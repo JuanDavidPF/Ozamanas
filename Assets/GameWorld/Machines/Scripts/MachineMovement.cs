@@ -56,7 +56,7 @@ public class MachineMovement : MonoBehaviour
 
         if(machine.pathPending) return false; 
         if (machine.remainingDistance > machine.stoppingDistance) return false;
-        if (machine.hasPath || machine.velocity.sqrMagnitude != 0f) return false;
+        if (machine.velocity.sqrMagnitude != 0f) return false;
         return true;
     }
 
