@@ -44,11 +44,13 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
         private bool isWaitingChoice;
 
         private AudioSource _localSource;
-        private AudioSource localSource {
+        private AudioSource localSource
+        {
             get { return _localSource != null ? _localSource : _localSource = gameObject.AddComponent<AudioSource>(); }
         }
 
-        bool anyKeyDown {
+        bool anyKeyDown
+        {
             get
             {
 #if ENABLE_LEGACY_INPUT_MANAGER
@@ -65,7 +67,8 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
         void OnEnable() { UnSubscribe(); Subscribe(); }
         void OnDisable() { UnSubscribe(); }
 
-        void Subscribe() {
+        void Subscribe()
+        {
             DialogueTree.OnDialogueStarted += OnDialogueStarted;
             DialogueTree.OnDialoguePaused += OnDialoguePaused;
             DialogueTree.OnDialogueFinished += OnDialogueFinished;
@@ -73,7 +76,8 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
             DialogueTree.OnMultipleChoiceRequest += OnMultipleChoiceRequest;
         }
 
-        void UnSubscribe() {
+        void UnSubscribe()
+        {
             DialogueTree.OnDialogueStarted -= OnDialogueStarted;
             DialogueTree.OnDialoguePaused -= OnDialoguePaused;
             DialogueTree.OnDialogueFinished -= OnDialogueFinished;
@@ -81,7 +85,8 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
             DialogueTree.OnMultipleChoiceRequest -= OnMultipleChoiceRequest;
         }
 
-        void Hide() {
+        void Hide()
+        {
             subtitlesGroup.gameObject.SetActive(false);
             optionsGroup.gameObject.SetActive(false);
             optionButton.gameObject.SetActive(false);
@@ -89,38 +94,46 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
             originalSubsPosition = subtitlesGroup.transform.position;
         }
 
-        void OnDialogueStarted(DialogueTree dlg) {
+        void OnDialogueStarted(DialogueTree dlg)
+        {
             //nothing special...
         }
 
-        void OnDialoguePaused(DialogueTree dlg) {
+        void OnDialoguePaused(DialogueTree dlg)
+        {
             subtitlesGroup.gameObject.SetActive(false);
             optionsGroup.gameObject.SetActive(false);
             StopAllCoroutines();
-            if ( playSource != null ) playSource.Stop();
+            if (playSource != null) playSource.Stop();
         }
 
-        void OnDialogueFinished(DialogueTree dlg) {
+        void OnDialogueFinished(DialogueTree dlg)
+        {
             subtitlesGroup.gameObject.SetActive(false);
             optionsGroup.gameObject.SetActive(false);
-            if ( cachedButtons != null ) {
-                foreach ( var tempBtn in cachedButtons.Keys ) {
-                    if ( tempBtn != null ) {
+            if (cachedButtons != null)
+            {
+                foreach (var tempBtn in cachedButtons.Keys)
+                {
+                    if (tempBtn != null)
+                    {
                         Destroy(tempBtn.gameObject);
                     }
                 }
                 cachedButtons = null;
             }
             StopAllCoroutines();
-            if ( playSource != null ) playSource.Stop();
+            if (playSource != null) playSource.Stop();
         }
 
 
-        void OnSubtitlesRequest(SubtitlesRequestInfo info) {
+        void OnSubtitlesRequest(SubtitlesRequestInfo info)
+        {
             StartCoroutine(Internal_OnSubtitlesRequestInfo(info));
         }
 
-        IEnumerator Internal_OnSubtitlesRequestInfo(SubtitlesRequestInfo info) {
+        IEnumerator Internal_OnSubtitlesRequestInfo(SubtitlesRequestInfo info)
+        {
 
             var text = info.statement.text;
             var audio = info.statement.audio;
@@ -135,15 +148,18 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
             actorPortrait.gameObject.SetActive(actor.portraitSprite != null);
             actorPortrait.sprite = actor.portraitSprite;
 
-            if ( audio != null ) {
+            if (audio != null)
+            {
                 var actorSource = actor.transform != null ? actor.transform.GetComponent<AudioSource>() : null;
                 playSource = actorSource != null ? actorSource : localSource;
                 playSource.clip = audio;
                 playSource.Play();
                 actorSpeech.text = text;
                 var timer = 0f;
-                while ( timer < audio.length ) {
-                    if ( skipOnInput && anyKeyDown ) {
+                while (timer < audio.length)
+                {
+                    if (skipOnInput && anyKeyDown)
+                    {
                         playSource.Stop();
                         break;
                     }
@@ -152,22 +168,27 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
                 }
             }
 
-            if ( audio == null ) {
+            if (audio == null)
+            {
                 var tempText = "";
                 var inputDown = false;
-                if ( skipOnInput ) {
+                if (skipOnInput)
+                {
                     StartCoroutine(CheckInput(() => { inputDown = true; }));
                 }
 
-                for ( int i = 0; i < text.Length; i++ ) {
+                for (int i = 0; i < text.Length; i++)
+                {
 
-                    if ( skipOnInput && inputDown ) {
+                    if (skipOnInput && inputDown)
+                    {
                         actorSpeech.text = text;
                         yield return null;
                         break;
                     }
 
-                    if ( subtitlesGroup.gameObject.activeSelf == false ) {
+                    if (subtitlesGroup.gameObject.activeSelf == false)
+                    {
                         yield break;
                     }
 
@@ -175,11 +196,13 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
                     tempText += c;
                     yield return StartCoroutine(DelayPrint(subtitleDelays.characterDelay));
                     PlayTypeSound();
-                    if ( c == '.' || c == '!' || c == '?' ) {
+                    if (c == '.' || c == '!' || c == '?')
+                    {
                         yield return StartCoroutine(DelayPrint(subtitleDelays.sentenceDelay));
                         PlayTypeSound();
                     }
-                    if ( c == ',' ) {
+                    if (c == ',')
+                    {
                         yield return StartCoroutine(DelayPrint(subtitleDelays.commaDelay));
                         PlayTypeSound();
                     }
@@ -187,14 +210,17 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
                     actorSpeech.text = tempText;
                 }
 
-                if ( !waitForInput ) {
+                if (!waitForInput)
+                {
                     yield return StartCoroutine(DelayPrint(subtitleDelays.finalDelay));
                 }
             }
 
-            if ( waitForInput ) {
+            if (waitForInput)
+            {
                 waitInputIndicator.gameObject.SetActive(true);
-                while ( !anyKeyDown ) {
+                while (!anyKeyDown)
+                {
                     yield return null;
                 }
                 waitInputIndicator.gameObject.SetActive(false);
@@ -205,25 +231,32 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
             info.Continue();
         }
 
-        void PlayTypeSound() {
-            if ( typingSounds.Count > 0 ) {
+        void PlayTypeSound()
+        {
+            if (typingSounds.Count > 0)
+            {
                 var sound = typingSounds[Random.Range(0, typingSounds.Count)];
-                if ( sound != null ) {
+                if (sound != null)
+                {
                     localSource.PlayOneShot(sound, Random.Range(0.6f, 1f));
                 }
             }
         }
 
-        IEnumerator CheckInput(System.Action Do) {
-            while ( !anyKeyDown ) {
+        IEnumerator CheckInput(System.Action Do)
+        {
+            while (!anyKeyDown)
+            {
                 yield return null;
             }
             Do();
         }
 
-        IEnumerator DelayPrint(float time) {
+        IEnumerator DelayPrint(float time)
+        {
             var timer = 0f;
-            while ( timer < time ) {
+            while (timer < time)
+            {
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -232,16 +265,18 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
 
 
 
-        void OnMultipleChoiceRequest(MultipleChoiceRequestInfo info) {
+        void OnMultipleChoiceRequest(MultipleChoiceRequestInfo info)
+        {
 
             optionsGroup.gameObject.SetActive(true);
             var buttonHeight = optionButton.GetComponent<RectTransform>().rect.height;
-            optionsGroup.sizeDelta = new Vector2(optionsGroup.sizeDelta.x, ( info.options.Values.Count * buttonHeight ) + 20);
+            optionsGroup.sizeDelta = new Vector2(optionsGroup.sizeDelta.x, (info.options.Values.Count * buttonHeight) + 20);
 
             cachedButtons = new Dictionary<Button, int>();
             int i = 0;
 
-            foreach ( KeyValuePair<IStatement, int> pair in info.options ) {
+            foreach (KeyValuePair<IStatement, int> pair in info.options)
+            {
                 var btn = (Button)Instantiate(optionButton);
                 btn.gameObject.SetActive(true);
                 btn.transform.SetParent(optionsGroup.transform, false);
@@ -252,22 +287,27 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
                 i++;
             }
 
-            if ( info.showLastStatement ) {
+            if (info.showLastStatement)
+            {
                 subtitlesGroup.gameObject.SetActive(true);
                 var newY = optionsGroup.position.y + optionsGroup.sizeDelta.y + 1;
                 subtitlesGroup.position = new Vector3(subtitlesGroup.position.x, newY, subtitlesGroup.position.z);
             }
 
-            if ( info.availableTime > 0 ) {
+            if (info.availableTime > 0)
+            {
                 StartCoroutine(CountDown(info));
             }
         }
 
-        IEnumerator CountDown(MultipleChoiceRequestInfo info) {
+        IEnumerator CountDown(MultipleChoiceRequestInfo info)
+        {
             isWaitingChoice = true;
             var timer = 0f;
-            while ( timer < info.availableTime ) {
-                if ( isWaitingChoice == false ) {
+            while (timer < info.availableTime)
+            {
+                if (isWaitingChoice == false)
+                {
                     yield break;
                 }
                 timer += Time.deltaTime;
@@ -275,27 +315,33 @@ namespace NodeCanvas.DialogueTrees.UI.Examples
                 yield return null;
             }
 
-            if ( isWaitingChoice ) {
+            if (isWaitingChoice)
+            {
                 Finalize(info, info.options.Values.Last());
             }
         }
 
-        void Finalize(MultipleChoiceRequestInfo info, int index) {
+        void Finalize(MultipleChoiceRequestInfo info, int index)
+        {
             isWaitingChoice = false;
             SetMassAlpha(optionsGroup, 1f);
             optionsGroup.gameObject.SetActive(false);
-            if ( info.showLastStatement ) {
+            if (info.showLastStatement)
+            {
                 subtitlesGroup.gameObject.SetActive(false);
                 subtitlesGroup.transform.position = originalSubsPosition;
             }
-            foreach ( var tempBtn in cachedButtons.Keys ) {
+            foreach (var tempBtn in cachedButtons.Keys)
+            {
                 Destroy(tempBtn.gameObject);
             }
             info.SelectOption(index);
         }
 
-        void SetMassAlpha(RectTransform root, float alpha) {
-            foreach ( var graphic in root.GetComponentsInChildren<CanvasRenderer>() ) {
+        void SetMassAlpha(RectTransform root, float alpha)
+        {
+            foreach (var graphic in root.GetComponentsInChildren<CanvasRenderer>())
+            {
                 graphic.SetAlpha(alpha);
             }
         }

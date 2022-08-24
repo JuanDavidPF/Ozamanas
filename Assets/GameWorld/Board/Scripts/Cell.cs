@@ -12,7 +12,6 @@ namespace Ozamanas.Board
     {
 
 
-
         private Animator m_animator;
         public CellData data;
 
