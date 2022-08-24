@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 4437430452436477115}
   - component: {fileID: 1905053658532991089}
   - component: {fileID: 986721063465929960}
-  - component: {fileID: 4437430452436477114}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,19 +107,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5720556590480990760, guid: 8ed59a62919c6ed47b36575656f35979, type: 3}
---- !u!114 &4437430452436477114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 103829381411336612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b15279a97cfff74ba808b85997379be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_cellSelectionReference: {fileID: 986721062166553441}
 --- !u!1 &986721062166553455
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +120,7 @@ GameObject:
   - component: {fileID: 986721062166553441}
   - component: {fileID: 986721062166553443}
   - component: {fileID: 986721062166553440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cell_PineWard
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: d08e699306eca27478df3c9cccabacef, type: 3}
@@ -170,7 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
-  gridPosition: {x: 0, y: 0, z: 0}
+  gridPosition:
+    x: 0
+    y: 0
+    z: 0
 --- !u!114 &986721062166553441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +230,7 @@ GameObject:
   - component: {fileID: 5804953265224160925}
   - component: {fileID: 6549116567544944056}
   - component: {fileID: 2869061661689291193}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +314,7 @@ GameObject:
   - component: {fileID: 6800751776401967710}
   - component: {fileID: 2230962600495121893}
   - component: {fileID: 5631969216910927195}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +398,7 @@ GameObject:
   - component: {fileID: 4407290571044130262}
   - component: {fileID: 6285448218164410959}
   - component: {fileID: 3872158594503935843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +482,7 @@ GameObject:
   - component: {fileID: 3452763257339562063}
   - component: {fileID: 4308077883348607260}
   - component: {fileID: 8000308410262445536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +566,7 @@ GameObject:
   - component: {fileID: 5273974169020376543}
   - component: {fileID: 5871181583586694483}
   - component: {fileID: 8713362751795971542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,9 +650,8 @@ GameObject:
   - component: {fileID: 3896464565738028033}
   - component: {fileID: 1924714240497467415}
   - component: {fileID: 349173649245838198}
-  - component: {fileID: 1260244311100370354}
-  - component: {fileID: 1260244311100370353}
-  m_Layer: 0
+  - component: {fileID: 867520713}
+  m_Layer: 6
   m_Name: tree 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,8 +724,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1260244311100370354
-CapsuleCollider:
+--- !u!64 &867520713
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -746,23 +734,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.09999999
-  m_Height: 0.37999997
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.18999998, z: 0}
---- !u!114 &1260244311100370353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7494304035839699583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b15279a97cfff74ba808b85997379be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_cellSelectionReference: {fileID: 986721062166553441}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7445948359284398021, guid: 8ed59a62919c6ed47b36575656f35979, type: 3}
 --- !u!1 &7983161120005747897
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +749,7 @@ GameObject:
   - component: {fileID: 7988426540125744135}
   - component: {fileID: 3846132302281608877}
   - component: {fileID: 5403010584439013062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +833,7 @@ GameObject:
   - component: {fileID: 902897382920966576}
   - component: {fileID: 3979381964625769078}
   - component: {fileID: 7822895837245405151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,29 +12,36 @@ namespace Ozamanas.Board
     [RequireComponent(typeof(Grid))]
     public class Board : MonoBehaviour
     {
-        public static Grid m_grid;
+        public static Board instance;
 
-        public static Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
-        public static Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
+        public Grid grid;
+        [SerializeField] private List<Cell> cells = new List<Cell>();
+        private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
+        private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
 
-
-        private void Awake()
+        private void BakeCollections()
         {
-            m_grid = m_grid ? m_grid : GetComponent<Grid>();
+            cells.Clear();
+            cellsByData.Clear();
+            cellsByGridPosition.Clear();
 
-        }//Closes Awake method
+            foreach (Transform cellChild in transform)
+            {
+                if (cellChild.tag != "Cell") continue;
+                if (cellChild.TryGetComponent(out Cell cell)) AddCellToBoard(cell);
 
-        private void Update()
+            }
+        }//Closes BakeCollections Methods;
+
+        public void DeselectSelectedCell()
         {
-            if (!Application.isPlaying) return;
-            if (Input.GetKeyDown(KeyCode.Escape)) CellSelectionHandler.currentCellSelected = null;
-        }//Closes Update method
+            CellSelectionHandler.currentCellSelected = null;
+        }//Closes DeselectSelectedCell method
 
-        public static void AddCellToBoard(Cell cell)
+        private void AddCellToBoard(Cell cell)
         {
-
-            if (!cell || !m_grid) return;
+            if (!cell) return;
 
             cell.gridPosition = cell.transform.position.ToFloat3().UnityToGrid();
 
@@ -43,9 +50,11 @@ namespace Ozamanas.Board
             if (previousCell) RemoveCellFromBoard(previousCell);
 
 
-
             //Add new cell to cell atlases
             cellsByGridPosition[cell.gridPosition] = cell;
+
+            if (!cells.Contains(cell)) cells.Add(cell);
+
 
             if (cell.data)
             {
@@ -58,24 +67,27 @@ namespace Ozamanas.Board
 
         public static void RemoveCellFromBoard(Cell cell)
         {
-            if (!cell || !m_grid) return;
+            if (!cell || !instance) return;
 
-            if (cellsByGridPosition.ContainsKey(cell.gridPosition) && cellsByGridPosition[cell.gridPosition] == cell)
-                cellsByGridPosition.Remove(cell.gridPosition);
+            if (instance.cellsByGridPosition.ContainsKey(cell.gridPosition) && instance.cellsByGridPosition[cell.gridPosition] == cell)
+                instance.cellsByGridPosition.Remove(cell.gridPosition);
 
-            if (cell.data && cellsByData.ContainsKey(cell.data)) cellsByData[cell.data].Remove(cell);
+            if (cell.data && instance.cellsByData.ContainsKey(cell.data)) instance.cellsByData[cell.data].Remove(cell);
 
-            Destroy(cell.gameObject);
+            if (Application.isPlaying) Destroy(cell.gameObject);
+            else DestroyImmediate(cell.gameObject);
         }//Closes RemoveCellFromCollections method
 
         public static List<Cell> GetCellsByData(params CellData[] datas)
         {
+            if (!instance) return null;
+
             List<Cell> cellsToReturn = new List<Cell>();
 
             foreach (var data in datas)
             {
-                if (!cellsByData.ContainsKey(data)) continue;
-                cellsToReturn.AddRange(cellsByData[data]);
+                if (!instance.cellsByData.ContainsKey(data)) continue;
+                cellsToReturn.AddRange(instance.cellsByData[data]);
             }
 
             return cellsToReturn;
@@ -84,7 +96,7 @@ namespace Ozamanas.Board
 
         public static Cell GetNearestCell(float3 origin, params CellData[] datas)
         {
-
+            if (!instance) return null;
 
             List<Cell> cellsByData = GetCellsByData(datas);
             origin.y = 0;
@@ -101,61 +113,37 @@ namespace Ozamanas.Board
 
         }//Closes GetNearestCell method
 
+        private void Update()
+        {
+            if (Application.isPlaying) return;
+            grid = grid ? grid : GetComponent<Grid>();
+            BakeCollections();
+        }//Closes Update method
+
+        private void Awake()
+        {
+
+            instance = this;
+        }//Closes Awake method
+
+        private void OnDestroy()
+        {
+            if (instance == this) instance = null;
+        }//Closes OnDestroy method
+
+
+        private void Start()
+        {
+            StartCoroutine(HandleBoardCreation());
+        }//Closes Start method
+
+        private IEnumerator HandleBoardCreation()
+        {
+            yield return null;
+        }//Closes HandleBoardCreation method
+
+
     }//Closes Board class
 
-    public static class BoardExtender
-    {
 
-        public static int DistanceTo(this int3 axialCoordA, int3 axialCoordB)
-        {
-            return Mathf.Max(Mathf.Abs(axialCoordA.x - axialCoordB.x), Mathf.Abs(axialCoordA.y - axialCoordB.y), Mathf.Abs(axialCoordA.z - axialCoordB.z));
-        }//Close DistanceTo method
-
-        public static int DistanceTo(this Cell cellA, Cell cellB)
-        {
-
-            int3 axialCoordA = cellA.gridPosition.GridToAxial();
-            int3 axialCoordB = cellB.gridPosition.GridToAxial();
-
-            return axialCoordA.DistanceTo(axialCoordB);
-        }//Close DistanceTo method
-
-        public static int3 AxialToGrid(this int3 axialVector)
-        {
-            var x = axialVector.x;
-            var z = axialVector.z;
-            var col = x + (z - (z & 1)) / 2;
-            var row = z;
-
-            return new int3(col, row, 0);
-        }//Close ToGrid method
-
-
-        public static int3 GridToAxial(this int3 gridVector)
-        {
-            var yCell = gridVector.x;
-            var xCell = gridVector.y;
-            var x = yCell - (xCell - (xCell & 1)) / 2;
-            var z = xCell;
-            var y = -x - z;
-            return new int3(x, y, z);
-        }//Close ToAxial method
-
-        public static int3 UnityToGrid(this float3 unityVector)
-        {
-            if (!Board.m_grid) return int3.zero;
-
-            return Board.m_grid.WorldToCell(unityVector).ToInt3();
-        }//Close ToAxial method
-
-
-        public static float3 GridToUnity(this int3 gridVector)
-        {
-            if (!Board.m_grid) return float3.zero;
-            return Board.m_grid.CellToWorld(gridVector.ToVector());
-        }//Close ToAxial method
-
-
-
-    }//Closes BoardExtender class
 }//Closes Namespace declaration

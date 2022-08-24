@@ -55,73 +55,35 @@ namespace JuanPayan.CodeSnippets.HelperComponents
             if (triggers.HasFlag(MonobehaviourEventsFlags.FixedUpdate)) Behaviour();
         }//Closes FixedUpdate method
 
-        protected virtual void OnMouseEnter()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseEnter)) Behaviour();
-
-        }//Closes OnMouseEnter method
-
         public virtual void OnPointerEnter(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseEnter)) Behaviour();
         }//Closes OnPointerEnter method
-
-        protected virtual void OnMouseOver()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseOver)) Behaviour();
-        }//Closes OnMouseOver method
 
         public virtual void OnPointerMove(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseOver)) Behaviour();
         }//Closes OnPointerMove method
 
-        protected virtual void OnMouseDown()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseDown)) Behaviour();
-
-        }//Closes OnMouseDown method
-
         public virtual void OnPointerDown(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseDown)) Behaviour();
         }//Closes OnPointerDown method
-
-        protected virtual void OnMouseDrag()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseDrag)) Behaviour();
-
-        }//Closes OnDrag method 
 
         public virtual void OnDrag(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseDrag)) Behaviour();
         }//Closes OnDrag method
 
-        protected virtual void OnMouseUpAsButton()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseClick)) Behaviour();
-        }//Closes OnMouseUpAsButton method
-
         public virtual void OnPointerClick(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseClick)) Behaviour();
         }//Closes OnPointerClick method
 
-        protected virtual void OnMouseExit()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseExit)) Behaviour();
-        }//Closes OnMouseExit method
-
         public virtual void OnPointerExit(PointerEventData eventData)
         {
             if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseExit)) Behaviour();
         }//Closes OnPointerExit method
-
-        protected virtual void OnMouseUp()
-        {
-            if (triggers.HasFlag(MonobehaviourEventsFlags.OnMouseUp)) Behaviour();
-        }//Closes OnMouseUp method
 
         public virtual void OnPointerUp(PointerEventData eventData)
         {

@@ -23,12 +23,12 @@ namespace Ozamanas.Board
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
         }//Closes Awake method
 
-        private void OnEnable()
+        private void SetAnimatorTrigger(string triggerName)
         {
-            Board.AddCellToBoard(this);
+            if (!m_animator) return;
+            m_animator.SetTrigger(triggerName);
 
-            m_animator.SetTrigger("Spawn");
-        }//Closes OnEnable event
+        }//Closes SetAnimatorTrigger method
 
         private void OnDisable()
         {

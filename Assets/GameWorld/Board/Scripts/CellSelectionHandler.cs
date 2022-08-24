@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Outline;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Ozamanas.Board
 {
@@ -9,7 +10,7 @@ namespace Ozamanas.Board
     [RequireComponent(typeof(Cell))]
 
     [RequireComponent(typeof(Outline.Outline))]
-    public class CellSelectionHandler : MonoBehaviour
+    public class CellSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
         [HideInInspector] public Cell cellReference;
         private Outline.Outline outline;
@@ -82,22 +83,21 @@ namespace Ozamanas.Board
         public void DrawSelectedOutline() => DrawOutline(m_selectedOutline);
 
 
-        public void OnMouseDown()
-        {
-            currentCellSelected = this;
-        }//Closes OnMouseDown method
 
-        public void OnMouseEnter()
+        public void OnPointerEnter(PointerEventData eventData)
         {
             currentCellHovered = this;
-        }//Closes OnMouseEnter method
+        }//Closes OnPointerEnter method
 
-        public void OnMouseExit()
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            currentCellSelected = this;
+        }//Closes OnPointerClick method
+
+        public void OnPointerExit(PointerEventData eventData)
         {
             if (currentCellHovered == this) currentCellHovered = null;
-        }//Closes OnMouseExit method
-
-
+        }//Closes OnPointerExit method
     }//Closes CellSelectionHandler class
 
 }//Closes Namespace declaration
