@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 986721062166553441}
   - component: {fileID: 986721062166553443}
   - component: {fileID: 986721062166553440}
+  - component: {fileID: 1209176223}
   m_Layer: 6
   m_Name: Cell_PineWard
   m_TagString: Cell
@@ -156,10 +157,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
+  worldPosition:
+    x: 4
+    y: 0
+    z: 5.1974998
   gridPosition:
-    x: -6
-    y: 3
+    x: 4
+    y: 6
     z: 0
+  isOccupied: 0
 --- !u!114 &986721062166553441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +867,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!135 &1209176223
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986721062166553455}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1001488246818730190
 GameObject:
   m_ObjectHideFlags: 0

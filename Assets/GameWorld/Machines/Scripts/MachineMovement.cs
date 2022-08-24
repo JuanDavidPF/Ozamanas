@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DataStructures.PriorityQueue;
 using Ozamanas.Board;
 using Ozamanas.Outline;
+using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,10 +14,21 @@ namespace Ozamanas.Machines
     [RequireComponent(typeof(NavMeshAgent))]
     public class MachineMovement : MonoBehaviour
     {
+
+        public enum PathFindingResult
+        {
+            NonCalculated,
+            InvalidDestiny,
+            PathIncomplete,
+            PathComplete,
+
+        }//Closes
+
+
         private NavMeshAgent navMeshAgent;
 
         [SerializeField] private Board.CellData mainObjective;
-
+        [SerializeField] private List<Board.CellData> blacklist = new List<CellData>();
         [SerializeField] private List<Cell> pathToObjective = new List<Cell>();
 
 
@@ -26,6 +38,19 @@ namespace Ozamanas.Machines
         [SerializeField] private OutlineConfig debugOutline;
         public float3 current_destination;
 
+        [Space(15)]
+        [Header("Parameters")]
+        public PathFindingResult result = PathFindingResult.NonCalculated;
+
+        public bool hasPathToMain
+        {
+            get
+            {
+                return (mainObjective && pathToObjective.Count > 0 && mainObjective == pathToObjective[pathToObjective.Count - 1].data);
+            }
+        }
+
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -34,6 +59,11 @@ namespace Ozamanas.Machines
 
 
         private void Update()
+        {
+            DebugPathProjection();
+        }//Closes Update method
+
+        private void DebugPathProjection()
         {
             if (debugPathFinding)
             {
@@ -45,7 +75,17 @@ namespace Ozamanas.Machines
                     cell.gameObject.SendMessage("ToggleOutline", true);
                 }
             }
-        }//Closes Update method
+            else
+            {
+                foreach (var cell in pathToObjective)
+                {
+                    if (!cell) continue;
+
+
+                    cell.gameObject.SendMessage("ToggleOutline", false);
+                }
+            }
+        }
 
         public void ResetPath()
         {
@@ -111,7 +151,13 @@ namespace Ozamanas.Machines
 
         public void CalculatePathToCell(Cell destiny)
         {
-            if (!destiny) return;
+            if (!destiny)
+            {
+                result = PathFindingResult.InvalidDestiny;
+                return;
+            }
+
+
             ResetPath();
             /*For more explanation of how this works, please reafer to:
             https://erdiizgi.com/data-structure-for-games-priority-queue-for-unity-in-c/
@@ -147,8 +193,8 @@ namespace Ozamanas.Machines
                 {
 
                     if (!next) continue;
-
-
+                    if (next.data && blacklist.Contains(next.data)) continue;
+                    if (next.isOccupied) continue;
                     /*Implement here early exits for board cell that dont met the conditions*/
 
 
@@ -173,23 +219,31 @@ namespace Ozamanas.Machines
             while (currentNode != start)
             {
 
-                if (!currentNode) return;
-                // {
-                //     Cell closestToDestiny = ClosestToUnreachableDestiny(came_from, destiny);
-                //     if (!closestToDestiny) return;
-                //     CalculatePathToCell(closestToDestiny);
-                //     return;
-                // }
+                if (!currentNode)
+                {
+                    result = PathFindingResult.PathIncomplete;
+                    return;
+                }
+
 
                 pathRoute.Add(currentNode);
                 came_from.TryGetValue(currentNode, out currentNode);
             }
 
             pathRoute.Reverse();
+            result = PathFindingResult.PathComplete;
             pathToObjective = pathRoute;
 
         }//Closes Calculate PathtoCell alogorythym
-
-
     }//Closes MachineMovement class
+
+
+
+    public struct PathFindingJob : IJob
+    {
+        public void Execute()
+        {
+
+        }//Closes Execute method
+    }//Closes PathFindingJob method
 }//Closes Namespace declaration 

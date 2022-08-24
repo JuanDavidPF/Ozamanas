@@ -44,15 +44,16 @@ namespace Ozamanas.Board
 
         public static int3 UnityToGrid(this float3 unityVector)
         {
-            if (!Board.instance) return int3.zero;
+            unityVector.y = 0;
+            if (!Board.grid) return int3.zero;
 
-            return Board.instance.grid.WorldToCell(unityVector).ToInt3();
+            return Board.grid.WorldToCell(unityVector).ToInt3();
         }//Close ToAxial method
 
         public static float3 GridToUnity(this int3 gridVector)
         {
-            if (!Board.instance) return float3.zero;
-            return Board.instance.grid.CellToWorld(gridVector.ToVector());
+            if (!Board.grid) return float3.zero;
+            return Board.grid.CellToWorld(gridVector.ToVector());
         }//Close ToAxial method
 
         public static List<Cell> GetCellsOnRange(this Cell originCell, int range = 1, bool includeOrigin = true)
@@ -66,21 +67,26 @@ namespace Ozamanas.Board
                 {
                     int z = -x - y;
 
-                    int3 originPositionToAxis = originCell.gridPosition.GridToAxial(); ;
-                    int3 underRangePosition = (originPositionToAxis + new int3(x, y, z)).AxialToGrid();
+
+
+                    int3 originPositionToAxis = originCell.gridPosition.GridToAxial();
+
+                    int3 underRangePosition = (originPositionToAxis + new int3(x, z, y)).AxialToGrid();
+
 
                     Cell cell = Board.GetCellByPosition(underRangePosition);
-                    if (cell) cellsUnderRange.Add(cell);
-                    if (cell)
-                    {
-                        Debug.Log(cell);
-                        cell.gameObject.SetActive(false);
-                    }
+
+
+                    if (!cell) continue;
+                    if (!includeOrigin && cell == originCell) continue;
+
+                    cellsUnderRange.Add(cell);
+
                 }
 
             }//closes the doubleFor
 
-            if (!includeOrigin) cellsUnderRange.Remove(originCell);
+
             return cellsUnderRange;
         }//Closes GetCellsUnderRange method
 

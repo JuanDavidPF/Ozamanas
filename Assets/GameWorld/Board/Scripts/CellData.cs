@@ -10,11 +10,15 @@ namespace Ozamanas.Board
     [CreateAssetMenu(menuName = "Cells/Cells Data", fileName = "new Cell Data")]
     public class CellData : ScriptableObject
     {
+        [Header("UI Config")]
+        public Sprite machineIcon;
         public LocalizedString machineName;
         public LocalizedString machineDescription;
 
-        public IntegerReference movemenCost;
 
+        [Header("Heuristic Config")]
+        public IntegerReference movemenCost;
+        public IntegerReference expansionCost;
 
     }//Closes CellID class
 }//Closes Namespace declaration

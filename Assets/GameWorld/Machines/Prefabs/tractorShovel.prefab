@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -3200941559946265716}
   m_Layer: 0
   m_Name: tractorShovel
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,13 +153,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fecf47e7717d394aad78b78594168a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainObjective: {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
+  mainObjective: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
+  cellObjective: {fileID: 0}
+  blacklist: []
   pathToObjective: []
-  debugPathFinding: 0
+  debugPathFinding: 1
   debugOutline:
     mode: 0
-    outlineColor: {r: 0, g: 0, b: 0, a: 0}
-    width: 0
+    outlineColor: {r: 0, g: 0, b: 0, a: 1}
+    width: 6
   current_destination:
     x: 0
     y: 0
@@ -227,7 +229,7 @@ MonoBehaviour:
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
-  _lockBoundGraphPrefabOverrides: 0
+  _lockBoundGraphPrefabOverrides: 1
   _preInitializeSubGraphs: 0
   _updateMode: 0
   _graph: {fileID: 0}

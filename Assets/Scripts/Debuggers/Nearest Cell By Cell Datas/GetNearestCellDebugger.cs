@@ -15,7 +15,7 @@ namespace Ozamanas.Debuggers
 
         [SerializeField] private Outline.OutlineConfig debugOutline;
 
-        private CellSelectionHandler cachedNearestCell;
+        private Cell cachedNearestCell;
 
 
         [ContextMenu("Execute Behavior")]
@@ -26,21 +26,21 @@ namespace Ozamanas.Debuggers
 
             if (!nearestCell) return;
 
-            if (cachedNearestCell && nearestCell == cachedNearestCell.cellReference)
+            if (cachedNearestCell && nearestCell == cachedNearestCell)
             {
-                cachedNearestCell.DrawOutline(debugOutline);
-                cachedNearestCell.ToggleOutline(true);
+                cachedNearestCell.SendMessage("DrawOutline", debugOutline, SendMessageOptions.DontRequireReceiver);
+                cachedNearestCell.SendMessage("ToggleOutline", true, SendMessageOptions.DontRequireReceiver);
+
                 return;
             }
 
-            if (cachedNearestCell) cachedNearestCell.ToggleOutline(false);
+            if (cachedNearestCell) cachedNearestCell.SendMessage("ToggleOutline", false);
 
-            if (nearestCell.TryGetComponent(out CellSelectionHandler selectionHandler))
-            {
-                cachedNearestCell = selectionHandler;
-                selectionHandler.DrawOutline(debugOutline);
-                selectionHandler.ToggleOutline(true);
-            }
+
+            cachedNearestCell = nearestCell;
+            cachedNearestCell.SendMessage("DrawOutline", debugOutline, SendMessageOptions.DontRequireReceiver);
+            cachedNearestCell.SendMessage("ToggleOutline", true, SendMessageOptions.DontRequireReceiver);
+
 
 
         }//Closes Behaviour method

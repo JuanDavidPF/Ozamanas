@@ -11,17 +11,22 @@ namespace Ozamanas.Board
     public class Cell : MonoBehaviour
     {
 
-
         private Animator m_animator;
         public CellData data;
 
+
+        public float3 worldPosition;
         public int3 gridPosition;
+
+        public bool isOccupied = false;
+
 
 
         private void Awake()
         {
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
         }//Closes Awake method
+
 
         public void SetAnimatorTrigger(string triggerName)
         {
@@ -34,6 +39,19 @@ namespace Ozamanas.Board
         {
             Board.RemoveCellFromBoard(this);
         }//Closes OnDisable event
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Machine") isOccupied = true;
+
+        }//Closes OnTriggerEnter method
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "Machine") isOccupied = false;
+
+        }//Closes OnTriggerExit method
 
     }//Closes Cell class
 }//Closes Namespace declaration

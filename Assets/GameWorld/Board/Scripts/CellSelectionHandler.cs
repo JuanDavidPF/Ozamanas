@@ -88,11 +88,13 @@ namespace Ozamanas.Outline
         public void OnPointerEnter(PointerEventData eventData)
         {
             currentCellHovered = this;
+
         }//Closes OnPointerEnter method
 
         public void OnPointerClick(PointerEventData eventData)
         {
             currentCellSelected = this;
+
         }//Closes OnPointerClick method
 
         public void OnPointerExit(PointerEventData eventData)
