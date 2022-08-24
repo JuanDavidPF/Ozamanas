@@ -55,6 +55,35 @@ namespace Ozamanas.Board
             return Board.instance.grid.CellToWorld(gridVector.ToVector());
         }//Close ToAxial method
 
+        public static List<Cell> GetCellsOnRange(this Cell originCell, int range = 1, bool includeOrigin = true)
+        {
+            if (!originCell) return null;
+            List<Cell> cellsUnderRange = new List<Cell>();
+
+            for (int x = -range; x <= range; x++)
+            {
+                for (int y = math.max(-range, -x - range); y <= math.min(range, -x + range); y++)
+                {
+                    int z = -x - y;
+
+                    int3 originPositionToAxis = originCell.gridPosition.GridToAxial(); ;
+                    int3 underRangePosition = (originPositionToAxis + new int3(x, y, z)).AxialToGrid();
+
+                    Cell cell = Board.GetCellByPosition(underRangePosition);
+                    if (cell) cellsUnderRange.Add(cell);
+                    if (cell)
+                    {
+                        Debug.Log(cell);
+                        cell.gameObject.SetActive(false);
+                    }
+                }
+
+            }//closes the doubleFor
+
+            if (!includeOrigin) cellsUnderRange.Remove(originCell);
+            return cellsUnderRange;
+        }//Closes GetCellsUnderRange method
+
 
     }//Closes BoardExtender class
 }//Closes Namespace declaration

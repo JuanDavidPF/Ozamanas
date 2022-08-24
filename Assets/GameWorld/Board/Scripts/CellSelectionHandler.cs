@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ozamanas.Board;
 using Ozamanas.Outline;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Ozamanas.Board
+namespace Ozamanas.Outline
 {
 
     [RequireComponent(typeof(Cell))]
 
-    [RequireComponent(typeof(Outline.Outline))]
+    [RequireComponent(typeof(Outline))]
     public class CellSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
         [HideInInspector] public Cell cellReference;
-        private Outline.Outline outline;
+        private Outline outline;
 
 
         private static CellSelectionHandler m_currentCellSelected;
@@ -62,7 +63,7 @@ namespace Ozamanas.Board
         private void Awake()
         {
             cellReference = cellReference ? cellReference : GetComponent<Cell>();
-            outline = outline ? outline : GetComponent<Outline.Outline>();
+            outline = outline ? outline : GetComponent<Outline>();
             outline.enabled = false;
         }//Closes Awake method
 

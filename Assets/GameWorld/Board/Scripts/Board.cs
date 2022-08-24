@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.Extenders;
 using Ozamanas.Board.Levels;
+using Ozamanas.Outline;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -72,6 +73,8 @@ namespace Ozamanas.Board
         {
             if (!cell || !instance) return;
 
+            instance.cells.Remove(cell);
+
             if (instance.cellsByGridPosition.ContainsKey(cell.gridPosition) && instance.cellsByGridPosition[cell.gridPosition] == cell)
                 instance.cellsByGridPosition.Remove(cell.gridPosition);
 
@@ -115,6 +118,42 @@ namespace Ozamanas.Board
             return cellsByData.Count > 0 ? cellsByData[0] : null;
 
         }//Closes GetNearestCell method
+
+
+        public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
+        {
+            if (!instance) return null;
+            List<Cell> cellsByPosition = new List<Cell>();
+
+            foreach (var position in worldPositions)
+            {
+                Cell cellToAdd = GetCellByPosition(position);
+                if (!cellToAdd) continue;
+                cellsByPosition.Add(cellToAdd);
+            }
+
+            return cellsByPosition;
+
+        }//Closes GetNearestCell method
+
+        public static Cell GetCellByPosition(float3 worldPosition)
+        {
+            if (!instance) return null;
+            worldPosition.y = 0;
+
+            Cell cellAtPosition = null;
+
+
+            int3 gridPosition = worldPosition.UnityToGrid();
+            if (instance.cellsByGridPosition.TryGetValue(gridPosition, out Cell cellToAdd))
+            {
+                cellAtPosition = cellToAdd;
+            }
+
+            return cellAtPosition;
+
+        }//Closes GetNearestCell method
+
 
         private void Update()
         {

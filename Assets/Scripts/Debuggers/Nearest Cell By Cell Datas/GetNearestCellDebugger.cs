@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.CodeSnippets.HelperComponents;
 using Ozamanas.Board;
+using Ozamanas.Outline;
 using UnityEngine;
 
 
