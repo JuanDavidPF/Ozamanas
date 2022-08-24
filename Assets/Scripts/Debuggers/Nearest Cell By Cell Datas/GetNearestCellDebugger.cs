@@ -23,7 +23,14 @@ namespace Ozamanas.Debuggers
 
             Cell nearestCell = Board.Board.GetNearestCell(transform.position, cellDatas);
 
-            if (!nearestCell || (cachedNearestCell && nearestCell == cachedNearestCell.cellReference)) return;
+            if (!nearestCell) return;
+
+            if (cachedNearestCell && nearestCell == cachedNearestCell.cellReference)
+            {
+                cachedNearestCell.DrawOutline(debugOutline);
+                cachedNearestCell.ToggleOutline(true);
+                return;
+            }
 
             if (cachedNearestCell) cachedNearestCell.ToggleOutline(false);
 

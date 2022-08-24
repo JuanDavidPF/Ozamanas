@@ -23,7 +23,7 @@ namespace Ozamanas.Board
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
         }//Closes Awake method
 
-        private void SetAnimatorTrigger(string triggerName)
+        public void SetAnimatorTrigger(string triggerName)
         {
             if (!m_animator) return;
             m_animator.SetTrigger(triggerName);

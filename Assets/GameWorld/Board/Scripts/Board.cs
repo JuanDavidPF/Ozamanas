@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.Extenders;
+using Ozamanas.Board.Levels;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ namespace Ozamanas.Board
     {
         public static Board instance;
 
-        public Grid grid;
+        public LevelData levelData;
+
+        [HideInInspector] public Grid grid;
         [SerializeField] private List<Cell> cells = new List<Cell>();
         private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
@@ -116,7 +119,8 @@ namespace Ozamanas.Board
         private void Update()
         {
             if (Application.isPlaying) return;
-            grid = grid ? grid : GetComponent<Grid>();
+            grid = GetComponent<Grid>();
+            if (levelData) levelData.board = gameObject;
             BakeCollections();
         }//Closes Update method
 
@@ -139,10 +143,26 @@ namespace Ozamanas.Board
 
         private IEnumerator HandleBoardCreation()
         {
-            yield return null;
+            YieldInstruction initialDelay = levelData ? new WaitForSeconds(levelData.creationDelay.value) : new WaitForSeconds(1f);
+            YieldInstruction cooldown = levelData && levelData.creationRate.value > 0 ? new WaitForSeconds(1f / levelData.creationRate.value) : new WaitForSeconds(.1f);
+
+            yield return initialDelay;
+
+
+            foreach (var cell in new List<Cell>(cells))
+            {
+                cell.SetAnimatorTrigger("Spawn");
+                yield return cooldown;
+            }
+
+
         }//Closes HandleBoardCreation method
 
 
+        private void OnDisable()
+        {
+
+        }//Closes OnDisalbeMethod
     }//Closes Board class
 
 
