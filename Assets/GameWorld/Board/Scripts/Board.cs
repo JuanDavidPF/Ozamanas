@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using JuanPayan.Extenders;
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -12,7 +14,7 @@ namespace Ozamanas.Board
     {
         public static Grid m_grid;
 
-        public static Dictionary<Vector3Int, Cell> cellsByGridPosition = new Dictionary<Vector3Int, Cell>();
+        public static Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         public static Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
 
@@ -34,7 +36,7 @@ namespace Ozamanas.Board
 
             if (!cell || !m_grid) return;
 
-            cell.gridPosition = cell.transform.position.UnityToGrid();
+            cell.gridPosition = cell.transform.position.ToFloat3().UnityToGrid();
 
             //Removes previous cell in this position if existing;
             Cell previousCell = null; cellsByGridPosition.TryGetValue(cell.gridPosition, out previousCell);
@@ -80,7 +82,7 @@ namespace Ozamanas.Board
 
         }//Closes GetCellsByData method
 
-        public static Cell GetNearestCell(Vector3 origin, params CellData[] datas)
+        public static Cell GetNearestCell(float3 origin, params CellData[] datas)
         {
 
 
@@ -104,7 +106,7 @@ namespace Ozamanas.Board
     public static class BoardExtender
     {
 
-        public static int DistanceTo(this Vector3Int axialCoordA, Vector3Int axialCoordB)
+        public static int DistanceTo(this int3 axialCoordA, int3 axialCoordB)
         {
             return Mathf.Max(Mathf.Abs(axialCoordA.x - axialCoordB.x), Mathf.Abs(axialCoordA.y - axialCoordB.y), Mathf.Abs(axialCoordA.z - axialCoordB.z));
         }//Close DistanceTo method
@@ -112,47 +114,46 @@ namespace Ozamanas.Board
         public static int DistanceTo(this Cell cellA, Cell cellB)
         {
 
-            Vector3Int axialCoordA = cellA.gridPosition.GridToAxial();
-            Vector3Int axialCoordB = cellB.gridPosition.GridToAxial();
+            int3 axialCoordA = cellA.gridPosition.GridToAxial();
+            int3 axialCoordB = cellB.gridPosition.GridToAxial();
 
             return axialCoordA.DistanceTo(axialCoordB);
         }//Close DistanceTo method
 
-        public static Vector3Int AxialToGrid(this Vector3Int axialVector)
+        public static int3 AxialToGrid(this int3 axialVector)
         {
             var x = axialVector.x;
             var z = axialVector.z;
             var col = x + (z - (z & 1)) / 2;
             var row = z;
 
-            return new Vector3Int(col, row, 0);
+            return new int3(col, row, 0);
         }//Close ToGrid method
 
 
-        public static Vector3Int GridToAxial(this Vector3Int gridVector)
+        public static int3 GridToAxial(this int3 gridVector)
         {
             var yCell = gridVector.x;
             var xCell = gridVector.y;
             var x = yCell - (xCell - (xCell & 1)) / 2;
             var z = xCell;
             var y = -x - z;
-            return new Vector3Int(x, y, z);
+            return new int3(x, y, z);
         }//Close ToAxial method
 
-        public static Vector3Int UnityToGrid(this Vector3 unityVector)
+        public static int3 UnityToGrid(this float3 unityVector)
         {
-            if (!Board.m_grid) return Vector3Int.zero;
+            if (!Board.m_grid) return int3.zero;
 
-            return Board.m_grid.WorldToCell(unityVector);
+            return Board.m_grid.WorldToCell(unityVector).ToInt3();
         }//Close ToAxial method
 
 
-        public static Vector3 GridToUnity(this Vector3Int gridVector)
+        public static float3 GridToUnity(this int3 gridVector)
         {
-            if (!Board.m_grid) return Vector3.zero;
-            return Board.m_grid.CellToWorld(gridVector);
+            if (!Board.m_grid) return float3.zero;
+            return Board.m_grid.CellToWorld(gridVector.ToVector());
         }//Close ToAxial method
-
 
 
 

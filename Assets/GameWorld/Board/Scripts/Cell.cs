@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Collections;
+using Unity.Mathematics;
 
 namespace Ozamanas.Board
 {
@@ -10,10 +11,12 @@ namespace Ozamanas.Board
     public class Cell : MonoBehaviour
     {
 
+
+
         private Animator m_animator;
         public CellData data;
 
-        public Vector3Int gridPosition;
+        public int3 gridPosition;
 
 
         private void Awake()
