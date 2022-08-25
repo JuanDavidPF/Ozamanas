@@ -93,12 +93,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1084892198633983565}
-  - component: {fileID: 613886794944842890}
+  - component: {fileID: -3200941559946265716}
   - component: {fileID: 613886794944842996}
+  - component: {fileID: 8999396850821742871}
+  - component: {fileID: 613886794944842890}
   - component: {fileID: 613886794944842997}
   - component: {fileID: 1997517461896226359}
   - component: {fileID: -7377147150895641835}
-  - component: {fileID: -3200941559946265716}
   m_Layer: 0
   m_Name: tractorShovel
   m_TagString: Machine
@@ -128,19 +129,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &613886794944842890
-BoxCollider:
+--- !u!114 &-3200941559946265716
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307827077080126711}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c535bfbf8e6b94687a6de6cd29ec19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machine_status: {fileID: 0}
+  flag: {fileID: 511473094932665437}
 --- !u!114 &613886794944842996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +168,51 @@ MonoBehaviour:
     y: 0
     z: 0
   result: 0
+--- !u!114 &8999396850821742871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307827077080126711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  events:
+  - {fileID: 11400000, guid: b0cf3fb0d51fc1a4398837523a0cafea, type: 2}
+  mode: 1
+  maxInvocations: 1
+  callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1997517461896226359}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!65 &613886794944842890
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307827077080126711}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &613886794944842997
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -195,25 +242,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307827077080126711}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a7dbb6bbdf4ffb46ab7dd87ba8191e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters:
   - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[HumanMachine,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+      Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: -3200941559946265716}
   - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.MachineMovement,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+      Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: 613886794944842996}
   _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Machine
-    Starting"},"secondsToRun":0.5,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"method":{"_baseInfo":"HumanMachine|SetMachineStatus|System.Void","_paramsInfo":"MachineState"},"parameters":[{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}}],"returnValue":{},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":115.0,"y":279.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":752.0,"y":605.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":1310.0,"y":1021.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_nestedBT":{"_value":2},"executionMode":0,"_variablesMap":[{"_targetSubGraphVariableID":"91446756-7001-4bca-9e6d-b7870e333350","_canRead":true,"_canWrite":true,"_type":"Ozamanas.Machines.MachineMovement","_name":"myMachineMovement","_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a"},{"_targetSubGraphVariableID":"11dd2d82-f389-4aaf-afec-16c6aa276e6b","_canRead":true,"_canWrite":true,"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"}],"_position":{"x":145.0086,"y":954.0027},"$type":"NodeCanvas.StateMachines.NestedBTState","$id":"3"}],"connections":[{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":3,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{"myHumanMachine":{"_name":"myHumanMachine","_id":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[HumanMachine,
-    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"myMachineMovement":{"_name":"myMachineMovement","_id":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[Ozamanas.Machines.MachineMovement,
+    Starting"},"secondsToRun":0.5,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"method":{"_baseInfo":"HumanMachine|SetMachineStatus|System.Void","_paramsInfo":"MachineState"},"parameters":[{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}}],"returnValue":{},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":115.0,"y":279.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":752.0,"y":605.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":1310.0,"y":1021.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_nestedBT":{"_value":2},"executionMode":0,"_variablesMap":[{"_targetSubGraphVariableID":"91446756-7001-4bca-9e6d-b7870e333350","_canRead":true,"_canWrite":true,"_type":"MachineMovement","_name":"myMachineMovement","_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a"},{"_targetSubGraphVariableID":"11dd2d82-f389-4aaf-afec-16c6aa276e6b","_canRead":true,"_canWrite":true,"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"}],"_position":{"x":145.0086,"y":954.0027},"$type":"NodeCanvas.StateMachines.NestedBTState","$id":"3"}],"connections":[{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":3,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{"myHumanMachine":{"_name":"myHumanMachine","_id":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[HumanMachine,
+    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"myMachineMovement":{"_name":"myMachineMovement","_id":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[MachineMovement,
     Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}}'
   _boundGraphObjectReferences:
   - {fileID: 0}
@@ -224,8 +271,8 @@ MonoBehaviour:
     _version: 3.25
     _category: 
     _comments: 
-    _translation: {x: 466, y: 252}
-    _zoomFactor: 0.38067272
+    _translation: {x: -6.999897, y: -446.9999}
+    _zoomFactor: 1
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -250,20 +297,6 @@ MonoBehaviour:
   _serializedBlackboard: '{"_variables":{}}'
   _objectReferences: []
   _serializedVariables: []
---- !u!114 &-3200941559946265716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307827077080126711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c535bfbf8e6b94687a6de6cd29ec19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  machine_status: {fileID: 0}
-  flag: {fileID: 511473094932665437}
 --- !u!1 &2301607515106509846
 GameObject:
   m_ObjectHideFlags: 0

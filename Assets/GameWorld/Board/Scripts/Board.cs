@@ -5,7 +5,7 @@ using Ozamanas.Board.Levels;
 using Ozamanas.Outline;
 using Unity.Mathematics;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace Ozamanas.Board
 {
@@ -16,6 +16,8 @@ namespace Ozamanas.Board
     {
 
         public LevelData levelData;
+
+        public UnityEvent OnBoardCreated;
 
         [HideInInspector] public static Grid grid;
         [SerializeField] private static List<Cell> cells = new List<Cell>();
@@ -217,7 +219,7 @@ namespace Ozamanas.Board
                 yield return cooldown;
             }
 
-
+            OnBoardCreated?.Invoke();
         }//Closes HandleBoardCreation method
 
 
