@@ -32,6 +32,8 @@ namespace Ozamanas.Machines
         [SerializeField] private List<Cell> pathToObjective = new List<Cell>();
 
 
+
+
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
@@ -49,6 +51,8 @@ namespace Ozamanas.Machines
                 return (mainObjective && pathToObjective.Count > 0 && mainObjective == pathToObjective[pathToObjective.Count - 1].data);
             }
         }
+
+
 
 
         // Start is called before the first frame update

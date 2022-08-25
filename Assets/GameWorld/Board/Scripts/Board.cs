@@ -20,7 +20,7 @@ namespace Ozamanas.Board
         public UnityEvent OnBoardCreated;
 
         [HideInInspector] public static Grid grid;
-        [SerializeField] private static List<Cell> cells = new List<Cell>();
+        private static List<Cell> cells = new List<Cell>();
         private static Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         private static Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
