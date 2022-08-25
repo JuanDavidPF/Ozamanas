@@ -6,7 +6,7 @@ using Unity.Mathematics;
 
 namespace Ozamanas.Board
 {
-
+    [SelectionBase]
     [RequireComponent(typeof(Animator))]
     public class Cell : MonoBehaviour
     {
