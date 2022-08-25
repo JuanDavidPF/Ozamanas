@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 613886794944842997}
   - component: {fileID: 1997517461896226359}
   - component: {fileID: -7377147150895641835}
+  - component: {fileID: 3122823844388225881}
   m_Layer: 0
   m_Name: tractorShovel
   m_TagString: Machine
@@ -115,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307827077080126711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.497, y: 0.208, z: 0}
+  m_LocalPosition: {x: 1.497, y: 0.16, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -156,19 +157,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainObjective: {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
+  secondObjective: {fileID: 0}
+  secondObjectiveRange: 0
+  thirdObjective: {fileID: 0}
+  thirdObjectiveRange: 0
   blacklist:
   - {fileID: 0}
-  pathToObjective: []
+  result: 0
+  currentDestination: {fileID: 0}
+  pathToDestination: []
   debugPathFinding: 1
   debugOutline:
     mode: 0
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
     width: 6
-  current_destination:
-    x: 0
-    y: 0
-    z: 0
-  result: 0
 --- !u!114 &8999396850821742871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,20 +261,13 @@ MonoBehaviour:
     _references:
     - {fileID: 0}
     - {fileID: 613886794944842996}
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Machine
-    Starting"},"secondsToRun":0.5,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"method":{"_baseInfo":"HumanMachine|SetMachineStatus|System.Void","_paramsInfo":"MachineState"},"parameters":[{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}}],"returnValue":{},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":115.0,"y":279.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":752.0,"y":605.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":1310.0,"y":1021.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_nestedBT":{"_value":2},"executionMode":0,"_variablesMap":[{"_targetSubGraphVariableID":"91446756-7001-4bca-9e6d-b7870e333350","_canRead":true,"_canWrite":true,"_type":"Ozamanas.Machines.MachineMovement","_name":"myMachineMovement","_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a"},{"_targetSubGraphVariableID":"11dd2d82-f389-4aaf-afec-16c6aa276e6b","_canRead":true,"_canWrite":true,"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"}],"_position":{"x":145.0086,"y":954.0027},"$type":"NodeCanvas.StateMachines.NestedBTState","$id":"3"}],"connections":[{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":3,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"MachineState","_value":{"$content":1,"$type":"MachineState"}},"field":{"_baseInfo":"HumanMachine|machine_status"},"overrideAgent":{"_type":"HumanMachine","_name":"myHumanMachine","_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{"myHumanMachine":{"_name":"myHumanMachine","_id":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[HumanMachine,
-    Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"myMachineMovement":{"_name":"myMachineMovement","_id":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[Ozamanas.Machines.MachineMovement,
-    Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}}'
-  _boundGraphObjectReferences:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: 3fd4079f5adb63b4b8d2b1edadf4ef0d, type: 2}
-  - {fileID: 11400000, guid: 33dbff452584cdf42913557df6208fc8, type: 2}
-  - {fileID: 11400000, guid: ec725df1c79815444951cbe81df71451, type: 2}
+  _boundGraphSerialization: 
+  _boundGraphObjectReferences: []
   _boundGraphSource:
-    _version: 3.25
+    _version: 0
     _category: 
     _comments: 
-    _translation: {x: -183, y: -352}
+    _translation: {x: 0, y: 0}
     _zoomFactor: 1
   _firstActivation: 0
   _enableAction: 0
@@ -280,7 +275,7 @@ MonoBehaviour:
   _lockBoundGraphPrefabOverrides: 1
   _preInitializeSubGraphs: 0
   _updateMode: 0
-  _graph: {fileID: 0}
+  _graph: {fileID: 11400000, guid: 9301cb8c8e0bd5948b1875c8934d546b, type: 2}
   _blackboard: {fileID: -7377147150895641835}
 --- !u!114 &-7377147150895641835
 MonoBehaviour:
@@ -298,6 +293,28 @@ MonoBehaviour:
   _serializedBlackboard: '{"_variables":{}}'
   _objectReferences: []
   _serializedVariables: []
+--- !u!114 &3122823844388225881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307827077080126711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f1f69e1b16a7944bf5efb6a9539da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorPoints: 1
+  OnMachineDestroyedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineGainArmor:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2301607515106509846
 GameObject:
   m_ObjectHideFlags: 0
