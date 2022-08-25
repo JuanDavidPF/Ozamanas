@@ -43,13 +43,12 @@ namespace Ozamanas.Board
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Machine") isOccupied = true;
-
+            
         }//Closes OnTriggerEnter method
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag == "Machine") isOccupied = false;
+           
 
         }//Closes OnTriggerExit method
 

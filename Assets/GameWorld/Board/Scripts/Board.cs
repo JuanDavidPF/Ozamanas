@@ -107,7 +107,7 @@ namespace Ozamanas.Board
         public static Cell GetNearestCell(float3 origin, params CellData[] datas)
         {
 
-
+            if ( datas.Equals(null)) return null;
             List<Cell> cellsByData = GetCellsByData(datas);
 
 
@@ -122,6 +122,27 @@ namespace Ozamanas.Board
 
         }//Closes GetNearestCell method
 
+        public static Cell GetNearestCellInRange(float3 origin,int range,  params CellData[] datas)
+        {
+
+            if ( datas.Equals(null)) return null;
+            List<Cell> cellsByData = GetCellsByData(datas);
+
+
+            cellsByData.Sort((Cell cellA, Cell cellB) =>
+             {
+                 int OriginToA = cellA.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+                 int OriginToB = cellB.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+                 return OriginToA - OriginToB;
+             });
+
+            Cell result = cellsByData.Count > 0 ? cellsByData[0] : null;
+
+            if(!result.Equals(null) && result.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial()) <= range)
+            return result;
+            else
+            return null;
+        }
 
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {
