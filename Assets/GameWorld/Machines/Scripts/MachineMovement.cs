@@ -26,27 +26,33 @@ namespace Ozamanas.Machines
 
 
         private NavMeshAgent navMeshAgent;
-
+        [Header("Setup")]
         [SerializeField] private Board.CellData mainObjective;
+           [Space(5)]
+        [SerializeField] private Board.CellData secondObjective;
+        [SerializeField] private int secondObjectiveRange;
+           [Space(5)]
+        [SerializeField] private Board.CellData thirdObjective;
+         [SerializeField] private int thirdObjectiveRange;
+         [Space(15)]
         [SerializeField] private List<Board.CellData> blacklist = new List<CellData>();
-        [SerializeField] private List<Cell> pathToObjective = new List<Cell>();
-
-
+        
+        [Space(15)]
+        [Header("Parameters")]
+        public PathFindingResult result = PathFindingResult.NonCalculated;
+        [SerializeField] private Cell currentDestination;
+        [SerializeField] private List<Cell> pathToDestination = new List<Cell>();
+        
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
         [SerializeField] private OutlineConfig debugOutline;
-        public float3 current_destination;
-
-        [Space(15)]
-        [Header("Parameters")]
-        public PathFindingResult result = PathFindingResult.NonCalculated;
 
         public bool hasPathToMain
         {
             get
             {
-                return (mainObjective && pathToObjective.Count > 0 && mainObjective == pathToObjective[pathToObjective.Count - 1].data);
+                return (mainObjective && pathToDestination.Count > 0 && mainObjective == pathToDestination[pathToDestination.Count - 1].data);
             }
         }
 
@@ -67,7 +73,7 @@ namespace Ozamanas.Machines
         {
             if (debugPathFinding)
             {
-                foreach (var cell in pathToObjective)
+                foreach (var cell in pathToDestination)
                 {
                     if (!cell) continue;
 
@@ -77,7 +83,7 @@ namespace Ozamanas.Machines
             }
             else
             {
-                foreach (var cell in pathToObjective)
+                foreach (var cell in pathToDestination)
                 {
                     if (!cell) continue;
 
@@ -91,59 +97,21 @@ namespace Ozamanas.Machines
         {
             if (debugPathFinding)
             {
-                foreach (var cell in pathToObjective)
+                foreach (var cell in pathToDestination)
                 {
                     if (!cell) continue;
                     cell.gameObject.SendMessage("ToggleOutline", false);
                 }
             }
-            pathToObjective.Clear();
+            pathToDestination.Clear();
         }//Closes ResetPath method
 
-
-
-        [ContextMenu("Go to main")]
-        public void GoToMainObjective()
-        {
-            if (!mainObjective) return;
-            Cell objective = Board.Board.GetNearestCell(transform.position, mainObjective);
-
-            if (objective)
-            {
-                CalculatePathToCell(objective);
-                SetDestination(objective.transform.position);
-
-            }
-        }//Closes GoToMainObjective method;
-
-
-        public void SetDestination(float3 destination)
-        {
-            current_destination = destination;
-        }
-
-        public bool GoToDestination()
-        {
-            if (current_destination.Equals(null)) return false;
-
-            return navMeshAgent.SetDestination(current_destination);
-
-        }
-
-        public NavMeshPathStatus CalculatePath()
-        {
-            NavMeshPath path = new NavMeshPath();
-            navMeshAgent.CalculatePath(current_destination, path);
-            return path.status;
-        }
 
         public bool CheckIfReachDestination()
         {
 
-            if (navMeshAgent.pathPending) return false;
-            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance) return false;
-            if (navMeshAgent.velocity.sqrMagnitude != 0f) return false;
-            return true;
+            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance + 0.5f) return false;
+            else return true;
         }
 
 
@@ -232,18 +200,62 @@ namespace Ozamanas.Machines
 
             pathRoute.Reverse();
             result = PathFindingResult.PathComplete;
-            pathToObjective = pathRoute;
+            pathToDestination = pathRoute;
 
         }//Closes Calculate PathtoCell alogorythym
-    }//Closes MachineMovement class
 
 
-
-    public struct PathFindingJob : IJob
-    {
-        public void Execute()
+        public bool CheckIfMachineIsBlocked()
         {
 
-        }//Closes Execute method
-    }//Closes PathFindingJob method
-}//Closes Namespace declaration 
+         if(mainObjective==null) return true;
+
+         Board.Cell newCell = Board.Board.GetNearestCell(transform.position,mainObjective);
+
+         if(newCell==null) return true;
+
+         CalculatePathToCell(newCell);
+
+         if (result == PathFindingResult.PathComplete) return false;
+         else return true;
+        }
+
+        public void SetCurrentDestination()
+        {
+            float3 origin = transform.position;
+            Cell  firstCell = null,secondCell = null, thirdCell = null;
+
+            if( mainObjective!= null) firstCell = Board.Board.GetNearestCell(transform.position,mainObjective);
+            if( secondObjective!= null) secondCell = Board.Board.GetNearestCellInRange(transform.position,secondObjectiveRange,secondObjective);
+            if( thirdObjective!= null) thirdCell = Board.Board.GetNearestCellInRange(transform.position,thirdObjectiveRange,thirdObjective);
+
+            int distanceToMain = 1000;
+            int distanceToSecondary = 1000;
+            int distanceToTertiary = 1000;
+            
+            if(firstCell!= null) distanceToMain = firstCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            if(secondCell!= null) distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            if(thirdCell!= null)  distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            
+            if(distanceToMain<=distanceToSecondary) currentDestination = firstCell;
+    
+            else if(distanceToSecondary<=distanceToTertiary ) currentDestination = secondCell;
+        
+            else currentDestination = thirdCell;
+
+            CalculatePathToCell(currentDestination);
+
+        }
+
+
+    public void MoveToNextCell()
+    {
+        navMeshAgent.SetDestination(pathToDestination[0].transform.position);
+        pathToDestination.RemoveAt(0);
+    }
+
+    }//Closes MachineMovement class
+    
+  
+}     
+//Closes Namespace declaration 
