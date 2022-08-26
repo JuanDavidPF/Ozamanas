@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 1997517461896226359}
   - component: {fileID: -7377147150895641835}
   - component: {fileID: 3122823844388225881}
+  - component: {fileID: 126186905943435833}
   m_Layer: 0
   m_Name: tractorShovel
   m_TagString: Machine
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machine_status: {fileID: 0}
   flag: {fileID: 511473094932665437}
+  activeTraits: []
 --- !u!114 &613886794944842996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +165,8 @@ MonoBehaviour:
   thirdObjectiveRange: 0
   blacklist:
   - {fileID: 0}
+  speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
+  currentSpeed: 0
   result: 0
   currentDestination: {fileID: 0}
   pathToDestination: []
@@ -251,13 +255,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters:
-  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[HumanMachine,
-      Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Main.HumanMachine,
+      OzamanasMain, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: -3200941559946265716}
-  - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.MachineMovement,
-      Ozamanas.Machines, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+  - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Main.MachineMovement,
+      OzamanasMain, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: 613886794944842996}
@@ -306,6 +310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorPoints: 1
+  maxArmorPoints: 1
+  doubleDamage: 0
+  invulnerable: 0
   OnMachineDestroyedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -315,6 +322,34 @@ MonoBehaviour:
   OnMachineGainArmor:
     m_PersistentCalls:
       m_Calls: []
+  OnMachineDisarm:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &126186905943435833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307827077080126711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5035f1da1332e4bbf4bcad9c2153f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: {fileID: 11400000, guid: ddf25574696d0724e923b863536ccdb0, type: 2}
+  _machineReverseSpeed: 1
+  _type: 2
+  _hierarchy: 1
+  isAlpha: 0
+  _color: {r: 0, g: 0, b: 0, a: 0}
+  maxArmorPoints: 1
+  armorPoints: 1
+  machineSpeed: 2
+  special: 0
+  alphaArmorPoints: 1
+  alphaMachineSpeed: 3
+  alphaSpecial: 0
 --- !u!1 &2301607515106509846
 GameObject:
   m_ObjectHideFlags: 0

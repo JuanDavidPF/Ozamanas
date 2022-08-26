@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Ozamanas.Machines
 {
 
+    [RequireComponent(typeof(MachineAttributes))]
 public class MachineArmor : MonoBehaviour
 {
     [Header("Armor")]
@@ -18,16 +18,26 @@ public class MachineArmor : MonoBehaviour
                 _armorPoints = value;
             }
         }
+        
+         [SerializeField] private int maxArmorPoints = 1;
+         [SerializeField] private bool doubleDamage = false;
+         [SerializeField] private bool invulnerable = false;
+         private MachineAttributes machineAttributes;
+        
         [Space(15)]
 
         [SerializeField] public UnityEvent OnMachineDestroyedEvent;
         [SerializeField] public UnityEvent OnMachineDamaged;
         [SerializeField] public UnityEvent OnMachineGainArmor;
-        public event Action<int> OnDamageTaken;
+        [SerializeField] public UnityEvent OnMachineDisarm;
+
+
 
         void Awake()
         {
-            
+            machineAttributes = GetComponent<MachineAttributes>();
+            armorPoints = machineAttributes.GetMachineArmorPoints();
+            maxArmorPoints = machineAttributes.maxArmorPoints;
         }
         
         void OnEnable()
@@ -35,28 +45,52 @@ public class MachineArmor : MonoBehaviour
             
         }//Closes OnEnable method
         
-            public void GainArmor(int armor)
+        public void RestoreOriginalValues()
         {
-            armorPoints += armor;
+            armorPoints = machineAttributes.GetMachineArmorPoints();
+            doubleDamage = false;
+            invulnerable = false;
+        }
 
+        public void RepairMachine()
+        {
+            armorPoints++;
+            armorPoints = Mathf.Clamp(armorPoints,1,maxArmorPoints);   
             OnMachineGainArmor?.Invoke();
         }
 
-
-        public void TakeDamage(int damageAmount)
+        public void DisarmMachine()
         {
-
-            armorPoints = armorPoints - damageAmount < 0 ? 0 : armorPoints - damageAmount;
-            OnDamageTaken?.Invoke(damageAmount);
-
-            if (armorPoints > 0) OnMachineDamaged?.Invoke();
-            else
-            {
-                Destroy();
-            }
+            armorPoints--;
+            armorPoints = Mathf.Clamp(armorPoints,1,maxArmorPoints);   
+            OnMachineDisarm?.Invoke();
         }
 
-         public void Destroy()
+        public void SetInvulnerable()
+        {
+            invulnerable = true;
+        }
+        public void SetDoubleDamageOn()
+        {
+            doubleDamage = true;
+        }
+        public void TakeDamage(int damageAmount)
+        {
+            if(invulnerable) return;
+
+            int currentDamage = damageAmount;
+
+             if (doubleDamage) currentDamage = currentDamage*2;
+
+            armorPoints = armorPoints - currentDamage;
+            armorPoints = Mathf.Clamp(armorPoints,0,maxArmorPoints);   
+
+            if (armorPoints > 0) OnMachineDamaged?.Invoke();
+            else Destroy();
+
+        }
+
+        public void Destroy()
         {
             gameObject.SetActive(false);
             Destroy(gameObject);
