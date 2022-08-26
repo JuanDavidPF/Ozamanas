@@ -6,33 +6,37 @@ using UnityEngine.Events;
 
 namespace Ozamanas.Board.Levels
 {
-    public class LevelSelectionListener : MonobehaviourEvents
+    public class LevelReferenceListener : MonobehaviourEvents
     {
-
+        [SerializeField] private LevelReference levelReference;
         public UnityEvent<LevelData> processes;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            LevelData.OnLevelSelectedChanged += LevelSelectedChanged;
+
+            if (levelReference)
+                levelReference.OnLevelChanged += LevelSelectedChanged;
         }//Closes OnEnable method
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            LevelData.OnLevelSelectedChanged -= LevelSelectedChanged;
+
+            if (levelReference)
+                levelReference.OnLevelChanged -= LevelSelectedChanged;
         }//Closeos OnDisable method
 
         public override void Behaviour()
         {
-            LevelSelectedChanged(LevelData.levelSelected);
+            if (levelReference) LevelSelectedChanged(levelReference.level);
         }//Closes Begaviour method
 
 
         private void LevelSelectedChanged(LevelData levelData)
         {
             processes?.Invoke(levelData);
-        }//Closes Begaviour method
+        }//Closes LevelSelectedChanged method
 
 
     }//Closes LevelSelectionListener class
