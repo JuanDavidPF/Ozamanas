@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 1084892198633983565}
   - component: {fileID: -3200941559946265716}
   - component: {fileID: 613886794944842996}
-  - component: {fileID: 8999396850821742871}
   - component: {fileID: 613886794944842890}
   - component: {fileID: 613886794944842997}
   - component: {fileID: 1997517461896226359}
@@ -156,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fecf47e7717d394aad78b78594168a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainObjective: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
+  mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   secondObjective: {fileID: 0}
   secondObjectiveRange: 0
   thirdObjective: {fileID: 0}
@@ -166,43 +165,11 @@ MonoBehaviour:
   result: 0
   currentDestination: {fileID: 0}
   pathToDestination: []
-  debugPathFinding: 1
+  debugPathFinding: 0
   debugOutline:
     mode: 0
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
     width: 6
---- !u!114 &8999396850821742871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307827077080126711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggers: 0
-  events:
-  - {fileID: 11400000, guid: b0cf3fb0d51fc1a4398837523a0cafea, type: 2}
-  mode: 1
-  maxInvocations: 1
-  callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1997517461896226359}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!65 &613886794944842890
 BoxCollider:
   m_ObjectHideFlags: 0
