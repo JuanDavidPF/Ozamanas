@@ -11,8 +11,6 @@ namespace Ozamanas.UI
 
         [SerializeField] private TextMeshProUGUI energyCounterTMP;
 
-
-
         public void UpdateCounter(int value)
         {
             if (!energyCounterTMP) return;

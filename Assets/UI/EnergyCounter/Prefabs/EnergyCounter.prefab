@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2535799506619712870}
   - component: {fileID: 2535799506619712873}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -37.35, y: -42.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2535799506619712870
@@ -144,6 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2535799506707871490}
+  - component: {fileID: 714853840}
+  - component: {fileID: 714853843}
+  - component: {fileID: 714853841}
+  - component: {fileID: 714853842}
   - component: {fileID: 2535799506707871488}
   - component: {fileID: 2535799506707871491}
   - component: {fileID: 2535799506707871489}
@@ -175,6 +179,91 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -75}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &714853840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535799506707871493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e3ecdcb24a5d24693fed00da44e804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyCounterTMP: {fileID: 2535799506619712873}
+--- !u!114 &714853843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535799506707871493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9988921a9aad52419b55dcb14ba180c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyAmount: {fileID: 11400000, guid: 513b95f4a42cd9549b64fedf6db93e1d, type: 2}
+--- !u!114 &714853841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535799506707871493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158782fdd1c70ef449e9ff882f07c737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 4
+  eventDescription: 
+  intReference: {fileID: 11400000, guid: 513b95f4a42cd9549b64fedf6db93e1d, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714853840}
+        m_TargetAssemblyTypeName: Ozamanas.UI.EnergyCounter, Ozamanas.UI
+        m_MethodName: UpdateCounter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &714853842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535799506707871493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1453d9bc854b5e46ad132b1ec7fc7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 1
+  processes:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 513b95f4a42cd9549b64fedf6db93e1d, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.Integers.IntegerVariable,
+          Ozamanas.References
+        m_MethodName: set_value
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2535799506707871488
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -224,5 +313,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
-  m_Center: {x: 50, y: -50, z: 0}
+  m_Radius: 33.5
+  m_Center: {x: 0, y: 0, z: 0}

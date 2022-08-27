@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.CodeSnippets.HelperComponents;
+using JuanPayan.Extenders;
 using JuanPayan.References.Floats;
 using JuanPayan.References.Integers;
+using Ozamanas.Energy;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class EnergyGenerator : MonobehaviourEvents
+public class EnergyGenerator : MonoBehaviour
 {
-    [SerializeField] private Transform energyOrb;
+    [SerializeField] private EnergyOrb energyOrb;
+    [SerializeField] private float3 offsetPosition;
 
 
     [Space(15)]
@@ -24,9 +28,9 @@ public class EnergyGenerator : MonobehaviourEvents
 
     private IEnumerator generationCoroutine;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+
         generationCoroutine = HandleGeneration();
 
 
@@ -34,11 +38,7 @@ public class EnergyGenerator : MonobehaviourEvents
         cooldown = new WaitForSeconds(generationCooldown.value);
     }//Closes Awake method
 
-    public override void Behaviour()
-    {
-        StopGeneration();
-        ResumeGeneration();
-    }//Closes Behaviour method
+
 
     private IEnumerator HandleGeneration()
     {
@@ -71,8 +71,7 @@ public class EnergyGenerator : MonobehaviourEvents
     public void Generate()
     {
         if (!energyOrb) return;
-
-
+        Instantiate(energyOrb, offsetPosition + transform.position.ToFloat3(), Quaternion.identity);
     }//Closes Generate method
 
 
