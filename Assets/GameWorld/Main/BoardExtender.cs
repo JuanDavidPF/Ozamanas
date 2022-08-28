@@ -44,16 +44,19 @@ namespace Ozamanas.Main
 
         public static int3 UnityToGrid(this float3 unityVector)
         {
-            unityVector.y = 0;
-            if (!Board.grid) return int3.zero;
+            Board board = Board.reference;
 
-            return Board.grid.WorldToCell(unityVector).ToInt3();
+            unityVector.y = 0;
+            if (!board || !board.grid) return int3.zero;
+
+            return board.grid.WorldToCell(unityVector).ToInt3();
         }//Close ToAxial method
 
         public static float3 GridToUnity(this int3 gridVector)
         {
-            if (!Board.grid) return float3.zero;
-            return Board.grid.CellToWorld(gridVector.ToVector());
+            Board board = Board.reference;
+            if (!board || !board.grid) return float3.zero;
+            return board.grid.CellToWorld(gridVector.ToVector());
         }//Close ToAxial method
 
         public static List<Cell> GetCellsOnRange(this Cell originCell, int range = 1, bool includeOrigin = true)

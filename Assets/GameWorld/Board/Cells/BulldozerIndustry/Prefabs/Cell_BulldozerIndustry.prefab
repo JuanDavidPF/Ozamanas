@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 986721062166553442}
   - component: {fileID: 986721062166553441}
   - component: {fileID: 1703777373}
+  - component: {fileID: 4454315225927143526}
   - component: {fileID: 5170691469652966161}
   - component: {fileID: 986721062166553443}
   - component: {fileID: 986721062166553440}
@@ -295,6 +296,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a74a006571477a4d985f0fa02bb283a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnQueue:
+  - {fileID: -3200941559946265716, guid: 865415bb1af203245ab2d79302208f2c, type: 3}
+  - {fileID: -3200941559946265716, guid: 865415bb1af203245ab2d79302208f2c, type: 3}
+  - {fileID: -3200941559946265716, guid: 865415bb1af203245ab2d79302208f2c, type: 3}
+--- !u!114 &4454315225927143526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986721062166553455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  events:
+  - {fileID: 11400000, guid: 8c8308d49641f094db0df7c0764d1d8f, type: 2}
+  mode: 0
+  maxInvocations: 0
+  callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1703777373}
+        m_TargetAssemblyTypeName: Ozamanas.Machines.MachineSpawner, Ozamanas.Machines
+        m_MethodName: SpawnNextMachineOnQueue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5170691469652966161
 MonoBehaviour:
   m_ObjectHideFlags: 0

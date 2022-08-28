@@ -11,18 +11,21 @@ namespace Ozamanas.Main
 {
     [ExecuteInEditMode]
 
+
+
     [RequireComponent(typeof(Grid))]
     public class Board : MonoBehaviour
     {
+        public static Board reference;
 
         public LevelData levelData;
 
         public UnityEvent OnBoardCreated;
 
-        [HideInInspector] public static Grid grid;
-        private static List<Cell> cells = new List<Cell>();
-        private static Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
-        private static Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
+        [HideInInspector] public Grid grid;
+        private List<Cell> cells = new List<Cell>();
+        private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
+        private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
 
         private void BakeCollections()
@@ -75,14 +78,17 @@ namespace Ozamanas.Main
 
         public static void RemoveCellFromBoard(Cell cell)
         {
-            if (!cell) return;
+            Board board = Board.reference;
+            if (!cell || !board) return;
 
-            cells.Remove(cell);
 
-            if (cellsByGridPosition.ContainsKey(cell.gridPosition) && cellsByGridPosition[cell.gridPosition] == cell)
-                cellsByGridPosition.Remove(cell.gridPosition);
 
-            if (cell.data && cellsByData.ContainsKey(cell.data)) cellsByData[cell.data].Remove(cell);
+            board.cells.Remove(cell);
+
+            if (board.cellsByGridPosition.ContainsKey(cell.gridPosition) && board.cellsByGridPosition[cell.gridPosition] == cell)
+                board.cellsByGridPosition.Remove(cell.gridPosition);
+
+            if (cell.data && board.cellsByData.ContainsKey(cell.data)) board.cellsByData[cell.data].Remove(cell);
 
             if (Application.isPlaying) Destroy(cell.gameObject);
             else DestroyImmediate(cell.gameObject);
@@ -90,14 +96,16 @@ namespace Ozamanas.Main
 
         public static List<Cell> GetCellsByData(params CellData[] datas)
         {
-
-
+            Board board = Board.reference;
             List<Cell> cellsToReturn = new List<Cell>();
 
-            foreach (var data in datas)
+            if (reference)
             {
-                if (!cellsByData.ContainsKey(data)) continue;
-                cellsToReturn.AddRange(cellsByData[data]);
+                foreach (var data in datas)
+                {
+                    if (!board.cellsByData.ContainsKey(data)) continue;
+                    cellsToReturn.AddRange(board.cellsByData[data]);
+                }
             }
 
             return cellsToReturn;
@@ -107,7 +115,7 @@ namespace Ozamanas.Main
         public static Cell GetNearestCell(float3 origin, params CellData[] datas)
         {
 
-            if ( datas.Equals(null)) return null;
+            if (datas.Equals(null)) return null;
             List<Cell> cellsByData = GetCellsByData(datas);
 
 
@@ -122,10 +130,10 @@ namespace Ozamanas.Main
 
         }//Closes GetNearestCell method
 
-        public static Cell GetNearestCellInRange(float3 origin,int range,  params CellData[] datas)
+        public static Cell GetNearestCellInRange(float3 origin, int range, params CellData[] datas)
         {
 
-            if ( datas.Equals(null)) return null;
+            if (datas.Equals(null)) return null;
             List<Cell> cellsByData = GetCellsByData(datas);
 
 
@@ -138,10 +146,10 @@ namespace Ozamanas.Main
 
             Cell result = cellsByData.Count > 0 ? cellsByData[0] : null;
 
-            if(!result.Equals(null) && result.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial()) <= range)
-            return result;
+            if (!result.Equals(null) && result.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial()) <= range)
+                return result;
             else
-            return null;
+                return null;
         }
 
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
@@ -162,26 +170,25 @@ namespace Ozamanas.Main
 
         public static Cell GetCellByPosition(float3 worldPosition)
         {
-
+            Board board = Board.reference;
+            if (!reference) return null;
 
             Cell cellAtPosition = null;
 
-
             int3 gridPosition = worldPosition.UnityToGrid();
-            if (cellsByGridPosition.TryGetValue(gridPosition, out Cell cellToAdd))
-            {
-                cellAtPosition = cellToAdd;
-            }
-
+            reference.cellsByGridPosition.TryGetValue(gridPosition, out cellAtPosition);
             return cellAtPosition;
 
         }//Closes GetNearestCell method
 
         public static Cell GetCellByPosition(int3 gridPosition)
         {
-            if (cellsByGridPosition.TryGetValue(gridPosition, out Cell cellToAdd)) return cellToAdd;
+            Board board = Board.reference;
+            Cell cellToReturn = null;
 
-            else return null;
+            if (reference) reference.cellsByGridPosition.TryGetValue(gridPosition, out cellToReturn);
+
+            return cellToReturn;
 
         }//Closes GetNearestCell method
 
