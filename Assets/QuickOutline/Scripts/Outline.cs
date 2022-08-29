@@ -13,7 +13,7 @@ using UnityEngine;
 
 
 
-namespace Ozamanas.Outline
+namespace Ozamanas.Outlines
 {
     [DisallowMultipleComponent]
 

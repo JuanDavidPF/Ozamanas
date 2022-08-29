@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.CodeSnippets.HelperComponents;
 using JuanPayan.Extenders;
-using Ozamanas.Board;
-using Ozamanas.Outline;
-using Unity.Mathematics;
+using Ozamanas.Main;
+using Ozamanas.Outlines;
 using UnityEngine;
 
 
@@ -15,7 +13,7 @@ namespace Ozamanas.Debuggers
 
         [SerializeField] int range;
 
-        [SerializeField] private Outline.OutlineConfig debugOutline;
+        [SerializeField] private OutlineConfig debugOutline;
 
         [SerializeField] private List<Cell> cellsUnderRange = new List<Cell>();
 
@@ -35,7 +33,7 @@ namespace Ozamanas.Debuggers
             }
 
 
-            Cell originCell = Board.Board.GetCellByPosition(transform.position);
+            Cell originCell = Main.Board.GetCellByPosition(transform.position);
             storedOriginCell = originCell;
             if (!storedOriginCell)
             {

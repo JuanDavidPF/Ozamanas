@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.CodeSnippets.HelperComponents;
+using Ozamanas.Main;
 using Ozamanas.Board;
-using Ozamanas.Outline;
+using Ozamanas.Outlines;
 using UnityEngine;
 
 
@@ -11,9 +12,9 @@ namespace Ozamanas.Debuggers
     public class GetNearestCellDebugger : MonobehaviourEvents
     {
 
-        [SerializeField] private Ozamanas.Board.CellData[] cellDatas = new Ozamanas.Board.CellData[0];
+        [SerializeField] private CellData[] cellDatas = new CellData[0];
 
-        [SerializeField] private Outline.OutlineConfig debugOutline;
+        [SerializeField] private OutlineConfig debugOutline;
 
         private Cell cachedNearestCell;
 
@@ -22,7 +23,7 @@ namespace Ozamanas.Debuggers
         public override void Behaviour()
         {
 
-            Cell nearestCell = Board.Board.GetNearestCell(transform.position, cellDatas);
+            Cell nearestCell = Main.Board.GetNearestCell(transform.position, cellDatas);
 
             if (!nearestCell) return;
 

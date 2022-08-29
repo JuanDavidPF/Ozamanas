@@ -7,7 +7,7 @@ namespace Ozamanas.Machines
 
     public class MachineSpawner : MonoBehaviour
     {
-        [SerializeField] private List<HumanMachine> spawnQueue = new List<HumanMachine>();
+        [SerializeField] private List<GameObject> spawnQueue = new List<GameObject>();
 
 
         [ContextMenu("Spawn next machine")]
@@ -15,7 +15,7 @@ namespace Ozamanas.Machines
         {
             if (spawnQueue.Count == 0) return;
 
-            HumanMachine nextMachine = spawnQueue[0];
+            GameObject nextMachine = spawnQueue[0];
             spawnQueue.RemoveAt(0);
 
             if (nextMachine) Instantiate(nextMachine, transform.position, transform.rotation);
