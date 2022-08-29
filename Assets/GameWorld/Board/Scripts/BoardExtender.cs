@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.Extenders;
+using Ozamanas.Extenders;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Ozamanas.Main
+namespace Ozamanas.Board
 {
     public static class BoardExtender
     {

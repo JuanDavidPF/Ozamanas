@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace JuanPayan.CodeSnippets.HelperComponents
+namespace JuanPayan.Helpers
 {
     public abstract class MonobehaviourEvents : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerDownHandler, IPointerExitHandler, IPointerMoveHandler, IPointerUpHandler, IDragHandler
     {

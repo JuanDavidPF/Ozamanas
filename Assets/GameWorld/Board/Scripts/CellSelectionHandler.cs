@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Ozamanas.Board;
+
 using Ozamanas.Outlines;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Ozamanas.Main
+namespace Ozamanas.Board
 {
 
     [RequireComponent(typeof(Cell))]

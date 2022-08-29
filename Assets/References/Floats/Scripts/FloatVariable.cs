@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace JuanPayan.References.Floats
+namespace JuanPayan.References
 {
     [CreateAssetMenu(fileName = ("newFloatVariable"), menuName = ("References/Float/Float variable"))]
     public class FloatVariable : ScriptableObject

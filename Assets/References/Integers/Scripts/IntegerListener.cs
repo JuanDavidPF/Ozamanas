@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
+using JuanPayan.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace JuanPayan.References.Integers
+namespace JuanPayan.References
+
 {
     public class IntegerListener : MonobehaviourEvents
     {

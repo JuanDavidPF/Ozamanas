@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
-using Ozamanas.Main;
+using JuanPayan.Helpers;
 using Ozamanas.Board;
 using Ozamanas.Outlines;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace Ozamanas.Debuggers
         public override void Behaviour()
         {
 
-            Cell nearestCell = Main.Board.GetNearestCell(transform.position, cellDatas);
+            Cell nearestCell = Board.Board.GetNearestCell(transform.position, cellDatas);
 
             if (!nearestCell) return;
 

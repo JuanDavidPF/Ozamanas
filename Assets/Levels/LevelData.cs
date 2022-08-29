@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.References.Floats;
-using JuanPayan.References.Integers;
+using JuanPayan.References;
 using UnityEngine;
 
-namespace Ozamanas.Board.Levels
+namespace Ozamanas.Levels
 {
     [CreateAssetMenu(menuName = "References/Level/LevelData", fileName = "new LevelData")]
     public class LevelData : ScriptableObject

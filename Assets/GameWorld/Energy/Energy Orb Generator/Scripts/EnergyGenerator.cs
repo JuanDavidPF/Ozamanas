@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
-using JuanPayan.Extenders;
-using JuanPayan.References.Floats;
-using JuanPayan.References.Integers;
+using JuanPayan.References;
 using Ozamanas.Energy;
+using Ozamanas.Extenders;
 using Unity.Mathematics;
 using UnityEngine;
 

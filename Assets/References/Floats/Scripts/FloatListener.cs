@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
+using JuanPayan.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace JuanPayan.References.Floats
+namespace JuanPayan.References
 {
     public class FloatListener : MonobehaviourEvents
     {

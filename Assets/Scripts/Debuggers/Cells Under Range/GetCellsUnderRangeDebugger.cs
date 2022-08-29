@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
-using JuanPayan.Extenders;
-using Ozamanas.Main;
+using JuanPayan.Helpers;
+using Ozamanas.Board;
+using Ozamanas.Extenders;
 using Ozamanas.Outlines;
 using UnityEngine;
 
@@ -33,7 +33,7 @@ namespace Ozamanas.Debuggers
             }
 
 
-            Cell originCell = Main.Board.GetCellByPosition(transform.position);
+            Cell originCell = Board.Board.GetCellByPosition(transform.position);
             storedOriginCell = originCell;
             if (!storedOriginCell)
             {

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace JuanPayan.References.Strings
+namespace JuanPayan.References
 {
     [CustomPropertyDrawer(typeof(StringReference))]
     public class StringReferenceDrawer : PropertyDrawer

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace JuanPayan.CodeSnippets.HelperComponents.Processors
+namespace JuanPayan.Helpers
 {
     public class Processor : MonobehaviourEvents
     {

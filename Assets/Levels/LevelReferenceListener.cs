@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.CodeSnippets.HelperComponents;
+using JuanPayan.Helpers;
+using Ozamanas.Levels;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Ozamanas.Board.Levels
+namespace Ozamanas.Levels
 {
     public class LevelReferenceListener : MonobehaviourEvents
     {

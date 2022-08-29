@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace JuanPayan.References.Strings
+namespace JuanPayan.References
 {
     [CreateAssetMenu(fileName = ("newStringVariable"), menuName = ("References/String/String variable"))]
     public class StringVariable : ScriptableObject

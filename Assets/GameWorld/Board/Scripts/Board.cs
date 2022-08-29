@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using JuanPayan.Extenders;
-using Ozamanas.Board.Levels;
+using Ozamanas.Extenders;
+using Ozamanas.Levels;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
-using Ozamanas.Board;
 
-namespace Ozamanas.Main
+
+namespace Ozamanas.Board
 {
     [ExecuteInEditMode]
 

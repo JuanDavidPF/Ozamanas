@@ -11,7 +11,7 @@ using UnityEngine.AI;
 using Ozamanas.Tags;
 
 
-namespace Ozamanas.Main
+namespace Ozamanas.Machines
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(MachineAttributes))]
@@ -144,7 +144,7 @@ namespace Ozamanas.Main
             https://www.redblobgames.com/pathfinding/a-star/implementation.html
             I love the Unity community <3
             */
-            Cell start = Board.GetCellByPosition(transform.position);
+            Cell start = Board.Board.GetCellByPosition(transform.position);
 
 
 
@@ -221,7 +221,7 @@ namespace Ozamanas.Main
             if (mainObjective == null) return true;
 
             //There is no cell matching the mainobjective tag
-            Cell newCell = Board.GetNearestCell(transform.position, mainObjective);
+            Cell newCell = Board.Board.GetNearestCell(transform.position, mainObjective);
             if (newCell == null) return true;
 
             //There is no path to main objective cell
@@ -236,9 +236,9 @@ namespace Ozamanas.Main
             float3 origin = transform.position;
             Cell firstCell = null, secondCell = null, thirdCell = null;
 
-            if (mainObjective != null) firstCell = Board.GetNearestCell(transform.position, mainObjective);
-            if (secondObjective != null) secondCell = Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
-            if (thirdObjective != null) thirdCell = Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
+            if (mainObjective != null) firstCell = Board.Board.GetNearestCell(transform.position, mainObjective);
+            if (secondObjective != null) secondCell = Board.Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
+            if (thirdObjective != null) thirdCell = Board.Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
 
             int distanceToMain = 1000;
             int distanceToSecondary = 1000;

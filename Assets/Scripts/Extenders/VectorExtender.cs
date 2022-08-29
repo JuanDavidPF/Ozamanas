@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace JuanPayan.Extenders
+namespace Ozamanas.Extenders
 {
     public static class VectorExtender
     {

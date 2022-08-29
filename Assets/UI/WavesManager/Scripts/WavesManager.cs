@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using JuanPayan.References.Integers;
-using Ozamanas.Board.Levels;
+using JuanPayan.References;
+using Ozamanas.Levels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Ozamanas.UI
+
+namespace Ozamanas.UI.WavesManager
 {
 
     [SelectionBase]

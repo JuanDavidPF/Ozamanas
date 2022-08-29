@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace Ozamanas.Board.Levels
+namespace Ozamanas.Levels
 {
     [CustomEditor(typeof(LevelData))]
     public class LevelDataDrawer : Editor

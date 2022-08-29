@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JuanPayan.References.Integers
+namespace JuanPayan.References
 {
     [Serializable]
     public class IntegerReference

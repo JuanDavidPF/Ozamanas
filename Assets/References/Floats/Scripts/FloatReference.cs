@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JuanPayan.References.Floats
+namespace JuanPayan.References
 {
     [Serializable]
     public class FloatReference

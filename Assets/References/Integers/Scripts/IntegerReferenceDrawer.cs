@@ -3,8 +3,9 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace JuanPayan.References.Integers
+namespace JuanPayan.References
 {
+
     [CustomPropertyDrawer(typeof(IntegerReference))]
     public class IntegerReferenceDrawer : PropertyDrawer
     {

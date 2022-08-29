@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace JuanPayan.References.Integers
+namespace JuanPayan.References
 {
     [CreateAssetMenu(fileName = ("newIntegerVariable"), menuName = ("References/Integer/Integer Variable"))]
     public class IntegerVariable : ScriptableObject

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace JuanPayan.References.Floats
+namespace JuanPayan.References
 {
     [CustomPropertyDrawer(typeof(FloatReference))]
     public class FloatReferenceDrawer : PropertyDrawer

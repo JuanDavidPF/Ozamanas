@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace JuanPayan.References.GameEvents
+namespace JuanPayan.References
 {
     [CustomEditor(typeof(GameEvent))]
     public class GameEventDrawer : Editor

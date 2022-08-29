@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Collections;
+
 using Unity.Mathematics;
-using Ozamanas.Board;
+
 using Ozamanas.Machines;
 
-namespace Ozamanas.Main
+namespace Ozamanas.Board
 {
     [SelectionBase]
     [RequireComponent(typeof(Animator))]
@@ -47,31 +47,31 @@ namespace Ozamanas.Main
 
         private void OnTriggerEnter(Collider other)
         {
-            
+
         }//Closes OnTriggerEnter method
 
         private void OnTriggerExit(Collider other)
         {
-           
+
 
         }//Closes OnTriggerExit method
 
-         public void AddTraitToMachine(MachineTrait trait)
+        public void AddTraitToMachine(MachineTrait trait)
         {
             activeTraits.Add(trait);
-            if(!trait.isPermanetOnHolder) waitToRemoveTrait(trait);
+            if (!trait.isPermanetOnHolder) waitToRemoveTrait(trait);
         }
 
-    public void removeTraitToMachine(MachineTrait trait)
-    {
-        activeTraits.Remove(trait);
-    }
+        public void removeTraitToMachine(MachineTrait trait)
+        {
+            activeTraits.Remove(trait);
+        }
 
-    IEnumerator waitToRemoveTrait(MachineTrait trait)
-    {
-        yield return new WaitForSeconds(trait.holderTimer);
-        removeTraitToMachine(trait);
-    }
+        IEnumerator waitToRemoveTrait(MachineTrait trait)
+        {
+            yield return new WaitForSeconds(trait.holderTimer);
+            removeTraitToMachine(trait);
+        }
 
     }//Closes Cell class
 }//Closes Namespace declaration

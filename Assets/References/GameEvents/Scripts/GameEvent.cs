@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace JuanPayan.References.GameEvents
+namespace JuanPayan.References
 {
 
     [CreateAssetMenu(menuName = "References/Events/GameEvent", fileName = "new GameEvent")]
