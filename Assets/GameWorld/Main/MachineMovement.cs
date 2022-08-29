@@ -220,9 +220,12 @@ namespace Ozamanas.Main
 
          if(mainObjective==null) return true;
 
+     
          Cell newCell = Board.GetNearestCell(transform.position,mainObjective);
 
          if(newCell==null) return true;
+
+            return false;
 
          CalculatePathToCell(newCell);
 

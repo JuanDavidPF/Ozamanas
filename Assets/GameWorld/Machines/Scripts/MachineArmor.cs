@@ -47,7 +47,6 @@ public class MachineArmor : MonoBehaviour
         
         public void RestoreOriginalValues()
         {
-            armorPoints = machineAttributes.GetMachineArmorPoints();
             doubleDamage = false;
             invulnerable = false;
         }
