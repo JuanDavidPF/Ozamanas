@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -12,7 +13,7 @@ namespace Ozamanas.Board
     {
         [SerializeField] Transform meshToRotate;
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Machine") RotateAtMachine(other.transform);
 
@@ -21,6 +22,7 @@ namespace Ozamanas.Board
         private void RotateAtMachine(Transform machineTransform)
         {
             if (!meshToRotate) return;
+
             var lookPos = machineTransform.position - meshToRotate.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
