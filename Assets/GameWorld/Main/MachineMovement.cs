@@ -14,7 +14,7 @@ using Ozamanas.Tags;
 namespace Ozamanas.Main
 {
     [RequireComponent(typeof(NavMeshAgent))]
-     [RequireComponent(typeof(MachineAttributes))]
+    [RequireComponent(typeof(MachineAttributes))]
     public class MachineMovement : MonoBehaviour
     {
 
@@ -32,13 +32,13 @@ namespace Ozamanas.Main
         private MachineAttributes machineAttributes;
         [Header("Setup")]
         [SerializeField] private CellData mainObjective;
-           [Space(5)]
+        [Space(5)]
         [SerializeField] private CellData secondObjective;
         [SerializeField] private int secondObjectiveRange;
-           [Space(5)]
+        [Space(5)]
         [SerializeField] private CellData thirdObjective;
-         [SerializeField] private int thirdObjectiveRange;
-         [Space(15)]
+        [SerializeField] private int thirdObjectiveRange;
+        [Space(15)]
         [SerializeField] private List<CellData> blacklist = new List<CellData>();
         [SerializeField] private MachineSpeedValues speedValues;
         [SerializeField] private MachineSpeed currentSpeed;
@@ -48,7 +48,7 @@ namespace Ozamanas.Main
         public PathFindingResult result = PathFindingResult.NonCalculated;
         [SerializeField] private Cell currentDestination;
         [SerializeField] private List<Cell> pathToDestination = new List<Cell>();
-        
+
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
@@ -62,7 +62,7 @@ namespace Ozamanas.Main
             }
         }
 
-     
+
 
 
         // Start is called before the first frame update
@@ -217,43 +217,41 @@ namespace Ozamanas.Main
 
         public bool CheckIfMachineIsBlocked()
         {
+            //There is no main objective
+            if (mainObjective == null) return true;
 
-         if(mainObjective==null) return true;
+            //There is no cell matching the mainobjective tag
+            Cell newCell = Board.GetNearestCell(transform.position, mainObjective);
+            if (newCell == null) return true;
 
-     
-         Cell newCell = Board.GetNearestCell(transform.position,mainObjective);
-
-         if(newCell==null) return true;
+            //There is no path to main objective cell
+            CalculatePathToCell(newCell);
+            if (result != PathFindingResult.PathComplete) return true;
 
             return false;
-
-         CalculatePathToCell(newCell);
-
-         if (result == PathFindingResult.PathComplete) return false;
-         else return true;
         }
 
         public void SetCurrentDestination()
         {
             float3 origin = transform.position;
-            Cell  firstCell = null,secondCell = null, thirdCell = null;
+            Cell firstCell = null, secondCell = null, thirdCell = null;
 
-            if( mainObjective!= null) firstCell = Board.GetNearestCell(transform.position,mainObjective);
-            if( secondObjective!= null) secondCell = Board.GetNearestCellInRange(transform.position,secondObjectiveRange,secondObjective);
-            if( thirdObjective!= null) thirdCell = Board.GetNearestCellInRange(transform.position,thirdObjectiveRange,thirdObjective);
+            if (mainObjective != null) firstCell = Board.GetNearestCell(transform.position, mainObjective);
+            if (secondObjective != null) secondCell = Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
+            if (thirdObjective != null) thirdCell = Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
 
             int distanceToMain = 1000;
             int distanceToSecondary = 1000;
             int distanceToTertiary = 1000;
-            
-            if(firstCell!= null) distanceToMain = firstCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-            if(secondCell!= null) distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-            if(thirdCell!= null)  distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-            
-            if(distanceToMain<=distanceToSecondary) currentDestination = firstCell;
-    
-            else if(distanceToSecondary<=distanceToTertiary ) currentDestination = secondCell;
-        
+
+            if (firstCell != null) distanceToMain = firstCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            if (secondCell != null) distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            if (thirdCell != null) distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+
+            if (distanceToMain <= distanceToSecondary) currentDestination = firstCell;
+
+            else if (distanceToSecondary <= distanceToTertiary) currentDestination = secondCell;
+
             else currentDestination = thirdCell;
 
             CalculatePathToCell(currentDestination);
@@ -261,46 +259,46 @@ namespace Ozamanas.Main
         }
 
 
-    public void MoveToNextCell()
-    {
-        navMeshAgent.SetDestination(pathToDestination[0].transform.position);
-        pathToDestination.RemoveAt(0);
-    }
+        public void MoveToNextCell()
+        {
+            navMeshAgent.SetDestination(pathToDestination[0].transform.position);
+            pathToDestination.RemoveAt(0);
+        }
 
-    #region Speed Management
-    public void RestoreOriginalValues()
-    {
-        currentSpeed = machineAttributes.GetMachineSpeed();
-        navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-        if(navMeshAgent.isStopped) navMeshAgent.isStopped = false;
-    }
+        #region Speed Management
+        public void RestoreOriginalValues()
+        {
+            currentSpeed = machineAttributes.GetMachineSpeed();
+            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+            if (navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+        }
 
-    public void IncreaseMachineSpeed()
-    {
-        int speed = (int) currentSpeed;
-        speed++;
-        speed = Mathf.Clamp(speed,0,4);   
-        currentSpeed = (MachineSpeed) speed;
-        navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-    }
+        public void IncreaseMachineSpeed()
+        {
+            int speed = (int)currentSpeed;
+            speed++;
+            speed = Mathf.Clamp(speed, 0, 4);
+            currentSpeed = (MachineSpeed)speed;
+            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+        }
 
-    public void DecreaseMachineSpeed()
-    {
-        int speed = (int) currentSpeed;
-        speed--;
-        speed = Mathf.Clamp(speed,0,4);   
-        currentSpeed = (MachineSpeed) speed;
-        navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-    }
+        public void DecreaseMachineSpeed()
+        {
+            int speed = (int)currentSpeed;
+            speed--;
+            speed = Mathf.Clamp(speed, 0, 4);
+            currentSpeed = (MachineSpeed)speed;
+            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+        }
 
-    public void StopMachine()
-    {
-        navMeshAgent.isStopped = true;
-    }
+        public void StopMachine()
+        {
+            navMeshAgent.isStopped = true;
+        }
 
-    #endregion
+        #endregion
     }//Closes MachineMovement class
-    
-  
-}     
+
+
+}
 //Closes Namespace declaration 
