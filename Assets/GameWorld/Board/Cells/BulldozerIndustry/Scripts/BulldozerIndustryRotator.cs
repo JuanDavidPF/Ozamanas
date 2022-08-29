@@ -13,7 +13,7 @@ namespace Ozamanas.Board
     {
         [SerializeField] Transform meshToRotate;
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (other.tag == "Machine") RotateAtMachine(other.transform);
 
@@ -21,6 +21,7 @@ namespace Ozamanas.Board
 
         private void RotateAtMachine(Transform machineTransform)
         {
+
             if (!meshToRotate) return;
 
             var lookPos = machineTransform.position - meshToRotate.position;

@@ -28,6 +28,17 @@ namespace Ozamanas.Board
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
 
+        private void SetReference()
+        {
+            if (reference && reference != this)
+            {
+                Debug.LogWarning("A Board reference is already load up, try to unload the previous reference first");
+                Destroy(gameObject);
+            }
+
+            reference = this;
+        }//Closes SetReference method
+
         private void BakeCollections()
         {
             cells.Clear();
@@ -201,6 +212,7 @@ namespace Ozamanas.Board
             if (!Application.isEditor) return;
             grid = GetComponent<Grid>();
             if (levelData) levelData.board = gameObject;
+            // SetReference();
             BakeCollections();
 
         }//Closes Awake method
@@ -209,6 +221,8 @@ namespace Ozamanas.Board
 
         private void Start()
         {
+
+            SetReference();
             StartCoroutine(HandleBoardCreation());
         }//Closes Start method
 
@@ -232,7 +246,7 @@ namespace Ozamanas.Board
 
         private void OnDisable()
         {
-
+            if (reference == this) reference = null;
         }//Closes OnDisalbeMethod
     }//Closes Board class
 
