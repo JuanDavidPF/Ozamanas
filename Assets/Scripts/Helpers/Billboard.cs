@@ -30,7 +30,8 @@ namespace JuanPayan.Utilities
         private void LateUpdate()
         {
             if (!cameraTransform) return;
-            _t.rotation = cameraTransform.transform.rotation;
+
+            _t.forward = cameraTransform.forward;
 
         }//Closes LateUpdate method
 
