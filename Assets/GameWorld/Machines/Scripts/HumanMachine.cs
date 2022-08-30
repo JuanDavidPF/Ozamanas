@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ozamanas.Board;
 using Ozamanas.Tags;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace Ozamanas.Machines
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
 
+        private Cell currentCell;
 
         public void SetMachineStatus(MachineState status)
         { machine_status = status; }
@@ -149,5 +151,40 @@ namespace Ozamanas.Machines
         }
         #endregion
 
-    }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag != "Cell") return;
+
+            if (other.TryGetComponent(out Cell cell))
+            {
+                cell.isOccupied = true;
+            }
+
+        }//Closes OnTriggerEnter method
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (currentCell) currentCell.isOccupied = true;
+        }//Closes OnTriggerStay method
+
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag != "Cell") return;
+
+            if (other.TryGetComponent(out Cell cell))
+            {
+                cell.isOccupied = false;
+            }
+
+        }//Closes OnTriggerExit method
+
+        private void OnDisable()
+        {
+            if (currentCell) currentCell.isOccupied = false;
+        }//Closes OnDisable method
+
+    }//Closes HumanMachine class
 }

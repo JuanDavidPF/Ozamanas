@@ -22,13 +22,11 @@ namespace Ozamanas.Machines
         [ContextMenu("Spawn next machine")]
         public void SpawnNextMachineOnQueue()
         {
-            if (spawnQueue.Count == 0) return;
+            if (spawnQueue.Count == 0 || !spawnQueue[0]) return;
 
-            GameObject nextMachine = spawnQueue[0].gameObject;
+
+            Instantiate(spawnQueue[0], _t.position, _t.rotation);
             spawnQueue.RemoveAt(0);
-
-            if (nextMachine) Instantiate(nextMachine, _t.position, _t.rotation);
-
         }//Closes SpawnNextMachineOnQueue method
 
 

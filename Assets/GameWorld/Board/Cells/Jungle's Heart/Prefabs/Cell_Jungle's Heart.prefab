@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
+  activeTraits: []
   worldPosition:
     x: 0.5
     y: 0
@@ -90,8 +91,20 @@ MonoBehaviour:
     variable: {fileID: 0}
   generationCooldown:
     useConstant: 1
-    constantValue: 10
+    constantValue: 1
     variable: {fileID: 0}
+  lifetime: 0
+  maxCycles:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  currentCycle: 0
+  OnEnergyGenerated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnergyDepleated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &665083173
 MonoBehaviour:
   m_ObjectHideFlags: 0

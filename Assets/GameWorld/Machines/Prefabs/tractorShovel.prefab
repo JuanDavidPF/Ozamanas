@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 1084892198633983565}
   - component: {fileID: -3200941559946265716}
   - component: {fileID: 613886794944842996}
-  - component: {fileID: 613886794944842890}
   - component: {fileID: 613886794944842997}
   - component: {fileID: 1997517461896226359}
   - component: {fileID: -7377147150895641835}
@@ -127,6 +126,7 @@ Transform:
   - {fileID: 7559074893783336792}
   - {fileID: 592003019418665574}
   - {fileID: 887999389787868903}
+  - {fileID: 7171334403649107973}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -174,19 +174,6 @@ MonoBehaviour:
     mode: 0
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
     width: 6
---- !u!65 &613886794944842890
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307827077080126711}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &613886794944842997
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -196,7 +183,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 307827077080126711}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.2
+  m_Radius: 1.05
   m_Speed: 0.5
   m_Acceleration: 1
   avoidancePriority: 50
@@ -205,8 +192,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.1
-  m_BaseOffset: 0
+  m_Height: 0.85
+  m_BaseOffset: -0.04
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1997517461896226359
@@ -222,13 +209,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters:
-  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Main.HumanMachine,
-      OzamanasMain, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.HumanMachine,
+      Ozamanas.World, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: -3200941559946265716}
-  - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Main.MachineMovement,
-      OzamanasMain, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+  - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.MachineMovement,
+      Ozamanas.World, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
     - {fileID: 0}
     - {fileID: 613886794944842996}
@@ -742,6 +729,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7208760938448684405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7171334403649107973}
+  - component: {fileID: 8672273526974182811}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7171334403649107973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7208760938448684405}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.043, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084892198633983565}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8672273526974182811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7208760938448684405}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.82, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0.48}
 --- !u!1 &7280639048135513027
 GameObject:
   m_ObjectHideFlags: 0
