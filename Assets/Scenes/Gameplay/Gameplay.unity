@@ -3070,6 +3070,7 @@ GameObject:
   - component: {fileID: 824408771}
   - component: {fileID: 824408770}
   - component: {fileID: 824408768}
+  - component: {fileID: 824408772}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: Untagged
@@ -3168,6 +3169,19 @@ Transform:
   m_Father: {fileID: 1801715651}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &824408772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824408766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28db127037cbd447a39ee53c693c89d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: UICamera
 --- !u!4 &839095075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3816844547452470177, guid: dc82da4d18b66024cb2dc9b8ae5d6b21,
@@ -6661,6 +6675,7 @@ GameObject:
   - component: {fileID: 1801715649}
   - component: {fileID: 1801715652}
   - component: {fileID: 1801715653}
+  - component: {fileID: 1801715654}
   m_Layer: 0
   m_Name: Gameplay Camera
   m_TagString: MainCamera
@@ -6785,6 +6800,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   m_MaxRayIntersections: 0
+--- !u!114 &1801715654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801715648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28db127037cbd447a39ee53c693c89d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MainCamera
 --- !u!4 &1835097222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3816844547452470177, guid: dc82da4d18b66024cb2dc9b8ae5d6b21,
