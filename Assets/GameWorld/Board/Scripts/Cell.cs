@@ -20,7 +20,8 @@ namespace Ozamanas.Board
         public float3 worldPosition;
         public int3 gridPosition;
 
-        public bool isOccupied = false;
+
+        public bool isOccupied;
 
 
 
@@ -43,16 +44,11 @@ namespace Ozamanas.Board
         }//Closes OnDisable event
 
 
-        private void OnTriggerEnter(Collider other)
+        public List<MachineTrait> GetCellTraits()
         {
+            return activeTraits;
+        }//Closes GetTraitsOnCell method
 
-        }//Closes OnTriggerEnter method
-
-        private void OnTriggerExit(Collider other)
-        {
-
-
-        }//Closes OnTriggerExit method
 
         public void AddTraitToMachine(MachineTrait trait)
         {
@@ -70,6 +66,8 @@ namespace Ozamanas.Board
             yield return new WaitForSeconds(trait.holderTimer);
             removeTraitToMachine(trait);
         }
+
+
 
     }//Closes Cell class
 }//Closes Namespace declaration

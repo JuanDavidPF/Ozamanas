@@ -93,8 +93,20 @@ MonoBehaviour:
     variable: {fileID: 0}
   generationCooldown:
     useConstant: 1
-    constantValue: 10
+    constantValue: 1
     variable: {fileID: 0}
+  lifetime: 0
+  maxCycles:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  currentCycle: 0
+  OnEnergyGenerated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnergyDepleated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &665083173
 MonoBehaviour:
   m_ObjectHideFlags: 0
