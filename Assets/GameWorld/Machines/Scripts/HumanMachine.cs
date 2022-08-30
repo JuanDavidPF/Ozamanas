@@ -13,7 +13,8 @@ namespace Ozamanas.Machines
     [SelectionBase]
     public class HumanMachine : MonoBehaviour
     {
-        public MachineState machine_status;
+         [SerializeField] private MachineState machine_status;
+         [SerializeField] private HumanMachineToken machine_token;
         public GameObject flag;
 
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();

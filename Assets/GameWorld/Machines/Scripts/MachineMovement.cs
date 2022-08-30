@@ -4,7 +4,6 @@ using DataStructures.PriorityQueue;
 using Ozamanas.Board;
 using Ozamanas.Machines;
 using Ozamanas.Outlines;
-using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -42,6 +41,8 @@ namespace Ozamanas.Machines
         [SerializeField] private List<CellData> blacklist = new List<CellData>();
         [SerializeField] private MachineSpeedValues speedValues;
         [SerializeField] private MachineSpeed currentSpeed;
+        [SerializeField] public MachineType currentLevel;
+        [SerializeField] private float height = 5f;
 
         [Space(15)]
         [Header("Parameters")]
@@ -120,7 +121,7 @@ namespace Ozamanas.Machines
         public bool CheckIfReachDestination()
         {
 
-            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance + 0.5f) return false;
+            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance +0.2f ) return false;
             else return true;
         }
 
@@ -264,6 +265,64 @@ namespace Ozamanas.Machines
             navMeshAgent.SetDestination(pathToDestination[0].transform.position);
             pathToDestination.RemoveAt(0);
         }
+
+        #region Height Management
+
+        public bool GoUp()
+        {
+            if (currentLevel == MachineType.Aerial) return true;
+
+            Vector3 sub = new Vector3(0f,height,0f);
+
+            currentLevel = (MachineType) currentLevel + 1;
+
+            return navMeshAgent.Warp(transform.position + sub);
+        }
+
+        public bool GoDown()
+        {
+            if (currentLevel == MachineType.Subterrestrial) return true;
+
+            Vector3 sub = new Vector3(0f,-height,0f);
+
+            currentLevel = (MachineType) currentLevel - 1;
+
+            return navMeshAgent.Warp(transform.position + sub);
+        }
+
+        public bool MoveToDestinationSpecial()
+        {
+            NavMeshPath path = new NavMeshPath();
+            SetCurrentDestination();
+            navMeshAgent.CalculatePath(currentDestination.transform.position, path);
+            if (path.status == NavMeshPathStatus.PathInvalid ||path.status == NavMeshPathStatus.PathPartial  ) return false;
+            
+            Vector3 sub = new Vector3(0f,-height,0f);
+
+            if(currentLevel == MachineType.Aerial) sub = new Vector3(0f,height,0f);
+            
+            return  navMeshAgent.SetDestination(currentDestination.transform.position+ sub);
+        }
+
+        #endregion
+
+        #region Objectives Management
+
+            public void ReplaceSecondaryObjective(CellData cell,int range)
+            {
+                if(cell==null || range <= 0 ) return;
+                
+                secondObjective = cell;
+                secondObjectiveRange = range;
+            }
+
+            public bool CkechIfOnCell(CellData token)
+            {
+                return token == Board.Board.GetCellByPosition(transform.position).data;
+            }
+
+            #endregion
+
 
         #region Speed Management
         public void RestoreOriginalValues()
