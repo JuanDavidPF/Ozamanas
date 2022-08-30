@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Ozamanas.Board;
 using Ozamanas.Tags;
 using UnityEngine;
-
-
+using UnityEngine.Events;
 
 namespace Ozamanas.Machines
 {
@@ -18,8 +17,19 @@ namespace Ozamanas.Machines
          [SerializeField] private HumanMachineToken machine_token;
         public GameObject flag;
 
-        [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
+        [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
 
+        public List<MachineTrait> activeTraits
+        {
+            get { return m_activeTraits; }
+            set
+            {
+                m_activeTraits = value;
+                OnTraitsUpdated?.Invoke(value);
+            }
+        }
+
+        public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
 
@@ -87,11 +97,13 @@ namespace Ozamanas.Machines
         {
             activeTraits.Add(trait);
             if (!trait.isPermanentOnMachine) waitToRemoveTrait(trait);
+            OnTraitsUpdated?.Invoke(activeTraits);
         }
 
         public void removeTraitToMachine(MachineTrait trait)
         {
             activeTraits.Remove(trait);
+            OnTraitsUpdated?.Invoke(activeTraits);
         }
 
         IEnumerator waitToRemoveTrait(MachineTrait trait)
@@ -173,7 +185,7 @@ namespace Ozamanas.Machines
             if (other.TryGetComponent(out Cell cell))
             {
                 cell.isOccupied = false;
-
+                activeTraits = new List<MachineTrait>();
             }
 
         }//Closes OnTriggerExit method

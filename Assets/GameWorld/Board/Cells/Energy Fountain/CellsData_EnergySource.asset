@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5e0cf35c7f69446a9f0a2e315f4aaa, type: 3}
-  m_Name: Enraged
+  m_Script: {fileID: 11500000, guid: bc80d9103828a66448ace5d6570a11b6, type: 3}
+  m_Name: CellsData_EnergySource
   m_EditorClassIdentifier: 
-  traitIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  traitName:
+  machineIcon: {fileID: 0}
+  machineName:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -22,7 +22,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  traitDescription:
+  machineDescription:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -31,11 +31,14 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  types: 0000000003000000
-  isPermanentOnMachine: 1
-  machineTimer: 0
-  isPermanetOnHolder: 1
-  holderTimer: 0
+  movemenCost:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  expansionCost:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
   references:
     version: 2
     RefIds: []

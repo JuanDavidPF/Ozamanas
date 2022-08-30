@@ -5,9 +5,9 @@ namespace Ozamanas.Machines
 {
 
     [RequireComponent(typeof(MachineAttributes))]
-public class MachineArmor : MonoBehaviour
-{
-    [Header("Armor")]
+    public class MachineArmor : MonoBehaviour
+    {
+        [Header("Armor")]
         [Space(15)]
         [SerializeField] private int _armorPoints = 1;
         public int armorPoints
@@ -15,20 +15,22 @@ public class MachineArmor : MonoBehaviour
             get { return _armorPoints; }
             set
             {
+                OnArmorChanged?.Invoke(value);
                 _armorPoints = value;
             }
         }
-        
-         [SerializeField] private int maxArmorPoints = 1;
-         [SerializeField] private bool doubleDamage = false;
-         [SerializeField] private bool invulnerable = false;
-         private MachineAttributes machineAttributes;
-        
+
+        [SerializeField] private int maxArmorPoints = 1;
+        [SerializeField] private bool doubleDamage = false;
+        [SerializeField] private bool invulnerable = false;
+        private MachineAttributes machineAttributes;
+
         [Space(15)]
 
         [SerializeField] public UnityEvent OnMachineDestroyedEvent;
         [SerializeField] public UnityEvent OnMachineDamaged;
         [SerializeField] public UnityEvent OnMachineGainArmor;
+        [SerializeField] public UnityEvent<int> OnArmorChanged;
         [SerializeField] public UnityEvent OnMachineDisarm;
 
 
@@ -36,15 +38,19 @@ public class MachineArmor : MonoBehaviour
         void Awake()
         {
             machineAttributes = GetComponent<MachineAttributes>();
+
+        }
+        private void Start()
+        {
             armorPoints = machineAttributes.GetMachineArmorPoints();
             maxArmorPoints = machineAttributes.maxArmorPoints;
         }
-        
+
         void OnEnable()
         {
-            
+
         }//Closes OnEnable method
-        
+
         public void RestoreOriginalValues()
         {
             doubleDamage = false;
@@ -54,14 +60,14 @@ public class MachineArmor : MonoBehaviour
         public void RepairMachine()
         {
             armorPoints++;
-            armorPoints = Mathf.Clamp(armorPoints,1,maxArmorPoints);   
+            armorPoints = Mathf.Clamp(armorPoints, 1, maxArmorPoints);
             OnMachineGainArmor?.Invoke();
         }
 
         public void DisarmMachine()
         {
             armorPoints--;
-            armorPoints = Mathf.Clamp(armorPoints,1,maxArmorPoints);   
+            armorPoints = Mathf.Clamp(armorPoints, 1, maxArmorPoints);
             OnMachineDisarm?.Invoke();
         }
 
@@ -75,14 +81,16 @@ public class MachineArmor : MonoBehaviour
         }
         public void TakeDamage(int damageAmount)
         {
-            if(invulnerable) return;
+            if (invulnerable) return;
 
             int currentDamage = damageAmount;
 
-             if (doubleDamage) currentDamage = currentDamage*2;
+            if (doubleDamage) currentDamage = currentDamage * 2;
 
             armorPoints = armorPoints - currentDamage;
-            armorPoints = Mathf.Clamp(armorPoints,0,maxArmorPoints);   
+            armorPoints = Mathf.Clamp(armorPoints, 0, maxArmorPoints);
+
+
 
             if (armorPoints > 0) OnMachineDamaged?.Invoke();
             else Destroy();
@@ -95,5 +103,5 @@ public class MachineArmor : MonoBehaviour
             Destroy(gameObject);
             OnMachineDestroyedEvent?.Invoke();
         }
-}
+    }
 }
