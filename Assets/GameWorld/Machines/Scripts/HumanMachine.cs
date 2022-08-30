@@ -159,15 +159,10 @@ namespace Ozamanas.Machines
 
             if (other.TryGetComponent(out Cell cell))
             {
-                cell.isOccupied = true;
+                currentCell = cell;
             }
 
         }//Closes OnTriggerEnter method
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (currentCell) currentCell.isOccupied = true;
-        }//Closes OnTriggerStay method
 
 
         private void OnTriggerExit(Collider other)
@@ -177,9 +172,24 @@ namespace Ozamanas.Machines
             if (other.TryGetComponent(out Cell cell))
             {
                 cell.isOccupied = false;
+
             }
 
         }//Closes OnTriggerExit method
+
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.tag != "Cell") return;
+
+            if (currentCell.gameObject != other.gameObject) other.TryGetComponent(out currentCell);
+
+            currentCell.isOccupied = true;
+            activeTraits = currentCell.GetCellTraits();
+
+        }//Closes OnTriggerStay method
+
+
 
         private void OnDisable()
         {

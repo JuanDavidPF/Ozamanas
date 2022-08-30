@@ -46,6 +46,11 @@ namespace Ozamanas.Board
         }//Closes OnDisable event
 
 
+        public List<MachineTrait> GetCellTraits()
+        {
+            return activeTraits;
+        }//Closes GetTraitsOnCell method
+
 
         public void AddTraitToMachine(MachineTrait trait)
         {
