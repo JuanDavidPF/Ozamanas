@@ -208,5 +208,7 @@ namespace Ozamanas.Machines
             if (currentCell) currentCell.isOccupied = false;
         }//Closes OnDisable method
 
+
+
     }//Closes HumanMachine class
 }

@@ -2,20 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ozamanas
+namespace Ozamanas.Energy
 {
     public class Whisper : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-    }
-}
+    }//Closes Whisper class
+}//Closes namespace declaration

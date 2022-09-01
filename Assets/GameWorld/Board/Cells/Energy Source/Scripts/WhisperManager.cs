@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JuanPayan.Utilities;
 using Ozamanas.Board;
 using Ozamanas.Extenders;
 using UnityEngine;
@@ -18,6 +19,14 @@ namespace Ozamanas.Energy
         [SerializeField] private Transform whisperContainer;
 
 
+
+        [Space(20)]
+        [Header("Orbit config")]
+
+        [SerializeField] private Ellipse orbitPath;
+
+
+
         private void Awake()
         {
 
@@ -28,14 +37,17 @@ namespace Ozamanas.Energy
         }//Closes Awake method
 
 
-
         public void InitializeWhispers()
         {
             if (!generatorReference || !whisperPrefab) return;
 
             for (int i = 0; i < generatorReference.maxCycles.value; i++)
             {
-                Instantiate(whisperPrefab, whisperContainer);
+                Whisper whisper = Instantiate(whisperPrefab, whisperContainer);
+
+                Vector2 positionInOrbit = orbitPath.Evaluate(i / generatorReference.maxCycles.value);
+
+                whisper.transform.localPosition = new Vector3(positionInOrbit.x, whisper.transform.position.y, positionInOrbit.y);
             }
         }//Closes InitializeWhisper method
 
