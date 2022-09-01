@@ -145,8 +145,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machine_status: 0
+  machine_token: {fileID: 0}
   flag: {fileID: 511473094932665437}
-  activeTraits: []
+  m_activeTraits: []
   OnTraitsUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -183,6 +184,8 @@ MonoBehaviour:
   - {fileID: 0}
   speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
   currentSpeed: 0
+  currentLevel: 0
+  height: 5
   result: 0
   currentDestination: {fileID: 0}
   pathToDestination: []
@@ -280,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f1f69e1b16a7944bf5efb6a9539da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armorPoints: 1
+  armorPoints: 1
   maxArmorPoints: 1
   doubleDamage: 0
   invulnerable: 0
@@ -1272,7 +1275,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1282,7 +1285,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}

@@ -26,9 +26,9 @@ namespace Ozamanas.Machines
 
         }//Closes
 
-
         private NavMeshAgent navMeshAgent;
         private MachineAttributes machineAttributes;
+        private HumanMachine humanMachine;
         [Header("Setup")]
         [SerializeField] private CellData mainObjective;
         [Space(5)]
@@ -41,13 +41,14 @@ namespace Ozamanas.Machines
         [SerializeField] private List<CellData> blacklist = new List<CellData>();
         [SerializeField] private MachineSpeedValues speedValues;
         [SerializeField] private MachineSpeed currentSpeed;
-        [SerializeField] public MachineType currentLevel;
+        [SerializeField] public MachineType currentAltitude;
         [SerializeField] private float height = 5f;
 
         [Space(15)]
         [Header("Parameters")]
         public PathFindingResult result = PathFindingResult.NonCalculated;
         [SerializeField] private Cell currentDestination;
+        [SerializeField] private Cell nextCellOnPath;
         [SerializeField] private List<Cell> pathToDestination = new List<Cell>();
 
         [Space(15)]
@@ -71,6 +72,7 @@ namespace Ozamanas.Machines
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             machineAttributes = GetComponent<MachineAttributes>();
+            humanMachine = GetComponent<HumanMachine>();
             RestoreOriginalValues();
         }//Closes Awake method
 
@@ -120,17 +122,17 @@ namespace Ozamanas.Machines
 
         public bool CheckIfReachDestination()
         {
+            if(navMeshAgent.pathPending) return false;
 
-            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance +0.2f ) return false;
-            else return true;
+           return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance +0.2f;
         }
 
 
-
-
-        public void CalculatePathToCell(Cell destiny)
+ 
+      
+        public void CalculatePathToDestination()
         {
-            if (!destiny)
+            if (!currentDestination)
             {
                 result = PathFindingResult.InvalidDestiny;
                 return;
@@ -149,7 +151,7 @@ namespace Ozamanas.Machines
 
 
 
-            Cell goal = destiny;
+            Cell goal = currentDestination;
 
             PriorityQueue<Cell, int> frontier = new PriorityQueue<Cell, int>(0);
             frontier.Insert(start, 0);
@@ -172,8 +174,8 @@ namespace Ozamanas.Machines
                 {
 
                     if (!next) continue;
-                    if (next.data && blacklist.Contains(next.data)) continue;
-                    if (next.isOccupied) continue;
+                    if (currentAltitude == MachineType.Terrestrial && next.data && blacklist.Contains(next.data)) continue;
+                    if (currentAltitude == MachineType.Terrestrial && next.isOccupied) continue;
                     /*Implement here early exits for board cell that dont met the conditions*/
 
 
@@ -194,7 +196,7 @@ namespace Ozamanas.Machines
 
             List<Cell> pathRoute = new List<Cell>();
 
-            Cell currentNode = destiny;
+            Cell currentNode = currentDestination;
             while (currentNode != start)
             {
 
@@ -215,29 +217,35 @@ namespace Ozamanas.Machines
 
         }//Closes Calculate PathtoCell alogorythym
 
-
         public bool CheckIfMachineIsBlocked()
         {
             //There is no main objective
             if (mainObjective == null) return true;
 
+            
             //There is no cell matching the mainobjective tag
             Cell newCell = Board.Board.GetNearestCell(transform.position, mainObjective);
             if (newCell == null) return true;
-
+      
             //There is no path to main objective cell
-            CalculatePathToCell(newCell);
+            currentDestination = newCell;
+            CalculatePathToDestination();
+
             if (result != PathFindingResult.PathComplete) return true;
 
             return false;
         }
-
         public void SetCurrentDestination()
         {
             float3 origin = transform.position;
             Cell firstCell = null, secondCell = null, thirdCell = null;
 
-            if (mainObjective != null) firstCell = Board.Board.GetNearestCell(transform.position, mainObjective);
+            firstCell = currentDestination;
+            PathFindingResult tempResult = result;
+            List<Cell> tempPathToDestination = pathToDestination;
+            
+            
+             // Main Objective
             if (secondObjective != null) secondCell = Board.Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
             if (thirdObjective != null) thirdCell = Board.Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
 
@@ -249,61 +257,84 @@ namespace Ozamanas.Machines
             if (secondCell != null) distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
             if (thirdCell != null) distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
 
-            if (distanceToMain <= distanceToSecondary) currentDestination = firstCell;
+            if (distanceToMain <= distanceToSecondary) return;
+        
+            if (distanceToSecondary <= distanceToTertiary) 
+            {
+                currentDestination = secondCell;
+                CalculatePathToDestination();
 
-            else if (distanceToSecondary <= distanceToTertiary) currentDestination = secondCell;
+                if(result != PathFindingResult.PathComplete && distanceToMain >= distanceToTertiary)
+                {
+                    currentDestination = thirdCell;
+                    CalculatePathToDestination();
+                    if(result != PathFindingResult.PathComplete)
+                    {
+                        currentDestination = firstCell;
+                        pathToDestination = tempPathToDestination;
+                        result = tempResult;
+                    }
+                }
+            }
 
-            else currentDestination = thirdCell;
-
-            CalculatePathToCell(currentDestination);
-
+           
         }
-
-
         public void MoveToNextCell()
         {
-            navMeshAgent.SetDestination(pathToDestination[0].transform.position);
+            if(pathToDestination.Count == 0) return; 
+            
+            nextCellOnPath = pathToDestination[0];
+            Vector3 altitude = GetAltitudeModifier();
+            navMeshAgent.SetDestination(nextCellOnPath.transform.position + altitude);
             pathToDestination.RemoveAt(0);
         }
 
         #region Height Management
 
-        public bool GoUp()
+        public void GoAerial()
         {
-            if (currentLevel == MachineType.Aerial) return true;
-
-            Vector3 sub = new Vector3(0f,height,0f);
-
-            currentLevel = (MachineType) currentLevel + 1;
-
-            return navMeshAgent.Warp(transform.position + sub);
+            if (currentAltitude == MachineType.Aerial) return ;
+            currentAltitude = MachineType.Aerial;
+            Vector3 altitude = GetAltitudeModifier();
+            navMeshAgent.Warp(transform.position + altitude);
         }
 
-        public bool GoDown()
+        public void GoTerrestrial()
         {
-            if (currentLevel == MachineType.Subterrestrial) return true;
+            if (currentAltitude == MachineType.Terrestrial) return ;
 
-            Vector3 sub = new Vector3(0f,-height,0f);
+            Vector3 altitude = GetAltitudeModifier()*-1;
 
-            currentLevel = (MachineType) currentLevel - 1;
+            currentAltitude = MachineType.Terrestrial;
 
-            return navMeshAgent.Warp(transform.position + sub);
+            Vector3 temp =  Board.Board.GetCellByPosition(transform.position + altitude).transform.position;
+
+             navMeshAgent.Warp(temp);
         }
 
-        public bool MoveToDestinationSpecial()
+        public void GoSubterrestrial()
         {
-            NavMeshPath path = new NavMeshPath();
-            SetCurrentDestination();
-            navMeshAgent.CalculatePath(currentDestination.transform.position, path);
-            if (path.status == NavMeshPathStatus.PathInvalid ||path.status == NavMeshPathStatus.PathPartial  ) return false;
+            if (currentAltitude == MachineType.Subterrestrial) return ;
+
+            currentAltitude = MachineType.Subterrestrial;
             
-            Vector3 sub = new Vector3(0f,-height,0f);
+            Vector3 altitude = GetAltitudeModifier();
 
-            if(currentLevel == MachineType.Aerial) sub = new Vector3(0f,height,0f);
-            
-            return  navMeshAgent.SetDestination(currentDestination.transform.position+ sub);
+             navMeshAgent.Warp(transform.position + altitude);
         }
 
+        private Vector3 GetAltitudeModifier()
+        {
+            switch(currentAltitude)
+            {
+                case MachineType.Aerial:
+                return new Vector3(0f,height,0f);
+                case MachineType.Subterrestrial:
+                return new Vector3(0f,-height,0f);
+                default:
+                return new Vector3(0f,0f,0f);
+            }
+        }
         #endregion
 
         #region Objectives Management
@@ -316,13 +347,14 @@ namespace Ozamanas.Machines
                 secondObjectiveRange = range;
             }
 
-            public bool CkechIfOnCell(CellData token)
+
+
+            public bool CheckIfCurrentDestinationOnRange(int range)
             {
-                return token == Board.Board.GetCellByPosition(transform.position).data;
+                return range <= Board.BoardExtender.DistanceTo(currentDestination,Board.Board.GetCellByPosition(transform.position));
             }
 
             #endregion
-
 
         #region Speed Management
         public void RestoreOriginalValues()
@@ -354,6 +386,14 @@ namespace Ozamanas.Machines
         {
             navMeshAgent.isStopped = true;
         }
+
+        public int GetRemainingDistance()
+        {
+            return pathToDestination.Count;
+        }
+
+     
+        
 
         #endregion
     }//Closes MachineMovement class
