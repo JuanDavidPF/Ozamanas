@@ -12,6 +12,11 @@ namespace Ozamanas.Board
 
     public class DestructableElement : MonoBehaviour
     {
+        [SerializeField] private float lifetime = 5f;
+        [SerializeField] private Transform fragmentedModel;
+        [SerializeField] private ParticleSystem destructionVFX;
+
+        private bool alreadyTriggered;
         private Rigidbody rb;
         private Collider cd;
 
@@ -23,14 +28,30 @@ namespace Ozamanas.Board
         }//Closes Awake method
         private void OnCollisionEnter(Collision other)
         {
-            if (other.transform.tag != "Machine") return;
+            if (alreadyTriggered || other.transform.tag != "Machine") return;
+            alreadyTriggered = true;
 
             transform.parent = null;
+            transform.DetachChildren();
+
+
             OnDestruction?.Invoke();
-            enabled = false;
+
+            if (fragmentedModel) fragmentedModel.gameObject.SetActive(true);
+            if (destructionVFX) destructionVFX.Play();
+
+            StartCoroutine(HandleVanishing());
         }//Closes OnColissionEnter method
 
+        private IEnumerator HandleVanishing()
+        {
+            yield return new WaitForSeconds(lifetime);
 
+            if (destructionVFX) Destroy(destructionVFX);
+            if (fragmentedModel) Destroy(fragmentedModel.gameObject);
+            Destroy(gameObject);
+
+        }//Closes HandleVanishing corotuine
 
     }//Closes DestructableElement class
 }//Closes Namespace declaration

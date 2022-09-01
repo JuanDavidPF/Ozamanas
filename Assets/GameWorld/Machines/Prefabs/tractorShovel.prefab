@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2244351138921652308}
   m_Layer: 0
   m_Name: wheel_frontRight
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,6 @@ Transform:
   - {fileID: 887999389787868903}
   - {fileID: 7171334403649107973}
   - {fileID: 6592288524582185612}
-  - {fileID: 5502994146347933328}
   - {fileID: 3109053906347600580}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -367,7 +366,7 @@ GameObject:
   - component: {fileID: 1497455604716687105}
   m_Layer: 0
   m_Name: skirts
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -450,7 +449,7 @@ GameObject:
   - component: {fileID: 6755705391238122762}
   m_Layer: 0
   m_Name: wheel_backLeft
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -534,7 +533,7 @@ GameObject:
   - component: {fileID: 6536439108172105070}
   m_Layer: 0
   m_Name: Shovel Collider
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -578,9 +577,10 @@ GameObject:
   - component: {fileID: 2750821556791282841}
   - component: {fileID: 3694793866394047552}
   - component: {fileID: 9061414501422813978}
+  - component: {fileID: 1442998923317620155}
   m_Layer: 0
   m_Name: body
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -655,6 +655,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1442998923317620155
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862499875186508388}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8545447256379345787, guid: d55ecb9d4eafa424f88ea1ba9cb2ff04, type: 3}
 --- !u!1 &4849940732104228465
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +684,7 @@ GameObject:
   - component: {fileID: 8389405617414386367}
   m_Layer: 5
   m_Name: MachineUI
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -689,7 +703,7 @@ RectTransform:
   m_Children:
   - {fileID: 1899914978378975285}
   m_Father: {fileID: 1084892198633983565}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -867,7 +881,7 @@ GameObject:
   - component: {fileID: 869581520613466048}
   m_Layer: 0
   m_Name: wheel_backRight
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -951,7 +965,7 @@ GameObject:
   - component: {fileID: 8672273526974182811}
   m_Layer: 0
   m_Name: GroundCheck
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -997,7 +1011,7 @@ GameObject:
   - component: {fileID: 2552761599187230648}
   m_Layer: 0
   m_Name: wheel_frontLeft
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1068,66 +1082,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7718071442472601748
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5502994146347933328}
-  - component: {fileID: 1531286508798864611}
-  - component: {fileID: 667173141449672776}
-  m_Layer: 0
-  m_Name: Body Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5502994146347933328
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7718071442472601748}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.866, z: -0.331}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1084892198633983565}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1531286508798864611
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7718071442472601748}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.67, z: 1}
-  m_Center: {x: 0, y: 0.31, z: 0}
---- !u!136 &667173141449672776
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7718071442472601748}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.49
-  m_Height: 2.31
-  m_Direction: 2
-  m_Center: {x: 0, y: -0.33, z: 0.44}
 --- !u!1001 &853563795965782284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1214,6 +1168,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed6b60ed17f3e9c4a980628aa07efd64,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed6b60ed17f3e9c4a980628aa07efd64, type: 3}
