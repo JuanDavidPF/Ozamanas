@@ -28,7 +28,10 @@ namespace Ozamanas.Board
         }//Closes Awake method
         private void OnCollisionEnter(Collision other)
         {
+
             if (alreadyTriggered || other.transform.tag != "Machine") return;
+
+
             alreadyTriggered = true;
 
             transform.parent = null;
