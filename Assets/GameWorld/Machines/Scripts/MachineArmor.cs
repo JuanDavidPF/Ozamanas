@@ -9,17 +9,17 @@ namespace Ozamanas.Machines
     {
         [Header("Armor")]
         [Space(15)]
-        [SerializeField] private int _armorPoints = 1;
+        [SerializeField] private int m_armorPoints = 1;
+
         public int armorPoints
         {
-            get { return _armorPoints; }
+            get { return m_armorPoints; }
             set
             {
+                m_armorPoints = value;
                 OnArmorChanged?.Invoke(value);
-                _armorPoints = value;
             }
         }
-
         [SerializeField] private int maxArmorPoints = 1;
         [SerializeField] private bool doubleDamage = false;
         [SerializeField] private bool invulnerable = false;
@@ -89,8 +89,6 @@ namespace Ozamanas.Machines
 
             armorPoints = armorPoints - currentDamage;
             armorPoints = Mathf.Clamp(armorPoints, 0, maxArmorPoints);
-
-
 
             if (armorPoints > 0) OnMachineDamaged?.Invoke();
             else Destroy();

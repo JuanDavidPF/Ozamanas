@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Ozamanas.Tags
 {
-    [System.Flags]
+
         public enum MachineType
     {
-        Aerial = 1 << 0,
-        Terrestrial = 1 << 1,
-        Subterrestrial = 1 << 2,
-        Nautical = 1 << 3,
-        SubNautical = 1 << 4,
+        Aerial = -1,
+        Terrestrial = 0,
+        Subterrestrial = 1,
+        Nautical = 2,
+        SubNautical = 3,
     }
 
     public enum MachineHierarchy

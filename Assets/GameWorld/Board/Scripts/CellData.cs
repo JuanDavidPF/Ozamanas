@@ -12,8 +12,8 @@ namespace Ozamanas.Board
     {
         [Header("UI Config")]
         public Sprite machineIcon;
-        public LocalizedString machineName;
-        public LocalizedString machineDescription;
+        public LocalizedString cellName;
+        public LocalizedString cellDescription;
 
 
         [Header("Heuristic Config")]
