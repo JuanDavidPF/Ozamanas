@@ -41,8 +41,11 @@ namespace Ozamanas.Energy
             get { return m_currentLevel; }
             set
             {
-                m_currentLevel = value;
+                m_currentLevel = value > 0 ? m_currentLevel = value : 0;
+
                 OnEnergyLevelChanged?.Invoke(value);
+                if (m_currentLevel == 0) OnEnergyDepleated?.Invoke();
+
             }
         }
 
