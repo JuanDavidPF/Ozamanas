@@ -123,12 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 7697299f35528e44688fa05ff72ffbd2, type: 2}
---- !u!1 &19226214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1754916418458094559, guid: ee8e993051ded4b4bbb792e9a57d08a1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1754916417749549752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &20719070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1479,11 +1473,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell_Controlled Energy Pool
       objectReference: {fileID: 0}
-    - target: {fileID: 6165971139144108099, guid: 8cf6b86f19535ae4d9ff4d90ccedc1df,
+    - target: {fileID: 5619540907224393303, guid: 8cf6b86f19535ae4d9ff4d90ccedc1df,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 2dbc0f190812faa4aa13dbf70655018f, type: 2}
+      propertyPath: generationCooldown.constantValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661326432208513430, guid: 8cf6b86f19535ae4d9ff4d90ccedc1df,
+        type: 3}
+      propertyPath: m_Name
+      value: Energy Liquid
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cf6b86f19535ae4d9ff4d90ccedc1df, type: 3}
 --- !u!1001 &392408364
@@ -6489,7 +6488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1688421286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8243,38 +8242,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 564976408}
     m_Modifications:
-    - target: {fileID: 298988555, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 19226214}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589938539, guid: ee8e993051ded4b4bbb792e9a57d08a1, type: 3}
-      propertyPath: OnNewWave.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1754916418458094544, guid: ee8e993051ded4b4bbb792e9a57d08a1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8531,12 +8498,12 @@ PrefabInstance:
     - target: {fileID: 2535799506707871490, guid: 44a4ece7e9a65dd4f9106be0b6ed3f0e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.95311147
       objectReference: {fileID: 0}
     - target: {fileID: 2535799506707871490, guid: 44a4ece7e9a65dd4f9106be0b6ed3f0e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.30261943
       objectReference: {fileID: 0}
     - target: {fileID: 2535799506707871490, guid: 44a4ece7e9a65dd4f9106be0b6ed3f0e,
         type: 3}
@@ -8561,7 +8528,7 @@ PrefabInstance:
     - target: {fileID: 2535799506707871490, guid: 44a4ece7e9a65dd4f9106be0b6ed3f0e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 35.23
       objectReference: {fileID: 0}
     - target: {fileID: 2535799506707871490, guid: 44a4ece7e9a65dd4f9106be0b6ed3f0e,
         type: 3}

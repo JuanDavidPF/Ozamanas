@@ -15,7 +15,7 @@ namespace Ozamanas.Energy
         private void SetFieldCondition()
         {
 
-            ShowOnEnum("lifetime", "Limited", "maxCycles"); //type1Var is only visible when type == Type1
+            ShowOnEnum("lifetime", "Limited", "fullLevel"); //type1Var is only visible when type == Type1
 
         }
 

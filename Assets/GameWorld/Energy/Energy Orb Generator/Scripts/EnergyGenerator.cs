@@ -33,14 +33,25 @@ namespace Ozamanas.Energy
         [Space(15)]
         [Header("Lifetime config")]
         public LifetimeConfig lifetime;
-        public IntegerReference maxCycles;
-        [HideInInspector] public int currentCycle;
+        public IntegerReference fullLevel;
+
+        [SerializeField] private int m_currentLevel;
+        public int currentLevel
+        {
+            get { return m_currentLevel; }
+            set
+            {
+                m_currentLevel = value;
+                OnEnergyLevelChanged?.Invoke(value);
+            }
+        }
 
 
 
         [Space(15)]
         [Header("Generation Events")]
-        public UnityEvent OnEnergyGenerated;
+        public UnityEvent<int> OnEnergyLevelChanged;
+        public UnityEvent OnEnergyOrbGenerated;
         public UnityEvent OnEnergyDepleated;
 
 
@@ -57,6 +68,7 @@ namespace Ozamanas.Energy
 
             offset = new WaitForSeconds(generationOffset.value);
             cooldown = new WaitForSeconds(generationCooldown.value);
+            currentLevel = fullLevel.value;
         }//Closes Awake method
 
 
@@ -64,11 +76,11 @@ namespace Ozamanas.Energy
         private IEnumerator HandleGeneration()
         {
             while (lifetime == LifetimeConfig.Unlimited ||
-             (lifetime == LifetimeConfig.Limited && currentCycle < maxCycles.value))
+             (lifetime == LifetimeConfig.Limited && currentLevel > 0))
             {
                 yield return cooldown;
 
-                currentCycle++;
+                currentLevel--;
                 for (int i = 0; i < generationAmount.value; i++)
                 {
                     Generate();
@@ -81,8 +93,16 @@ namespace Ozamanas.Energy
         public void ResumeGeneration()
         {
             if (!energyOrb) return;
-
             StartCoroutine(generationCoroutine);
+        }//Closes ResumeGeneration method
+
+
+        public void RestartGeneration()
+        {
+            if (!energyOrb) return;
+            currentLevel = fullLevel.value;
+            StopGeneration();
+            ResumeGeneration();
         }//Closes ResumeGeneration method
 
         public void StopGeneration()
@@ -94,6 +114,7 @@ namespace Ozamanas.Energy
         {
             if (!energyOrb) return;
             Instantiate(energyOrb, offsetPosition + transform.position.ToFloat3(), Quaternion.identity);
+            OnEnergyOrbGenerated?.Invoke();
         }//Closes Generate method
 
     }//Closes EnergyGenerator

@@ -318,11 +318,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e910a437991b04e9a682eea6f7f443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
   initialDelay:
     useConstant: 1
     constantValue: 3
     variable: {fileID: 0}
-  levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
+  OnNewWave:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 8c8308d49641f094db0df7c0764d1d8f, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvents.GameEvent, Ozamanas.References
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   waveTMP: {fileID: 298988556}
   progressBar: {fileID: 1754916417459998944}
   waveProgressColor:
@@ -354,21 +369,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  OnNewWave:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 8c8308d49641f094db0df7c0764d1d8f, type: 2}
-        m_TargetAssemblyTypeName: JuanPayan.References.GameEvents.GameEvent, Ozamanas.References
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &3729323007238586970
 MonoBehaviour:
   m_ObjectHideFlags: 0

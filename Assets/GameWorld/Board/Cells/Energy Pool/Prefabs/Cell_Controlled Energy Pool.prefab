@@ -141,8 +141,8 @@ MonoBehaviour:
     y: 0
     z: 7.792
   gridPosition:
-    x: 0
-    y: 0
+    x: -3
+    y: 9
     z: 0
   isOccupied: 0
 --- !u!114 &5619540907224393303
@@ -161,7 +161,7 @@ MonoBehaviour:
     type: 3}
   offsetPosition:
     x: 0
-    y: 1
+    y: 0
     z: 0
   generationAmount:
     useConstant: 1
@@ -176,12 +176,27 @@ MonoBehaviour:
     constantValue: 10
     variable: {fileID: 0}
   lifetime: 1
-  maxCycles:
+  fullLevel:
     useConstant: 1
     constantValue: 5
     variable: {fileID: 0}
-  currentCycle: 0
-  OnEnergyGenerated:
+  m_currentLevel: 0
+  OnEnergyLevelChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2030776744}
+        m_TargetAssemblyTypeName: Ozamanas.Energy.EnergyPool, Ozamanas.World
+        m_MethodName: UpdateLiquidLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnergyOrbGenerated:
     m_PersistentCalls:
       m_Calls: []
   OnEnergyDepleated:
@@ -199,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155b325ee9793d84794527f6fc35e0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPool: {fileID: 5033549705303372588}
+  liquid: {fileID: 5033549705303372588}
 --- !u!114 &9154455692210794038
 MonoBehaviour:
   m_ObjectHideFlags: 0
