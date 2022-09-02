@@ -157,7 +157,7 @@ namespace Ozamanas.Board
 
             Cell result = cellsByData.Count > 0 ? cellsByData[0] : null;
 
-            if (!result.Equals(null) && result.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial()) <= range)
+            if (result && result.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial()) <= range)
                 return result;
             else
                 return null;

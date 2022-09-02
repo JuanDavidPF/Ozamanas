@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
-  secondObjective: {fileID: 0}
-  secondObjectiveRange: 0
+  secondObjective: {fileID: 11400000, guid: d5f0ea6625e6a1b4f9b3772c3485edc0, type: 2}
+  secondObjectiveRange: 4
   thirdObjective: {fileID: 0}
   thirdObjectiveRange: 0
   blacklist:
@@ -395,6 +395,7 @@ GameObject:
   - component: {fileID: 2471498889558933762}
   - component: {fileID: 3540197636637272524}
   - component: {fileID: 4405979060738031661}
+  - component: {fileID: 2461275202048307025}
   m_Layer: 0
   m_Name: MachineTrail
   m_TagString: Untagged
@@ -513,7 +514,7 @@ TrailRenderer:
     textureMode: 3
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.5
+  m_MinVertexDistance: 0.3
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!114 &3540197636637272524
@@ -543,6 +544,18 @@ MonoBehaviour:
   triggers: 1
   axis: 2
   offsetRange: {x: 0, y: 0.01}
+--- !u!114 &2461275202048307025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4684417640739798018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b853eb9ea67878e4e9af3d70c6e8fef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5097072562740501198
 GameObject:
   m_ObjectHideFlags: 0
