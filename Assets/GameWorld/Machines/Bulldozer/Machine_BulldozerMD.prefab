@@ -175,6 +175,21 @@ MonoBehaviour:
   machine_token: {fileID: 11400000, guid: ddf25574696d0724e923b863536ccdb0, type: 2}
   flag: {fileID: 511473094932665437}
   m_activeTraits: []
+  OnCurrentCellChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2461275202048307025}
+        m_TargetAssemblyTypeName: Ozamanas.PathRenderer, Ozamanas.World
+        m_MethodName: OnNewCell
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTraitsUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -202,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fecf47e7717d394aad78b78594168a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
-  secondObjective: {fileID: 11400000, guid: d5f0ea6625e6a1b4f9b3772c3485edc0, type: 2}
+  mainObjective: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
+  secondObjective: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   secondObjectiveRange: 4
   thirdObjective: {fileID: 0}
   thirdObjectiveRange: 0
@@ -394,7 +409,6 @@ GameObject:
   - component: {fileID: 1712212738332485232}
   - component: {fileID: 2471498889558933762}
   - component: {fileID: 3540197636637272524}
-  - component: {fileID: 4405979060738031661}
   - component: {fileID: 2461275202048307025}
   m_Layer: 0
   m_Name: MachineTrail
@@ -463,7 +477,7 @@ TrailRenderer:
   m_Time: Infinity
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1.8477772
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -509,12 +523,12 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 2
     alignment: 1
     textureMode: 3
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.3
+  m_MinVertexDistance: 0.35
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!114 &3540197636637272524
@@ -529,21 +543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a8c90ee6cd8b544844921ee025e5c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4405979060738031661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4684417640739798018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13bf44969d6674a46bd9734fcfe52c8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggers: 1
-  axis: 2
-  offsetRange: {x: 0, y: 0.01}
 --- !u!114 &2461275202048307025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853eb9ea67878e4e9af3d70c6e8fef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionalPathing: 1
+  allowedCells:
+  - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
 --- !u!1 &5097072562740501198
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +942,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 25
       objectReference: {fileID: 0}
@@ -999,12 +1007,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7322276364019886207, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322276364019886207, guid: b0b6652949be0c5489d16f9191ef6739,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322276364019886207, guid: b0b6652949be0c5489d16f9191ef6739,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7322276364019886207, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322276364019886207, guid: b0b6652949be0c5489d16f9191ef6739,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7652803696673734278, guid: b0b6652949be0c5489d16f9191ef6739,

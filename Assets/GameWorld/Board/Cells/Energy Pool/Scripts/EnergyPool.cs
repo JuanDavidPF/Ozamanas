@@ -17,9 +17,11 @@ namespace Ozamanas.Energy
         private EnergyGenerator generatorReference;
 
         [SerializeField] private Transform liquid;
+        private float scaleMultiplier;
 
         private void Awake()
         {
+            if (liquid) scaleMultiplier = liquid.transform.localScale.y;
             cellReference = GetComponent<Cell>();
             generatorReference = GetComponent<EnergyGenerator>();
         }//Closes Awake methods
@@ -35,7 +37,7 @@ namespace Ozamanas.Energy
             float normalizedLevel = (float)level
                                      / (float)generatorReference.fullLevel.value;
 
-            liquid.DOScaleY(normalizedLevel, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
+            liquid.DOScaleY(normalizedLevel * scaleMultiplier, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
         }//Closes UpdateLiquidLevel
 
         public void PlayerAtPool()

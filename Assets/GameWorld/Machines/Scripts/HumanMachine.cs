@@ -13,8 +13,8 @@ namespace Ozamanas.Machines
     [SelectionBase]
     public class HumanMachine : MonoBehaviour
     {
-         [SerializeField] private MachineState machine_status;
-         [SerializeField] private HumanMachineToken machine_token;
+        [SerializeField] private MachineState machine_status;
+        [SerializeField] private HumanMachineToken machine_token;
         public GameObject flag;
 
         [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
@@ -29,12 +29,26 @@ namespace Ozamanas.Machines
             }
         }
 
-        public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
+
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
 
-        private Cell currentCell;
+        private Cell m_currentCell;
+        public Cell currentCell
+        {
+            get { return m_currentCell; }
+            set
+            {
+                if (m_currentCell == value) return;
+                m_currentCell = value;
+                OnCurrentCellChanged?.Invoke(value);
+            }
+        }
 
+        [Space(20)]
+        [Header("Events")]
+        public UnityEvent<Cell> OnCurrentCellChanged;
+        public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
         public void SetMachineStatus(MachineState status)
         { machine_status = status; }
 
@@ -134,21 +148,21 @@ namespace Ozamanas.Machines
 
         private void SetMachineTraitsfromCell(Cell cell)
         {
-                activeTraits.AddRange(currentCell.GetCellTraits());
-                foreach (MachineTrait trait in currentCell.GetCellTraits())
-                {
-                    if (!trait.isPermanentOnMachine) WaitToRemoveTrait(trait);
-                }
-                SetMachineAttributes();
+            activeTraits.AddRange(cell.GetCellTraits());
+            foreach (MachineTrait trait in cell.GetCellTraits())
+            {
+                if (!trait.isPermanentOnMachine) WaitToRemoveTrait(trait);
+            }
+            SetMachineAttributes();
         }
 
         private void RemoveMachineTraitsFromCell(Cell cell)
         {
-                foreach (MachineTrait trait in currentCell.GetCellTraits())
-                {
-                    activeTraits.Remove(trait);
-                }
-                SetMachineAttributes();
+            foreach (MachineTrait trait in cell.GetCellTraits())
+            {
+                activeTraits.Remove(trait);
+            }
+            SetMachineAttributes();
         }
 
         private void SetMachineTrait(MachineTrait trait)
@@ -211,6 +225,7 @@ namespace Ozamanas.Machines
 
             if (other.TryGetComponent(out Cell cell))
             {
+                if (currentCell == cell) currentCell = null;
                 RemoveMachineTraitsFromCell(cell);
             }
 
@@ -219,7 +234,7 @@ namespace Ozamanas.Machines
 
         private void OnTriggerStay(Collider other)
         {
-            
+
         }//Closes OnTriggerStay method
 
         #endregion
@@ -235,14 +250,14 @@ namespace Ozamanas.Machines
             return token == currentCell.data;
         }
 
-          public bool CheckIfCurrentCellEqualsTo(Cell token)
+        public bool CheckIfCurrentCellEqualsTo(Cell token)
         {
             return token == currentCell;
         }
 
         public bool ReplaceCellDataToCurrent(CellData token)
         {
-            if ( currentCell == null) return false;
+            if (currentCell == null) return false;
 
             currentCell.data = token;
 

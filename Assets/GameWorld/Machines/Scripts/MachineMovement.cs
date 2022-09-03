@@ -122,14 +122,14 @@ namespace Ozamanas.Machines
 
         public bool CheckIfReachDestination()
         {
-            if(navMeshAgent.pathPending) return false;
+            if (navMeshAgent.pathPending) return false;
 
-           return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance +0.2f;
+            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.2f;
         }
 
 
- 
-      
+
+
         public void CalculatePathToDestination()
         {
             if (!currentDestination)
@@ -222,11 +222,11 @@ namespace Ozamanas.Machines
             //There is no main objective
             if (mainObjective == null) return true;
 
-            
+
             //There is no cell matching the mainobjective tag
             Cell newCell = Board.Board.GetNearestCell(transform.position, mainObjective);
             if (newCell == null) return true;
-      
+
             //There is no path to main objective cell
             currentDestination = newCell;
             CalculatePathToDestination();
@@ -243,9 +243,9 @@ namespace Ozamanas.Machines
             firstCell = currentDestination;
             PathFindingResult tempResult = result;
             List<Cell> tempPathToDestination = pathToDestination;
-            
-            
-             // Main Objective
+
+
+            // Main Objective
             if (secondObjective != null) secondCell = Board.Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
             if (thirdObjective != null) thirdCell = Board.Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
 
@@ -258,17 +258,17 @@ namespace Ozamanas.Machines
             if (thirdCell != null) distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
 
             if (distanceToMain <= distanceToSecondary) return;
-        
-            if (distanceToSecondary <= distanceToTertiary) 
+
+            if (distanceToSecondary <= distanceToTertiary)
             {
                 currentDestination = secondCell;
                 CalculatePathToDestination();
 
-                if(result != PathFindingResult.PathComplete && distanceToMain >= distanceToTertiary)
+                if (result != PathFindingResult.PathComplete && distanceToMain >= distanceToTertiary)
                 {
                     currentDestination = thirdCell;
                     CalculatePathToDestination();
-                    if(result != PathFindingResult.PathComplete)
+                    if (result != PathFindingResult.PathComplete)
                     {
                         currentDestination = firstCell;
                         pathToDestination = tempPathToDestination;
@@ -277,12 +277,12 @@ namespace Ozamanas.Machines
                 }
             }
 
-           
+
         }
         public void MoveToNextCell()
         {
-            if(pathToDestination.Count == 0) return; 
-            
+            if (pathToDestination.Count == 0) return;
+
             nextCellOnPath = pathToDestination[0];
             Vector3 altitude = GetAltitudeModifier();
             navMeshAgent.SetDestination(nextCellOnPath.transform.position + altitude);
@@ -293,7 +293,7 @@ namespace Ozamanas.Machines
 
         public void GoAerial()
         {
-            if (currentAltitude == MachineType.Aerial) return ;
+            if (currentAltitude == MachineType.Aerial) return;
             currentAltitude = MachineType.Aerial;
             Vector3 altitude = GetAltitudeModifier();
             navMeshAgent.Warp(transform.position + altitude);
@@ -301,60 +301,60 @@ namespace Ozamanas.Machines
 
         public void GoTerrestrial()
         {
-            if (currentAltitude == MachineType.Terrestrial) return ;
+            if (currentAltitude == MachineType.Terrestrial) return;
 
-            Vector3 altitude = GetAltitudeModifier()*-1;
+            Vector3 altitude = GetAltitudeModifier() * -1;
 
             currentAltitude = MachineType.Terrestrial;
 
-            Vector3 temp =  Board.Board.GetCellByPosition(transform.position + altitude).transform.position;
+            Vector3 temp = Board.Board.GetCellByPosition(transform.position + altitude).transform.position;
 
-             navMeshAgent.Warp(temp);
+            navMeshAgent.Warp(temp);
         }
 
         public void GoSubterrestrial()
         {
-            if (currentAltitude == MachineType.Subterrestrial) return ;
+            if (currentAltitude == MachineType.Subterrestrial) return;
 
             currentAltitude = MachineType.Subterrestrial;
-            
+
             Vector3 altitude = GetAltitudeModifier();
 
-             navMeshAgent.Warp(transform.position + altitude);
+            navMeshAgent.Warp(transform.position + altitude);
         }
 
         private Vector3 GetAltitudeModifier()
         {
-            switch(currentAltitude)
+            switch (currentAltitude)
             {
                 case MachineType.Aerial:
-                return new Vector3(0f,height,0f);
+                    return new Vector3(0f, height, 0f);
                 case MachineType.Subterrestrial:
-                return new Vector3(0f,-height,0f);
+                    return new Vector3(0f, -height, 0f);
                 default:
-                return new Vector3(0f,0f,0f);
+                    return new Vector3(0f, 0f, 0f);
             }
         }
         #endregion
 
         #region Objectives Management
 
-            public void ReplaceSecondaryObjective(CellData cell,int range)
-            {
-                if(cell==null || range <= 0 ) return;
-                
-                secondObjective = cell;
-                secondObjectiveRange = range;
-            }
+        public void ReplaceSecondaryObjective(CellData cell, int range)
+        {
+            if (cell == null || range <= 0) return;
+
+            secondObjective = cell;
+            secondObjectiveRange = range;
+        }
 
 
 
-            public bool CheckIfCurrentDestinationOnRange(int range)
-            {
-                return range <= Board.BoardExtender.DistanceTo(currentDestination,Board.Board.GetCellByPosition(transform.position));
-            }
+        public bool CheckIfCurrentDestinationOnRange(int range)
+        {
+            return range <= Board.BoardExtender.DistanceTo(currentDestination, Board.Board.GetCellByPosition(transform.position));
+        }
 
-            #endregion
+        #endregion
 
         #region Speed Management
         public void RestoreOriginalValues()
@@ -392,8 +392,8 @@ namespace Ozamanas.Machines
             return pathToDestination.Count;
         }
 
-     
-        
+
+
 
         #endregion
     }//Closes MachineMovement class
