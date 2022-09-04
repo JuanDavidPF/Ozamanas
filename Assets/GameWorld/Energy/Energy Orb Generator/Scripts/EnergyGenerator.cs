@@ -61,14 +61,10 @@ namespace Ozamanas.Energy
         private YieldInstruction offset;
         private YieldInstruction cooldown;
 
-        private IEnumerator generationCoroutine;
+        private Coroutine generationCoroutine;
 
         private void Awake()
         {
-
-            generationCoroutine = HandleGeneration();
-
-
             offset = new WaitForSeconds(generationOffset.value);
             cooldown = new WaitForSeconds(generationCooldown.value);
             currentLevel = fullLevel.value;
@@ -78,6 +74,7 @@ namespace Ozamanas.Energy
 
         private IEnumerator HandleGeneration()
         {
+
             while (lifetime == LifetimeConfig.Unlimited ||
              (lifetime == LifetimeConfig.Limited && currentLevel > 0))
             {
@@ -96,7 +93,8 @@ namespace Ozamanas.Energy
         public void ResumeGeneration()
         {
             if (!energyOrb) return;
-            StartCoroutine(generationCoroutine);
+            if (generationCoroutine != null) StopGeneration();
+            generationCoroutine = StartCoroutine(HandleGeneration());
         }//Closes ResumeGeneration method
 
 
@@ -104,13 +102,13 @@ namespace Ozamanas.Energy
         {
             if (!energyOrb) return;
             currentLevel = fullLevel.value;
-            StopGeneration();
+
             ResumeGeneration();
         }//Closes ResumeGeneration method
 
         public void StopGeneration()
         {
-            StopCoroutine(generationCoroutine);
+            if (generationCoroutine != null) StopCoroutine(generationCoroutine);
         }//Closes ResumeGeneration method
 
         public void Generate()

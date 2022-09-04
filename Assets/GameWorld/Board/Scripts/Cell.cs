@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using Ozamanas.Machines;
+using UnityEngine.Events;
 
 namespace Ozamanas.Board
 {
@@ -12,7 +13,18 @@ namespace Ozamanas.Board
     {
 
         private Animator m_animator;
-        public CellData data;
+
+        [SerializeField] private CellData m_data;
+        public CellData data
+        {
+            get { return m_data; }
+            set
+            {
+                if (m_data == value) return;
+                m_data = value;
+                OnCellDataChanged?.Invoke(value);
+            }
+        }
 
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
 
@@ -23,11 +35,14 @@ namespace Ozamanas.Board
 
         public bool isOccupied;
 
-
+        [Space(15)]
+        [Header("Events")]
+        public UnityEvent<CellData> OnCellDataChanged;
 
         private void Awake()
         {
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
+            OnCellDataChanged?.Invoke(m_data);
         }//Closes Awake method
 
 

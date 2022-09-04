@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf7d381cf54be6488fa0a333eeae6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
+  m_data: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   activeTraits: []
   worldPosition:
     x: 0.5
@@ -65,6 +65,9 @@ MonoBehaviour:
     y: 5
     z: 0
   isOccupied: 0
+  OnCellDataChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4828400566628597791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,12 +99,15 @@ MonoBehaviour:
     constantValue: 10
     variable: {fileID: 0}
   lifetime: 0
-  maxCycles:
+  fullLevel:
     useConstant: 1
     constantValue: 0
     variable: {fileID: 0}
-  currentCycle: 0
-  OnEnergyGenerated:
+  m_currentLevel: 0
+  OnEnergyLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnergyOrbGenerated:
     m_PersistentCalls:
       m_Calls: []
   OnEnergyDepleated:
