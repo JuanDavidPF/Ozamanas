@@ -1,0 +1,170 @@
+using System.Collections;
+using System.Collections.Generic;
+using Ozamanas.Board;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+
+namespace Ozamanas.Forces
+{
+    public abstract class AncientForce : MonoBehaviour
+    {
+        public enum PlacementMode
+        {
+            SinglePlacement,
+            DoublePlacement,
+            TriplePlacement
+        }
+
+
+        private Camera cam;
+        private GameObject g;
+        private Transform t;
+
+        public ForceData data;
+
+        [SerializeField] private Vector3 draggedOffset;
+        [SerializeField] private bool snapToGrid = true;
+        [SerializeField] private Outlines.OutlineConfig rangeOutline;
+
+        [SerializeField] protected PlacementMode placementMode;
+
+
+        [Space(10)]
+        [Header("Events")]
+        public UnityEvent<AncientForce> OnSuccesfulPlacement;
+        public UnityEvent<AncientForce> OnFailedPlacement;
+
+        protected virtual void Awake()
+        {
+            g = gameObject;
+            t = g.transform;
+            cam = Camera.main;
+        }//Closes Awake method
+
+        Vector3 draggedPosition;
+        public virtual void Drag()
+        {
+            if (!Board.CellSelectionHandler.currentCellHovered || !snapToGrid)
+            {
+                Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+                draggedPosition = (ray.origin + ray.direction * Mathf.Abs(cam.transform.position.z));
+                if (!snapToGrid) draggedPosition += draggedOffset;
+            }
+            else
+            {
+                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + draggedOffset;
+
+            }
+
+
+            t.position = draggedPosition;
+            DrawValidCells();
+        }//Closes OnDrag method
+
+        public virtual void FirstPlacement()
+        {
+            if (placementMode != PlacementMode.SinglePlacement) return;
+
+            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+                OnSuccesfulPlacement?.Invoke(this);
+
+            else OnFailedPlacement?.Invoke(this);
+            EraseValidCells();
+        }//Closes FirstPlacement method
+
+        protected virtual void SecondPlacement()
+        {
+            if (placementMode != PlacementMode.DoublePlacement) return;
+
+            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+                OnSuccesfulPlacement?.Invoke(this);
+
+            else OnFailedPlacement?.Invoke(this);
+            EraseValidCells();
+        }//Closes SecondPlacement method
+
+        protected virtual void ThirdPlacement()
+        {
+            if (placementMode != PlacementMode.TriplePlacement) return;
+
+            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+                OnSuccesfulPlacement?.Invoke(this);
+
+            else OnFailedPlacement?.Invoke(this);
+            EraseValidCells();
+        }//Closes ThirdPlacement method
+
+        protected virtual bool IsValidPlacement(Cell cell)
+        {
+            if (!cell) return false;
+            if (!data) return false;
+            if (!data.whiteList.Contains(cell.data)) return false;
+
+            return true;
+        }//Closes IsValidPlacement method
+
+
+
+
+        List<Board.Cell> validCells = new List<Cell>();
+
+        protected virtual void DrawValidCells()
+        {
+            if (!data) return;
+
+
+
+
+
+
+            EraseValidCells();
+
+            //Gets plausibles cells to be placed based on range and conditions
+            foreach (var cell in Board.Board.GetCellsByData(data.rangeAnchors.ToArray()))
+            {
+
+                if (!cell) continue;
+
+                foreach (var cellOnRange in cell.GetCellsOnRange(data.range.value, false))
+                {
+                    if (!cellOnRange ||
+                    cell == CellSelectionHandler.currentCellHovered ||
+                    cell == CellSelectionHandler.currentCellSelected ||
+                    !IsValidPlacement(cellOnRange)) continue;
+
+                    //Draw an outline on every valid cell
+                    if (cellOnRange.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
+                    {
+                        cellSelectionHandler.DrawOutline(rangeOutline);
+                        cellSelectionHandler.ToggleOutline(true);
+                        validCells.Add(cellOnRange);
+                    }
+                }
+            }
+
+        }//Closes DrawPlaceableCells method
+
+        private void EraseValidCells()
+        {
+            //Undraws Previous range
+            foreach (var cell in validCells)
+            {
+                if (!cell || cell == CellSelectionHandler.currentCellHovered || cell == CellSelectionHandler.currentCellSelected) continue;
+
+                if (cell.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
+                {
+                    cellSelectionHandler.ToggleOutline(false);
+                }
+            }
+
+        }//Closes s method
+        private void OnDestroy()
+        {
+            EraseValidCells();
+        }//Closes OnDestroy method
+
+
+    }//Closes AncientForce class
+}//Closes Namespace declaration

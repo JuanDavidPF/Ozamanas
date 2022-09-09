@@ -58,7 +58,7 @@ namespace Ozamanas.Board
             CellSelectionHandler.currentCellSelected = null;
         }//Closes DeselectSelectedCell method
 
-        private void AddCellToBoard(Cell cell)
+        public void AddCellToBoard(Cell cell)
         {
             if (!cell) return;
 
@@ -162,6 +162,27 @@ namespace Ozamanas.Board
             else
                 return null;
         }
+
+
+        public static List<Cell> GetNearestsCellInRange(float3 origin, int range, params CellData[] datas)
+        {
+
+            if (datas.Equals(null)) return null;
+            List<Cell> cellsByData = GetCellsByData(datas);
+
+
+            cellsByData.Sort((Cell cellA, Cell cellB) =>
+             {
+                 int OriginToA = cellA.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+                 int OriginToB = cellB.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+                 return OriginToA - OriginToB;
+             });
+
+
+            return cellsByData;
+        }//Closes GetNearestsCellInRange method
+
+
 
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {

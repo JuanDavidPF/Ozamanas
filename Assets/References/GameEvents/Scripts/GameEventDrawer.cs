@@ -17,6 +17,7 @@ namespace JuanPayan.References
             if (GUILayout.Button("Invoke Event", GUILayout.Height(40))) gameEvent.Invoke();
 
 
-        }
+        }//Closes OnInspectorGUI method
+
     }//Closes GameEvent class
 }//Closes Namespace declaration

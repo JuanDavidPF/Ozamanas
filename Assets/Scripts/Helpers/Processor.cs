@@ -10,8 +10,10 @@ namespace JuanPayan.Helpers
 
         public UnityEvent processes;
 
+        [ContextMenu("Execute Processor")]
         public override void Behaviour()
         {
+
             processes?.Invoke();
 
         }//Closes Behaviour Implementations
