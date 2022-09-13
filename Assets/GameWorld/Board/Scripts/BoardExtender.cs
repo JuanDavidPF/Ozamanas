@@ -42,6 +42,25 @@ namespace Ozamanas.Board
             return new int3(x, y, z);
         }//Close ToAxial method
 
+        public static int3 RoundAxialVector(this float3 unroundedAxial)
+        {
+
+            int x = (int)math.round(unroundedAxial.x);
+            int y = (int)math.round(unroundedAxial.y);
+            int z = (int)math.round(unroundedAxial.z);
+
+            float x_diff = math.abs(x - unroundedAxial.x);
+            float y_diff = math.abs(y - unroundedAxial.y);
+            float z_diff = math.abs(z - unroundedAxial.z);
+
+            if (x_diff > y_diff && x_diff > z_diff) x = -y - z;
+            else if (y_diff > z_diff) y = -x - z;
+            else z = -x - y;
+
+            return new int3(x, y, z);
+        }//closes AxialToGrid method
+
+
         public static int3 UnityToGrid(this float3 unityVector)
         {
             Board board = Board.reference;
@@ -51,6 +70,23 @@ namespace Ozamanas.Board
 
             return board.grid.WorldToCell(unityVector).ToInt3();
         }//Close ToAxial method
+
+
+        public static float3 ToFloat(this int3 intVector)
+        {
+            Board board = Board.reference;
+            return new float3((float)intVector.x, (float)intVector.y, (float)intVector.z);
+        }//Close ToAxial method
+
+
+
+        public static int3 ToInt(this float3 floatVector)
+        {
+            Board board = Board.reference;
+            return new int3((int)floatVector.x, (int)floatVector.y, (int)floatVector.z);
+        }//Close ToAxial method
+
+
 
         public static float3 GridToUnity(this int3 gridVector)
         {

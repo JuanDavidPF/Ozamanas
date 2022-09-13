@@ -40,93 +40,98 @@ namespace Ozamanas.Forces
         [SerializeField] private ExpansionMode mode;
         [SerializeField] private bool fillPath;
         [SerializeField] private List<ExpansionRules> ruleList = new List<ExpansionRules>();
-        [SerializeField] private FloatReference reptileSpeed;
-
+        [SerializeField] private FloatReference speed;
+        [SerializeField] private float jumpHeight;
+        int3 reptileOrigin;
+        int3 reptileDestiny;
+        private List<int3> reptilePath = new List<int3>();
 
         private void Expand()
         {
-            Cell destinyCell = null;
+            if (!CellSelectionHandler.currentCellHovered) return;
 
-            if (CellSelectionHandler.currentCellHovered) destinyCell = CellSelectionHandler.currentCellHovered.cellReference;
+            Cell destinyCell = CellSelectionHandler.currentCellHovered.cellReference;
+            reptileDestiny = destinyCell.gridPosition;
+            Cell originCell = Board.Board.GetNearestCellInRange(destinyCell.worldPosition, data.range.value, data.rangeAnchors.ToArray());
+            if (!originCell) return;
 
-            if (!destinyCell) return;
+            reptileOrigin = originCell.gridPosition;
 
-            float3 reptileDestiny = destinyCell.worldPosition;
-            reptileDestiny.y = .5f;
+            transform.position = reptileOrigin.GridToUnity();
 
+            switch (mode)
+            {
+                case ExpansionMode.Jump:
+                    if (fillPath)
+                    {
+                        reptilePath = Board.Board.CellsOnLine(reptileOrigin, destinyCell.gridPosition);
+                        //Remove origin from path   
+                        if (reptilePath.Count > 0)
+                            reptilePath.RemoveAt(0);
+                    }
 
-            Cell nearestCell = Board.Board.GetNearestCellInRange(destinyCell.worldPosition, data.range.value, data.rangeAnchors.ToArray());
-            if (!nearestCell) return;
+                    //Add destiny to path, jump always will be able to reach destiny
+                    if (!reptilePath.Contains(destinyCell.gridPosition)) reptilePath.Add(destinyCell.gridPosition);
 
-            float3 reptileOrigin = nearestCell.worldPosition;
+                    break;
 
+                case ExpansionMode.Throw:
 
+                    reptilePath = Board.Board.CellsOnLine(reptileOrigin, destinyCell.gridPosition);
 
-            if (mode == ExpansionMode.Jump) Jump(reptileOrigin, reptileDestiny);
-            else if (mode == ExpansionMode.Throw) Throw();
+                    //Remove origin from path   
+                    if (reptilePath.Count > 0)
+                    {
+                        reptilePath.RemoveAt(0);
 
+                        if (reptilePath.Count > 0)
+                            reptileDestiny = reptilePath[reptilePath.Count - 1];
+                    }
+                    break;
+
+            }
+
+            Jump();
 
         }//Closes Expand method
 
         Tween reptileTween;
-        private void Jump(Vector3 from, Vector3 to)
+        private void Jump()
         {
+            if (reptilePath.Count == 0) return;
             if (reptileTween != null) reptileTween.Kill();
+
+
+            float3 positionReference = transform.position;
+
             reptileTween = DOTween.To(setter: value =>
                        {
-                           transform.position = Parabol.EvaluateParabole(from, to, 1.5f, value);
-                       }, startValue: 0, endValue: 1, duration: reptileSpeed.value)
-               .SetSpeedBased(true)
-               .OnComplete(() =>
-               {
-                   Cell destiny = Board.Board.GetCellByPosition(to);
-                   if (!destiny) return;
-
-                   ExpansionRules expRule = ruleList.Find(rule => rule.condition == destiny.data);
-
-                   if (expRule.mode == MutationMode.SwapCell)
-                   {
-                       if (!expRule.cellToSwap) return;
-                       Cell newCell = Instantiate(expRule.cellToSwap, Board.Board.reference.transform);
-                       if (!newCell) return;
-
-                       newCell.transform.position = destiny.worldPosition;
-
-                       Board.Board.reference.AddCellToBoard(newCell);
-                       if (newCell.TryGetComponent(out Animator cellAnimator)) cellAnimator.Play("Idle");
-
-                   }
-                   else if (expRule.mode == MutationMode.SwapToken)
-                   {
-                       if (!expRule.tokenToSwap) return;
-                       destiny.data = expRule.tokenToSwap;
-                   }
-
-                   Destroy(gameObject);
-               });
+                           transform.position = Parabol.EvaluateParabole(positionReference, reptilePath[0].GridToUnity(), jumpHeight, value);
+                       }, startValue: 0, endValue: 1, duration: speed.value)
+               .SetSpeedBased(true);
 
         }//Closes Jump method
 
-        private void Throw()
-        {
 
-        }//Closes Jump method
-
+        private int placements;
         public override void FirstPlacement()
         {
             base.FirstPlacement();
             Expand();
+            placements = 1;
 
         }//Closes FirstPlacement method
 
         protected override void SecondPlacement()
         {
             base.SecondPlacement();
+            placements = 2;
         }//Closes SecondPlacement method
 
         protected override void ThirdPlacement()
         {
             base.ThirdPlacement();
+            placements = 3;
         }//Closes SecondPlacement method
 
 
@@ -138,9 +143,60 @@ namespace Ozamanas.Forces
             return true;
         }//Closes IsValidPlacement method
 
-
-        private void OnDestroy()
+        private bool TryMutateCell(Cell cell)
         {
+
+            if (!cell || !IsValidPlacement(cell)) return false;
+
+            if (mode == ExpansionMode.Throw && !fillPath && !cell.gridPosition.Equals(reptileDestiny)) return true;
+
+            ExpansionRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if (expRule.mode == MutationMode.SwapCell)
+            {
+                if (!expRule.cellToSwap) return false;
+                Cell newCell = Instantiate(expRule.cellToSwap, Board.Board.reference.transform);
+                if (!newCell) return false;
+
+                newCell.transform.position = cell.worldPosition;
+
+                Board.Board.reference.AddCellToBoard(newCell);
+                if (newCell.TryGetComponent(out Animator cellAnimator)) cellAnimator.Play("Idle");
+
+            }
+            else if (expRule.mode == MutationMode.SwapToken)
+            {
+                if (!expRule.tokenToSwap) return false;
+                cell.data = expRule.tokenToSwap;
+            }
+
+            return true;
+        }//Closes MutateCell method
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!isPlaced) return;
+            Cell cellArrived = other.transform.GetComponentInParent<Cell>();
+
+            if (!cellArrived
+            || cellArrived.gridPosition.Equals(reptileOrigin)
+            || (reptilePath.Count > 0 && !cellArrived.gridPosition.Equals(reptilePath[0]))) return;
+
+            if (reptileTween != null) reptileTween.Kill();
+
+            reptilePath.Remove(cellArrived.gridPosition);
+
+            if (!TryMutateCell(cellArrived)) if (mode == ExpansionMode.Throw) Destroy(gameObject);
+
+            if (!cellArrived.gridPosition.Equals(reptileDestiny)) Jump();
+            else Destroy(gameObject);
+
+        }//Closes OnTriggerEnter method
+
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
             if (reptileTween != null) reptileTween.Kill();
         }//Closes OnDestroy method
 

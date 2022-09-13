@@ -17,6 +17,10 @@ namespace Ozamanas.Energy
         private EnergyGenerator generatorReference;
 
         [SerializeField] private Transform liquid;
+        [SerializeField] private string liquidColorKey;
+        [SerializeField] private Color inactiveColor;
+        [SerializeField] private Gradient activeColor;
+        private MeshRenderer liquidRenderer;
         private float scaleMultiplier;
 
         [Space(15)]
@@ -31,8 +35,10 @@ namespace Ozamanas.Energy
             generatorReference = GetComponent<EnergyGenerator>();
 
             generatorReference.StopGeneration();
-            if (liquid) scaleMultiplier = liquid.transform.localScale.y;
 
+            if (liquid) scaleMultiplier = liquid.transform.localScale.y;
+            if (liquid) liquidRenderer = liquid.GetComponent<MeshRenderer>();
+            SetLiquidColor(inactiveColor);
         }//Closes Awake methods
 
 
@@ -45,6 +51,8 @@ namespace Ozamanas.Energy
 
             float normalizedLevel = (float)level
                                      / (float)generatorReference.fullLevel.value;
+
+            SetLiquidColor(activeColor.Evaluate(normalizedLevel));
 
             liquid.DOScaleY(normalizedLevel * scaleMultiplier, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
 
@@ -64,9 +72,22 @@ namespace Ozamanas.Energy
 
             if (data == emptyID) generatorReference.currentLevel = 0;
             else if (data == activeID) generatorReference.ResumeGeneration();
-            else if (data == inactiveID) generatorReference.StopGeneration();
+            else if (data == inactiveID)
+            {
+                generatorReference.StopGeneration();
+                SetLiquidColor(inactiveColor);
+            }
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
+
+
+        private void SetLiquidColor(Color color)
+        {
+            if (!liquidRenderer) return;
+            liquidRenderer.material.SetColor(liquidColorKey, color);
+        }//Closes SetLiquidColor method
+
+
 
     }//Closes EnergyPool class
 }//Closes Namespace declaration

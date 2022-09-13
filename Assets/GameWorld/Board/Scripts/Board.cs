@@ -182,7 +182,44 @@ namespace Ozamanas.Board
             return cellsByData;
         }//Closes GetNearestsCellInRange method
 
+        public static List<int3> CellsOnLine(int3 origin, int3 destiny)
+        {
+            List<int3> listToReturn = new List<int3>();
+            if (!reference) return listToReturn;
 
+            int3 originAxial = origin.GridToAxial();
+            int3 destinyAxial = destiny.GridToAxial();
+
+
+
+            int distance = origin.DistanceTo(destiny);
+
+            float step = 0;
+
+            for (int i = 0; i < distance; i++)
+            {
+
+                step = 1f / distance * i;
+
+                int3 position = new float3(
+                   originAxial.x + (destinyAxial.x - originAxial.x) * step,
+                 originAxial.y + (destinyAxial.y - originAxial.y) * step,
+                    originAxial.z + (destinyAxial.z - originAxial.z) * step
+                ).RoundAxialVector();
+
+                if (reference.cellsByGridPosition.TryGetValue(position.AxialToGrid(), out Cell cell))
+                {
+                    listToReturn.Add(cell.gridPosition);
+                    if (i == distance - 1) listToReturn.Add(destiny);
+                }
+                else break;
+
+                if (!cell) break;
+            }
+
+            return listToReturn;
+
+        }//Closes LineBetweenCell method
 
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {

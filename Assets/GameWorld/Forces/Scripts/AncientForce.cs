@@ -10,6 +10,7 @@ namespace Ozamanas.Forces
 {
     public abstract class AncientForce : MonoBehaviour
     {
+        public bool isPlaced;
         public enum PlacementMode
         {
             SinglePlacement,
@@ -68,7 +69,10 @@ namespace Ozamanas.Forces
             if (placementMode != PlacementMode.SinglePlacement) return;
 
             if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+            {
                 OnSuccesfulPlacement?.Invoke(this);
+                isPlaced = true;
+            }
 
             else OnFailedPlacement?.Invoke(this);
             EraseValidCells();
@@ -79,8 +83,10 @@ namespace Ozamanas.Forces
             if (placementMode != PlacementMode.DoublePlacement) return;
 
             if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+            {
                 OnSuccesfulPlacement?.Invoke(this);
-
+                isPlaced = true;
+            }
             else OnFailedPlacement?.Invoke(this);
             EraseValidCells();
         }//Closes SecondPlacement method
@@ -90,7 +96,10 @@ namespace Ozamanas.Forces
             if (placementMode != PlacementMode.TriplePlacement) return;
 
             if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+            {
                 OnSuccesfulPlacement?.Invoke(this);
+                isPlaced = true;
+            }
 
             else OnFailedPlacement?.Invoke(this);
             EraseValidCells();
@@ -160,7 +169,7 @@ namespace Ozamanas.Forces
             }
 
         }//Closes s method
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             EraseValidCells();
         }//Closes OnDestroy method

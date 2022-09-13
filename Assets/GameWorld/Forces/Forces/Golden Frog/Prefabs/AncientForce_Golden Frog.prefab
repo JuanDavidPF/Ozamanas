@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a717e209d014e042b619c82c9761037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaced: 0
   data: {fileID: 11400000, guid: 3d4d22e462999c74bb6bc38a717a41a0, type: 2}
   draggedOffset: {x: 0, y: 1, z: 0}
   snapToGrid: 1
@@ -136,7 +137,8 @@ MonoBehaviour:
     condition: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
     cellToSwap: {fileID: 0}
     tokenToSwap: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
-  reptileSpeed:
+  speed:
     useConstant: 1
-    constantValue: 1
+    constantValue: 2
     variable: {fileID: 0}
+  jumpHeight: 0.4
