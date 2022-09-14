@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Extenders;
 using DG.Tweening;
+using Ozamanas.Board;
+
 namespace Ozamanas.Forces
 {
 
@@ -10,13 +12,20 @@ namespace Ozamanas.Forces
     public class OffensiveBird : AncientForce
     {
 
+        private enum OffensiveMode
+        {
+            Hitscan,
+            Projectile
+        }
+
+
 
         private Transform AOETransform;
 
         List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
         private Tween roosterTween;
 
-
+        [SerializeField] private OffensiveMode mode;
         [SerializeField] private float roosterSpeed = 2f;
         [SerializeField] private int damageAmount;
         [SerializeField] private Vector3 elevationForce;
@@ -37,6 +46,19 @@ namespace Ozamanas.Forces
 
             AOERenderer.gameObject.SetActive(false);
             roosterTween = transform.DOMoveY(0, roosterSpeed, false).SetSpeedBased();
+
+            if (mode == OffensiveMode.Hitscan)
+                roosterTween.OnComplete(() =>
+                {
+                    foreach (var machine in machinesAffected.ToArray())
+                    {
+                        if (!machine) continue;
+                        AttackMachine(machine);
+                    }
+
+                    Destroy(gameObject);
+                });
+
         }//Closes FirstPlacement method
 
 
@@ -102,32 +124,45 @@ namespace Ozamanas.Forces
 
         private void OnCollisionEnter(Collision other)
         {
+            if (mode != OffensiveMode.Projectile) return;
 
             if (!isPlaced || (other.transform.tag != "Machine" && other.transform.tag != "Cell")) return;
 
-            if (other.transform.TryGetComponent(out Machines.MachineArmor armor))
+
+            if (other.transform.TryGetComponent(out Machines.MachineArmor machine))
             {
-                armor.TakeDamage(damageAmount);
+                AttackMachine(machine);
             }
-
-
-            if (other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))
-            {
-                physics.ActivatePhysics(true);
-                if (physics.rb)
-                {
-                    physics.rb.AddForce(other.transform.up + elevationForce, ForceMode.Impulse);
-                    physics.rb.AddTorque(torqueForce, ForceMode.Impulse);
-                }
-            }
-
 
             Destroy(gameObject);
         }//Closes OnCollisionEnter method
 
 
+        private void AttackMachine(Machines.MachineArmor machine)
+        {
+            if (!machine || machine.tag != "Machine") return;
+
+            machine.TakeDamage(damageAmount);
+            machinesAffected.Remove(machine);
+
+
+
+            if (machine.TryGetComponent(out Machines.MachinePhysicsManager physics))
+            {
+                physics.ActivatePhysics(true);
+                if (physics.rb)
+                {
+                    physics.rb.AddForce(machine.transform.up + elevationForce, ForceMode.Impulse);
+                    physics.rb.AddTorque(torqueForce, ForceMode.Impulse);
+                }
+            }
+
+        }//Closes AttemptMachineDamage method
+
+
+
+
+
 
     }//Closes OffensiveBird class
-
-
 }//closes Namespace declaration
