@@ -9,7 +9,7 @@ using JuanPayan.References;
 using JuanPayan.Utilities;
 namespace Ozamanas.Forces
 {
-    public class ExpansionReptile : AncientForce
+    public class ExpansionAmphibian : AncientForce
     {
         public enum MutationMode
         {

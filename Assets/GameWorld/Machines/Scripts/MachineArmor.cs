@@ -16,6 +16,7 @@ namespace Ozamanas.Machines
             get { return m_armorPoints; }
             set
             {
+
                 m_armorPoints = value;
                 OnArmorChanged?.Invoke(value);
             }

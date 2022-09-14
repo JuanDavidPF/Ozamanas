@@ -50,6 +50,7 @@ namespace Ozamanas.Forces
             if (!Board.CellSelectionHandler.currentCellHovered || !snapToGrid)
             {
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
                 draggedPosition = (ray.origin + ray.direction * Mathf.Abs(cam.transform.position.z));
                 if (!snapToGrid) draggedPosition += draggedOffset;
             }

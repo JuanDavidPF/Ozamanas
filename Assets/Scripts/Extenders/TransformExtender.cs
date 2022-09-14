@@ -15,6 +15,18 @@ namespace Ozamanas.Extenders
             }
         }//Close ToVector method
 
+        public static bool TryGetComponentInParent<T>(this Component transform, out T component)
+        {
+            component = transform.GetComponentInParent<T>();
+            return component != null;
+        }//Close TryGetComponentInParent method
+
+
+        public static bool TryGetComponentInChildren<T>(this Component transform, out T component)
+        {
+            component = transform.GetComponentInChildren<T>();
+            return component != null;
+        }//Close TryGetComponentInChildren method
 
     }//Closes TransformExtender class
 }//Closes Namespace declaration
