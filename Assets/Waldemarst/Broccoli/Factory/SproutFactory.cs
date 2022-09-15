@@ -30,6 +30,11 @@ namespace Broccoli.Factory
 		/// True if this instance has been initialized.
 		/// </summary>
 		bool isInit = false;
+		[SerializeField]
+		/// <summary>
+		/// Branch collection description.
+		/// </summary>
+		BranchDescriptorCollection _branchDescriptorCollection;
 		/// <summary>
 		/// Pipeline containing the definition on how to build a tree.
 		/// </summary>
@@ -45,6 +50,16 @@ namespace Broccoli.Factory
 		#endregion
 
 		#region Accessors
+		/// <summary>
+		/// Gets the loaded BranchDescriptorCollection instance.
+		/// </summary>
+		/// <value>The local branch description collection.</value>
+		public BranchDescriptorCollection branchDescriptorCollection {
+			get { return _branchDescriptorCollection; }
+			set {
+				_branchDescriptorCollection = value;
+			}
+		}
 		/// <summary>
 		/// Access to the local pipeline.
 		/// </summary>

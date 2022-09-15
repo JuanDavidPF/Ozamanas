@@ -849,6 +849,7 @@ namespace Broccoli.NodeEditorFramework.Utilities
 
 			// Setup
 			SetupLineMat (tex, col);
+			/*
 			GL.Begin (GL.TRIANGLE_STRIP);
 			GL.Color (Color.white);
 			// Fetch clipping rect
@@ -863,6 +864,20 @@ namespace Broccoli.NodeEditorFramework.Utilities
 				DrawLineSegment (endPos, perpWidthOffset);
 			}
 			// Finalize drawing
+			GL.End ();
+			*/
+			/*
+			GL.Begin (GL.LINES);
+			GL.Color (col);
+			GL.Vertex (startPos);
+			GL.Vertex (endPos);
+			GL.End ();
+			*/
+			GL.Begin (GL.TRIANGLE_STRIP);
+			GL.Color (col);
+			Vector2 perpWidthOffset = CalculateLinePerpendicular (startPos, endPos) * width / 2;
+			DrawLineSegment (startPos, perpWidthOffset);
+			DrawLineSegment (endPos, perpWidthOffset);
 			GL.End ();
 		}
 

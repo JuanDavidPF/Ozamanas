@@ -101,12 +101,16 @@ namespace Broccoli.Pipe {
 		/// </summary>
 		[Range (0,1)]
 		public float strength = 0.3f;
-		[Range (6, 30)]
-		public int minPolygonSides = 6;
-		[Range (6, 30)]
-		public int maxPolygonSides = 24;
-		[Range (0.01f, 0.4f)]
-		public float lengthPosResolution = 0.1f;
+		/// <summary>
+		/// Resolution factor to increase the number of sides in a cross section of the trunk mesh.
+		/// </summary>
+		[Range (1f,3f)]
+		public float radialResolutionFactor = 1f;
+		/// <summary>
+		/// Resolution factor to increate the number of sections in the trunk range length.
+		/// </summary>
+		[Range (1f,4f)]
+		public float lengthResolutionFactor = 1f;
 		#endregion
 
 		#region Constructors
@@ -136,9 +140,8 @@ namespace Broccoli.Pipe {
 			clone.maxDisplacementScaleAtBase = maxDisplacementScaleAtBase;
 			clone.scaleCurve = new AnimationCurve(scaleCurve.keys);
 			clone.strength = strength;
-			clone.minPolygonSides = minPolygonSides;
-			clone.maxPolygonSides = maxPolygonSides;
-			clone.lengthPosResolution = lengthPosResolution;
+			clone.radialResolutionFactor = radialResolutionFactor;
+			clone.lengthResolutionFactor = lengthResolutionFactor;
 			return clone;
 		}
 		#endregion

@@ -19,7 +19,7 @@ using Broccoli.NodeEditorFramework;
 using Broccoli.NodeEditorFramework.Utilities;
 using Broccoli.Serialization;
 
-namespace Broccoli.TreeNodeEditor
+namespace Broccoli.BroccoEditor
 {
 	/// <summary>
 	/// Tree factory editor window.
@@ -120,7 +120,7 @@ namespace Broccoli.TreeNodeEditor
 		/// <param name="sproutFactory">Tree factory.</param>
 		public static SproutFactoryEditorWindow OpenSproutFactoryWindow (SproutFactory sproutFactory = null) 
 		{
-			GUITextureManager.Init ();
+			GUITextureManager.Init (true);
 			GetWindow ();
 
 			if (EditorApplication.isPlayingOrWillChangePlaymode && !GlobalSettings.useTreeEditorOnPlayMode) {
@@ -239,6 +239,7 @@ namespace Broccoli.TreeNodeEditor
 			EditorLoadingControl.justLeftPlayMode -= OnJustLeftPlayMode;
 			EditorLoadingControl.justOpenedNewScene -= OnJustOpenedNewScene;
 
+			sproutLabEditor.OnDisable ();
 			sproutLabEditor = null;
 
 			GUITextureManager.Clear ();
@@ -278,6 +279,10 @@ namespace Broccoli.TreeNodeEditor
 			sproutLabEditor.onBeforeBranchDescriptorChange += OnSproutLabBeforeChange;
 			sproutLabEditor.onBranchDescriptorChange -= OnSproutLabChange;
 			sproutLabEditor.onBranchDescriptorChange += OnSproutLabChange;
+			sproutLabEditor.onBeforeVariationDescriptorChange -= OnSproutLabBeforeChange;
+			sproutLabEditor.onBeforeVariationDescriptorChange += OnSproutLabBeforeChange;
+			sproutLabEditor.onVariationDescriptorChange -= OnSproutLabChange;
+			sproutLabEditor.onVariationDescriptorChange += OnSproutLabChange;
 			sproutLabEditor.onShowNotification -= OnShowNotification;
 			sproutLabEditor.onShowNotification += OnShowNotification;
 		}
@@ -289,14 +294,14 @@ namespace Broccoli.TreeNodeEditor
 		void OnSproutLabChange (BranchDescriptorCollection branchDescriptorCollection) {
 			int group = Undo.GetCurrentGroup();
 			Undo.CollapseUndoOperations( group );
-			sproutFactory.localPipeline.branchDescriptorCollection = branchDescriptorCollection;
+			sproutFactory.branchDescriptorCollection = branchDescriptorCollection;
 			sproutFactory.localPipeline.undoControl.undoCount++;
 			EditorUtility.SetDirty (sproutFactory);
 		}
 		void OnSproutLabUndo () {
 			if (sproutLabEditor != null) {
-				sproutFactory.localPipeline.branchDescriptorCollection.branchDescriptorIndex = sproutFactory.localPipeline.branchDescriptorCollection.lastBranchDescriptorIndex;
-				sproutLabEditor.SelectSnapshot (sproutFactory.localPipeline.branchDescriptorCollection.branchDescriptorIndex);
+				sproutFactory.branchDescriptorCollection.branchDescriptorIndex = sproutFactory.branchDescriptorCollection.lastBranchDescriptorIndex;
+				sproutLabEditor.SelectSnapshot (sproutFactory.branchDescriptorCollection.branchDescriptorIndex);
 				sproutLabEditor.ReflectChangesToPipeline ();
 				sproutLabEditor.RegeneratePreview ();
 			}
@@ -313,8 +318,8 @@ namespace Broccoli.TreeNodeEditor
 		private void DrawSproutLabPanel (Rect windowRect) {
 			if (sproutLabEditor == null) {
 				InitSproutLab ();
-				if (sproutLabEditor.branchDescriptorCollection != sproutFactory.localPipeline.branchDescriptorCollection) {
-					sproutLabEditor.LoadBranchDescriptorCollection (sproutFactory.localPipeline.branchDescriptorCollection, sproutFactory.GetSproutSubFactory ());
+				if (sproutLabEditor.branchDescriptorCollection != sproutFactory.branchDescriptorCollection) {
+					sproutLabEditor.LoadBranchDescriptorCollection (sproutFactory.branchDescriptorCollection, sproutFactory.GetSproutSubFactory ());
 				}
 			}
 			//verticalSplitView.BeginSplitView ();

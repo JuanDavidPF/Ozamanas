@@ -261,8 +261,8 @@ namespace Broccoli.Manager
 					baseTexture.width,
 					baseTexture.height,
 					1,
-					RenderTextureFormat.Default,
-					RenderTextureReadWrite.Linear);
+					RenderTextureFormat.ARGB32,
+					RenderTextureReadWrite.sRGB);
 				// Blit the pixels on texture to the RenderTexture
 				Graphics.Blit(baseTexture, tmpRenderTexture);
 				// Backup the currently set RenderTexture

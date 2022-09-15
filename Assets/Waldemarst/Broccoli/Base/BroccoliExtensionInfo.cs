@@ -29,7 +29,7 @@ namespace Broccoli.Base
 		/// <summary>
 		/// The patch version.
 		/// </summary>
-		public static string patchVersion = "7";
+		public static string patchVersion = "8";
 		/// <summary>
 		/// The complete version string of this extension.
 		/// </summary>

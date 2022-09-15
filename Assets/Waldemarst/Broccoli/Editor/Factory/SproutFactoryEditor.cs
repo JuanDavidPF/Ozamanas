@@ -26,8 +26,8 @@ namespace Broccoli.Factory
 		/// </summary>
 		void OnEnable () {
 			sproutFactory = target as SproutFactory;
-			if (Broccoli.TreeNodeEditor.SproutFactoryEditorWindow.IsOpen ()) {
-				Broccoli.TreeNodeEditor.SproutFactoryEditorWindow.OpenSproutFactoryWindow (sproutFactory);
+			if (Broccoli.BroccoEditor.SproutFactoryEditorWindow.IsOpen ()) {
+				Broccoli.BroccoEditor.SproutFactoryEditorWindow.OpenSproutFactoryWindow (sproutFactory);
 			}
 
 			Tools.hidden = true;
@@ -89,9 +89,9 @@ namespace Broccoli.Factory
 				Debug.Log ("Opening SproutLab");
 			}
 			*/
-			EditorGUI.BeginDisabledGroup (Broccoli.TreeNodeEditor.SproutFactoryEditorWindow.IsOpen ());
+			EditorGUI.BeginDisabledGroup (Broccoli.BroccoEditor.SproutFactoryEditorWindow.IsOpen ());
 			if (GUILayout.Button ("Open Sprout Lab Window", GUILayout.Width (255))) {
-				Broccoli.TreeNodeEditor.SproutFactoryEditorWindow.OpenSproutFactoryWindow (sproutFactory);
+				Broccoli.BroccoEditor.SproutFactoryEditorWindow.OpenSproutFactoryWindow (sproutFactory);
 			}
 			EditorGUI.EndDisabledGroup ();
 		}

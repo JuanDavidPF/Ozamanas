@@ -89,9 +89,6 @@ namespace Broccoli.Manager
 			case PipelineElement.ClassType.SproutMeshGenerator:
 				factoryComponent = new SproutMeshGeneratorComponent ();
 				break;
-			case PipelineElement.ClassType.SproutLab:
-				factoryComponent = new SproutLabComponent ();
-				break;
 			case PipelineElement.ClassType.BranchMapper:
 				factoryComponent = new BranchMapperComponent ();
 				break;

@@ -264,19 +264,17 @@ namespace Broccoli.Component
 					BranchMeshBuilder.BranchSkinRange rangeAtBranchSkin = new BranchMeshBuilder.BranchSkinRange ();
 					rangeAtBranchSkin.from = 0f;
 					rangeAtBranchSkin.to = range;
-					/*
-					// Dinamyc subdivision based on the angle tolerance for the pass.
-					if (lodIndex == 1) {
-						rangeAtBranchSkin.subdivisions = 
-							(int)(Mathf.Lerp (10f, 15f, branchMeshGeneratorElement.minBranchCurveResolution) * range) * 20;
-					} else {
-						rangeAtBranchSkin.subdivisions = 
-							(int)(Mathf.Lerp (15f, 30f, branchMeshGeneratorElement.maxBranchCurveResolution) * range) * 20;
-					}
-					*/
+					
+					// Define length subdivisions.
 					rangeAtBranchSkin.subdivisions = 
-							(int)(lod.branchAngleTolerance * range) * 20;
+						(int)Mathf.Lerp (24f * trunkMeshGeneratorElement.lengthResolutionFactor * range, 
+							12f * trunkMeshGeneratorElement.lengthResolutionFactor * range, Mathf.InverseLerp (5, 45, lod.branchAngleTolerance));
+					rangeAtBranchSkin.radialResolutionFactor = trunkMeshGeneratorElement.radialResolutionFactor;
 					rangeAtBranchSkin.builderType = BranchMeshBuilder.BuilderType.Trunk;
+
+					// Define radial segments.
+					float radialStep = 1f / (float)lod.maxPolygonSides * 1.2f / trunkMeshGeneratorElement.radialResolutionFactor;
+
 					branchSkin.AddBuilderRange (rangeAtBranchSkin);
 
 					// Register branch values on the trunk mesh builder.
@@ -291,7 +289,8 @@ namespace Broccoli.Component
 						trunkMeshGeneratorElement.maxDisplacementAngleVariance,
 						Random.Range (trunkMeshGeneratorElement.minDisplacementTwirl, trunkMeshGeneratorElement.maxDisplacementTwirl),
 						trunkMeshGeneratorElement.strength, 
-						trunkMeshGeneratorElement.scaleCurve);
+						trunkMeshGeneratorElement.scaleCurve,
+						radialStep);
 				}
 			}
 		}

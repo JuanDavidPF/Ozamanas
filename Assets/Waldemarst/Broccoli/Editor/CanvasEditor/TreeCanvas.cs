@@ -12,6 +12,7 @@ using Broccoli.Utils;
 namespace Broccoli.TreeNodeEditor
 {
 	using Pipeline = Broccoli.Pipe.Pipeline;
+	using NodeCanvas = Broccoli.NodeEditorFramework.NodeCanvas;
 	/// <summary>
 	/// Tree canvas.
 	/// </summary>
@@ -278,9 +279,6 @@ namespace Broccoli.TreeNodeEditor
 				break;
 			case PipelineElement.ClassType.SproutMeshGenerator:
 				baseNode = BaseNode.Create (typeof(SproutMeshGeneratorNode).ToString (), pipelineElement) as BaseNode;
-				break;
-			case PipelineElement.ClassType.SproutLab:
-				baseNode = BaseNode.Create (typeof(SproutLabNode).ToString (), pipelineElement) as BaseNode;
 				break;
 			case PipelineElement.ClassType.BranchMapper:
 				baseNode = BaseNode.Create (typeof(BranchMapperNode).ToString (), pipelineElement) as BaseNode;

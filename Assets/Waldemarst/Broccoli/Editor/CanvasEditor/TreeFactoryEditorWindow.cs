@@ -93,8 +93,7 @@ namespace Broccoli.TreeNodeEditor
 		public enum EditorView {
 			MainOptions,
 			FactoryOptions,
-			Catalog,
-			SproutsLab
+			Catalog
 		}
 		EditorView editorView = EditorView.MainOptions;
 		/*
@@ -151,10 +150,6 @@ namespace Broccoli.TreeNodeEditor
 		/// Displays the state of the loaded pipeline.
 		/// </summary>
 		private string pipelineLegend;
-		#endregion
-
-		#region Subeditors
-		private SproutLabEditor sproutLabEditor = null;
 		#endregion
 
 		#region Messages
@@ -412,8 +407,6 @@ namespace Broccoli.TreeNodeEditor
 			EditorLoadingControl.justLeftPlayMode -= OnJustLeftPlayMode;
 			EditorLoadingControl.justOpenedNewScene -= OnJustOpenedNewScene;
 
-			sproutLabEditor = null;
-
 			GUITextureManager.Clear ();
 
 			UnloadFactory ();
@@ -431,22 +424,12 @@ namespace Broccoli.TreeNodeEditor
 				    treeFactory.localPipeline.undoControl.undoCount) {
 					treeFactory.RequestPipelineUpdate ();
 				}
-				if (editorView == EditorView.SproutsLab) {
-					OnSproutLabUndo ();
-				}
 			}
 
 			// Editor view on canvas mode.
 			if (editorView == EditorView.Catalog) {
 				GUILayout.BeginArea (windowRect);
 				DrawCatalogPanel ();
-				GUILayout.EndArea ();
-				return;
-			}
-			// Editor view on Sprouts Lab mode.
-			if (editorView == EditorView.SproutsLab) {
-				GUILayout.BeginArea (windowRect);
-				DrawSproutLabPanel (windowRect);
 				GUILayout.EndArea ();
 				return;
 			}
@@ -616,34 +599,6 @@ namespace Broccoli.TreeNodeEditor
 					_factoryWindow.treeCanvas.pipeline.DeleteSproutGroup (sproutGroup.id);
 					Undo.CollapseUndoOperations( group );
 				}
-			}
-		}
-		#endregion
-
-		#region Sprout Lab
-		void InitSproutLab () {
-			sproutLabEditor = new SproutLabEditor ();
-			sproutLabEditor.onBeforeBranchDescriptorChange += OnSproutLabBeforeChange;
-			sproutLabEditor.onBranchDescriptorChange += OnSproutLabChange;
-		}
-		void OnSproutLabBeforeChange (BranchDescriptorCollection branchDescriptorCollection) {
-			Undo.SetCurrentGroupName( "Branch Descriptor Change" );
-			Undo.RecordObject (treeFactory.localPipeline, "Branch Descriptor Changed");
-			//Undo.RegisterCompleteObjectUndo (treeFactory.localPipeline, "Branch Descriptor Changed");
-		}
-		void OnSproutLabChange (BranchDescriptorCollection branchDescriptorCollection) {
-			int group = Undo.GetCurrentGroup();
-			Undo.CollapseUndoOperations( group );
-			treeFactory.localPipeline.branchDescriptorCollection = branchDescriptorCollection;
-			treeFactory.localPipeline.undoControl.undoCount++;
-			EditorUtility.SetDirty (treeFactory);
-		}
-		void OnSproutLabUndo () {
-			if (sproutLabEditor != null) {
-				treeFactory.localPipeline.branchDescriptorCollection.branchDescriptorIndex = treeFactory.localPipeline.branchDescriptorCollection.lastBranchDescriptorIndex;
-				sproutLabEditor.SelectSnapshot (treeFactory.localPipeline.branchDescriptorCollection.branchDescriptorIndex);
-				sproutLabEditor.ReflectChangesToPipeline ();
-				sproutLabEditor.RegeneratePreview ();
 			}
 		}
 		#endregion
@@ -879,15 +834,6 @@ namespace Broccoli.TreeNodeEditor
 			}
 			EditorGUILayout.EndScrollView ();
 		}
-		/// <summary>
-		/// Draws the SproutLab.
-		/// </summary>
-		private void DrawSproutLabPanel (Rect windowRect) {
-			if (sproutLabEditor == null) {
-				InitSproutLab ();
-			}
-			sproutLabEditor.Draw (windowRect);
-		}
 
 		/// <summary>
 		/// Draws the factory options panel.
@@ -1062,20 +1008,6 @@ namespace Broccoli.TreeNodeEditor
 		private void DrawSproutGroupList () {
 			//if (NodeEditorGUI.IsUsingSidePanelSkin ())
 				sproutGroupList.DoLayoutList  ();
-		}
-		/// <summary>
-		/// Displays the option to open the sprout lab editor.
-		/// </summary>
-		private void DrawOpenSproutLab () {
-			if (treeFactory.localPipeline.branchDescriptorCollection != null) {
-				if (GUILayout.Button (new GUIContent ("Open Sprout Lab"))) {
-					//if (sproutLabEditor == null) {
-					InitSproutLab ();
-					//}
-					sproutLabEditor.LoadBranchDescriptorCollection (treeFactory.localPipeline.branchDescriptorCollection, treeFactory.GetSproutFactory ());
-					SetEditorView (EditorView.SproutsLab);
-				}
-			}
 		}
 		/// <summary>
 		/// Draws the debug options.

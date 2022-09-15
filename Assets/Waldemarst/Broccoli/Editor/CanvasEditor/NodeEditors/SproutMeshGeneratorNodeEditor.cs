@@ -10,9 +10,12 @@ using Broccoli.Pipe;
 using Broccoli.Builder;
 using Broccoli.Manager;
 using Broccoli.Factory;
+using Broccoli.Utils;
+using Broccoli.BroccoEditor;
 
 namespace Broccoli.TreeNodeEditor
 {
+	using MeshPreview = Broccoli.BroccoEditor.MeshPreview;
 	/// <summary>
 	/// Sprout mesh generator node editor.
 	/// </summary>
@@ -38,26 +41,29 @@ namespace Broccoli.TreeNodeEditor
 		/// <summary>
 		/// Mesh preview utility.
 		/// </summary>
-		MeshPreview meshPreview;
-		bool meshPreviewEnabled = true;
+		MeshPreview meshPreview = null;
+		//bool meshPreviewEnabled = true;
 		Dictionary<int, Mesh> previewMeshes = new Dictionary<int, Mesh> ();
 		Dictionary<int, Material> previewMaterials = new Dictionary<int, Material> ();
-		private GUIContent previewTitleGUIContent;
+		//private GUIContent previewTitleGUIContent;
 		private static Rect scaleCurveRange = new Rect (0f, 0f, 1f, 1f);
 		//private static Rect billboardRotationCurveRange = new Rect (0f, 0f, 1f, 1f);
 		private static Rect gravityBendingCurveRange = new Rect (0f, 0f, 1f, 1f);
 		SerializedProperty propSproutMeshes;
 		GUIStyle pivotLabelStyle = new GUIStyle ();
 		GUIStyle gravityVectorLabelStyle = new GUIStyle ();
+		/*
 		/// <summary>
 		/// Flag to use autozoom only on the first mesh.
 		/// </summary>
 		bool autoZoomUsed = false;
+		*/
 		#endregion
 
 		#region Messages
 		private static string MSG_SPROUT_GROUP = "Sprout group this mesh group belongs to.";
 		private static string MSG_MODE = "Mode used to generate the sprouts.";
+		private static string MSG_SHAPE_MODE = "Mesh shape for the sprouts.";
 		private static string MSG_DEPTH = "Depth of the sprout mesh on its center.";
 		private static string MSG_WIDTH = "Width for the mesh plane.";
 		private static string MSG_HEIGHT = "Height for the mesh plane.";
@@ -98,6 +104,9 @@ namespace Broccoli.TreeNodeEditor
 		private static string MSG_SIDE_GRAVITY_BENDING_AT_BASE = "";
 		private static string MSG_SIDE_GRAVITY_BENDING_AT_TOP = "";
 		private static string MSG_SIDE_GRAVITY_BENDING_SHAPE = "";
+		private static string MSG_BRANCH_COLLECTION_EMPTY = "This meshing mode requires a Branch Collection Scriptable Object" +
+			" containing the definitions of the sprout meshes to populate the tree with.";
+		private static string MSG_BRANCH_COLLECTION = "The meshes to be assigned to this group will be taken from the ones defined at this Branch Collection Scriptable Object.";
 		#endregion
 
 		#region Events
@@ -124,6 +133,7 @@ namespace Broccoli.TreeNodeEditor
 			propNormalModeStrength = GetSerializedProperty ("normalModeStrength");
 
 			// Init mesh preview
+			/*
 			if (meshPreview == null) {
 				meshPreview = new MeshPreview ();
 				meshPreview.showPivot = true;
@@ -142,6 +152,7 @@ namespace Broccoli.TreeNodeEditor
 			if (previewTitleGUIContent == null) {
 				previewTitleGUIContent = new GUIContent ("Sprout Preview");
 			}
+			*/
 		}
 		/// <summary>
 		/// Raises the inspector GUI event.
@@ -217,10 +228,12 @@ namespace Broccoli.TreeNodeEditor
 				DestroyImmediate (matEnumerator.Current.Value);
 			}
 			previewMaterials.Clear ();
-			meshPreview.Clear ();
-			if (meshPreview.onDrawHandles != null) {
-				meshPreview.onDrawHandles -= OnPreviewMeshDrawHandles;
-				meshPreview.onDrawGUI -= OnPreviewMeshDrawGUI;
+			if (meshPreview != null) {
+				meshPreview.Clear ();
+				if (meshPreview.onDrawHandles != null) {
+					meshPreview.onDrawHandles -= OnPreviewMeshDrawHandles;
+					meshPreview.onDrawGUI -= OnPreviewMeshDrawGUI;
+				}
 			}
 		}
 		#endregion
@@ -253,8 +266,8 @@ namespace Broccoli.TreeNodeEditor
 					EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight), 
 					sproutGroups.GetSproutGroupColor(sproutGroupId));
 				rect.x += 22;
-				EditorGUI.LabelField (new Rect (rect.x, rect.y, 150, EditorGUIUtility.singleLineHeight), 
-					"Assigned to group " + sproutGroupId);
+				EditorGUI.LabelField (new Rect (rect.x, rect.y, 200, EditorGUIUtility.singleLineHeight), 
+					"Mesh Assigned to Sprout Group " + sproutGroupId);
 			} else {
 				rect.y += 2;
 				EditorGUI.DrawRect (new Rect (rect.x, rect.y, 
@@ -262,7 +275,7 @@ namespace Broccoli.TreeNodeEditor
 					Color.black);
 				rect.x += 22;
 				EditorGUI.LabelField (new Rect (rect.x, rect.y, 
-					150, EditorGUIUtility.singleLineHeight), "Unassigned mesh");
+					150, EditorGUIUtility.singleLineHeight), "Unassigned Mesh");
 			}
 
 			if (isActive) {
@@ -276,6 +289,7 @@ namespace Broccoli.TreeNodeEditor
 				SproutMesh sproutMeshObj = sproutMeshGeneratorNode.sproutMeshGeneratorElement.sproutMeshes [index];
 
 				// Sprout group.
+				EditorGUILayout.LabelField ("Assignation", BroccoEditorGUI.labelBoldCentered);
 				int sproutGroupIndex = EditorGUILayout.Popup ("Sprout Group",
 					sproutMeshGeneratorNode.pipelineElement.pipeline.sproutGroups.GetSproutGroupIndex (sproutMeshObj.groupId, true),
 					sproutMeshGeneratorNode.pipelineElement.pipeline.sproutGroups.GetPopupOptions (true));
@@ -290,19 +304,76 @@ namespace Broccoli.TreeNodeEditor
 				}
 				ShowHelpBox (MSG_SPROUT_GROUP);
 
-				// Mode.
-				EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("mode"));
-				SproutMesh.Mode sproutMode = sproutMeshObj.mode;
-				ShowHelpBox (MSG_MODE);
-				/*
-				if (sproutMode == SproutMesh.Mode.Billboard) {
-					EditorGUILayout.HelpBox ("Billboard meshes are only available when using the Tree Creator shader.", MessageType.Info);
+				// Meshing Mode
+				if (GlobalSettings.experimentalAdvancedSproutLab) {
+					SproutMesh.MeshingMode _meshingMode = (SproutMesh.MeshingMode)EditorGUILayout.EnumPopup ("Meshing Mode", sproutMeshObj.meshingMode);
+					if (_meshingMode != sproutMeshObj.meshingMode) {
+						sproutMeshObj.meshingMode = _meshingMode;
+						if (_meshingMode == SproutMesh.MeshingMode.Shape) {
+							sproutGroups.GetSproutGroup (sproutGroupId).branchCollection = null;
+						} else {
+							sproutGroups.GetSproutGroup (sproutGroupId).branchCollection = sproutMeshObj.branchCollection;
+						}
+					}
+					ShowHelpBox (MSG_MODE);
+					EditorGUILayout.Space ();
+					if (_meshingMode == SproutMesh.MeshingMode.Shape) {
+						DrawMeshItemShape ( sproutMeshObj,  sproutMesh,  sproutGroupId, sproutGroups);
+					} else if (_meshingMode == SproutMesh.MeshingMode.BranchCollection) {
+						DrawMeshItemBranchCollection ( sproutMeshObj,  sproutMesh,  sproutGroupId, sproutGroups);
+					}
+				} else {
+					EditorGUILayout.Space ();
+					DrawMeshItemShape ( sproutMeshObj,  sproutMesh,  sproutGroupId, sproutGroups);
 				}
-				*/
-				EditorGUILayout.Space ();
 
-				if (sproutMode != SproutMesh.Mode.Mesh) {
-					// Size and origin.
+				// Scale.
+				sproutMeshGeneratorNode.showSectionScale = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionScale, "Scale");
+				if (sproutMeshGeneratorNode.showSectionScale) {
+					EditorGUI.indentLevel++;
+					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("scaleAtTop"), 0f, 5f, "At Top");
+					ShowHelpBox (MSG_SCALE_AT_TOP);
+					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("scaleAtBase"), 0f, 5f, "At Base");
+					ShowHelpBox (MSG_SCALE_AT_BASE);
+					EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("scaleCurve"),
+						sproutGroups.GetSproutGroupColor(sproutGroupId), scaleCurveRange, new GUIContent ("Curve"));
+					ShowHelpBox (MSG_SCALE_CURVE);
+					EditorGUI.indentLevel--;
+				}
+				EditorGUILayout.EndFoldoutHeaderGroup ();
+
+				// Horizontal alignment.
+				sproutMeshGeneratorNode.showSectionHorizontalAlign = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionHorizontalAlign, "Horizontal Align");
+				if (sproutMeshGeneratorNode.showSectionHorizontalAlign) {
+					EditorGUI.indentLevel++;
+					ShowHelpBox (MSG_HORIZONTAL_ALIGN_AT_TOP);
+					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("horizontalAlignAtTop"), -1f, 1f, "At Top");
+					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("horizontalAlignAtBase"), -1f, 1f, "At Base");
+					ShowHelpBox (MSG_HORIZONTAL_ALIGN_AT_BASE);
+					EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("horizontalAlignCurve"),
+						sproutGroups.GetSproutGroupColor(sproutGroupId), scaleCurveRange, new GUIContent ("Curve"));
+					ShowHelpBox (MSG_HORIZONTAL_ALIGN_CURVE);
+					EditorGUI.indentLevel--;
+				}
+				EditorGUILayout.EndFoldoutHeaderGroup ();
+			}
+		}
+		private void DrawMeshItemShape (SproutMesh sproutMeshObj, SerializedProperty sproutMesh, int sproutGroupId, SproutGroups sproutGroups) {
+			EditorGUILayout.LabelField ("Shape for Group " + sproutGroupId, BroccoEditorGUI.labelBoldCentered);
+
+			// Shape Mode.
+			EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("shapeMode"), new GUIContent ("Mesh Shape"));
+			SproutMesh.ShapeMode sproutMode = sproutMeshObj.shapeMode;
+			ShowHelpBox (MSG_SHAPE_MODE);
+
+			if (sproutMode != SproutMesh.ShapeMode.Mesh) {
+				// Size and origin.
+				sproutMeshGeneratorNode.showSectionSize = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionSize, "Size");
+				if (sproutMeshGeneratorNode.showSectionSize) {
+					EditorGUI.indentLevel++;
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("width"), 0f, 10f);
 					ShowHelpBox (MSG_WIDTH);
 					if (!sproutMesh.FindPropertyRelative ("overrideHeightWithTexture").boolValue) {
@@ -319,62 +390,64 @@ namespace Broccoli.TreeNodeEditor
 					ShowHelpBox (MSG_PIVOT_X);
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("pivotY"), 0f, 1f);
 					ShowHelpBox (MSG_PIVOT_Y);
-					EditorGUILayout.Space ();
+					if (sproutMode == SproutMesh.ShapeMode.PlaneX) {
+						// Plane X mode.
+						EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("depth"), -3f, 3f, "Depth");
+						ShowHelpBox (MSG_DEPTH);
+					}
+					EditorGUI.indentLevel--;
 				}
-				/*
-				if (sproutMode == SproutMesh.Mode.Billboard) {
-					// Billboard mode.
-					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("billboardAtOrigin"));
-					ShowHelpBox (MSG_BILLBOARD_AT_ORIGIN);
-					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("billboardRotationAtTop"), 
-						-4f, 4f, "Rotation at Top");
-					ShowHelpBox (MSG_BILLBOARD_ROTATION_AT_TOP);
-					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("billboardRotationAtBase"), 
-						-4f, 4f, "Rotation at Base");
-					ShowHelpBox (MSG_BILLBOARD_ROTATION_AT_BASE);
-					EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("billboardRotationCurve"),
-						sproutGroups.GetSproutGroupColor (sproutGroupId), billboardRotationCurveRange, 
-						new GUIContent ("Rotation Curve"));
-					ShowHelpBox (MSG_BILLBOARD_ROTATION_CURVE);
-				} else 
-				*/
-				if (sproutMode == SproutMesh.Mode.Mesh) {
-					// Mesh mode.
+				EditorGUILayout.EndFoldoutHeaderGroup ();
+			}
+			if (sproutMode == SproutMesh.ShapeMode.Mesh) {
+				// Mesh mode.
+				sproutMeshGeneratorNode.showSectionMesh = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionMesh, "Mesh");
+				if (sproutMeshGeneratorNode.showSectionMesh) {
+					EditorGUI.indentLevel++;
 					sproutMesh.FindPropertyRelative ("meshGameObject").objectReferenceValue =
-					EditorGUILayout.ObjectField ("Mesh", sproutMesh.FindPropertyRelative ("meshGameObject").objectReferenceValue, typeof(GameObject), false);
+					EditorGUILayout.ObjectField ("Mesh Object", sproutMesh.FindPropertyRelative ("meshGameObject").objectReferenceValue, typeof(GameObject), false);
 					ShowHelpBox (MSG_MESH);
-					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshScale"), new GUIContent ("Mesh Scale"));
+					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshScale"), new GUIContent ("Scale"));
 					ShowHelpBox (MSG_MESH_SCALE);
-					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshRotation"), new GUIContent ("Mesh Rotation"));
+					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshRotation"), new GUIContent ("Rotation"));
 					ShowHelpBox (MSG_MESH_ROTATION);
-					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshOffset"), new GUIContent ("Mesh Offset"));
+					EditorGUILayout.PropertyField (sproutMesh.FindPropertyRelative ("meshOffset"), new GUIContent ("Offset"));
 					ShowHelpBox (MSG_MESH_OFFSET);
-				} else if (sproutMode == SproutMesh.Mode.PlaneX) {
-					// Plane X mode.
-					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("depth"), -3f, 3f, "Depth");
-					ShowHelpBox (MSG_DEPTH);
-				} else if (sproutMode == SproutMesh.Mode.GridPlane) {
-					// Grid plane mode.
+					EditorGUI.indentLevel--;
+				}
+				EditorGUILayout.EndFoldoutHeaderGroup ();
+			} else if (sproutMode == SproutMesh.ShapeMode.GridPlane) {
+				// Grid plane resolution.
+				sproutMeshGeneratorNode.showSectionResolution = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionResolution, "Resolution");
+				if (sproutMeshGeneratorNode.showSectionResolution) {
+					EditorGUI.indentLevel++;
 					EditorGUILayout.IntSlider (sproutMesh.FindPropertyRelative ("resolutionWidth"), 1, 10, "Grid Width Resolution");
 					ShowHelpBox (MSG_RESOLUTION_WIDTH);
 					EditorGUILayout.IntSlider (sproutMesh.FindPropertyRelative ("resolutionHeight"), 1, 10, "Grid Height Resolution");
 					ShowHelpBox (MSG_RESOLUTION_HEIGHT);
-					EditorGUILayout.Space ();
+					EditorGUI.indentLevel--;
+				}
+				EditorGUILayout.EndFoldoutHeaderGroup ();
+
+				sproutMeshGeneratorNode.showSectionGravityBending = 
+					EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionGravityBending, "Gravity Bending");
+				if (sproutMeshGeneratorNode.showSectionGravityBending) {
+					EditorGUI.indentLevel++;
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("gravityBendingAtBase"), 
-						-1f, 1f, "Gravity Bending at Base");
+						-1f, 1f, "Bending at Base");
 					ShowHelpBox (MSG_GRAVITY_BENDING_AT_BASE);
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("gravityBendingAtTop"), 
-						-1f, 1f, "Gravity Bending at Top");
+						-1f, 1f, "Bending at Top");
 					ShowHelpBox (MSG_GRAVITY_BENDING_AT_TOP);
 					EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("gravityBendingCurve"),
 						sproutGroups.GetSproutGroupColor (sproutGroupId), gravityBendingCurveRange, 
-						new GUIContent ("Gravity Bending Curve"));
+						new GUIContent ("Bending Curve"));
 					ShowHelpBox (MSG_GRAVITY_BENDING_CURVE);
-					EditorGUILayout.Space ();
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("gravityBendingMultiplierAtMiddle"), 
 						-1f, 1f, "Bending Middle Multiplier");
 					ShowHelpBox (MSG_GRAVITY_BENDING_MULTIPLIER_AT_MIDDLE);
-					EditorGUILayout.Space ();
 					EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("sideGravityBendingAtBase"), 
 						-1f, 1f, "Side Gravity at Base");
 					ShowHelpBox (MSG_SIDE_GRAVITY_BENDING_AT_TOP);
@@ -383,30 +456,52 @@ namespace Broccoli.TreeNodeEditor
 					ShowHelpBox (MSG_SIDE_GRAVITY_BENDING_AT_BASE);
 					EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("sideGravityBendingShape"),
 						sproutGroups.GetSproutGroupColor (sproutGroupId), gravityBendingCurveRange, 
-						new GUIContent ("Gravity Bending Curve"));
+						new GUIContent ("Side Bending Curve"));
 					ShowHelpBox (MSG_SIDE_GRAVITY_BENDING_SHAPE);
+					EditorGUI.indentLevel--;
 				}
-
-				// Scale.
-				EditorGUILayout.Space ();
-				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("scaleAtTop"), 0f, 5f);
-				ShowHelpBox (MSG_SCALE_AT_TOP);
-				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("scaleAtBase"), 0f, 5f);
-				ShowHelpBox (MSG_SCALE_AT_BASE);
-				EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("scaleCurve"),
-					sproutGroups.GetSproutGroupColor(sproutGroupId), scaleCurveRange);
-				ShowHelpBox (MSG_SCALE_CURVE);
-
-				// Horizontal alignment.
-				EditorGUILayout.Space ();
-				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("horizontalAlignAtTop"), -1f, 1f);
-				ShowHelpBox (MSG_HORIZONTAL_ALIGN_AT_TOP);
-				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("horizontalAlignAtBase"), -1f, 1f);
-				ShowHelpBox (MSG_HORIZONTAL_ALIGN_AT_BASE);
-				EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("horizontalAlignCurve"),
-					sproutGroups.GetSproutGroupColor(sproutGroupId), scaleCurveRange);
-				ShowHelpBox (MSG_HORIZONTAL_ALIGN_CURVE);
+				EditorGUILayout.EndFoldoutHeaderGroup ();
 			}
+		}
+		private void DrawMeshItemBranchCollection (SproutMesh sproutMeshObj, SerializedProperty sproutMesh, int sproutGroupId, SproutGroups sproutGroups) {
+			SerializedProperty propBranchCollection = sproutMesh.FindPropertyRelative ("branchCollection");
+			ScriptableObject former = (ScriptableObject)propBranchCollection.objectReferenceValue;
+			former = 
+				(ScriptableObject)EditorGUILayout.ObjectField (
+					"Branch Collection", 
+					former,
+					typeof (BranchDescriptorCollectionSO),
+					false);
+			if (former != (ScriptableObject)propBranchCollection.objectReferenceValue) {
+				// The Branch Collection SO is set in both the SproutMesh and the SproutGroup object.
+				propBranchCollection.objectReferenceValue = former;
+				sproutGroups.GetSproutGroup (sproutGroupId).branchCollection = former;
+			}
+			if (propBranchCollection.objectReferenceValue == null) {
+				EditorGUILayout.HelpBox (MSG_BRANCH_COLLECTION_EMPTY, MessageType.Warning);
+			} else {
+				BranchDescriptorCollectionSO bdSO = (BranchDescriptorCollectionSO) propBranchCollection.objectReferenceValue;
+				string msg = $"{MSG_BRANCH_COLLECTION}\nBranch definitions: {bdSO.branchDescriptorCollection.branchDescriptors.Count}";
+				EditorGUILayout.HelpBox (msg, MessageType.None);
+			}
+			EditorGUILayout.Space ();
+			sproutMeshGeneratorNode.showSectionGravityBending = 
+				EditorGUILayout.BeginFoldoutHeaderGroup (sproutMeshGeneratorNode.showSectionGravityBending, "Gravity Bending");
+			if (sproutMeshGeneratorNode.showSectionGravityBending) {
+				EditorGUI.indentLevel++;
+				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("gravityBendingAtBase"), 
+					-1f, 1f, "At Base");
+				ShowHelpBox (MSG_GRAVITY_BENDING_AT_BASE);
+				EditorGUILayout.Slider (sproutMesh.FindPropertyRelative ("gravityBendingAtTop"), 
+					-1f, 1f, "At Top");
+				ShowHelpBox (MSG_GRAVITY_BENDING_AT_TOP);
+				EditorGUILayout.CurveField (sproutMesh.FindPropertyRelative ("gravityBendingCurve"),
+					sproutGroups.GetSproutGroupColor (sproutGroupId), gravityBendingCurveRange, 
+					new GUIContent ("Bending Curve"));
+				ShowHelpBox (MSG_GRAVITY_BENDING_CURVE);
+				EditorGUI.indentLevel--;
+			}
+			EditorGUILayout.EndFoldoutHeaderGroup ();
 		}
 		/// <summary>
 		/// Raises the select mesh item event.
@@ -452,24 +547,22 @@ namespace Broccoli.TreeNodeEditor
 		/// </summary>
 		/// <returns><c>true</c> if this instance has preview GU; otherwise, <c>false</c>.</returns>
 		public override bool HasPreviewGUI () {
+			/*
 			if (sproutMeshGeneratorNode.selectedToolbar == 1) return false;
 			if (meshPreviewEnabled &&
 				sproutMeshGeneratorNode.sproutMeshGeneratorElement.sproutMeshes.Count > 0 &&
 				sproutMeshGeneratorNode.sproutMeshGeneratorElement.selectedMeshIndex > -1) {
 				int index = sproutMeshGeneratorNode.sproutMeshGeneratorElement.selectedMeshIndex;
 				SproutMesh sproutMesh = sproutMeshGeneratorNode.sproutMeshGeneratorElement.sproutMeshes [index];
-				/*
-				if (sproutMesh.mode == SproutMesh.Mode.Billboard) {
-					return false;
-				} else
-				*/
-				if (sproutMesh.mode == SproutMesh.Mode.Mesh && sproutMesh.meshGameObject == null) {
+				if (sproutMesh.shapeMode == SproutMesh.ShapeMode.Mesh && sproutMesh.meshGameObject == null) {
 					return false;
 				}
 				return true;
 			}
+			*/
 			return false;
 		}
+		/*
 		/// <summary>
 		/// Gets the preview title.
 		/// </summary>
@@ -477,6 +570,7 @@ namespace Broccoli.TreeNodeEditor
 		public override GUIContent GetPreviewTitle () {
 			return previewTitleGUIContent;
 		}
+		*/
 		/// <summary>
 		/// Raises the interactive preview GUI event.
 		/// </summary>
@@ -536,6 +630,7 @@ namespace Broccoli.TreeNodeEditor
 		/// </summary>
 		/// <param name="index">Index.</param>
 		public void ShowPreviewMesh (int index) {
+			/*
 			Mesh mesh = null;
 			Material material = null;
 			if (!previewMeshes.ContainsKey (index) || previewMeshes [index] == null) {
@@ -566,6 +661,7 @@ namespace Broccoli.TreeNodeEditor
 				autoZoomUsed = true;
 				meshPreview.CalculateZoom (mesh);
 			}
+			*/
 		}
 		/// <summary>
 		/// Draw additional handles on the mesh preview area.

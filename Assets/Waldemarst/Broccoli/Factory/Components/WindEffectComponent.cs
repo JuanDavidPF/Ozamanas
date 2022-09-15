@@ -167,12 +167,20 @@ namespace Broccoli.Component
 				treeFactory.meshManager.GetMeshesDataOfType (MeshManager.MeshData.Type.Sprout);
 			var meshDatasEnumerator = meshDatas.GetEnumerator ();
 			int sproutMeshId;
+			MeshManager.MeshData sproutMeshData;
 			while (meshDatasEnumerator.MoveNext ()) {
 				sproutMeshId = meshDatasEnumerator.Current.Key;
+				sproutMeshData = meshDatasEnumerator.Current.Value;
 				mesh = treeFactory.meshManager.GetMesh (sproutMeshId);
-				if (treeFactory.meshManager.GetMesh (sproutMeshId) != null && treeFactory.meshManager.HasMeshParts (sproutMeshId)) {
+
+				// If the mesh has mesh parts.
+				if (mesh != null && treeFactory.meshManager.HasMeshParts (sproutMeshId)) {
 					List<MeshManager.MeshPart> meshParts = treeFactory.meshManager.GetMeshParts (sproutMeshId);
 					stWindMetaBuilder.SetSproutsWindData (treeFactory.previewTree, sproutMeshId, mesh, meshParts);
+				}
+				// If the mesh has baked UV data for wind. 
+				else if (sproutMeshData.type == MeshManager.MeshData.Type.Sprout) {
+					stWindMetaBuilder.SetSproutsWindData (sproutMeshId, mesh);	
 				}
 			}
 			

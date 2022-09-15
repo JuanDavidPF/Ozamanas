@@ -67,6 +67,11 @@ namespace Broccoli.Builder
         #endregion
 
         #region Render methods
+        public void BeginUsage (GameObject target, Mesh targetMesh) {
+            _targetGameObject = target;
+            _targetMesh = targetMesh;
+            SetupCamera ();
+        }
         public void BeginUsage (GameObject target) {
             _targetGameObject = target;
             _targetMesh = _targetGameObject.GetComponent<MeshFilter> ().sharedMesh;
@@ -79,6 +84,9 @@ namespace Broccoli.Builder
             }
         }
         public Texture2D GetTexture (Plane cameraPlane, Vector3 cameraUp, string texturePath = "") {
+            return GetTexture (cameraPlane, cameraUp, _targetMesh.bounds, texturePath);
+        }
+        public Texture2D GetTexture (Plane cameraPlane, Vector3 cameraUp, Bounds bounds, string texturePath = "") {
             if (_targetGameObject == null) {
                 Debug.LogWarning ("Target mesh not set on TextureBuilder.");
             } else {
@@ -94,7 +102,7 @@ namespace Broccoli.Builder
                 _targetGameObject.SetActive (true);
                 
                 // Prepare camera
-                PositionCamera ();
+                PositionCamera (bounds);
 
                 // Render without SRP, save the render pipeline to a temp var, then assign it back after rendering
                 RenderPipelineAsset renderPipeline = GraphicsSettings.renderPipelineAsset;
@@ -208,17 +216,16 @@ namespace Broccoli.Builder
 			if (cameraGameObject != null)
 				Object.DestroyImmediate (cameraGameObject);
 		}
-        private void PositionCamera () {
+        private void PositionCamera (Bounds projectBounds) {
 			// Aspect and size of the camera.
-            Bounds projectBounds = _targetMesh.bounds;
 			camera.aspect = projectBounds.size.z / projectBounds.size.y;
             camera.orthographicSize = projectBounds.size.y / 2f;
 			// Positioning the camera.
-			float num = _targetMesh.bounds.extents.magnitude;
+			float num = projectBounds.extents.magnitude;
 			camera.nearClipPlane = num * 0.1f;
 			camera.farClipPlane = num * 2.2f;
-			cameraGameObject.transform.position = _targetMesh.bounds.center + _targetGameObject.transform.position + _cameraPlane.normal * num;
-			cameraGameObject.transform.LookAt (_targetMesh.bounds.center + _targetGameObject.transform.position, _cameraUp);
+			cameraGameObject.transform.position = projectBounds.center + _targetGameObject.transform.position + _cameraPlane.normal * num;
+			cameraGameObject.transform.LookAt (projectBounds.center + _targetGameObject.transform.position, _cameraUp);
         }
         #endregion
     }

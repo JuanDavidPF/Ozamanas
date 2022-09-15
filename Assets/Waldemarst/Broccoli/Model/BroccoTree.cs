@@ -26,10 +26,10 @@ namespace Broccoli.Model {
 			/// </summary>
 			public int groupId = 0;
 			/// <summary>
-			/// The index of the texture area.
+			/// The index of the snapshot or area map.
 			/// </summary>
 			[System.NonSerialized]
-			public int areaIndex = -1;
+			public int subgroupId = -1;
 			/// <summary>
 			/// Relative position on the parent branch. From 0 to 1.
 			/// </summary>
@@ -177,6 +177,10 @@ namespace Broccoli.Model {
 						referenceBranchNormal = referenceBranch.GetNormalAtPosition (position);
 						referenceBranchDirection = referenceBranch.GetDirectionAtPosition (position);
 					//}
+
+					if (referenceBranch != null && referenceBranch.parentTree != null) {
+						hierarchyPosition = (referenceBranch.GetHierarchyLevel () + position) / referenceBranch.parentTree.GetOffspringLevel ();
+					}
 
 					// Direction
 					Vector3 result;

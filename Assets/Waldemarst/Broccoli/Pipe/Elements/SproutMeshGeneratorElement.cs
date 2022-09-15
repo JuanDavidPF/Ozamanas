@@ -126,19 +126,29 @@ namespace Broccoli.Pipe {
 			} else {
 				bool allAssigned = true;
 				bool allMeshAssigned = true;
+				bool allBranchCollectionAssigned = true;
 				for (int i = 0; i < sproutMeshes.Count; i++) {
 					if (sproutMeshes[i].groupId <= 0) {
 						allAssigned = false;
 						break;
-					} else if (sproutMeshes[i].mode == SproutMesh.Mode.Mesh && sproutMeshes[i].meshGameObject == null) {
+					}
+					if (sproutMeshes[i].meshingMode == SproutMesh.MeshingMode.Shape && sproutMeshes[i].shapeMode == SproutMesh.ShapeMode.Mesh && sproutMeshes[i].meshGameObject == null) {
 						allMeshAssigned = false;
+						break;
+					}
+					if (sproutMeshes[i].meshingMode == SproutMesh.MeshingMode.BranchCollection && sproutMeshes[i].branchCollection == null) {
+						allBranchCollectionAssigned = false;
 						break;
 					}
 				}
 				if (!allAssigned) {
 					log.Enqueue (LogItem.GetWarnItem ("Not all sprout mesh entries are assigned to a sprout group."));
-				} else if (!allMeshAssigned) {
+				}
+				if (!allMeshAssigned) {
 					log.Enqueue (LogItem.GetWarnItem ("Mesh missing on sprout group."));
+				}
+				if (!allBranchCollectionAssigned) {
+					log.Enqueue (LogItem.GetWarnItem ("Branch Collection missing on sprout group."));
 				}
 			}
 			return true;

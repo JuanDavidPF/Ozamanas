@@ -42,37 +42,6 @@ namespace Broccoli.Pipe {
 				return PipelineElement.meshGeneratorWeight;
 			}
 		}
-		/*
-		/// <summary>
-		/// The minimum polygon sides.
-		/// </summary>
-		public int minPolygonSides = 3;
-		/// <summary>
-		/// The max polygon sides.
-		/// </summary>
-		public int maxPolygonSides = 8;
-		/// <summary>
-		/// The segment angle.
-		/// </summary>
-		public float segmentAngle = 0f;
-		/// <summary>
-		/// The generated mesh uses hard normals.
-		/// </summary>
-		[System.NonSerialized]
-		public bool useHardNormals = false;
-		/// <summary>
-		/// The minimum branch curve resolution to generate a branch mesh (LOD1).
-		/// </summary>
-		public float minBranchCurveResolution = 0.25f;
-		/// <summary>
-		/// The maximum branch curve resolution to generate a branch mesh (LOD0).
-		/// </summary>
-		public float maxBranchCurveResolution = 0.75f;
-		/// <summary>
-		/// Creates a polygon at the base (origin) of a branch.
-		/// </summary>
-		public bool useMeshCapAtBase = true;
-		*/
 		/// <summary>
 		/// True to average normals between a parent and a child branch at its base.
 		/// This smooths lighting on the mesh branch intersection.

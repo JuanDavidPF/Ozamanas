@@ -1019,14 +1019,14 @@ namespace Broccoli.Manager
 			return destTexture;
 		}
 		/// <summary>
-		/// Gets a tree creator material using another material as base.
+		/// Gets a material using another material as base.
 		/// The method tries to translate as many properties as possible from
 		/// the original material to the tree creator material.
 		/// </summary>
-		/// <returns>The tree creator material.</returns>
+		/// <returns>A tree material.</returns>
 		/// <param name="id">Identifier.</param>
 		/// <param name="isSprout">If set to <c>true</c> is sprout.</param>
-		public Material GetTreeCreatorMaterial (int id, bool isSprout) {
+		public Material GetOverridedMaterial (int id, bool isSprout) {
 			Material material = null;
 			if (materials.ContainsKey (id)) {
 				Material baseMaterial = materials [id];
@@ -1095,26 +1095,48 @@ namespace Broccoli.Manager
 			return material;
 		}
 		/// <summary>
-		/// Set properties for a material that uses the Tree Creator Leaves shader.
+		/// Set properties for a leaves material using shader values.
 		/// </summary>
-		/// <param name="material">Material</param>
-		/// <param name="sproutMap">SproutMap</param>
-		/// <param name="sproutArea">SpoutArea</param>
-		public void SetLeavesMaterialProperties (Material material, SproutMap sproutMap, SproutMap.SproutMapArea sproutArea) {
-			material.SetTexture ("_MainTex", sproutArea.texture);
-			material.SetColor ("_Color", sproutMap.color);
+		/// <param name="material">Material to set the properties to.</param>
+		/// <param name="color">Tint color.</param>
+		/// <param name="cutoff">Alpha cutoff value.</param>
+		/// <param name="glossiness">Glossiness value.</param>
+		/// <param name="metallic">Metallic value.</param>
+		/// <param name="subsurface">Subsurface (light scattering) value.</param>
+		/// <param name="subsurfaceColor">Subsurface color.</param>
+		/// <param name="mainTex">Main texture.</param>
+		/// <param name="normalsTex">Normals texture.</param>
+		/// <param name="extrasTex">Extras textures.</param>
+		/// <param name="subsurfaceTex">Subsurface textures.</param>
+		/// <param name="diffusionProfile">Diffusion profile settings used on HDRP pipelines.</param>
+		public static void SetLeavesMaterialProperties (
+			Material material,
+			Color color,
+			float cutoff,
+			float glossiness,
+			float metallic,
+			float subsurface,
+			Color subsurfaceColor,
+			Texture2D mainTex,
+			Texture2D normalsTex,
+			Texture2D extrasTex,
+			Texture2D subsurfaceTex,
+			ScriptableObject diffusionProfile = null
+		) {
+			material.SetTexture ("_MainTex", mainTex);
+			material.SetColor ("_Color", color);
 			if (leavesShaderType == LeavesShaderType.SpeedTree8OrSimilar) {
 				// NORMAL
-				if (sproutArea.normalMap != null) {
-					material.SetTexture ("_BumpMap", sproutArea.normalMap);
+				if (normalsTex != null) {
+					material.SetTexture ("_BumpMap", normalsTex);
 					material.EnableKeyword ("EFFECT_BUMP");
 					material.SetFloat ("_NormalMapKwToggle", 1f);
 				}
-				// EXTRA
-				if (sproutArea.extraMap != null) {
+				// EXTRAS
+				if (extrasTex != null) {
 					material.EnableKeyword ("EFFECT_EXTRA_TEX");
 					material.SetFloat ("EFFECT_EXTRA_TEX", 1f);
-					material.SetTexture ("_ExtraTex", sproutArea.extraMap);
+					material.SetTexture ("_ExtraTex", extrasTex);
 				} else {
 					material.DisableKeyword ("EFFECT_EXTRA_TEX");
 					material.SetFloat ("EFFECT_EXTRA_TEX", 0f);
@@ -1123,34 +1145,33 @@ namespace Broccoli.Manager
 				material.EnableKeyword ("EFFECT_BACKSIDE_NORMALS");
 				// SUBSURFACE
 				material.SetFloat ("_SubsurfaceKwToggle", 1f);
-				material.SetTexture ("_SubsurfaceTex", sproutArea.texture);
-				material.SetColor ("_SubsurfaceColor", sproutMap.subsurfaceColor);
-				material.SetFloat ("_SubsurfaceIndirect", sproutMap.subsurfaceValue);
+				material.SetColor ("_SubsurfaceColor", subsurfaceColor);
+				material.SetFloat ("_SubsurfaceIndirect", subsurface);
 				material.EnableKeyword ("EFFECT_SUBSURFACE");
-				if (sproutArea.subsurfaceMap != null) {
-					material.SetTexture ("_SubsurfaceTex", sproutArea.subsurfaceMap);
+				if (subsurfaceTex != null) {
+					material.SetTexture ("_SubsurfaceTex", subsurfaceTex);
 				} else {
-					material.SetTexture ("_SubsurfaceTex", sproutArea.texture);
+					material.SetTexture ("_SubsurfaceTex", mainTex);
 				}
-				Color cutoffColor = sproutMap.color;//Color.Lerp(sproutMap.color, Color.gray, 0.5f);
-				cutoffColor.a = 1f - (sproutMap.alphaCutoff / 2f);
+				Color cutoffColor = color;
+				cutoffColor.a = 1f - (cutoff / 2f);
 				material.SetColor ("_Color", cutoffColor);
-				material.SetColor ("_HueVariationColor", sproutMap.color);
-				material.SetFloat ("_Glossiness", sproutMap.glossiness);
-				material.SetFloat ("_Metallic", sproutMap.metallic);
+				material.SetColor ("_HueVariationColor", color);
+				material.SetFloat ("_Glossiness", glossiness);
+				material.SetFloat ("_Metallic", metallic);
 				if (ExtensionManager.isHDRP) {
 					float hash = 0;
 					Vector4 guidVector = Vector4.zero;
-					if (sproutMap.diffusionProfileSettings != null) {
-						hash = ExtensionManager.GetHashFromDiffusionProfile (sproutMap.diffusionProfileSettings);
-						guidVector = ExtensionManager.GetVector4FromScriptableObject (sproutMap.diffusionProfileSettings);
+					if (diffusionProfile != null) {
+						hash = ExtensionManager.GetHashFromDiffusionProfile (diffusionProfile);
+						guidVector = ExtensionManager.GetVector4FromScriptableObject (diffusionProfile);
 					}
 					material.SetFloat ("Diffusion_Profile", hash);
 					material.SetVector ("Diffusion_Profile_Asset", guidVector);
 					material.SetFloat ("_Surface", 0f);
 					material.SetFloat ("_SurfaceType", 0f);
 					material.SetFloat ("_AlphaCutoffEnable", 1f);
-					material.SetFloat ("_AlphaClipThreshold", sproutMap.alphaCutoff);
+					material.SetFloat ("_AlphaClipThreshold", cutoff);
 					material.SetFloat ("_OpaqueCullMode", 0f);
 					material.SetFloat ("_OpaqueCullMode", 0f);
 					material.SetFloat ("_CullMode", 0f);
@@ -1163,9 +1184,6 @@ namespace Broccoli.Manager
 				material.SetFloat ("_TwoSided", 0f);
 				material.SetFloat ("_WindQuality", 4f);
 				material.EnableKeyword ("GEOM_TYPE_LEAF");
-				/*
-				material.EnableKeyword ("_WINDQUALITY_BETTER");
-				*/
 				material.doubleSidedGI = true;
 				material.enableInstancing = true;
 				//material.enableInstancing = false;
@@ -1180,44 +1198,30 @@ namespace Broccoli.Manager
 				[MaterialEnum(Off,0,Front,1,Back,2)] _Cull ("Cull", Int) = 2
 				[MaterialEnum(None,0,Fastest,1,Fast,2,Better,3,Best,4,Palm,5)] _WindQuality ("Wind Quality", Range(0,5)) = 0
 				*/
-				if (sproutArea.normalMap != null) {
-					material.SetTexture ("_BumpMap", sproutArea.normalMap);
+				if (normalsTex != null) {
+					material.SetTexture ("_BumpMap", normalsTex);
 					material.EnableKeyword ("EFFECT_BUMP");
 				}
-				material.SetColor ("_HueVariation", sproutMap.color);
-				material.SetFloat ("_Cutoff", sproutMap.alphaCutoff);
+				material.SetColor ("_HueVariation", color);
+				material.SetFloat ("_Cutoff", cutoff);
 				material.SetFloat ("_GeometryType", 2f);
 				material.SetFloat ("_WindQuality", 4f);
 				material.SetFloat ("_Cull", 0f);
 				material.EnableKeyword ("GEOM_TYPE_LEAF");
 				material.doubleSidedGI = true;
 				material.enableInstancing = true;
-			} else {
-				/* Available Shader Options
-				_Color ("Main Color", Color) = (1,1,1,1)
-				_TranslucencyColor ("Translucency Color", Color) = (0.73,0.85,0.41,1) // (187,219,106,255)
-				_Cutoff ("Alpha cutoff", Range(0,1)) = 0.3
-				_TranslucencyViewDependency ("View dependency", Range(0,1)) = 0.7
-				_ShadowStrength("Shadow Strength", Range(0,1)) = 0.8
-				_ShadowOffsetScale ("Shadow Offset Scale", Float) = 1
-				_MainTex ("Base (RGB) Alpha (A)", 2D) = "white" {}
-				_ShadowTex ("Shadow (RGB)", 2D) = "white" {}
-				_BumpSpecMap ("Normalmap (GA) Spec (R) Shadow Offset (B)", 2D) = "bump" {}
-				_TranslucencyMap ("Trans (B) Gloss(A)", 2D) = "white" {}
-				*/
-				if (sproutArea.normalMap != null) {
-					material.SetTexture ("_BumpSpecMap", sproutArea.normalMap);
-				} else {
-					material.SetTexture ("_BumpSpecMap", MaterialManager.GetNormalSpecularTex ());
-				}
-				material.SetColor ("_TranslucencyColor", sproutMap.transparency);
-				material.SetFloat ("_Cutoff", sproutMap.alphaCutoff);
-				material.SetFloat ("_TranslucencyViewDependency", sproutMap.translucencyViewDependency);
-				material.SetFloat ("_ShadowStrength", sproutMap.shadowStrength);
-				material.SetFloat ("_ShadowOffsetScale", sproutMap.shadowOffsetScale);
-				material.SetTexture ("_ShadowTex", MaterialManager.GetShadowTex ());
-				material.SetTexture ("_TranslucencyMap", MaterialManager.GetTranslucencyTex ());
 			}
+		}
+		/// <summary>
+		/// Set properties for a leaves material using a SpeedTree shader or similar from a SproutMap and a SproutArea instance.
+		/// </summary>
+		/// <param name="material">Material</param>
+		/// <param name="sproutMap">SproutMap</param>
+		/// <param name="sproutArea">SpoutArea</param>
+		public void SetLeavesMaterialProperties (Material material, SproutMap sproutMap, SproutMap.SproutMapArea sproutArea) {
+			SetLeavesMaterialProperties (material, sproutMap.color, sproutMap.alphaCutoff, 
+				sproutMap.glossiness, sproutMap.metallic, sproutMap.subsurfaceValue, sproutMap.subsurfaceColor, 
+				sproutArea.texture, sproutArea.normalMap, sproutArea.extraMap, sproutArea.subsurfaceMap, sproutMap.diffusionProfileSettings);
 		}
 		public static void OverrideLeavesMaterialProperties (Material material, SproutMap sproutMap, SproutMap.SproutMapArea sproutArea) {
 			/* Available Shader Options
@@ -1243,6 +1247,14 @@ namespace Broccoli.Manager
 			if (material.HasProperty ("_Cutoff")) {
 				material.SetFloat ("_Cutoff", sproutMap.alphaCutoff);
 			}
+		}
+		/// <summary>
+		/// Gets a leaves material.
+		/// </summary>
+		/// <returns>Leaves material.</returns>
+		public static Material GetLeavesMaterial () {
+			Material m = new Material (leavesShader);
+			return m;
 		}
 		/// <summary>
 		/// Get a leaves material for previewing.

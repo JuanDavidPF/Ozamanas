@@ -44,6 +44,8 @@ namespace Broccoli.Builder {
 			public float rangeLength;
 			public float twirl;
 			public float strength;
+			public float branchRoll = 0f;
+			public int numberOfSegments = 5;
 			public AnimationCurve scaleCurve;
 		}
 		#endregion
@@ -115,7 +117,7 @@ namespace Broccoli.Builder {
 						branchSkin.AddRelevantPosition (relativeRelevantPosition, lengthPosResolution);
 					}
 					*/
-					int subdivisions = 3;
+					int subdivisions = branchSkin.ranges [i].subdivisions;
 					float subdivisionStep = (branchSkin.ranges [i].to - branchSkin.ranges [i].from) / subdivisions;
 					float relativeRelevantPosition = 0f;
 					for (int j = 1; j <= subdivisions; j++) {
@@ -165,7 +167,8 @@ namespace Broccoli.Builder {
 			float maxAngleVariance,
 			float twirl,
 			float strength, 
-			AnimationCurve scaleCurve)
+			AnimationCurve scaleCurve,
+			float radialStep)
 		{
 			// Return if the branch is already registered.
 			if (branchInfos.ContainsKey (branch.id)) {
@@ -187,20 +190,21 @@ namespace Broccoli.Builder {
 			branchInfo.rangeLength = range * branchSkin.length;
 			branchInfo.strength = strength;
 			branchInfo.scaleCurve = new AnimationCurve (scaleCurve.keys);
+			branchInfo.branchRoll = branch.rollAngle;
 			branchInfos.Add (branch.id, branchInfo);
 
-			// Create curve at top of the branch.
-			/*
-			BezierCurve topCurve = GetBezierCircle (displacementPoints, branchInfo.girthAtTop, minAngleVariance, maxAngleVariance);
-			_topCurves.Add (branch.id, topCurve);
-			*/
-
-			// Create curve at base of the branch.
-			//BezierCurve baseCurve = GetBezierCircle (displacementPoints, branchInfo.girthAtBase, minAngleVariance, maxAngleVariance);
-			BezierCurve baseCurve = GetBezierCircle (displacementPoints, 1.0f, minAngleVariance, maxAngleVariance);
-			baseCurve.resolutionAngle = 40f;
+			// Create curve at base of branch.
+			BezierCurve baseCurve = GetBezierCircle (
+				displacementPoints, 
+				branchInfo.girthAtBase * globalScale, 
+				minAngleVariance, 
+				maxAngleVariance);
 			AddDisplacement (baseCurve, minScaleAtBase, maxScaleAtBase);
+			baseCurve.simplifyBias = BezierCurve.SimplifyBias.Distance;
+			baseCurve.distanceStep = radialStep;
+			baseCurve.Process ();
 			baseCurves.Add (branch.id, baseCurve);
+			branchInfo.numberOfSegments = baseCurve.points.Count;
 		}
 		#endregion
 
@@ -303,7 +307,15 @@ namespace Broccoli.Builder {
 			BranchMeshBuilder.BranchSkinRange range;
 			float tPosition = branchSkin.TranslateToPositionAtBuilderRange (branchSkinPosition, out range);
 			int numberOfSegments = (int)Mathf.Lerp (maxPolygonSides, minPolygonSides + 1, tPosition);
-			return numberOfSegments;
+			BranchInfo branchInfo = branchInfos [branchSkin.id];
+			//return branchInfo.
+			/*
+			if (range != null)
+				return (int)(numberOfSegments * range.radialResolutionFactor);
+			else
+			*/
+			//return numberOfSegments;
+			return branchInfo.numberOfSegments;
 		}
 		#endregion
 
@@ -346,8 +358,11 @@ namespace Broccoli.Builder {
 				if (i == 0) {
 					lastNode = node;
 				}
-				node.handle1 = new Vector3 (nodeY, -nodeX) * (4/3) * Mathf.Tan(Mathf.PI/ (float)(2 * pointyPoints));
+				float tan = (4/3) * Mathf.Tan(Mathf.PI/ (float)(2 * pointyPoints));
+				//node.handle1 = new Vector3 (nodeY, -nodeX) * tan * 0.5f;
+				node.handle1 = new Vector3 (nodeY, -nodeX) * tan;
 				node.handle2 = -node.handle1;
+				node.handleStyle = BezierNode.HandleStyle.Auto;
 				curve.AddNode (node);
 			}
 			curve.AddNode (lastNode);

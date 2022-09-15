@@ -169,8 +169,8 @@ namespace Broccoli.Utils
 			if (size <= 0) {
 				return false;
 			}
-			if (size < 100) {
-				size = 100;
+			if (size < 50) {
+				size = 50;
 			}
 			SplitDef splitDef = new SplitDef ();
 			splitDef.mode = SplitDef.Mode.Fixed;
@@ -408,7 +408,7 @@ namespace Broccoli.Utils
 		/// </summary>
 		public void Split () {
 			SplitDef splitDef = splits [currentSplitIndex];
-			GUILayout.EndScrollView();
+			GUILayout.EndScrollView ();
 			ResizeSplit ();
 			currentSplitIndex ++;
 			if (currentSplitIndex < splits.Count) {

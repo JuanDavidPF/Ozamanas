@@ -89,19 +89,6 @@ namespace Broccoli.Pipe {
 		/// <value>The sprout groups.</value>
 		public SproutGroups sproutGroups { get { return _sproutGroups; } private set { } }
 		/// <summary>
-		/// Branch descriptors on the pipeline, used to create leafs and other offspring from the branches.
-		/// </summary>
-		[SerializeField]
-		BranchDescriptorCollection _branchDescriptorCollection = new BranchDescriptorCollection ();
-		/// <summary>
-		/// Accessor for branch descriptors.
-		/// </summary>
-		/// <value>The sprout groups.</value>
-		public BranchDescriptorCollection branchDescriptorCollection { 
-			get { return _branchDescriptorCollection; } 
-			set { _branchDescriptorCollection = value; }
-		}
-		/// <summary>
 		/// The tree factory preferences.
 		/// </summary>
 		public TreeFactoryPreferences treeFactoryPreferences = new TreeFactoryPreferences ();
@@ -630,8 +617,6 @@ namespace Broccoli.Pipe {
 			for (int i = 0; i < childrenSproutGroups.Count; i++) {
 				clone.sproutGroups.AddSproutGroup (childrenSproutGroups[i].Clone ());
 			}
-			// Branch descriptors.
-			clone.branchDescriptorCollection = branchDescriptorCollection.Clone ();
 
 			clone.BuildIdToElementIndex ();
 			clone.BuildKeyNameIndex ();

@@ -35,9 +35,8 @@ namespace Broccoli.TreeNodeEditor
 		SerializedProperty propMinDisplacementScaleAtBase;
 		SerializedProperty propMaxDisplacementScaleAtBase;
 		SerializedProperty propScaleCurve;
-		SerializedProperty propMinPolygonSides;
-		SerializedProperty propMaxPolygonSides;
-		SerializedProperty propLengthPosResolution;
+		SerializedProperty propRadialResolutionFactor;
+		SerializedProperty propLengthResolutionFactor;
 		/// <summary>
 		/// The scale curve range.
 		/// </summary>
@@ -51,12 +50,11 @@ namespace Broccoli.TreeNodeEditor
 		private static string MSG_MIN_MAX_SPREAD = "Range along the trunk the mesh will take.";
 		private static string MSG_MIN_MAX_POINTS = "Displacement points around the trunk, reminiscent of roots comming from the trunk.";
 		private static string MSG_MIN_MAX_ANGLE_VARIANCE = "Angle variance between displacement points.";
-		//private static string MSG_MIN_MAX_TWIRL = "Twirl fo the displacement points around the trunk.";
+		private static string MSG_MIN_MAX_TWIRL = "Twirl fo the displacement points around the trunk.";
 		private static string MSG_MIN_MAX_SCALE_AT_BASE = "Scale applied at the girth of the base of the trunk.";
 		private static string MSG_SCALE_CURVE = "Distribution of the girth scaling along the trunk.";
-		//private static string MSG_STRENGTH = "Rotation angle of the polygon around the branch center.";
-		private static string MSG_MIN_MAX_POLYGON_SIDES = "Resolution along the trunk range (minimum and maximum number of sides).";
-		private static string MSG_LENGTH_POS_RESOLUTION = "Median segment step along the branch length.";
+		private static string MSG_RADIAL_RESOLUTION_FACTOR = "Factor to multiply the number of radial segment at the trunk.";
+		private static string MSG_LENGTH_RESOLUTION_FACTOR = "Factory to multiply the number of cross-sections along the trunk length.";
 		#endregion
 
 		#region Events
@@ -80,9 +78,8 @@ namespace Broccoli.TreeNodeEditor
 			propMinDisplacementScaleAtBase = GetSerializedProperty ("minDisplacementScaleAtBase");
 			propMaxDisplacementScaleAtBase = GetSerializedProperty ("maxDisplacementScaleAtBase");
 			propScaleCurve = GetSerializedProperty ("scaleCurve");
-			propMinPolygonSides = GetSerializedProperty ("minPolygonSides");
-			propMaxPolygonSides = GetSerializedProperty ("maxPolygonSides");
-			propLengthPosResolution = GetSerializedProperty ("lengthPosResolution");
+			propRadialResolutionFactor = GetSerializedProperty ("radialResolutionFactor");
+			propLengthResolutionFactor = GetSerializedProperty ("lengthResolutionFactor");
 		}
 		/// <summary>
 		/// Raises the inspector GUI event.
@@ -113,11 +110,9 @@ namespace Broccoli.TreeNodeEditor
 				FloatRangePropertyField (propMinDisplacementAngleVariance, propMaxDisplacementAngleVariance, 0f, 0.5f, "Angle Variance");
 				ShowHelpBox (MSG_MIN_MAX_ANGLE_VARIANCE);
 
-				/*
 				// Twirl
-				FloatRangePropertyField (propMinDisplacementTwirl, propMaxDisplacementTwirl, -1f, 1f, "Twil");
+				FloatRangePropertyField (propMinDisplacementTwirl, propMaxDisplacementTwirl, -2.5f, 2.5f, "Twirl");
 				ShowHelpBox (MSG_MIN_MAX_TWIRL);
-				*/
 
 				// Scale at Base
 				FloatRangePropertyField (propMinDisplacementScaleAtBase, propMaxDisplacementScaleAtBase, 1f, 3f, "Scale at Base");
@@ -130,11 +125,11 @@ namespace Broccoli.TreeNodeEditor
 
 				EditorGUILayout.LabelField ("Mesh Resolution", EditorStyles.boldLabel);
 				// Min Max Polygon Sides.
-				IntRangePropertyField (propMinPolygonSides, propMaxPolygonSides, 6, 36, "Polygon Sides");
-				ShowHelpBox (MSG_MIN_MAX_POLYGON_SIDES);
+				EditorGUILayout.Slider (propRadialResolutionFactor, 1f, 3f, "Radial Resolution Factor");
+				ShowHelpBox (MSG_RADIAL_RESOLUTION_FACTOR);
 
-				EditorGUILayout.Slider (propLengthPosResolution, 0.01f, 0.4f, "Length Step");
-				ShowHelpBox (MSG_LENGTH_POS_RESOLUTION);
+				EditorGUILayout.Slider (propLengthResolutionFactor, 1f, 4f, "Length Resolution Factor");
+				ShowHelpBox (MSG_LENGTH_RESOLUTION_FACTOR);
 			}
 
 			if (EditorGUI.EndChangeCheck () &&
@@ -164,6 +159,9 @@ namespace Broccoli.TreeNodeEditor
 				break;
 			}
 			BezierCurveDraw.DrawCurve (bezierCurve, Vector3.zero, 3, Color.white, 2);
+			//BezierCurveDraw.DrawCurvePoints (bezierCurve, Vector3.zero, 3, Color.white);
+			BezierCurveDraw.DrawCurvePoints (bezierCurve, Vector3.zero, 3, Color.white);
+			//BezierCurveDraw.DrawCurveFinePoints (bezierCurve, Vector3.zero, 3, Color.white);
 			*/
 		}
 		#endregion

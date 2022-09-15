@@ -354,6 +354,147 @@ namespace Broccoli.Builder
 		#endregion
 
 		#region Sprout Mesh
+		/// <summary>
+		/// Bakes wind data on the sprout mesh UV channels.
+		/// It takes values from the base mesh UV channels as parameters.
+		/// </summary>
+		/// <param name="sproutMeshId">Id of the sprout mesh.</param>
+		/// <param name="sproutMesh">Sprout mesh.</param>
+		public void SetSproutsWindData (
+			int sproutMeshId,
+			Mesh sproutMesh)
+		{
+			/*
+			Each sprout mesh should have the following baked values:	
+			UVs for the output mesh.
+				x: U mapping value.
+				y: V mapping value.
+				z: sprout anchor gradient.
+				w: sprout random value.
+			UV2s for the output mesh.
+				xyz: sprout anchor point.
+				w: sprout relative position on the branch
+			UV3s for the output mesh.
+				xyz: vertex value.
+				w: branch id.
+			*/
+
+			// List to get/save UVs.
+			if (!meshIdToUV.ContainsKey (sproutMeshId)) { // TODO: Only if ST8
+				meshIdToUV.Add (sproutMeshId, new List<Vector4>());
+			}
+			// List to get/save UV2s.
+			if (!meshIdToUV2.ContainsKey (sproutMeshId)) {
+				meshIdToUV2.Add (sproutMeshId, new List<Vector4>());
+			}
+			// List to get/save UV3s.
+			if (!meshIdToUV3.ContainsKey (sproutMeshId)) {
+				meshIdToUV3.Add (sproutMeshId, new List<Vector4>());
+			}
+			// List to get/save UV4s.
+			if (!meshIdToUV4.ContainsKey (sproutMeshId)) {
+				meshIdToUV4.Add (sproutMeshId, new List<Vector4>());
+			}
+
+			// Get base UVs.
+			sproutMesh.GetUVs (0, meshIdToUV [sproutMeshId]);
+			// Get base UV2s.
+			sproutMesh.GetUVs (1, meshIdToUV2 [sproutMeshId]);
+			// Get base UV3s, if not set, create them.
+			sproutMesh.GetUVs (2, meshIdToUV3 [sproutMeshId]);
+			if (meshIdToUV3 [sproutMeshId].Count == 0) {
+				meshIdToUV3 [sproutMeshId] = new List<Vector4> (new Vector4[sproutMesh.vertices.Length]);
+			}
+			// Get base UV4s, if not set, create them.
+			sproutMesh.GetUVs (3, meshIdToUV4 [sproutMeshId]);
+			if (meshIdToUV4 [sproutMeshId].Count == 0) {
+				meshIdToUV4 [sproutMeshId] = new List<Vector4> (new Vector4[sproutMesh.vertices.Length]);
+			}
+			// Get base vertices.
+			List<Vector3> _vertices = new List<Vector3> ();
+			sproutMesh.GetVertices (_vertices);
+
+			// Get list as vars to be allowed to be passed as references.
+			List<Vector4> _uvs = meshIdToUV [sproutMeshId];
+			List<Vector4> _uv2s = meshIdToUV2 [sproutMeshId];
+			List<Vector4> _uv3s = meshIdToUV3 [sproutMeshId];
+			List<Vector4> _uv4s = meshIdToUV4 [sproutMeshId];
+
+			// Bake wind data on the sprout mesh UV channels.
+			SetSproutWindData (ref _vertices, ref _uvs, ref _uv2s, ref _uv3s, ref _uv4s);
+
+			// Set the baked UVs back to the sprout mesh.
+			sproutMesh.SetUVs (0, meshIdToUV[sproutMeshId]);
+			sproutMesh.SetUVs (1, meshIdToUV2[sproutMeshId]);
+			sproutMesh.SetUVs (2, meshIdToUV3[sproutMeshId]);
+			sproutMesh.SetUVs (3, meshIdToUV4[sproutMeshId]);
+		}
+		void SetSproutWindData (
+			ref List<Vector3> localVertices,
+			ref List<Vector4> localUVs, 
+			ref List<Vector4> localUV2s, 
+			ref List<Vector4> localUV3s, 
+			ref List<Vector4> localUV4s) 
+		{
+			/*
+			Each sprout mesh should have the following baked values:	
+			UVs for the output mesh.
+				x: U mapping value.
+				y: V mapping value.
+				z: sprout anchor gradient.
+				w: sprout random value (0-1).
+			UV2s for the output mesh.
+				xyz: sprout anchor point.
+				w: sprout relative position on the branch
+			UV3s for the output mesh.
+				xyz: vertex value.
+				w: branch id.
+			*/
+
+			Vector3 originalVertex = Vector3.zero;
+			Vector4 originalUV = Vector4.zero;
+			Vector4 originalUV3 = Vector4.zero;
+			Vector2 windUV = Vector2.zero;
+			Vector4 windUV2 = Vector4.zero;
+			Vector4 windUV3 = Vector4.zero;
+			Vector4 windUV4 = Vector4.zero;
+			float branchId = -1;
+			BroccoTree.Branch branch = null;
+			float sproutRandomValue;
+			float sproutRandomValue2;
+			float sproutRandomValue3;
+			Vector3 anchor;
+
+			// Run per vertex.
+			for (int i = 0; i < localVertices.Count; i++) {
+				if (localUV3s [i].w != branchId) {
+					branchId = localUV3s [i].w;
+					branch = null;
+					if (branches.ContainsKey ((int)branchId)) {
+						branch = branches [(int)branchId];
+					}
+				}
+				if (branch != null) {
+					originalVertex = localVertices [i];
+					windUV = GetUV (branch, localUV2s [i].w);
+					originalUV = localUVs [i];
+					anchor = localUV2s [i];
+					sproutRandomValue = localUVs [i].w * 16f;
+					sproutRandomValue2 = 0.5f + localUVs [i].w * 1.5f;
+					sproutRandomValue3 = localUVs [i].w * 0.3f;	
+					localUVs [i] = new Vector4 (originalUV.x, originalUV.y, windUV.x, windUV.y);
+					if (isST7) {
+						localUV2s [i] = GetUV2ST7 (anchor, originalUV.w * anchor.x);
+						localUV3s [i] = GetUV3ST7 (anchor, sproutRandomValue, originalUV.w);
+						localUV4s [i] = new Vector4 (originalVertex.y - anchor.y, originalUV.w * anchor.z, 0f, 1f);
+					} else {
+						localUV2s [i] = GetUV2ST8 (anchor, originalUV.z, originalUV.w);
+						localUV3s [i] = GetUV3ST8 (localVertices [i], anchor.z);
+						localUV4s [i] = GetUV4ST8 (localUVs [i].z + sproutRandomValue3, sproutRandomValue, (originalVertex.y - anchor.y) + sproutRandomValue2);
+					}
+				}
+			}
+		}
 		public void SetSproutsWindData (
 			BroccoTree tree,
 			int sproutMeshId,
@@ -403,7 +544,6 @@ namespace Broccoli.Builder
 			sproutMesh.SetUVs (1, meshIdToUV2[sproutMeshId]);
 			sproutMesh.SetUVs (2, meshIdToUV3[sproutMeshId]);
 			sproutMesh.SetUVs (3, meshIdToUV4[sproutMeshId]);
-			//sproutMesh.SetColors (meshIdToColor [sproutMeshId]);
 		}
 		void SetSproutWindData (
 			ref List<Vector3> localVertices,
@@ -446,7 +586,7 @@ namespace Broccoli.Builder
 					localUV3s [index] = GetUV3ST8 (originalVertex, meshPart.origin.z);
 					localUV4s [index] = GetUV4ST8 (originalUV2.z + sproutRandomValue3, sproutRandomValue, (originalVertex.y - meshPart.origin.y) + sproutRandomValue2);
 				}
-				localColors [index] = GetColor (branches [meshPart.branchId], meshPart.position);
+				localColors [index] = Color.white;
 			}
 		}
 		#endregion
@@ -488,35 +628,6 @@ namespace Broccoli.Builder
 		}
 		public Vector4 GetUV4ST8 (float xPosition, float yValue, float zValue) {
 			return new Vector4 (xPosition * sproutSway * 2f, yValue, zValue, 2);
-		}
-		/// <summary>
-		/// Gets the color wind weight at a given branch position on the tree.
-		/// </summary>
-		/// <returns>The color value.</returns>
-		/// <param name="branch">Branch.</param>
-		/// <param name="position">Position on the branch.</param>
-		public Color GetColor (BroccoTree.Branch branch, float position) {
-			return Color.white;
-			/*
-			if (branchIdToCompoundBranchId.ContainsKey (branch.id)) {
-				if (compoundBranches.ContainsKey (branchIdToCompoundBranchId [branch.id])) {
-					CompoundBranch compoundBranch = compoundBranches [branchIdToCompoundBranchId [branch.id]];
-					if (!compoundBranchToColor.ContainsKey (compoundBranch.phaseGroupId)) {
-						if (compoundBranch.phaseGroupId == -1) {
-							if (!compoundBranchToColor.ContainsKey (compoundBranch.phaseGroupId)) {
-								compoundBranchToColor.Add (compoundBranch.phaseGroupId, new Color (0f, 0f, 0f, 0f));
-							}
-						} else {
-							if (!compoundBranchToColor.ContainsKey (compoundBranch.phaseGroupId)) {
-								compoundBranchToColor.Add (compoundBranch.phaseGroupId, new Color (Random.Range (0f, 1f), 0f, 0f, 0.5f));
-							}
-						}
-					}
-					return compoundBranchToColor [compoundBranch.phaseGroupId];
-				}
-			}
-			return Color.black;
-			*/
 		}
 		#endregion
 	}

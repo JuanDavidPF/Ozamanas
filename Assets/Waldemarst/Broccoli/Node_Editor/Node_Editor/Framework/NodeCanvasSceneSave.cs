@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using Broccoli.NodeEditorFramework;
 
-//TODO ??? why not namespace.
-public partial class NodeCanvasSceneSave : MonoBehaviour 
+namespace Broccoli.NodeEditorFramework 
 {
-	public string saveName;
-	public NodeCanvas savedNodeCanvas;
+	public partial class NodeCanvasSceneSave : MonoBehaviour 
+	{
+		public string saveName;
+		public Broccoli.NodeEditorFramework.NodeCanvas savedNodeCanvas;
+	}
 }

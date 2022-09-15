@@ -9,6 +9,7 @@ using Broccoli.Generator;
 
 namespace Broccoli.TreeNodeEditor
 {
+	using NodeCanvas = Broccoli.NodeEditorFramework.NodeCanvas;
 	/// <summary>
 	/// Tree canvas.
 	/// </summary>

@@ -153,6 +153,12 @@ namespace Broccoli.Model
 		public Guid guid = System.Guid.Empty;
 		[SerializeField]
 		private string _guid = "";
+		public enum SimplifyBias {
+			Angle,
+			Distance
+		}
+		public SimplifyBias simplifyBias = SimplifyBias.Angle;
+		public float distanceStep = 0.05f;
 		#endregion
 
 		#region Events
@@ -280,7 +286,11 @@ namespace Broccoli.Model
 			// Recalculate normals.
 			RecalculateNormals ();
 
-			points = GetPoints (resolutionAngle);
+			if (simplifyBias == SimplifyBias.Angle) {
+				points = GetPoints (resolutionAngle);
+			} else {
+				points = GetPointsByStep (distanceStep);
+			}
 
 			vectorPoints.Clear ();
 			AddPriorityPoints (relevantPositions);
@@ -476,6 +486,39 @@ namespace Broccoli.Model
 				firstIndex = 1;
 			}
 			return optimizedPoints;
+		}
+		public List<CurvePoint> GetPointsByStep (float step = 0.05f) {
+			List<CurvePoint> optimizedPoints = new List<CurvePoint> ();
+			float accumCubicLength = 0f;
+			float accumLength = 0f;
+			float lengthStep = length * step;
+			CurvePoint candidatePoint;
+			for (int i = 0; i < bezierCurves.Count; i++) {
+				if (bezierCurves[i].samples == null) { 
+					bezierCurves[i].samples = new List<CurvePoint>();
+					bezierCurves[i].ComputeSamples ();
+				}
+				for (int j = 0; j < bezierCurves[i].samples.Count; j++) {
+					if ((i == 0 && j == 0) || (i == bezierCurves.Count - 1 && j == bezierCurves[i].samples.Count - 1)) {
+						candidatePoint = bezierCurves[i].samples[j].Clone ();
+						candidatePoint.lengthPosition = accumLength + candidatePoint.lengthPosition;
+						candidatePoint.relativePosition = candidatePoint.lengthPosition / length;
+						accumLength += lengthStep;
+						optimizedPoints.Add (candidatePoint);
+					} else {
+						candidatePoint = bezierCurves[i].samples[j];
+						if (candidatePoint.lengthPosition + accumCubicLength > accumLength) {
+							accumLength = candidatePoint.lengthPosition + accumCubicLength + lengthStep;
+							candidatePoint = candidatePoint.Clone ();
+							candidatePoint.lengthPosition = accumCubicLength + candidatePoint.lengthPosition;
+							candidatePoint.relativePosition = candidatePoint.lengthPosition / length;
+							optimizedPoints.Add (candidatePoint);
+						}
+					}
+				}
+				accumCubicLength += bezierCurves [i].length;
+			}
+		return optimizedPoints;
 		}
 		/*
 		/// <summary>

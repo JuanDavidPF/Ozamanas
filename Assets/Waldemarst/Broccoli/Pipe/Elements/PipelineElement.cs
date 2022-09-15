@@ -69,7 +69,6 @@ namespace Broccoli.Pipe {
 			SproutMeshGenerator,
 			SproutMapper,
 			StructureGenerator,
-			SproutLab,
 			TrunkMeshGenerator,
 			ProceduralBranchMapper,
 			Baker

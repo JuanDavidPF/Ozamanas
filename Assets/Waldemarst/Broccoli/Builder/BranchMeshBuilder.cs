@@ -113,7 +113,7 @@ namespace Broccoli.Builder {
 			/// x: vertex x position.
 			/// y: vertex y position.
 			/// z: vertex z position..
-			/// w: vertex z position on the branch origin..
+			/// w: vertex z position on the branch origin.
 			/// </summary>
 			[NativeDisableParallelForRestriction]
 			public NativeArray<Vector4> uv3s;
@@ -142,6 +142,13 @@ namespace Broccoli.Builder {
 			/// </summary>
 			[NativeDisableParallelForRestriction]
 			public NativeArray<Vector4> uv7s;
+			/// <summary>
+			/// UV8 information of the mesh.
+			/// x, y, z: direction.
+			/// w: unallocated.
+			/// </summary>
+			[NativeDisableParallelForRestriction]
+			public NativeArray<Vector4> uv8s;
 			#endregion
 
 			public void Execute (int i) {
@@ -364,6 +371,7 @@ namespace Broccoli.Builder {
 						uv5s [startIndex + indexPos] = new Vector4 (radialPosition, lengthOffset, normal_girth.w, 0f);
 						uv6s [startIndex + indexPos] = new Vector4 (id_struct_seg_segType.x, branchSkinId, id_struct_seg_segType.y, 0f);
 						uv7s [startIndex + indexPos] = new Vector4 (center_pos.x, center_pos.y, center_pos.z, 0f);
+						uv8s [startIndex + indexPos] = new Vector4 (direction_posAtSkin.x, direction_posAtSkin.y, direction_posAtSkin.z, 0f);
 						indexPos++;
 
 						if (useHardNormals && (i > 0 || i < polygonSides)) {
@@ -403,6 +411,13 @@ namespace Broccoli.Builder {
 			/// Number of preferred subdivisions on this range.
 			/// </summary>
 			public int subdivisions = 1;
+			/// <summary>
+			/// Multiply factor to radial resolution.
+			/// </summary>
+			public float radialResolutionFactor = 1f;
+			/// <summary>
+			/// Type of builder for this range.
+			/// </summary>
 			public BuilderType builderType = BuilderType.Default;
 			/// <summary>
 			/// Used only for ranges describing branches within a branch skin instance.
@@ -1879,6 +1894,7 @@ namespace Broccoli.Builder {
 				uv5s = new NativeArray<Vector4> (totalVertices, Allocator.TempJob),
 				uv6s = new NativeArray<Vector4> (totalVertices, Allocator.TempJob),
 				uv7s = new NativeArray<Vector4> (totalVertices, Allocator.TempJob),
+				uv8s = new NativeArray<Vector4> (totalVertices, Allocator.TempJob),
 
 				triangles = new NativeArray<int> (totalTriangles * 3, Allocator.TempJob)
 			};
@@ -1934,6 +1950,7 @@ namespace Broccoli.Builder {
 			Vector4[] _uv5s = new Vector4 [totalVertices];
 			Vector4[] _uv6s = new Vector4 [totalVertices];
 			Vector4[] _uv7s = new Vector4 [totalVertices];
+			Vector4[] _uv8s = new Vector4 [totalVertices];
 			int[] _triangles = new int [totalTriangles * 3];
 
 			_branchJob.vertices.CopyTo (_vertices);
@@ -1944,6 +1961,7 @@ namespace Broccoli.Builder {
 			_branchJob.uv5s.CopyTo (_uv5s);
 			_branchJob.uv6s.CopyTo (_uv6s);
 			_branchJob.uv7s.CopyTo (_uv7s);
+			_branchJob.uv8s.CopyTo (_uv8s);
 
 			mesh.vertices = _vertices;
 			mesh.normals = _normals;
@@ -1953,6 +1971,7 @@ namespace Broccoli.Builder {
 			mesh.SetUVs (4, new List<Vector4>(_uv5s));
 			mesh.SetUVs (5, new List<Vector4>(_uv6s));
 			mesh.SetUVs (6, new List<Vector4>(_uv7s));
+			mesh.SetUVs (7, new List<Vector4>(_uv8s));
 			/*
 			List<Color> colors = new List<Color> ();
 			for (int i = 0; i < _vertices.Length; i++) {
@@ -1979,6 +1998,7 @@ namespace Broccoli.Builder {
 			_branchJob.uv5s.Dispose ();
 			_branchJob.uv6s.Dispose ();
 			_branchJob.uv7s.Dispose ();
+			_branchJob.uv8s.Dispose ();
 			_branchJob.triangles.Dispose ();
 
 			// Return mesh.

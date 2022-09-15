@@ -191,13 +191,17 @@ namespace Broccoli.Manager
 		public string prefabFolder = "Assets";
 		*/
 		/// <summary>
-		/// The prefab path.
+		/// The full path to the prefab.
 		/// </summary>
-		public string prefabPath = "";
+		public string prefabFullPath = "";
 		/// <summary>
 		/// The name of the prefab.
 		/// </summary>
 		public string prefabName = "";
+		/// <summary>
+		/// The path to the folder containing the prefab.
+		/// </summary>
+		public string prefabFolder = "";
 		/// <summary>
 		/// LOD fading mode.
 		/// </summary>
@@ -238,32 +242,35 @@ namespace Broccoli.Manager
 		/// Makes sure the destination path is writable, creates the empty prefab and
 		/// the prefab container object.
 		/// </summary>
-		/// <param name="previewTarget">The preview tree game object.</param>
-		public void BeginWithCreatePrefab (GameObject previewTarget) {
+		/// <param name="previewTarget">The preview game object.</param>
+		/// <param name="previewFolder">Folder path to the container folder.</param>
+		public void BeginWithCreatePrefab (GameObject previewTarget, string prefabFolder, string prefabName) {
 			#if UNITY_EDITOR
+			// Clear previous prefab process variables.
 			Clear ();
-			previewTargetGameObject = previewTarget;
-			prefabGameObject = new GameObject ();
-			if (!AssetDatabase.IsValidFolder (GlobalSettings.prefabSavePath)) {
-				throw new UnityException ("Broccoli Tree Creator: Path to create/edit the tree prefab is no valid (" + GlobalSettings.prefabSavePath + ")");
-			} else {
-				int i = 0;
-				do {
-					prefabName = GlobalSettings.prefabSavePrefix + (i==0?"0":"" + i);
-					prefabPath = Path.Combine (GlobalSettings.prefabSavePath, prefabName) + ".prefab";
-					prefab = AssetDatabase.LoadAssetAtPath<UnityEngine.Object> (prefabPath);
-					i++;
-				} while (prefab != null); //TODO: check without loading at path.
-				if (prefab == null) {
-					//prefab = PrefabUtility.CreateEmptyPrefab (prefabPath);
-					#if UNITY_2018_3_OR_NEWER
-					prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabPath);
-					#else
-					prefab = PrefabUtility.CreatePrefab (prefabPath, prefabGameObject);
-					#endif
-					prefabIsValid = true;
-				}
+
+			// Set the prefab name, folder path and full path.
+			this.prefabName = prefabName;
+			this.prefabFolder = prefabFolder;
+			this.prefabFullPath = Path.Combine (prefabFolder, prefabName) + ".prefab";
+			// Validate the folder path.
+			if (!FileUtils.IsValidFolder (this.prefabFolder)) {
+				throw new UnityException ("AssetManager: Path to create/edit the prefab is not valid (" + this.prefabFolder + ")");
 			}
+
+			// Set the target GameObject.
+			previewTargetGameObject = previewTarget;
+
+			// Create the prefab GameObject.
+			prefabGameObject = new GameObject ();
+
+			// Create the prefab object.
+			#if UNITY_2018_3_OR_NEWER
+			prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabFullPath);
+			#else
+			prefab = PrefabUtility.CreatePrefab (prefabPath, prefabGameObject);
+			#endif
+			prefabIsValid = true;
 			#endif
 		}
 		/// <summary>
@@ -277,18 +284,17 @@ namespace Broccoli.Manager
 			#if UNITY_EDITOR
 			previewTargetGameObject = null;
 			Object.DestroyImmediate (prefabGameObject);
-			//AssetDatabase.ImportAsset (AssetDatabase.GetAssetPath (prefab));
 			EditorUtility.UnloadUnusedAssetsImmediate ();
 			#endif
 			return result;
 		}
 		/// <summary>
-		/// Adds a list of submeshes to be included on the prefab.
+		/// Adds a mesh to be included on the prefab.
 		/// </summary>
-		/// <returns><c>true</c>, if submeshes were added, <c>false</c> otherwise.</returns>
+		/// <returns><c>true</c>, if the mesh gets added, <c>false</c> otherwise.</returns>
 		/// <param name="submeshesToAdd">Submeshes to add.</param>
 		/// <param name="lodIndex">LOD index.</param>
-		public bool AddSubmeshes (Mesh[] submeshesToAdd, int lodIndex, float lodGroupPercentage) {
+		public bool AddMeshToPrefab (Mesh[] submeshesToAdd, int lodIndex, float lodGroupPercentage) {
 			#if UNITY_EDITOR
 			if (prefabIsValid) {
 				if (!assetMeshes.ContainsKey (lodIndex)) {
@@ -316,7 +322,7 @@ namespace Broccoli.Manager
 		/// <param name="submeshIndex">Submesh index.</param>
 		/// <param name="groupId">Group identifier if the submesh belong to one.</param>
 		/// <param name="area">Map area if the material belong to one.</param>
-		public bool AddMaterial (Material material, int submeshIndex, int groupId = 0, SproutMap.SproutMapArea area = null) {
+		public bool AddMaterialToPrefab (Material material, int submeshIndex, int groupId = 0, SproutMap.SproutMapArea area = null) {
 			#if UNITY_EDITOR
 			if (prefabIsValid) {
 				if (materials.ContainsKey (submeshIndex)) {
@@ -370,7 +376,7 @@ namespace Broccoli.Manager
 			prefabGameObject = null;
 			prefab = null;
 			prefabName = "";
-			prefabPath = "";
+			prefabFullPath = "";
 			prefabIsValid = false;
 			applyVerticesOffset = false;
 			verticesOffset = Vector3.zero;
@@ -409,7 +415,7 @@ namespace Broccoli.Manager
 		/// <returns>The LOD mesh.</returns>
 		/// <param name="meshFilter">Mesh filter.</param>
 		/// <param name="lodIndex">Mesh LOD index.</param>
-		Mesh GetMesh (MeshFilter meshFilter, int lodIndex = 0) {
+		Mesh GetMeshForPrefab (MeshFilter meshFilter, int lodIndex = 0) {
 			Mesh mergingMesh = new Mesh ();
 			#if UNITY_EDITOR
 			if (assetMeshes.ContainsKey (lodIndex)) {
@@ -558,7 +564,7 @@ namespace Broccoli.Manager
 					if (onLODReady != null) onLODReady.Invoke (prefabGameObject);
 
 					#if UNITY_2018_3_OR_NEWER
-					prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabPath);
+					prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabFullPath);
 					#else
 					PrefabUtility.ReplacePrefab (prefabGameObject, prefab);
 					#endif
@@ -754,7 +760,7 @@ namespace Broccoli.Manager
 					}
 
 					#if UNITY_2018_3_OR_NEWER
-					prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabPath);
+					prefab = PrefabUtility.SaveAsPrefabAsset (prefabGameObject, prefabFullPath);
 					#else
 					PrefabUtility.ReplacePrefab (prefabGameObject, prefab);
 					#endif
@@ -777,7 +783,7 @@ namespace Broccoli.Manager
 			#if UNITY_EDITOR
 			MeshFilter meshFilter = gameObject.AddComponent<MeshFilter> ();
 			gameObject.AddComponent<MeshRenderer> ();
-			mainMesh = GetMesh (meshFilter, lodIndex);
+			mainMesh = GetMeshForPrefab (meshFilter, lodIndex);
 			if (TreeFactory.GetActiveInstance ().treeFactoryPreferences.prefabIncludeAssetsInsidePrefab) {
 				AssetDatabase.AddObjectToAsset (mainMesh, prefab);
 			} else {

@@ -81,6 +81,8 @@ namespace Broccoli.Utils
 		public OnSaveElement onSaveElement;
 		public bool showCreateNewEnabled = true;
 		public bool showSaveCurrentEnabled = true;
+		public bool showLoadEnabled = true;
+		public bool showSaveEnabled = true;
 		#endregion
 
 		#region GUI Vars
@@ -173,12 +175,16 @@ namespace Broccoli.Utils
 				}
 			}
 			// Load from file.
-			if (GUILayout.Button (new GUIContent (btnLoadElement, btnLoadElementHelp))) {
-				LoadButtonClicked ();
+			if (showLoadEnabled) {
+				if (GUILayout.Button (new GUIContent (btnLoadElement, btnLoadElementHelp))) {
+					LoadButtonClicked ();
+				}
 			}
 			// Save as new to file.
-			if (GUILayout.Button (new GUIContent (btnSaveAsNewElement, btnSaveAsNewElementHelp))) {
-				SaveAsButtonClicked ();
+			if (showSaveEnabled) {
+				if (GUILayout.Button (new GUIContent (btnSaveAsNewElement, btnSaveAsNewElementHelp))) {
+					SaveAsButtonClicked ();
+				}
 			}
 			if (showSaveCurrentEnabled) {
 				// Save current to file.
@@ -238,7 +244,6 @@ namespace Broccoli.Utils
 			}
 			Event.current.Use ();
 			GUIUtility.ExitGUI();
-			return;
 		}
 		/// <summary>
 		/// Save as element button click event.
@@ -264,6 +269,16 @@ namespace Broccoli.Utils
 		#endregion
 
 		#region Persistence Ops
+		/// <summary>
+		/// Gets a save path from the file dialog. Should call GUIUtility.ExitGUI on the calling method.
+		/// </summary>
+		/// <returns>File path.</returns>
+		public string GetSavePath () {
+			string pathToFile = EditorUtility.SaveFilePanelInProject (dialogSaveAsNewElementTitle, 
+				saveFileDefaultName, saveFileExtension, "", savePath);
+			Event.current.Use ();
+			return pathToFile;
+		}
 		/// <summary>
 		/// Attemps to load an element from a file.
 		/// </summary>
@@ -291,14 +306,14 @@ namespace Broccoli.Utils
 				try {
 					pathToFile = pathToFile.Replace(Application.dataPath, "Assets");
 					T loadedElement = AssetDatabase.LoadAssetAtPath<T> (pathToFile);
-					if (loadedElement != null) {
-						AssetDatabase.DeleteAsset (pathToFile);
-						Object.DestroyImmediate (loadedElement, true);
+					if (loadedElement == null) {
+						loadedElement = elementToSave.Clone ();
+						AssetDatabase.CreateAsset (loadedElement, pathToFile);
+					} else {
+						EditorUtility.CopySerialized (elementToSave.Clone (), loadedElement);
 					}
-					loadedElement = elementToSave.Clone ();
-					AssetDatabase.CreateAsset (loadedElement, pathToFile);
 					AssetDatabase.SaveAssets ();
-					Resources.UnloadAsset (loadedElement);
+					//Resources.UnloadAsset (loadedElement);
 					return true;
 				} catch (UnityException e) {
 					Debug.LogException (e);

@@ -442,6 +442,21 @@ namespace Broccoli.Generator
 			public float maxBreakRange = 1f;
 			#endregion
 
+			#region Noise Vars
+			/// <summary>
+			/// Flag to mark structures from this generator to have their own noise parameters.
+			/// </summary>
+			public bool overrideNoise = false;
+			/// <summary>
+			/// Noise value.
+			/// </summary>
+			public float noise = 0.5f;
+			/// <summary>
+			/// Noise scale.
+			/// </summary>
+			public float noiseScale = 0.5f;
+			#endregion
+
 			#region Ops
 			/// <summary>
 			/// Validate this instance.
@@ -627,6 +642,9 @@ namespace Broccoli.Generator
 				clone.maxBreakRange = maxBreakRange;
 				clone.nodePosition = nodePosition;
 				clone.isLocked = isLocked;
+				clone.overrideNoise = overrideNoise;
+				clone.noise = noise;
+				clone.noiseScale = noiseScale;
 				return clone;
 			}
 			#endregion
@@ -919,6 +937,7 @@ namespace Broccoli.Generator
 		{
 			// Validation
 			if (structures == null) return structures;
+			if (parentStructure != null && parentStructure.isTuned && structures.Count == 0) return structures;
 
 			// If parent structure is tuned then set random init state.
 			if (useParentStructureRandomState && parentStructure != null && parentStructure.isTuned) {
@@ -947,29 +966,173 @@ namespace Broccoli.Generator
 
 			// If there are no tuned structures then we create them from the candidates.
 			if (tunedStructures == 0) { // No tuned structures found, meaning we will create anew
+				// Get the main structure level, if generated from a shared generator.
 				originStructureLevel = GetStructureLevel (structureLevel);
+
+				// If the structure level is a sprout, just return the sprout structures.
 				if (originStructureLevel.isSprout) {
 					TerminalStructure sproutStructure = new TerminalStructure ();
 					sproutStructure.randomState = Random.state;
 					sproutStructure.id = GetNextStructureId ();
 					sproutStructure.generatorId = structureLevel.id;
+					// If the structure comes from a shared structure, assign its main generator id.
+					if (originStructureLevel.id != structureLevel.id) {
+						sproutStructure.mainGeneratorId = originStructureLevel.id;
+						sproutStructure.isSharedGenerator = true;
+					}
 					parentStructure.childrenTerminalStructures.Add (sproutStructure);
 					return structures;
-				} else {
+				}
+				// If the structure level is a branch generator, create the candidate branches. 
+				else {
 					bool occurred = false;
 					candidateBranches = GenerateBranchCandidates (originStructureLevel, (parentStructure!=null?parentStructure.branch:null), out occurred);
 					frequency = candidateBranches.Count;
 				}
-			} else { // Tuned structures found, branch merging with structures is required.
+			}
+			// If there are tuned structures, branch merging with existing structures is required.
+			else {
+				// Get the main structure level, if generated from a shared generator.
 				originStructureLevel = GetStructureLevel (structureLevel, originStructureLevelIndex);
+				// Get the number of candidates to generate.
 				frequency = Random.Range (originStructureLevel.minFrequency, originStructureLevel.maxFrequency + 1);
+				// Generate the candidates if the frequency is not already covered by the tuned structures.
 				if (frequency > tunedStructures) {
 					bool occurred = false;
 					candidateBranches = GenerateBranchCandidates (originStructureLevel, (parentStructure!=null?parentStructure.branch:null), out occurred, frequency);
 				}
 			}
 
-			// Merge structures
+			// For branch structures, merge existing structures with the candidates.
+			List<Structure> mergedStructures = new List<Structure> ();
+			int tunedCount = 0;
+			// For each existing structure, add tuned to the merge.
+			for (int _i = 0; _i < structures.Count; _i++) {
+				// If the structure belongs to this structure level generator and is tuned, add to the merge.
+				if (BelongsToStructureLevel (structures[_i].generatorId, structureLevel) && structures[_i].isTuned) {
+					tunedCount++;
+					// Add the tuned structure.
+					mergedStructures.Add (structures[_i]);
+					if (parentStructure != null) {
+						structures[_i].parentStructureId = parentStructure.id;
+						structures[_i].parentStructure = parentStructure;
+					}
+					if (!useParentStructureRandomState) {
+						structures[_i].randomState = Random.state;
+					}
+				}
+			}
+			// There are candidate branches to add to the tuned branches.
+			if (mergedStructures.Count < candidateBranches.Count) {
+				int candI = 0; // Candidate index.
+				int tunI = 0; // Tuned index.
+				// While there are candidates to complete.
+				while (candI < candidateBranches.Count && mergedStructures.Count < candidateBranches.Count) {
+					// Add candidates above tuned branches.
+					if (tunedCount > 0 && tunI < mergedStructures.Count && candidateBranches [candI].position > mergedStructures [tunI].branch.position) {
+						// Create the merged structure.
+						Structure mergedStructure = new Structure ();
+						mergedStructure.id = GetNextStructureId ();
+						mergedStructure.branch = candidateBranches [candI];
+						mergedStructure.branch.id = mergedStructure.id;
+						mergedStructure.branch.isRoot = originStructureLevel.isRoot;
+						mergedStructure.generatorId = originStructureLevel.id;
+						mergedStructure.mainGeneratorId = originStructureLevel.GetMainId ();
+						if (mergedStructure.generatorId == 0) {
+							SetRootPositionAndDirection (mergedStructure, structureLevel);
+						}
+						if (parentStructure == null) {
+							mergedStructure.parentStructureId = -1;
+							mergedStructure.parentStructure = null;
+						} else {
+							mergedStructure.parentStructureId = parentStructure.id;
+							mergedStructure.parentStructure = parentStructure;
+						}
+						mergedStructure.isSharedGenerator = originStructureLevel.IsShared();
+						mergedStructure.randomState = Random.state;
+						// Add the structure to the merges.
+						mergedStructures.Add (mergedStructure);
+					}
+					// Shuffling between existing tuned branch position.
+					else {
+						if (tunI < tunedCount) tunI++;
+						else {
+							// Create the merged structure.
+							Structure mergedStructure = new Structure ();
+							mergedStructure.id = GetNextStructureId ();
+							mergedStructure.branch = candidateBranches [candI];
+							mergedStructure.branch.id = mergedStructure.id;
+							mergedStructure.branch.isRoot = originStructureLevel.isRoot;
+							mergedStructure.generatorId = originStructureLevel.id;
+							mergedStructure.mainGeneratorId = originStructureLevel.GetMainId ();
+							if (mergedStructure.generatorId == 0) {
+								SetRootPositionAndDirection (mergedStructure, structureLevel);
+							}
+							if (parentStructure == null) {
+								mergedStructure.parentStructureId = -1;
+								mergedStructure.parentStructure = null;
+							} else {
+								mergedStructure.parentStructureId = parentStructure.id;
+								mergedStructure.parentStructure = parentStructure;
+							}
+							mergedStructure.isSharedGenerator = originStructureLevel.IsShared();
+							mergedStructure.randomState = Random.state;
+							// Add the structure to the merges.
+							mergedStructures.Add (mergedStructure);
+						}
+					}
+					candI++;
+				}
+			}
+			// Order merged structures by branch position.
+			mergedStructures.Sort ((s1,s2) => s2.branch.position.CompareTo(s1.branch.position));
+			/*
+			int i;
+			for (i = 0;i < candidateBranches.Count; i++) {
+				if (i < structures.Count && structures[i] != null && structures[i].isTuned) {
+					if (parentStructure != null) {
+						structures[i].parentStructureId = parentStructure.id;
+						structures[i].parentStructure = parentStructure;
+					}
+					if (!useParentStructureRandomState) {
+						structures[i].randomState = Random.state;
+					}
+					mergedStructures.Add (structures[i]);
+				} else {
+					Structure mergedStructure = new Structure ();
+					mergedStructure.id = GetNextStructureId ();
+					mergedStructure.branch = candidateBranches [i];
+					mergedStructure.branch.id = mergedStructure.id;
+					mergedStructure.branch.isRoot = originStructureLevel.isRoot;
+					mergedStructure.generatorId = originStructureLevel.id;
+					mergedStructure.mainGeneratorId = originStructureLevel.GetMainId ();
+					if (mergedStructure.generatorId == 0) {
+						SetRootPositionAndDirection (mergedStructure, structureLevel);
+					}
+					if (parentStructure == null) {
+						mergedStructure.parentStructureId = -1;
+						mergedStructure.parentStructure = null;
+					} else {
+						mergedStructure.parentStructureId = parentStructure.id;
+						mergedStructure.parentStructure = parentStructure;
+					}
+					mergedStructure.isSharedGenerator = originStructureLevel.IsShared();
+					mergedStructure.randomState = Random.state;
+					mergedStructures.Add (mergedStructure);
+				}
+			}
+
+			// TODO: add remaining structures
+			for (;i < structures.Count; i++) {
+				if (structures[i].isTuned && BelongsToStructureLevel (structures[i].generatorId, structureLevel)) {
+					if (!useParentStructureRandomState) {
+						structures[i].randomState = Random.state;
+					}
+					mergedStructures.Add (structures[i]);
+				}
+			}
+			*/
+			/*
 			List<Structure> mergedStructures = new List<Structure> ();
 			int i;
 			for (i = 0;i < candidateBranches.Count; i++) {
@@ -1015,9 +1178,10 @@ namespace Broccoli.Generator
 					mergedStructures.Add (structures[i]);
 				}
 			}
+			*/
 			
 			// Call recursively
-			for (i = 0; i < mergedStructures.Count; i++) {
+			for (int i = 0; i < mergedStructures.Count; i++) {
 				if (structureLevel.structureLevels != null) {
 					for (int j = 0; j < structureLevel.structureLevels.Count; j++) {
 						GenerateStructuresRecursive (mergedStructures[i].childrenStructures, structureLevel.structureLevels[j], mergedStructures[i]);
@@ -1040,7 +1204,6 @@ namespace Broccoli.Generator
 						filteredOutStructures.Add (mergedStructures[j]);
 					}
 				}
-				// Assign to the parent structure.
 				parentStructure.childrenStructures = filteredOutStructures;
 			}
 		

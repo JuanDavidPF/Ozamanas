@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+using Broccoli.Model;
+
 namespace Broccoli.Pipe {
 	/// <summary>
 	/// Branch bender element.
@@ -83,6 +85,13 @@ namespace Broccoli.Pipe {
 		public float noiseAtRootBottom = 0.5f;
 		public float noiseScaleAtRootBase = 0.2f;
 		public float noiseScaleAtRootBottom = 0.5f;
+		#endregion
+
+		#region Delegates
+		public delegate void OnBranchBending (BroccoTree tree, BranchBenderElement branchBenderElement);
+		public OnBranchBending onDirectionalBending;
+		public OnBranchBending onFollowUpSmoothing;
+		public OnBranchBending onBranchNoise;		
 		#endregion
 
 		#region Constructors

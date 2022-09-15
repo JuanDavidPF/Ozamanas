@@ -75,6 +75,10 @@ namespace Broccoli.Utils
 		/// </summary>
 		private static Dictionary<GUIElement, Texture2D> loadedTextures = new Dictionary<GUIElement, Texture2D> ();
 		/// <summary>
+		/// The requested textures to be loaded, relative to the editor resources path.
+		/// </summary>
+		private static List<Texture2D> loadedCustomTextures = new List<Texture2D> ();
+		/// <summary>
 		/// Flag to mark this manager as initialized.
 		/// </summary>
 		private static bool isInit = false;
@@ -123,34 +127,34 @@ namespace Broccoli.Utils
 		static GUITextureManager () {
 			#if UNITY_EDITOR
 			newPreviewBtnTexture = EditorGUIUtility.FindTexture ("RotateTool On");
-			createPrefabBtnTexture = EditorGUIUtility.FindTexture ("PrefabNormal Icon");
+			createPrefabBtnTexture = EditorGUIUtility.FindTexture ("xd_Prefab Icon");
 			infoTexture = EditorGUIUtility.FindTexture ("console.infoicon");
 			warnTexture = EditorGUIUtility.FindTexture ("console.warnicon");
 			errorTexture = EditorGUIUtility.FindTexture ("console.erroricon");
 			visibilityOnTexture = EditorGUIUtility.FindTexture ("animationvisibilitytoggleon");
 			visibilityOffTexture = EditorGUIUtility.FindTexture ("animationvisibilitytoggleoff");
-			inspectMeshOnTexture = EditorGUIUtility.FindTexture ("MeshRenderer Icon");
-			inspectMeshOffTexture = EditorGUIUtility.FindTexture ("MeshFilter Icon");
-			#endif
+			inspectMeshOnTexture = EditorGUIUtility.FindTexture ("animationvisibilitytoggleoff");
+			inspectMeshOffTexture = EditorGUIUtility.FindTexture ("animationvisibilitytoggleon");
+			#endif 
 		}
 		/// <summary>
 		/// Inits the manager.
 		/// </summary>
 		/// <param name="force">If set to <c>true</c> forces the initialization despite the isInit flag.</param>
 		public static void Init (bool force = false) {
-			if (!isInit || force) {
-				LoadTexture ("Broccoli/GUI/broccoli_logo.png", GUIElement.Logo, 0, 0, 246, 109);
-				LoadTexture ("Broccoli/GUI/broccoli_logo_simple.png", GUIElement.LogoBox, 0, 0, 64,64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgStructure, 0, 0, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgMesh, 64, 0, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgFunction, 128, 0, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgMap, 192, 0, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgBranch, 0, 64, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgRoot, 192, 64, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgSprout, 64, 64, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_GUI_a.png", GUIElement.NodeBgBarkSprout, 128, 64, 64, 64);
-				LoadTexture ("Broccoli/GUI/broccoli_icons.png", GUIElement.IconShuffleOff, 0, 0, 32, 32);
-				LoadTexture ("Broccoli/GUI/broccoli_icons.png", GUIElement.IconShuffleOn, 32, 0, 32, 32);
+			if (!isInit || force || GetLogo () == null) {
+				LoadTexture ("GUI/broccoli_logo.png", GUIElement.Logo, 0, 0, 246, 109);
+				LoadTexture ("GUI/broccoli_logo_simple.png", GUIElement.LogoBox, 0, 0, 64,64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgStructure, 0, 0, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgMesh, 64, 0, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgFunction, 128, 0, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgMap, 192, 0, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgBranch, 0, 64, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgRoot, 192, 64, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgSprout, 64, 64, 64, 64);
+				LoadTexture ("GUI/broccoli_GUI_a.png", GUIElement.NodeBgBarkSprout, 128, 64, 64, 64);
+				LoadTexture ("GUI/broccoli_icons.png", GUIElement.IconShuffleOff, 0, 0, 32, 32);
+				LoadTexture ("GUI/broccoli_icons.png", GUIElement.IconShuffleOn, 32, 0, 32, 32);
 				isInit = true;
 			}
 		}
@@ -163,10 +167,46 @@ namespace Broccoli.Utils
 				UnityEngine.Object.DestroyImmediate (loadedTexturesEnumerator.Current.Value);
 			}
 			loadedTextures.Clear ();
+			var loadedCustomTexturesEnumerator = loadedCustomTextures.GetEnumerator ();
+			while (loadedCustomTexturesEnumerator.MoveNext ()) {
+				UnityEngine.Object.DestroyImmediate (loadedCustomTexturesEnumerator.Current);
+			}
+			loadedCustomTextures.Clear ();
 			#if UNITY_EDITOR
 			EditorUtility.UnloadUnusedAssetsImmediate ();
 			#endif
 			isInit = false;
+		}
+		/// <summary>
+		/// Loads a custom texture given the path relative to the editor resource path.
+		/// </summary>
+		/// <param name="path">Path relative to the editor resources folder.</param>
+		/// <returns>The index of the texture, if none loaded -1.</returns>
+		public static int LoadCustomTexture (string path) {
+			int index = -1;
+			#if UNITY_EDITOR
+			Texture2D texture = null;
+			path = ExtensionManager.resourcesPath + path;
+			texture = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D> (path);
+			if (loadedCustomTextures.Contains (texture)) {
+				index = loadedCustomTextures.IndexOf (texture);
+			} else {
+				loadedCustomTextures.Add (texture);
+				index = loadedCustomTextures.Count - 1;
+			}
+			#endif
+			return index;
+		}
+		/// <summary>
+		/// Gets a previously loaded custom texture.
+		/// </summary>
+		/// <param name="index">Id of the texture.</param>
+		/// <returns>Loaded custom texture.</returns>
+		public static Texture2D GetCustomTexture (int index) {
+			if (index >= 0 && index < loadedCustomTextures.Count) {
+				return loadedCustomTextures [index];
+			}
+			return null;
 		}
 		/// <summary>
 		/// Loads a texture given its GUIElement enum value.

@@ -113,7 +113,7 @@ namespace Broccoli.Base
 						throw new UnityException ("Broccoli Tree Creator: Correct path could not be detected! " +
 							"Please correct the _extensionPath variable in ExtensionManager.cs!");
 					_extensionPath = _extensionPath.Substring (0, subFolderIndex);
-					_resourcesPath = _extensionPath + "Resources/";
+					_resourcesPath = _extensionPath + "Editor/Resources/";
 					return true;
 				} else {
 					throw new UnityException ("Broccoli Tree Creator: Correct path could not be detected! " +

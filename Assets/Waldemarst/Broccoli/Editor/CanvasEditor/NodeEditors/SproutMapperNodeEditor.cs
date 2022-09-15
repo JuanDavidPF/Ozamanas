@@ -10,6 +10,7 @@ using Broccoli.Pipe;
 using Broccoli.Component;
 using Broccoli.Manager;
 using Broccoli.Factory;
+using Broccoli.BroccoEditor;
 
 namespace Broccoli.TreeNodeEditor
 {
@@ -215,6 +216,8 @@ namespace Broccoli.TreeNodeEditor
 			}
 
 			if (isActive) {
+				SproutGroups sproutGroups = sproutMapperNode.sproutMapperElement.pipeline.sproutGroups;
+				SproutGroups.SproutGroup sproutGroup = sproutGroups.GetSproutGroup (sproutGroupId);
 				if (index != sproutMapperNode.sproutMapperElement.selectedMapIndex) {
 					sproutMapperNode.sproutMapperElement.selectedMapIndex = index;
 				}
@@ -235,33 +238,37 @@ namespace Broccoli.TreeNodeEditor
 						changesForPipeline = true;
 					}
 				}
-				EditorGUI.BeginChangeCheck ();
-				// Mode.
-				SproutMap.Mode sproutMapMode = (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex;
-				EditorGUILayout.PropertyField(sproutMapProp.FindPropertyRelative ("mode"));
-				if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.MaterialOverride) {
-					// Changes for mode.
-					if (EditorGUI.EndChangeCheck () ||
-						sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
-						changesForPipeline = true;
-					} else {
-						DrawSproutMapElementMaterialOverrideMode (sproutMapProp, index);
-					}
-				} else if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.Material) {
-					// Changes for mode.
-					if (EditorGUI.EndChangeCheck () ||
-					    sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
-						changesForPipeline = true;
-					} else {
-						DrawSproutMapElementMaterialMode (sproutMapProp);
-					}
-				} else if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.Texture) {
-					// Changes for mode.
-					if (EditorGUI.EndChangeCheck () ||
-						sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
-						changesForPipeline = true;
-					} else {
-						DrawSproutMapElementTextureMode (sproutMapProp, index);
+				if (sproutGroup != null && sproutGroup.branchCollection != null) {
+					EditorGUILayout.HelpBox ("This Sprout Group uses a Branch Collection Scriptable Object to define its meshes. Textures will be taken from the collection as well.", MessageType.Info);
+				} else {
+					EditorGUI.BeginChangeCheck ();
+					// Mode.
+					SproutMap.Mode sproutMapMode = (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex;
+					EditorGUILayout.PropertyField(sproutMapProp.FindPropertyRelative ("mode"));
+					if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.MaterialOverride) {
+						// Changes for mode.
+						if (EditorGUI.EndChangeCheck () ||
+							sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
+							changesForPipeline = true;
+						} else {
+							DrawSproutMapElementMaterialOverrideMode (sproutMapProp, index);
+						}
+					} else if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.Material) {
+						// Changes for mode.
+						if (EditorGUI.EndChangeCheck () ||
+							sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
+							changesForPipeline = true;
+						} else {
+							DrawSproutMapElementMaterialMode (sproutMapProp);
+						}
+					} else if ((SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex == SproutMap.Mode.Texture) {
+						// Changes for mode.
+						if (EditorGUI.EndChangeCheck () ||
+							sproutMapMode != (SproutMap.Mode)sproutMapProp.FindPropertyRelative ("mode").enumValueIndex) {
+							changesForPipeline = true;
+						} else {
+							DrawSproutMapElementTextureMode (sproutMapProp, index);
+						}
 					}
 				}
 				EditorGUILayout.Space ();

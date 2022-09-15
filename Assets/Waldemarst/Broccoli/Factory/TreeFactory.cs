@@ -252,6 +252,7 @@ namespace Broccoli.Factory
 				}
 				return _previewTree;
 			}
+			set { _previewTree = value; }
 		}
 		/// <summary>
 		/// Access to the local pipeline.
@@ -946,6 +947,13 @@ namespace Broccoli.Factory
 			if (onProcessPipeline != null) {
 				onProcessPipeline (pipeline, tree, lodIndex, referenceElement, useCache, forceNewTree);
 			}
+
+			BroccoTreeController broccoTreeController = _previewTree.obj.GetComponent<Broccoli.Controller.BroccoTreeController> ();
+			if (broccoTreeController != null) {
+				broccoTreeController.shaderType = (BroccoTreeController.ShaderType)MaterialManager.leavesShaderType;
+				broccoTreeController.windScale = treeFactoryPreferences.factoryScale;
+				broccoTreeController.Start ();
+			}
 			//UnityEngine.Profiling.Profiler.EndSample();
 
 			return result;
@@ -1138,7 +1146,10 @@ namespace Broccoli.Factory
 
 				// Create the prefab main GameObject.
 				_assetManager.onLODReady += OnAssetManagerLODReady;
-				_assetManager.BeginWithCreatePrefab (previewTree.obj);
+				string prefabSuffix = Broccoli.Utils.FileUtils.GetNumericSuffix (GlobalSettings.prefabSavePath,
+					GlobalSettings.prefabSavePrefix, "prefab");
+				_assetManager.BeginWithCreatePrefab (previewTree.obj,
+					GlobalSettings.prefabSavePath, GlobalSettings.prefabSavePrefix + prefabSuffix);
 
 				// Enables apply offset to vertices on the asset manager if the conditions are met.
 				if (treeFactoryPreferences.prefabRepositionEnabled) {
@@ -1187,11 +1198,11 @@ namespace Broccoli.Factory
 				// Process standard LOD or list of LODs.
 				if (lodIndex.Count == 0) {
 					ProcessPipeline (localPipeline, previewTree, -1, null, true);
-					_assetManager.AddSubmeshes (_meshManager.GetSubmeshes (), 0, 0.7f);
+					_assetManager.AddMeshToPrefab (_meshManager.GetSubmeshes (), 0, 0.7f);
 				} else {
 					for (int i = 0; i < lodIndex.Count; i++) {
 						ProcessPipeline (localPipeline, previewTree, lodIndex[i], null, true);
-						_assetManager.AddSubmeshes (_meshManager.GetSubmeshes (), i, treeFactoryPreferences.lods[lodIndex[i]].groupPercentage);
+						_assetManager.AddMeshToPrefab (_meshManager.GetSubmeshes (), i, treeFactoryPreferences.lods[lodIndex[i]].groupPercentage);
 					}
 				}
 
@@ -1226,7 +1237,7 @@ namespace Broccoli.Factory
 				bool result = _assetManager.EndWithCommit (treeFactoryPreferences.prefabIncludeBillboard, treeFactoryPreferences.prefabBillboardPercentage);
 				_assetManager.onLODReady -= OnAssetManagerLODReady;
 				if (result) {
-					lastPrefabPath = _assetManager.prefabPath;
+					lastPrefabPath = _assetManager.prefabFullPath;
 					if (onEndPrefabCommit != null) {
 						onEndPrefabCommit (_localPipeline, _previewTree, lastPrefabPath);
 					}
@@ -1353,7 +1364,6 @@ namespace Broccoli.Factory
 		/// <param name="neededMaterialsCount">Number of materials needed according to submeshes.</param>
 		private void SetMaterials (MeshRenderer meshRenderer, int neededMaterialsCount) {
 			Material[] materials = new Material[neededMaterialsCount];
-			bool hasCustomMaterials = false;
 			bool hasUnassignedMaterials = false;
 			bool hasUnassignedMesh = false;
 			for (int i = 0; i < neededMaterialsCount; i++) {
@@ -1384,12 +1394,12 @@ namespace Broccoli.Factory
 						&& _meshManager.HasMeshAndNotEmpty (meshId)) 
 					{
 						if (_materialManager.IsCustomMaterial (meshId)) {
-							hasCustomMaterials = true;
+							//hasCustomMaterials = true;
 						}
 						if (_materialManager.IsCustomMaterial (meshId)) {
 							if (treeFactoryPreferences.overrideMaterialShaderEnabled) {
 								bool isSprout = _meshManager.IsSproutMesh (meshId);
-								materials [i] = _materialManager.GetTreeCreatorMaterial (meshId, isSprout);
+								materials [i] = _materialManager.GetOverridedMaterial (meshId, isSprout);
 							} else {
 								materials [i] = _materialManager.GetMaterial (meshId);
 							}
@@ -1402,10 +1412,12 @@ namespace Broccoli.Factory
 					}
 				}
 			}
+			/*
 			if (hasCustomMaterials && (!treeFactoryPreferences.prefabCloneCustomMaterialEnabled || 
 				!treeFactoryPreferences.overrideMaterialShaderEnabled)) {
 				log.Enqueue (LogItem.GetInfoItem (MSG_CUSTOM_MATERIAL_NO_WINDZONE));
 			}
+			*/
 			if (hasUnassignedMaterials) {
 				log.Enqueue (LogItem.GetWarnItem (MSG_MATERIALS_UNASSIGNED));
 			}

@@ -21,11 +21,15 @@ namespace Broccoli.Component
 		/// </summary>
 		SproutMeshBuilder sproutMeshBuilder = null;
 		/// <summary>
+		/// Advanced sprout mesh builder.
+		/// </summary>
+		AdvancedSproutMeshBuilder advancedSproutMeshBuilder = null;
+		/// <summary>
 		/// The sprout mesh generator element.
 		/// </summary>
 		SproutMeshGeneratorElement sproutMeshGeneratorElement = null;
 		/// <summary>
-		/// The sprout meshes.
+		/// The sprout meshes relationship between their group id and the assigned sprout mesh.
 		/// </summary>
 		Dictionary<int, SproutMesh> sproutMeshes = new Dictionary <int, SproutMesh> ();
 		/// <summary>
@@ -52,6 +56,7 @@ namespace Broccoli.Component
 			TreeFactoryProcessControl processControl = null) 
 		{
 			sproutMeshBuilder = SproutMeshBuilder.GetInstance ();
+			advancedSproutMeshBuilder = AdvancedSproutMeshBuilder.GetInstance ();
 
 			// Gather all SproutMap objects from elements downstream.
 			PipelineElement pipelineElement = 
@@ -74,21 +79,9 @@ namespace Broccoli.Component
 
 			sproutMeshBuilder.globalScale = treeFactory.treeFactoryPreferences.factoryScale;
 			sproutMeshBuilder.SetGravity (GlobalSettings.gravityDirection);
-			//sproutMeshBuilder.mapST = MaterialManager.leavesShaderType != MaterialManager.LeavesShaderType.TreeCreatorOrSimilar;
 			sproutMeshBuilder.mapST = true;
 
-			// Switch simplify flag for LOD processing.
-			/*
-			if (!treeFactory.treeFactoryPreferences.prefabStrictLowPoly) {
-				if (processControl != null && processControl.pass == 1) {
-					simplifySprouts = true;
-				} else {
-					simplifySprouts = false;
-				}
-			} else {
-				simplifySprouts = false;
-			}
-			*/
+			advancedSproutMeshBuilder.globalScale = treeFactory.treeFactoryPreferences.factoryScale;
 		}
 		/// <summary>
 		/// Gets the changed aspects on the tree for this component.
@@ -103,7 +96,12 @@ namespace Broccoli.Component
 		public override void Clear ()
 		{
 			base.Clear ();
+			if (sproutMeshBuilder != null)
+				sproutMeshBuilder.Clear ();
 			sproutMeshBuilder = null;
+			if (advancedSproutMeshBuilder != null)
+				advancedSproutMeshBuilder.Clear ();
+			advancedSproutMeshBuilder = null;
 			sproutMeshGeneratorElement = null;
 			sproutMeshes.Clear ();
 			sproutMappers.Clear ();
@@ -144,99 +142,97 @@ namespace Broccoli.Component
 		/// <param name="lodIndex">Index for the LOD definition.</param>
 		private void BuildMesh (TreeFactory treeFactory, int lodIndex) {
 			var sproutMeshesEnumerator = sproutMeshes.GetEnumerator ();
-			int groupId;
 			sproutMeshBuilder.PrepareBuilder (sproutMeshes, sproutMappers);
+			SproutMesh sproutMesh;
+			sproutMeshGeneratorElement.PrepareSeed ();
 			while (sproutMeshesEnumerator.MoveNext ()) {
-				groupId = sproutMeshesEnumerator.Current.Key;
-				bool isTwoSided = treeFactory.materialManager.IsSproutTwoSided ();
-				//if (sproutGroups.ContainsKey (groupId)) {
-				if (pipelineElement.pipeline.sproutGroups.HasSproutGroup (groupId)) {
-					if (sproutMappers.ContainsKey (groupId) && sproutMeshes[groupId].mode != SproutMesh.Mode.Mesh) {
-						if (sproutMappers [groupId].IsTextured ()) {
-							sproutMeshBuilder.AssignSproutAreas (tree, groupId, sproutMappers [groupId]);
-							List<SproutMap.SproutMapArea> sproutAreas = sproutMappers [groupId].sproutAreas;
-							for (int i = 0; i < sproutAreas.Count; i++) {
-								if (sproutAreas[i].enabled) {
-									Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, 
-										                 groupId, TranslateSproutMesh (sproutMeshes [groupId]), sproutAreas[i], i, isTwoSided);
-									ApplyNormalMode (groupMesh, Vector3.zero);
-									treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId, i);
-									treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId, i);
-									List<SproutMeshBuilder.SproutMeshData> sproutMeshDatas = sproutMeshBuilder.sproutMeshData;
-									for (int j = 0; j < sproutMeshDatas.Count; j++) {
-										MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[j].startIndex, 
-											                                sproutMeshDatas[j].length,
-																			sproutMeshDatas[j].position, 
-											                                0, 
-											                                sproutMeshDatas[j].origin,
-											                                MeshManager.MeshData.Type.Sprout,
-											                                groupId,
-											                                i);
-										meshPart.sproutId = sproutMeshDatas[j].sproutId;
-										meshPart.branchId = sproutMeshDatas[j].branchId;
-									}
-								} else {
-									treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId, i);
+				sproutMesh = sproutMeshesEnumerator.Current.Value;
+				if (sproutMesh.meshingMode == SproutMesh.MeshingMode.Shape) {
+					BuildShapeMesh (treeFactory, lodIndex, sproutMesh);
+				} else if (sproutMesh.meshingMode == SproutMesh.MeshingMode.BranchCollection) {
+					BuildBranchCollectionMesh (treeFactory, lodIndex, sproutMesh);
+				}
+			}
+		}
+		#endregion
+
+		#region Process Shape Mesh
+		/// <summary>
+		/// Builds the mesh or meshes for the sprouts.
+		/// </summary>
+		/// <param name="treeFactory">Tree factory.</param>
+		/// <param name="lodIndex">Index for the LOD definition.</param>
+		private void BuildShapeMesh (TreeFactory treeFactory, int lodIndex, SproutMesh sproutMesh) {
+			int groupId = sproutMesh.groupId;
+			bool isTwoSided = treeFactory.materialManager.IsSproutTwoSided ();
+			if (pipelineElement.pipeline.sproutGroups.HasSproutGroup (groupId)) {
+				if (sproutMappers.ContainsKey (groupId) && sproutMeshes[groupId].shapeMode != SproutMesh.ShapeMode.Mesh) {
+					if (sproutMappers [groupId].IsTextured ()) {
+						sproutMeshBuilder.AssignSproutSubgroups (tree, groupId, sproutMappers [groupId]);
+						List<SproutMap.SproutMapArea> sproutAreas = sproutMappers [groupId].sproutAreas;
+						for (int i = 0; i < sproutAreas.Count; i++) {
+							if (sproutAreas[i].enabled) {
+								Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, 
+														groupId, TranslateSproutMesh (sproutMeshes [groupId]), sproutAreas[i], i, isTwoSided);
+								ApplyNormalMode (groupMesh, Vector3.zero);
+								treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId, i);
+								treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId, i);
+								List<SproutMeshBuilder.SproutMeshData> sproutMeshDatas = sproutMeshBuilder.sproutMeshData;
+								for (int j = 0; j < sproutMeshDatas.Count; j++) {
+									MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[j].startIndex, 
+																		sproutMeshDatas[j].length,
+																		sproutMeshDatas[j].position, 
+																		0, 
+																		sproutMeshDatas[j].origin,
+																		MeshManager.MeshData.Type.Sprout,
+																		groupId,
+																		i);
+									meshPart.sproutId = sproutMeshDatas[j].sproutId;
+									meshPart.branchId = sproutMeshDatas[j].branchId;
 								}
-							}
-						} else {
-							Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, groupId, TranslateSproutMesh (sproutMeshes [groupId]));
-							ApplyNormalMode (groupMesh, Vector3.zero);
-							treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId);
-							treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId);
-							List<SproutMeshBuilder.SproutMeshData> sproutMeshDatas = sproutMeshBuilder.sproutMeshData;
-							for (int i = 0; i < sproutMeshDatas.Count; i++) {
-								MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[i].startIndex, 
-									sproutMeshDatas[i].length,
-									sproutMeshDatas[i].position,
-									0, 
-									sproutMeshDatas[i].origin,
-									MeshManager.MeshData.Type.Sprout,
-									groupId);
-								meshPart.sproutId = sproutMeshDatas[i].sproutId;
-								meshPart.branchId = sproutMeshDatas[i].branchId;
+							} else {
+								treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId, i);
 							}
 						}
 					} else {
-						// Process without sprout areas.
-						Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, 
-							groupId, sproutMeshes [groupId]);
+						Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, groupId, TranslateSproutMesh (sproutMeshes [groupId]));
 						ApplyNormalMode (groupMesh, Vector3.zero);
 						treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId);
 						treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId);
 						List<SproutMeshBuilder.SproutMeshData> sproutMeshDatas = sproutMeshBuilder.sproutMeshData;
 						for (int i = 0; i < sproutMeshDatas.Count; i++) {
-							MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[i].startIndex,
+							MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[i].startIndex, 
 								sproutMeshDatas[i].length,
 								sproutMeshDatas[i].position,
-								0,
+								0, 
 								sproutMeshDatas[i].origin,
 								MeshManager.MeshData.Type.Sprout,
 								groupId);
-							meshPart.branchId = sproutMeshDatas[i].branchId;
 							meshPart.sproutId = sproutMeshDatas[i].sproutId;
+							meshPart.branchId = sproutMeshDatas[i].branchId;
 						}
+					}
+				} else {
+					// Process without sprout areas.
+					Mesh groupMesh = sproutMeshBuilder.MeshSprouts (tree, 
+						groupId, sproutMeshes [groupId]);
+					ApplyNormalMode (groupMesh, Vector3.zero);
+					treeFactory.meshManager.DeregisterMesh (MeshManager.MeshData.Type.Sprout, groupId);
+					treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId);
+					List<SproutMeshBuilder.SproutMeshData> sproutMeshDatas = sproutMeshBuilder.sproutMeshData;
+					for (int i = 0; i < sproutMeshDatas.Count; i++) {
+						MeshManager.MeshPart meshPart = treeFactory.meshManager.AddMeshPart (sproutMeshDatas[i].startIndex,
+							sproutMeshDatas[i].length,
+							sproutMeshDatas[i].position,
+							0,
+							sproutMeshDatas[i].origin,
+							MeshManager.MeshData.Type.Sprout,
+							groupId);
+						meshPart.branchId = sproutMeshDatas[i].branchId;
+						meshPart.sproutId = sproutMeshDatas[i].sproutId;
 					}
 				}
 			}
-			/*
-			if (lodIndex == 1) {
-				sproutMeshGeneratorElement.verticesCountFirstPass = treeFactory.meshManager.GetVerticesCount ();
-				sproutMeshGeneratorElement.trianglesCountFirstPass = treeFactory.meshManager.GetTrianglesCount ();
-			} else {
-				sproutMeshGeneratorElement.verticesCountSecondPass = treeFactory.meshManager.GetVerticesCount ();
-				sproutMeshGeneratorElement.trianglesCountSecondPass = treeFactory.meshManager.GetTrianglesCount ();
-			}
-			*/
-			/*
-			if (treeFactory.treeFactoryPreferences.prefabStrictLowPoly) {
-				sproutMeshGeneratorElement.showLODInfoLevel = 1;
-			} else if (!treeFactory.treeFactoryPreferences.prefabUseLODGroups) {
-				sproutMeshGeneratorElement.showLODInfoLevel = 2;
-			} else {
-				sproutMeshGeneratorElement.showLODInfoLevel = -1;
-			}
-			*/
 		}
 		/// <summary>
 		/// Reprocess normals for the sprout mesh.
@@ -267,7 +263,7 @@ namespace Broccoli.Component
 		/// <returns>Translated SproutMesh.</returns>
 		SproutMesh TranslateSproutMesh (SproutMesh sproutMesh) {
 			if (simplifySprouts) {
-				if (sproutMesh.mode == SproutMesh.Mode.GridPlane) {
+				if (sproutMesh.shapeMode == SproutMesh.ShapeMode.GridPlane) {
 					SproutMesh simplyfiedSproutMesh = sproutMesh.Clone ();
 					if (sproutMesh.resolutionHeight > sproutMesh.resolutionWidth) {
 						simplyfiedSproutMesh.resolutionWidth = 1;
@@ -292,11 +288,92 @@ namespace Broccoli.Component
 							(float) simplyfiedSproutMesh.resolutionWidth);
 					}
 					return simplyfiedSproutMesh;
-				} else if (sproutMesh.mode == SproutMesh.Mode.PlaneX) {
+				} else if (sproutMesh.shapeMode == SproutMesh.ShapeMode.PlaneX) {
 					
 				}
 			}
 			return sproutMesh;
+		}
+		#endregion
+
+		#region Process Branch Collection Mesh
+		/// <summary>
+		/// Builds the mesh or meshes for the sprouts.
+		/// </summary>
+		/// <param name="treeFactory">Tree factory.</param>
+		/// <param name="lodIndex">Index for the LOD definition.</param>
+		private void BuildBranchCollectionMesh (TreeFactory treeFactory, int lodIndex, SproutMesh sproutMesh) {
+			int groupId = sproutMesh.groupId;
+			bool isTwoSided = treeFactory.materialManager.IsSproutTwoSided ();
+			if (pipelineElement.pipeline.sproutGroups.HasSproutGroup (groupId) && sproutMesh.branchCollection != null) {
+				// Get the branch collection.
+				BranchDescriptorCollection branchCollection = ((BranchDescriptorCollectionSO)sproutMesh.branchCollection).branchDescriptorCollection;
+
+				// Assign the sprout subgroups.
+				sproutMeshBuilder.AssignSproutSubgroups (tree, groupId, branchCollection, sproutMesh);
+
+				// Register the branch collection.
+				RegisterBranchCollection (treeFactory, lodIndex, sproutMesh, branchCollection);
+
+				// Generate a mesh for each snapshot.
+				treeFactory.meshManager.DeregisterSproutGroupMeshes (groupId);
+				if (sproutMesh.subgroups.Length == 0) {
+					Mesh groupMesh = advancedSproutMeshBuilder.MeshSprouts (tree, sproutMesh, groupId, -1);
+					ApplyNormalMode (groupMesh, Vector3.zero);
+					treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId);
+				} else {
+					Mesh groupMesh = new Mesh ();
+					CombineInstance[] combine = new CombineInstance [sproutMesh.subgroups.Length];
+					for (int i = 0; i < sproutMesh.subgroups.Length; i++) {
+						combine [i].mesh = advancedSproutMeshBuilder.MeshSprouts (tree, sproutMesh, groupId, sproutMesh.subgroups [i]);
+						combine [i].transform = Matrix4x4.identity;
+						combine [i].subMeshIndex = 0;
+						ApplyNormalMode (combine [i].mesh, Vector3.zero);
+					}
+					groupMesh.CombineMeshes (combine, true, false);
+					treeFactory.meshManager.RegisterSproutMesh (groupMesh, groupId);
+				}
+			}
+		}
+		private void RegisterBranchCollection (
+			TreeFactory treeFactory, 
+			int lodIndex, 
+			SproutMesh sproutMesh, 
+			BranchDescriptorCollection branchDescriptorCollection)
+		{
+			SproutCompositeManager sproutCompositeManager = new SproutCompositeManager ();
+			// Reconstruct the branch collection.
+			BranchDescriptor branchDescriptor;
+			for (int i = 0; i < branchDescriptorCollection.branchDescriptors.Count; i++) {
+				branchDescriptor = branchDescriptorCollection.branchDescriptors [i];
+				for (int j = 0; j < branchDescriptor.polygonAreas.Count; j++) {
+					PolygonAreaBuilder.SetPolygonAreaMesh (branchDescriptor.polygonAreas [j]);
+					sproutCompositeManager.ManagePolygonArea (branchDescriptor.polygonAreas [j], branchDescriptor);
+				}
+				Mesh meshToRegister = sproutCompositeManager.GetMesh (branchDescriptor.id, lodIndex);
+				NormalizeBranchCollectionTransform (meshToRegister, 5f, Quaternion.Euler (0f, 90f, 90f));
+				advancedSproutMeshBuilder.RegisterMesh (meshToRegister, sproutMesh.groupId, i);
+			}
+		}
+		/// <summary>
+		/// Applies scale and rotation to meshes coming from SproutLab's branch descriptor collection.
+		/// </summary>
+		/// <param name="mesh">Mesh to appy the transformation.</param>
+		/// <param name="scale">Scale transformation.</param>
+		/// <param name="rotation">Rotation transformation.</param>
+		private void NormalizeBranchCollectionTransform (Mesh mesh, float scale, Quaternion rotation) {
+			Vector3[] _vertices = mesh.vertices;
+			Vector3[] _normals = mesh.normals;
+			Vector4[] _tangents = mesh.tangents;
+			for (int i = 0; i < _vertices.Length; i++) {
+				_vertices [i] = rotation * _vertices [i] * scale;
+				_normals [i] = rotation * _normals [i];
+				_tangents [i] = rotation * _tangents [i];
+			}
+			mesh.vertices = _vertices;
+			mesh.normals = _normals;
+			mesh.tangents = _tangents;
+			mesh.RecalculateBounds ();
 		}
 		#endregion
 	}

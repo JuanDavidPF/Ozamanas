@@ -317,6 +317,10 @@ namespace Broccoli.Builder
 		/// </summary>
 		List<Vector4> uv2s = new List<Vector4> ();
 		/// <summary>
+		/// The UV6s on the mesh.
+		/// </summary>
+		List<Vector4> uv6s = new List<Vector4> ();
+		/// <summary>
 		/// Sprout mesh data.
 		/// </summary>
 		List<SproutMeshData> _sproutMeshData = new List<SproutMeshData> ();
@@ -328,7 +332,7 @@ namespace Broccoli.Builder
 		/// <summary>
 		/// The enabled areas temp var.
 		/// </summary>
-		List<int> enabledAreas = new List<int> ();
+		List<int> enabledSubgroups = new List<int> ();
 		/// <summary>
 		/// gravity forward vector used on rotation operations.
 		/// </summary>
@@ -407,11 +411,11 @@ namespace Broccoli.Builder
 			}
 			// Init planeDef.
 			planeDef = new PlaneDef ();
-			if (sproutMesh.mode == SproutMesh.Mode.Plane)
+			if (sproutMesh.shapeMode == SproutMesh.ShapeMode.Plane)
 				planeDef.planes = 1;
-			else if (sproutMesh.mode == SproutMesh.Mode.Cross)
+			else if (sproutMesh.shapeMode == SproutMesh.ShapeMode.Cross)
 				planeDef.planes = 2;
-			else if (sproutMesh.mode == SproutMesh.Mode.Tricross)
+			else if (sproutMesh.shapeMode == SproutMesh.ShapeMode.Tricross)
 				planeDef.planes = 3;
 			planeDef.width = sproutMesh.width;
 			planeDef.height = sproutMesh.height;
@@ -443,7 +447,7 @@ namespace Broccoli.Builder
 			this.sproutMesh = sproutMesh;
 
 			// Get processed mesh (to use on sprout mesh copies).
-			if (sproutMesh.mode == SproutMesh.Mode.Mesh) {
+			if (sproutMesh.shapeMode == SproutMesh.ShapeMode.Mesh) {
 				if (sproutMesh.processedMesh != null) {
 					Object.DestroyImmediate (sproutMesh.processedMesh);
 				}
@@ -457,14 +461,14 @@ namespace Broccoli.Builder
 			}
 
 			// Prepare mesh sprout.
-			switch (sproutMesh.mode) {
-				case SproutMesh.Mode.GridPlane:
+			switch (sproutMesh.shapeMode) {
+				case SproutMesh.ShapeMode.GridPlane:
 					GetGridPlane (ref verticesBuffer, 
 						ref normalsBuffer, 
 						ref uvsBuffer,
 						ref uv2sBuffer);
 				break;
-				case SproutMesh.Mode.PlaneX:
+				case SproutMesh.ShapeMode.PlaneX:
 					GetPlaneX (ref verticesBuffer,
 						ref normalsBuffer,
 						ref uvsBuffer,
@@ -478,7 +482,7 @@ namespace Broccoli.Builder
 						ref uv2sBuffer);
 				break;
 				*/
-				case SproutMesh.Mode.Mesh:
+				case SproutMesh.ShapeMode.Mesh:
 					GetMesh (ref verticesBuffer,
 						ref normalsBuffer,
 						ref uvsBuffer,
@@ -516,13 +520,14 @@ namespace Broccoli.Builder
 		/// <summary>
 		/// Clear local variables.
 		/// </summary>
-		void Clear () {
+		public void Clear () {
 			vertices.Clear ();
 			normals.Clear ();
 			tangents.Clear ();
 			triangles.Clear ();
 			uvs.Clear ();
 			uv2s.Clear ();
+			uv6s.Clear ();
 			_sproutMeshData.Clear ();
 		}
 		#endregion
@@ -592,6 +597,8 @@ namespace Broccoli.Builder
 			groupMesh.tangents = tangents.ToArray ();
 			groupMesh.SetUVs (0, uvs);
 			groupMesh.SetUVs (1, uv2s);
+			groupMesh.SetUVs (2, vertices);
+			groupMesh.SetUVs (5, uv6s);
 			if (GlobalSettings.useAutoCalculateTangents) {
 				//if (sproutMesh.mode != SproutMesh.Mode.Billboard || tangents.Count == 0) {
 				if (tangents.Count == 0) {
@@ -626,7 +633,7 @@ namespace Broccoli.Builder
 			for (int i = 0; i < branches.Count; i++) {
 				for (int j = 0; j < branches[i].sprouts.Count; j++) {
 					if (branches[i].sprouts[j].groupId == sproutGroupId && 
-						branches[i].sprouts[j].areaIndex == sproutAreaIndex) {
+						branches[i].sprouts[j].subgroupId == sproutAreaIndex) {
 						branches[i].sprouts[j].horizontalAlign = 
 							Mathf.Lerp (sproutMesh.horizontalAlignAtBase, 
 								sproutMesh.horizontalAlignAtTop, 
@@ -646,7 +653,7 @@ namespace Broccoli.Builder
 			groupMesh.SetUVs (0, uvs);
 			groupMesh.SetUVs (1, uv2s);
 			groupMesh.SetUVs (2, vertices);
-			
+			groupMesh.SetUVs (5, uv6s);			
 			if (GlobalSettings.useAutoCalculateTangents) {
 				//if (sproutMesh.mode != SproutMesh.Mode.Billboard || tangents.Count == 0) {
 				if (tangents.Count == 0) {
@@ -670,30 +677,58 @@ namespace Broccoli.Builder
 		/// <param name="tree">Tree object.</param>
 		/// <param name="sproutGroupId">Sprout group id.</param>
 		/// <param name="sproutMap">Sprout map instance.</param>
-		public void AssignSproutAreas (BroccoTree tree, int sproutGroupId, SproutMap sproutMap) {
+		public void AssignSproutSubgroups (BroccoTree tree, int sproutGroupId, SproutMap sproutMap) {
 			sproutMap.NormalizeAreas ();
-			enabledAreas.Clear ();
+			enabledSubgroups.Clear ();
 			for (int i = 0; i < sproutMap.sproutAreas.Count; i++) {
 				if (sproutMap.sproutAreas[i].enabled && 
 					sproutMap.sproutAreas[i].texture != null) {
-					enabledAreas.Add (i);
+					enabledSubgroups.Add (i);
 				}
 			}
-			int maxAreaIndex = enabledAreas.Count;
+			int maxAreaIndex = enabledSubgroups.Count;
 			List<BroccoTree.Branch> branches = tree.GetDescendantBranches ();
 			for (int i = 0; i < branches.Count; i++) {
 				for (int j = 0; j < branches[i].sprouts.Count; j++) {
 					if (branches[i].sprouts[j].groupId == sproutGroupId) {
 						if (maxAreaIndex > 0) {
-							branches[i].sprouts[j].areaIndex = 
-								enabledAreas [Random.Range (0, maxAreaIndex)];
+							branches[i].sprouts[j].subgroupId = 
+								enabledSubgroups [Random.Range (0, maxAreaIndex)];
 						} else {
-							branches[i].sprouts[j].areaIndex = -1;
+							branches[i].sprouts[j].subgroupId = -1;
 						}
 					}
 				}
 			}
-			enabledAreas.Clear ();
+			enabledSubgroups.Clear ();
+		}
+		/// <summary>
+		/// Matches sprout groups with branch collection snapshot.
+		/// </summary>
+		/// <param name="tree">Tree object.</param>
+		/// <param name="sproutGroupId">Sprout group id.</param>
+		/// <param name="branchCollection">Sprout map instance.</param>
+		public void AssignSproutSubgroups (BroccoTree tree, int sproutGroupId, BranchDescriptorCollection branchCollection, SproutMesh sproutMesh) {
+			enabledSubgroups.Clear ();
+			for (int i = 0; i < branchCollection.branchDescriptors.Count; i++) {
+				enabledSubgroups.Add (i);
+			}
+			sproutMesh.subgroups = enabledSubgroups.ToArray ();
+			
+			int maxSnapshotIndex = enabledSubgroups.Count;
+			List<BroccoTree.Branch> branches = tree.GetDescendantBranches ();
+			for (int i = 0; i < branches.Count; i++) {
+				for (int j = 0; j < branches[i].sprouts.Count; j++) {
+					if (branches[i].sprouts[j].groupId == sproutGroupId) {
+						if (maxSnapshotIndex > 0) {
+							branches[i].sprouts[j].subgroupId = enabledSubgroups [Random.Range (0, maxSnapshotIndex)];
+						} else {
+							branches[i].sprouts[j].subgroupId = -1;
+						}
+					}
+				}
+			}
+			enabledSubgroups.Clear ();
 		}
 		/// <summary>
 		/// Adds information on the mesh creation for a single sprout.
@@ -707,10 +742,10 @@ namespace Broccoli.Builder
 				Mathf.Clamp (sproutMesh.scaleCurve.Evaluate(sprout.preferedPosition), 0f, 1f));
 			sprout.meshHeight = scale * planeDef.height * (1f - planeDef.pivotPosH);
 
-			switch (sproutMesh.mode) {
-			case SproutMesh.Mode.Plane:
-			case SproutMesh.Mode.Cross:
-			case SproutMesh.Mode.Tricross:
+			switch (sproutMesh.shapeMode) {
+			case SproutMesh.ShapeMode.Plane:
+			case SproutMesh.ShapeMode.Cross:
+			case SproutMesh.ShapeMode.Tricross:
 				AddPlaneMesh (sprout.inGirthPosition * globalScale, sprout.position,
 					sprout.sproutDirection, sprout.sproutNormal, 
 					branch, sprout, sproutMesh.isTwoSided, scale * globalScale);
@@ -724,19 +759,19 @@ namespace Broccoli.Builder
 					sprout.sproutNormal, branch, sprout, sproutMesh.isTwoSided, scale * globalScale);
 				break;
 			*/
-			case SproutMesh.Mode.PlaneX:
+			case SproutMesh.ShapeMode.PlaneX:
 				AddPlaneXMesh (sproutMesh.depth, sprout.inGirthPosition * globalScale, sprout.position,
 					sprout.sproutDirection, sprout.sproutNormal, 
 					branch, sprout, sproutMesh.isTwoSided, scale * globalScale);
 				break;
-			case SproutMesh.Mode.Mesh:
+			case SproutMesh.ShapeMode.Mesh:
 				if (sproutMesh.processedMesh != null) {
 					AddCustomMesh (sproutMesh.processedMesh, sprout.inGirthPosition * globalScale,
 						sprout.position, sprout.sproutDirection, sprout.sproutNormal, 
 						sproutMesh.meshOffset, branch, sprout, sproutMesh.isTwoSided, scale * globalScale);
 				}
 				break;
-			case SproutMesh.Mode.GridPlane:
+			case SproutMesh.ShapeMode.GridPlane:
 				AddGridPlaneMesh (sprout.inGirthPosition * globalScale, sprout.position,
 					sprout.sproutDirection, sprout.sproutNormal, 
 					branch, sprout, sproutMesh.isTwoSided, sproutMesh.resolutionWidth, sproutMesh.resolutionHeight, 
@@ -779,6 +814,9 @@ namespace Broccoli.Builder
 			tangents.AddRange (planeTangents);
 			uvs.AddRange (uvsBuffer);
 			uv2s.AddRange (uv2sBuffer);
+			for (int i = 0; i < uv2sBuffer.Length; i++) {
+				uv6s.Add (new Vector4 (branch.id, 0, 0, 0));
+			}
 
 			if (isTwoSided) {
 				for (int i = 0; i < planeDef.planes; i++) {
@@ -899,6 +937,9 @@ namespace Broccoli.Builder
 			normals.AddRange (planeXNormals);
 			uvs.AddRange (uvsBuffer);
 			uv2s.AddRange (uv2sBuffer);
+			for (int i = 0; i < uv2sBuffer.Length; i++) {
+				uv6s.Add (new Vector4 (branch.id, 0, 0, 0));
+			}
 
 			if (isTwoSided) {
 				// Polygon A.
@@ -994,6 +1035,9 @@ namespace Broccoli.Builder
 			normals.AddRange (meshNormals);
 			uvs.AddRange (uvsBuffer);
 			uv2s.AddRange (uv2sBuffer);
+			for (int i = 0; i < uv2sBuffer.Length; i++) {
+				uv6s.Add (new Vector4 (branch.id, 0, 0, 0));
+			}
 		}
 		/// <summary>
 		/// Scales and rotates a mesh taking its zero coordinates as pivot point.
@@ -1065,6 +1109,9 @@ namespace Broccoli.Builder
 			normals.AddRange (gridPlaneNormals);
 			uvs.AddRange (uvsBuffer);
 			uv2s.AddRange (uv2sBuffer);
+			for (int i = 0; i < uv2sBuffer.Length; i++) {
+				uv6s.Add (new Vector4 (branch.id, 0, 0, 0));
+			}
 
 			int pointCount = 0;
 			// Add triangles
@@ -1662,11 +1709,20 @@ namespace Broccoli.Builder
 		/// Applies bending to an array of vertices. Pivot is Vector3.zero.
 		/// </summary>
 		/// <param name="pointsToBend">Array of points to bend.</param>
-		/// <param name="gravityForward">Vector pointing forward realive to gravity.</param>
-		/// <param name="gravityUp">Vector pointing again the gravity.</param>
+		/// <param name="gravityForward">Vector pointing forward relative to gravity.</param>
+		/// <param name="gravityUp">Vector pointing against the gravity.</param>
 		/// <param name="radius">Length for the bending.</param>
 		/// <param name="gravityStrength">Strength of the bending.</param>
-		void GravityBend (ref Vector3[] pointsToBend, ref Vector3[] normalsToBend, Vector3 gravityForward, Vector3 gravityUp, PlaneDef planeDef, float gravityStrength, float middleMultiplier, float sideGravityStrength) {
+		void GravityBend (
+			ref Vector3[] pointsToBend, 
+			ref Vector3[] normalsToBend, 
+			Vector3 gravityForward, 
+			Vector3 gravityUp, 
+			PlaneDef planeDef, 
+			float gravityStrength, 
+			float middleMultiplier, 
+			float sideGravityStrength)
+		{
 			if (gravityStrength < 0) {
 				gravityForward *= -1;
 				gravityUp *= -1;

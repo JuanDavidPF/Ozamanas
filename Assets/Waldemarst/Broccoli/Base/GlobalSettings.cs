@@ -44,7 +44,7 @@ namespace Broccoli.Base
 		/// <summary>
 		/// Shows the GameObject with the TreeFactory component used by SproutLab.
 		/// </summary>
-		public static bool showSproutLabTreeFactoryInHierarchy = true;
+		public static bool showSproutLabTreeFactoryInHierarchy = false;
 		/// <summary>
 		/// The experimental flag to merge nearby points to reduce vertex count.
 		/// </summary>
@@ -62,13 +62,17 @@ namespace Broccoli.Base
 		/// </summary>
 		public static bool experimentalAO = true;
 		/// <summary>
+		/// Experimental flag to use lab modes on the Sprout Lab Factory.
+		/// </summary>
+		public static bool experimentalAdvancedSproutLab = false;
+		/// <summary>
 		/// Path to the default pipeline to load when requesting a new pipeline.
 		/// </summary>
-		public static string templateOnCreateNewPipelinePath = "Resources/base_pipeline.asset";
+		public static string templateOnCreateNewPipelinePath = "Editor/Resources/base_pipeline.asset";
 		/// <summary>
 		/// Path tothe default pipeline to use when building branches on sproutlab.
 		/// </summary>
-		public static string templateSproutLabPipelinePath = "Resources/sproutlab_base_pipeline.asset";
+		public static string templateSproutLabPipelinePath = "Editor/Resources/sproutlab_base_pipeline.asset";
 		/// <summary>
 		/// The path for saving pipelines.
 		/// </summary>
@@ -80,7 +84,7 @@ namespace Broccoli.Base
 		/// <summary>
 		/// Default prefab filename prefix to save prefabs.
 		/// </summary>
-		public static string prefabSavePrefix = "BroccoTree_";
+		public static string prefabSavePrefix = "BroccoTree";
 		/// <summary>
 		/// Default prefix for textures saved at a prefab folder.
 		/// </summary>
@@ -117,27 +121,27 @@ namespace Broccoli.Base
 		/// Delay (in seconds) to use for waiting on very low demanding processes 
 		/// related to updating the preview tree.
 		/// </summary>
-		public static float processingDelayVeryLow = 0.05f;
+		public static float processingDelayVeryLow = 0.025f;
 		/// <summary>
 		/// Delay (in seconds) to use for waiting on low demanding processes 
 		/// related to updating the preview tree.
 		/// </summary>
-		public static float processingDelayLow = 0.1f;
+		public static float processingDelayLow = 0.05f;
 		/// <summary>
 		/// Delay (in seconds) to use for waiting on medium demanding processes 
 		/// related to updating the preview tree.
 		/// </summary>
-		public static float processingDelayMedium = 0.2f;
+		public static float processingDelayMedium = 0.075f;
 		/// <summary>
 		/// Delay (in seconds) to use for waiting on high demanding processes 
 		/// related to updating the preview tree.
 		/// </summary>
-		public static float processingDelayHigh = 0.25f;
+		public static float processingDelayHigh = 0.1f;
 		/// <summary>
 		/// Delay (in seconds) to use for waiting on very high demanding processes 
 		/// related to updating the preview tree.
 		/// </summary>
-		public static float processingDelayVeryHigh = 0.3f;
+		public static float processingDelayVeryHigh = 0.125f;
 		#endregion
 
 		#region Gizmos/Handles

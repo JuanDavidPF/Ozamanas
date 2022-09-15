@@ -260,12 +260,12 @@ namespace Broccoli.Controller {
 		#region Wind
 		public void SetupWind () {
 			bool isEnabled = windQuality != WindQuality.None;
-			if (hasSpeedTreeWind) {
+			//if (hasSpeedTreeWind) {
 				SetWindQuality (isEnabled);
 				SetupSpeedTreeWind (isEnabled);
-			} else {
-				SetupTreeCreatorWind (isEnabled);
-			}
+			//} else {
+			//	SetupTreeCreatorWind (isEnabled);
+			//}
 		}
 		public void SetupTreeCreatorWind (bool enable = true) {
 			wind = Vector4.zero;
@@ -386,41 +386,45 @@ namespace Broccoli.Controller {
 		void SetWindQuality (bool enable = true) {
 			if (shaderType == ShaderType.SpeedTree8OrCompatible) {
 				foreach (Material material in _renderer.sharedMaterials) {
-					material.DisableKeyword ("_WINDQUALITY_NONE");
-					material.DisableKeyword ("_WINDQUALITY_FASTEST");
-					material.DisableKeyword ("_WINDQUALITY_FAST");
-					material.DisableKeyword ("_WINDQUALITY_BETTER");
-					material.DisableKeyword ("_WINDQUALITY_BEST");
-					material.DisableKeyword ("_WINDQUALITY_PALM");
-					if (enable) {
-						switch (windQuality) {
-							case WindQuality.None:
-								material.EnableKeyword ("_WINDQUALITY_NONE");
-								break;
-							case WindQuality.Fastest:
-								material.EnableKeyword ("_WINDQUALITY_FASTEST");
-								break;
-							case WindQuality.Fast:
-								material.EnableKeyword ("_WINDQUALITY_FAST");
-								break;
-							case WindQuality.Better:
-								material.EnableKeyword ("_WINDQUALITY_BETTER");
-								break;
-							case WindQuality.Best:
-								material.EnableKeyword ("_WINDQUALITY_BEST");
-								break;
-							case WindQuality.Palm:
-								material.EnableKeyword ("_WINDQUALITY_PALM");
-								break;
+					if (material != null) {
+						material.DisableKeyword ("_WINDQUALITY_NONE");
+						material.DisableKeyword ("_WINDQUALITY_FASTEST");
+						material.DisableKeyword ("_WINDQUALITY_FAST");
+						material.DisableKeyword ("_WINDQUALITY_BETTER");
+						material.DisableKeyword ("_WINDQUALITY_BEST");
+						material.DisableKeyword ("_WINDQUALITY_PALM");
+						if (enable) {
+							switch (windQuality) {
+								case WindQuality.None:
+									material.EnableKeyword ("_WINDQUALITY_NONE");
+									break;
+								case WindQuality.Fastest:
+									material.EnableKeyword ("_WINDQUALITY_FASTEST");
+									break;
+								case WindQuality.Fast:
+									material.EnableKeyword ("_WINDQUALITY_FAST");
+									break;
+								case WindQuality.Better:
+									material.EnableKeyword ("_WINDQUALITY_BETTER");
+									break;
+								case WindQuality.Best:
+									material.EnableKeyword ("_WINDQUALITY_BEST");
+									break;
+								case WindQuality.Palm:
+									material.EnableKeyword ("_WINDQUALITY_PALM");
+									break;
+							}
 						}
 					}
 				}
 			} else if (shaderType == ShaderType.SpeedTree7OrCompatible) {
 				foreach (Material material in _renderer.sharedMaterials) {
-					if (enable) {
-						material.EnableKeyword ("ENABLE_WIND");
-					} else {
-						material.DisableKeyword ("ENABLE_WIND");
+					if (material != null) {
+						if (enable) {
+							material.EnableKeyword ("ENABLE_WIND");
+						} else {
+							material.DisableKeyword ("ENABLE_WIND");
+						}
 					}
 				}
 			}

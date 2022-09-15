@@ -129,7 +129,7 @@ namespace Broccoli.Component
 					AssetManager.MaterialParams materialParams;
 					if (treeFactory.treeFactoryPreferences.overrideMaterialShaderEnabled) {
 						int meshId = MeshManager.MeshData.GetMeshDataId (MeshManager.MeshData.Type.Branch);
-						material = treeFactory.materialManager.GetTreeCreatorMaterial (meshId, false);
+						material = treeFactory.materialManager.GetOverridedMaterial (meshId, false);
 						materialParams = new AssetManager.MaterialParams (AssetManager.MaterialParams.ShaderType.Native);
 						material.name = "Optimized Bark Material";
 					} else {
@@ -140,7 +140,7 @@ namespace Broccoli.Component
 						materialParams.copyTextures = true;
 						materialParams.copyTexturesName = "bark";
 					}
-					treeFactory.assetManager.AddMaterial (material, 
+					treeFactory.assetManager.AddMaterialToPrefab (material, 
 						treeFactory.meshManager.GetMergedMeshIndex (MeshManager.MeshData.Type.Branch));
 					treeFactory.assetManager.AddMaterialParams (materialParams,
 						treeFactory.meshManager.GetMergedMeshIndex (MeshManager.MeshData.Type.Branch));
@@ -148,7 +148,7 @@ namespace Broccoli.Component
 					material = treeFactory.materialManager.GetMaterial (MeshManager.MeshData.Type.Branch, false);
 					AssetManager.MaterialParams materialParams;
 					materialParams = new AssetManager.MaterialParams (AssetManager.MaterialParams.ShaderType.Custom);
-					treeFactory.assetManager.AddMaterial (material, 
+					treeFactory.assetManager.AddMaterialToPrefab (material, 
 						treeFactory.meshManager.GetMergedMeshIndex (MeshManager.MeshData.Type.Branch));
 					treeFactory.assetManager.AddMaterialParams (materialParams,
 						treeFactory.meshManager.GetMergedMeshIndex (MeshManager.MeshData.Type.Branch));
@@ -157,7 +157,7 @@ namespace Broccoli.Component
 				Material material = treeFactory.materialManager.GetMaterial (MeshManager.MeshData.Type.Branch, true);
 				if (material != null) {
 					material.name = "Optimized Bark Material";
-					treeFactory.assetManager.AddMaterial (material, 
+					treeFactory.assetManager.AddMaterialToPrefab (material, 
 						treeFactory.meshManager.GetMergedMeshIndex (MeshManager.MeshData.Type.Branch));
 					if (treeFactory.treeFactoryPreferences.prefabCreateAtlas) {
 						AssetManager.MaterialParams materialParams = 
@@ -224,7 +224,7 @@ namespace Broccoli.Component
 						if (treeFactory.materialManager.IsCustomMaterial (meshId) &&
 						    treeFactory.treeFactoryPreferences.overrideMaterialShaderEnabled) {
 							bool isSproutMesh = treeFactory.meshManager.IsSproutMesh (meshId);
-							materials [j] = treeFactory.materialManager.GetTreeCreatorMaterial (meshId, isSproutMesh);
+							materials [j] = treeFactory.materialManager.GetOverridedMaterial (meshId, isSproutMesh);
 						} else {
 							materials [j] = treeFactory.materialManager.GetMaterial (meshId, true);
 						}

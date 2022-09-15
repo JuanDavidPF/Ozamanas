@@ -22,7 +22,6 @@ namespace Broccoli.Pipe {
 		public List<SproutMapperElement> sproutMappers = new List<SproutMapperElement> ();
 		public List<SproutGeneratorElement> sproutGenerators = new List<SproutGeneratorElement> ();
 		public List<SproutMeshGeneratorElement> sproutMeshGenerators = new List<SproutMeshGeneratorElement> ();
-		public List<SproutLabElement> sproutLabs = new List<SproutLabElement> ();
 		public List<WindEffectElement> windEffects = new List<WindEffectElement> ();
 		public List<PositionerElement> positioners = new List<PositionerElement> ();
 		public List<BakerElement> bakers = new List<BakerElement> ();
@@ -86,10 +85,6 @@ namespace Broccoli.Pipe {
 			case PipelineElement.ClassType.SproutMeshGenerator:
 				sproutMeshGenerators.Add ((SproutMeshGeneratorElement)element);
 				element.index = sproutMeshGenerators.Count - 1;
-				break;
-			case PipelineElement.ClassType.SproutLab:
-				sproutLabs.Add ((SproutLabElement)element);
-				element.index = sproutLabs.Count - 1;
 				break;
 			case PipelineElement.ClassType.SproutMapper:
 				sproutMappers.Add ((SproutMapperElement)element);
@@ -165,8 +160,6 @@ namespace Broccoli.Pipe {
 					return (index < sproutGenerators.Count ? sproutGenerators [index] : null);
 				case PipelineElement.ClassType.SproutMeshGenerator:
 					return (index < sproutMeshGenerators.Count ? sproutMeshGenerators [index] : null);
-				case PipelineElement.ClassType.SproutLab:
-					return (index < sproutLabs.Count ? sproutLabs [index] : null);
 				case PipelineElement.ClassType.SproutMapper:
 					return (index < sproutMappers.Count ? sproutMappers [index] : null);
 				case PipelineElement.ClassType.WindEffect:
@@ -221,9 +214,6 @@ namespace Broccoli.Pipe {
 			for (i = 0; i < sproutMeshGenerators.Count; i++) {
 				yield return sproutMeshGenerators[i];
 			}
-			for (i = 0; i < sproutLabs.Count; i++) {
-				yield return sproutLabs[i];
-			}
 			for (i = 0; i < sproutMappers.Count; i++) {
 				yield return sproutMappers[i];
 			}
@@ -254,7 +244,6 @@ namespace Broccoli.Pipe {
 			sproutMappers.Clear ();
 			sproutGenerators.Clear ();
 			sproutMeshGenerators.Clear ();
-			sproutLabs.Clear ();
 			windEffects.Clear ();
 			positioners.Clear ();
 			bakers.Clear ();

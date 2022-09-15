@@ -21,6 +21,10 @@ namespace Broccoli.Pipe {
 			/// </summary>
 			public int id = 0;
 			/// <summary>
+			/// Branch Collection asset, used to load sprout meshes to populate the tree.
+			/// </summary>
+			public ScriptableObject branchCollection = null;
+			/// <summary>
 			/// The index of the color.
 			/// </summary>
 			public int colorIndex = -1;
@@ -42,6 +46,7 @@ namespace Broccoli.Pipe {
 			public SproutGroup Clone () {
 				SproutGroup clone = new SproutGroup ();
 				clone.id = id;
+				clone.branchCollection = branchCollection;
 				clone.colorIndex = colorIndex;
 				return clone;
 			}

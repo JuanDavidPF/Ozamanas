@@ -5,6 +5,7 @@ using UnityEngine;
 using Broccoli.Pipe;
 using Broccoli.Model;
 using Broccoli.Factory;
+using Broccoli.Generator;
 
 namespace Broccoli.Component
 {
@@ -17,6 +18,10 @@ namespace Broccoli.Component
 		/// The branch bender element.
 		/// </summary>
 		BranchBenderElement branchBenderElement = null;
+		/// <summary>
+		/// Dictionary to save structure levels overriding global noise.
+		/// </summary>
+		private Dictionary<int, StructureGenerator.StructureLevel> overrideNoiseLevels = new Dictionary<int, StructureGenerator.StructureLevel> ();
 		/// <summary>
 		/// Number of offspring levels on the tree.
 		/// </summary>
@@ -38,6 +43,25 @@ namespace Broccoli.Component
 		{
 			base.PrepareParams (treeFactory, useCache, useLocalCache, processControl);
 			branchBenderElement.PrepareSeed ();
+
+			// Get structure levels overriding noise.
+			overrideNoiseLevels.Clear ();
+			StructureGeneratorElement structureGeneratorElement = 
+				(StructureGeneratorElement)pipelineElement.GetUpstreamElement (PipelineElement.ClassType.StructureGenerator);
+			if (structureGeneratorElement != null) {
+				// Add root generator?
+				if (structureGeneratorElement.rootStructureLevel.overrideNoise) {
+					overrideNoiseLevels.Add (structureGeneratorElement.rootStructureLevel.id, structureGeneratorElement.rootStructureLevel);
+				}
+				// Add children generators?
+				for (int i = 0; i < structureGeneratorElement.flatStructureLevels.Count; i++) {
+					if (structureGeneratorElement.flatStructureLevels [i].overrideNoise) {
+						overrideNoiseLevels.Add (structureGeneratorElement.flatStructureLevels [i].id, structureGeneratorElement.flatStructureLevels [i]);
+					}
+				}
+
+			}
+
 			treeMaxHierarchy = tree.GetOffspringLevel ();
 		}
 		/// <summary>
@@ -53,6 +77,7 @@ namespace Broccoli.Component
 		public override void Clear ()
 		{
 			base.Clear ();
+			overrideNoiseLevels.Clear ();
 			branchBenderElement = null;
 		}
 		#endregion
@@ -68,52 +93,34 @@ namespace Broccoli.Component
 		public override bool Process (TreeFactory treeFactory, 
 			bool useCache = false, 
 			bool useLocalCache = false, 
-			TreeFactoryProcessControl processControl = null) {
-				branchBenderElement = pipelineElement as BranchBenderElement;
-				if (processControl != null) {
-					/*
-					if (pipelineElement != null && tree != null && processControl.lodIndex == 1 && 
-						(processControl.lockedAspects & (int)TreeFactoryProcessControl.ChangedAspect.Structure) == 0
-					) {
-						*/
-					if (pipelineElement != null && tree != null && 
-						(processControl.lockedAspects & (int)TreeFactoryProcessControl.ChangedAspect.Structure) == 0
-					) {
-						PrepareParams (treeFactory, useCache, useLocalCache, processControl);
-						if (branchBenderElement.applyDirectionalBending) {
-							ApplyDirectionalBending ();
-						}
-						if (branchBenderElement.applyJointSmoothing) {
-							ApplyFollowUpSmoothing ();
-						}
-						if (branchBenderElement.applyNoise) {
-							ApplyBranchNoise ();
-						}
-					}
-					return true;
-				}
+			TreeFactoryProcessControl processControl = null) 
+		{
+			branchBenderElement = pipelineElement as BranchBenderElement;
+			if (processControl != null) {
 				/*
-				if (processControl != null) {
-					if (pipelineElement != null && tree != null && processControl.pass == 1 && (!useCache || structureGeneratorElement.requiresProcessingStructures) ) {
-						PrepareParams (treeFactory, useCache, useLocalCache, processControl);
-						StructureTree (treeFactory, useCache);
-						structureGeneratorElement.requiresProcessingStructures = false;
+				if (pipelineElement != null && tree != null && processControl.lodIndex == 1 && 
+					(processControl.lockedAspects & (int)TreeFactoryProcessControl.ChangedAspect.Structure) == 0
+				) {
+					*/
+				if (pipelineElement != null && tree != null && 
+					(processControl.lockedAspects & (int)TreeFactoryProcessControl.ChangedAspect.Structure) == 0
+				) {
+					PrepareParams (treeFactory, useCache, useLocalCache, processControl);
+					if (branchBenderElement.applyDirectionalBending) {
+						ApplyDirectionalBending ();
+						branchBenderElement.onDirectionalBending?.Invoke (tree, branchBenderElement);
 					}
-					BuildTree (treeFactory, useCache);
-					return true;
+					if (branchBenderElement.applyJointSmoothing) {
+						ApplyFollowUpSmoothing ();
+						branchBenderElement.onFollowUpSmoothing?.Invoke (tree, branchBenderElement);
+					}
+					if (branchBenderElement.applyNoise) {
+						ApplyBranchNoise ();
+						branchBenderElement.onBranchNoise?.Invoke (tree, branchBenderElement);
+					}
 				}
-				*/
-
-				/*
-			if (pipelineElement != null && tree != null) {
-				branchBenderElement = pipelineElement as BranchBenderElement;
-				PrepareParams (treeFactory, useCache, useLocalCache);
-				tree.Update ();
-				SetCurve (false, processControl);
-				RandomizeBending ();
 				return true;
 			}
-			*/
 			return false;
 		}
 		private void SetAutoProcess (bool autoProcessEnable) {
@@ -373,24 +380,31 @@ namespace Broccoli.Component
 		private void ApplyBranchNoiseRecursive (BroccoTree.Branch branch, float lengthOffset) {
 			float factorAtBase = Mathf.InverseLerp (0f, treeMaxHierarchy, branch.GetHierarchyLevel ());
 			float factorAtTop = Mathf.InverseLerp (0f, treeMaxHierarchy, branch.GetHierarchyLevel () + 1);
-			if (branch.isRoot) {
-				branch.curve.SetNoise (
-					Mathf.Lerp (branchBenderElement.noiseAtRootBase, branchBenderElement.noiseAtRootBottom, factorAtBase),
-					Mathf.Lerp (branchBenderElement.noiseAtRootBase, branchBenderElement.noiseAtRootBottom, factorAtTop),
-					Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtRootBottom, factorAtBase),
-					Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtRootBottom, factorAtTop),
-					false,
-					lengthOffset
-				);
+
+			if (overrideNoiseLevels.Count > 0 && overrideNoiseLevels.ContainsKey (branch.helperStructureLevelId)) {
+				StructureGenerator.StructureLevel structureLevel = overrideNoiseLevels [branch.helperStructureLevelId];
+				branch.curve.SetNoise (structureLevel.noise, structureLevel.noise,
+					structureLevel.noiseScale, structureLevel.noiseScale, false, lengthOffset);
 			} else {
-				branch.curve.SetNoise (
-					Mathf.Lerp (branchBenderElement.noiseAtBase, branchBenderElement.noiseAtTop, factorAtBase),
-					Mathf.Lerp (branchBenderElement.noiseAtBase, branchBenderElement.noiseAtTop, factorAtTop),
-					Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtTop, factorAtBase),
-					Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtTop, factorAtTop),
-					false,
-					lengthOffset
-				);
+				if (branch.isRoot) {
+					branch.curve.SetNoise (
+						Mathf.Lerp (branchBenderElement.noiseAtRootBase, branchBenderElement.noiseAtRootBottom, factorAtBase),
+						Mathf.Lerp (branchBenderElement.noiseAtRootBase, branchBenderElement.noiseAtRootBottom, factorAtTop),
+						Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtRootBottom, factorAtBase),
+						Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtRootBottom, factorAtTop),
+						false,
+						lengthOffset
+					);
+				} else {
+					branch.curve.SetNoise (
+						Mathf.Lerp (branchBenderElement.noiseAtBase, branchBenderElement.noiseAtTop, factorAtBase),
+						Mathf.Lerp (branchBenderElement.noiseAtBase, branchBenderElement.noiseAtTop, factorAtTop),
+						Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtTop, factorAtBase),
+						Mathf.Lerp (branchBenderElement.noiseScaleAtBase, branchBenderElement.noiseScaleAtTop, factorAtTop),
+						false,
+						lengthOffset
+					);
+				}
 			}
 			branch.curve.ComputeSamples ();
 			branch.curve.ProcessAfterCurveChanged ();

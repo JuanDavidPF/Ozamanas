@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Broccoli.Pipe {
 	/// <summary>
@@ -14,9 +16,26 @@ namespace Broccoli.Pipe {
 		/// </summary>
 		public int groupId = 0;
 		/// <summary>
-		/// Modes available for the mesh.
+		/// Active subgroups for this sprout mesh.
 		/// </summary>
-		public enum Mode
+		[System.NonSerialized]
+		public int[] subgroups = new int[0];
+		/// <summary>
+		/// Modes available to mesh sprouts.
+		/// </summary>
+		public enum MeshingMode {
+			Shape = 0,
+			//Mesh = 1,
+			BranchCollection = 2
+		}
+		/// <summary>
+		/// Mode to mesh sprouts.
+		/// </summary>
+		public MeshingMode meshingMode = MeshingMode.Shape;
+		/// <summary>
+		/// Modes available for the shape mode.
+		/// </summary>
+		public enum ShapeMode
 		{
 			Plane = 0,
 			Cross = 1,
@@ -26,6 +45,11 @@ namespace Broccoli.Pipe {
 			PlaneX = 5,
 			GridPlane = 6
 		}
+		/// <summary>
+		/// Mode for the sprout shape mesh.
+		/// </summary>
+		[FormerlySerializedAs("mode")]
+		public ShapeMode shapeMode = ShapeMode.Plane;
 		/// <summary>
 		/// The horizontal alignment (perpendicular to gravity) for sprouts at the base of the parent branch.
 		/// </summary>
@@ -59,13 +83,13 @@ namespace Broccoli.Pipe {
 		/// Plane is double sided.
 		/// </summary>
 		public bool isTwoSided = true;
+		/// <summary>
+		/// Branch Collection asset, used to load sprout meshes to populate the tree.
+		/// </summary>
+		public ScriptableObject branchCollection = null;
 		#endregion
 
 		#region Planes mode
-		/// <summary>
-		/// Mode for the sprout mesh.
-		/// </summary>
-		public Mode mode = Mode.Plane;
 		/// <summary>
 		/// Width of the sprout mesh.
 		/// </summary>
@@ -194,7 +218,8 @@ namespace Broccoli.Pipe {
 		public SproutMesh Clone () {
 			SproutMesh clone = new SproutMesh();
 			clone.groupId = groupId;
-			clone.mode = mode;
+			clone.meshingMode = meshingMode;
+			clone.shapeMode = shapeMode;
 			clone.meshGameObject = meshGameObject;
 			clone.meshScale = meshScale;
 			clone.meshRotation = meshRotation;
@@ -224,6 +249,7 @@ namespace Broccoli.Pipe {
 			clone.sideGravityBendingAtBase = sideGravityBendingAtBase;
 			clone.sideGravityBendingAtTop = sideGravityBendingAtTop;
 			clone.sideGravityBendingShape = new AnimationCurve (sideGravityBendingShape.keys);
+			clone.branchCollection = branchCollection;
 			return clone;
 		}
 		#endregion
