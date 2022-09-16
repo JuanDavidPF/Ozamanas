@@ -31,7 +31,8 @@ namespace Ozamanas.Forces
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
         [SerializeField] private MeshRenderer AOERenderer;
-
+        [SerializeField] private int traitRange = 1;
+        [SerializeField] private List<Machines.MachineTrait> traits;
         protected override void Awake()
         {
             base.Awake();
@@ -50,6 +51,7 @@ namespace Ozamanas.Forces
             if (mode == OffensiveMode.Hitscan)
                 roosterTween.OnComplete(() =>
                 {
+                    ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
                     {
                         if (!machine) continue;
@@ -137,6 +139,23 @@ namespace Ozamanas.Forces
             Destroy(gameObject);
         }//Closes OnCollisionEnter method
 
+        private void ActivateTraits(Cell origin)
+        {
+            if (!origin) return;
+
+            foreach (var cell in origin.GetCellsOnRange(traitRange))
+            {
+                if (!cell) continue;
+
+                foreach (var trait in traits)
+                {
+                    if (!trait) continue;
+                    cell.AddTraitToMachine(trait);
+                }
+            }
+
+
+        }//Closes ActivateTraits method
 
         private void AttackMachine(Machines.MachineArmor machine)
         {

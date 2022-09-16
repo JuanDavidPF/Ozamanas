@@ -7,7 +7,7 @@ using Ozamanas.Tags;
 
 namespace Ozamanas.Machines
 {
-[CreateAssetMenu(menuName = "ScriptableObjects/Human Machines/Traits", fileName = "new HumanMachine Trait")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Human Machines/Traits", fileName = "new HumanMachine Trait")]
     public class MachineTrait : ScriptableObject
     {
         public Sprite traitIcon;

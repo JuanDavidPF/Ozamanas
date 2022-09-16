@@ -68,18 +68,18 @@ namespace Ozamanas.Board
         public void AddTraitToMachine(MachineTrait trait)
         {
             activeTraits.Add(trait);
-            if (!trait.isPermanetOnHolder) waitToRemoveTrait(trait);
+            if (!trait.isPermanetOnHolder) StartCoroutine(HandleTraitDuration(trait));
         }
 
-        public void removeTraitToMachine(MachineTrait trait)
+        public void RemoveTraitToMachine(MachineTrait trait)
         {
             activeTraits.Remove(trait);
         }
 
-        IEnumerator waitToRemoveTrait(MachineTrait trait)
+        IEnumerator HandleTraitDuration(MachineTrait trait)
         {
             yield return new WaitForSeconds(trait.holderTimer);
-            removeTraitToMachine(trait);
+            RemoveTraitToMachine(trait);
         }
 
 
