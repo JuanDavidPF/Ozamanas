@@ -361,7 +361,7 @@ namespace Ozamanas.Machines
         {
             currentSpeed = machineAttributes.GetMachineSpeed();
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-            if (navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+            if ( navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
         public void IncreaseMachineSpeed()
