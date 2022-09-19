@@ -31,6 +31,11 @@ namespace Ozamanas.Forces
 
         [SerializeField] protected PlacementMode placementMode;
 
+        [Space(10)]
+        [Header("Traits")]
+        [SerializeField] protected int traitRange = 1;
+        [SerializeField] protected List<Machines.MachineTrait> traits;
+
 
         [Space(10)]
         [Header("Events")]

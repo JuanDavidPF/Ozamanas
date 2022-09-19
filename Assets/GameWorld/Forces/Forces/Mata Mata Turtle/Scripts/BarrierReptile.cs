@@ -22,7 +22,12 @@ namespace Ozamanas.Forces
         {
             base.FirstPlacement();
             collider.enabled = true;
-            transform.position = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()).worldPosition;
+
+            Cell currenCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
+
+            currenCell.isOccupied = true;
+
+            transform.position = currenCell.worldPosition;
 
             transform.DOScaleY(.5f, .5f).From(0);
         }//Closes FistPlacement method

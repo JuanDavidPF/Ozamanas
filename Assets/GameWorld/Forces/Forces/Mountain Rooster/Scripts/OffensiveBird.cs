@@ -31,8 +31,7 @@ namespace Ozamanas.Forces
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
         [SerializeField] private MeshRenderer AOERenderer;
-        [SerializeField] private int traitRange = 1;
-        [SerializeField] private List<Machines.MachineTrait> traits;
+
         protected override void Awake()
         {
             base.Awake();
@@ -171,6 +170,7 @@ namespace Ozamanas.Forces
                 physics.ActivatePhysics(true);
                 if (physics.rb)
                 {
+
                     physics.rb.AddForce(machine.transform.up + elevationForce, ForceMode.Impulse);
                     physics.rb.AddTorque(torqueForce, ForceMode.Impulse);
                 }
