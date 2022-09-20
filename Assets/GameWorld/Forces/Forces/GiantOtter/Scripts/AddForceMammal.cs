@@ -26,12 +26,18 @@ namespace Ozamanas.Forces
          [SerializeField] private float mammalSpeed = 2f;
          [Range(100, 1000)]
          [SerializeField] private int mammalForce = 1000;
-          private Tween roosterTween;
+          private Tween mammalTween;
 
+          
+         [SerializeField] private GameObject pullArrows;
+        [SerializeField] private GameObject pushArrows;
          protected override void Awake()
         {
             base.Awake();
             if (AOERenderer) AOETransform = AOERenderer.transform;
+
+            if(mode == MammalForceMode.Push) pushArrows.SetActive(true);
+            else pullArrows.SetActive(true);
         }//Closes Awake method
 
         public override void FirstPlacement()
@@ -40,10 +46,10 @@ namespace Ozamanas.Forces
             base.FirstPlacement();
 
             AOERenderer.gameObject.SetActive(false);
-            roosterTween = transform.DOMoveY(0, mammalSpeed, false).SetSpeedBased();
+            mammalTween = transform.DOMoveY(0, mammalSpeed, false).SetSpeedBased();
 
           
-                roosterTween.OnComplete(() =>
+                mammalTween.OnComplete(() =>
                 {
                     ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
@@ -136,7 +142,7 @@ namespace Ozamanas.Forces
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (roosterTween != null) roosterTween.Kill();
+            if (mammalTween != null) mammalTween.Kill();
         }//Closes OnDestroy method
 
 
