@@ -59,6 +59,9 @@ MonoBehaviour:
   machine_token: {fileID: 11400000, guid: 6d9d4cd6547d86c42b0ab7a51757c040, type: 2}
   flag: {fileID: 511473094932665437}
   m_activeTraits: []
+  OnCurrentCellChanged:
+    m_PersistentCalls:
+      m_Calls: []
   OnTraitsUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -86,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fecf47e7717d394aad78b78594168a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  humanBase: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
   mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   secondObjective: {fileID: 11400000, guid: d5f0ea6625e6a1b4f9b3772c3485edc0, type: 2}
   secondObjectiveRange: 5
@@ -213,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f1f69e1b16a7944bf5efb6a9539da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armorPoints: 1
+  m_armorPoints: 1
   maxArmorPoints: 1
   doubleDamage: 0
   invulnerable: 0

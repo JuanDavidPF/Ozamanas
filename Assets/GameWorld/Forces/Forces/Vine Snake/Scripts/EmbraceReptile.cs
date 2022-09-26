@@ -32,7 +32,9 @@ namespace Ozamanas.Forces
 
             transform.DOScaleY(.5f, riseTime).From(0);
 
-            StartCoroutine(WaitToRemoveTrait());
+            ActivateTraits(currentCell);
+
+            StartCoroutine(WaitToRemoveSnake());
         }//Closes FistPlacement method
 
         private void OnCollisionEnter(Collision other)
@@ -47,7 +49,7 @@ namespace Ozamanas.Forces
 
         }
 
-        IEnumerator WaitToRemoveTrait()
+        IEnumerator WaitToRemoveSnake()
         {
             yield return new WaitForSeconds(duration);
             transform.DOScaleY(0f, riseTime);
@@ -55,6 +57,24 @@ namespace Ozamanas.Forces
             base.OnDestroy();
 
         }
+
+        private void ActivateTraits(Cell origin)
+        {
+            if (!origin) return;
+
+            foreach (var cell in origin.GetCellsOnRange(traitRange))
+            {
+                if (!cell) continue;
+
+                foreach (var trait in traits)
+                {
+                    if (!trait) continue;
+                    cell.AddTraitToMachine(trait);
+                }
+            }
+
+
+        }//Closes ActivateTraits method
 
 
     }

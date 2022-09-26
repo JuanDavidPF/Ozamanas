@@ -39,7 +39,8 @@ namespace Ozamanas.Tags
         DisarmMachine ,
         RepairMachine ,
         DoubleDamage,
-        Invulnerable
+        Invulnerable,
+        GotoBase
     }
 
     public enum MachineState

@@ -110,7 +110,7 @@ namespace Ozamanas.Machines
         public void AddTraitToMachine(MachineTrait trait)
         {
             activeTraits.Add(trait);
-            if (!trait.isPermanentOnMachine) WaitToRemoveTrait(trait);
+            if (!trait.isPermanentOnMachine) StartCoroutine( WaitToRemoveTrait(trait));
             SetMachineAttributes();
         }
 
@@ -198,6 +198,10 @@ namespace Ozamanas.Machines
 
                     case MachineTraits.StopMachine:
                         machineMovement.StopMachine();
+                        break;
+
+                    case MachineTraits.GotoBase:
+                        machineMovement.GoToBase();
                         break;
 
                 }

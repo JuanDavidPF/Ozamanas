@@ -29,8 +29,13 @@ namespace Ozamanas.Machines
         private NavMeshAgent navMeshAgent;
         private MachineAttributes machineAttributes;
         private HumanMachine humanMachine;
+
+     
         [Header("Setup")]
+        [SerializeField] private CellData humanBase;
         [SerializeField] private CellData mainObjective;
+
+        private CellData mainObjectiveBackUP;
         [Space(5)]
         [SerializeField] private CellData secondObjective;
         [SerializeField] private int secondObjectiveRange;
@@ -73,6 +78,7 @@ namespace Ozamanas.Machines
             navMeshAgent = GetComponent<NavMeshAgent>();
             machineAttributes = GetComponent<MachineAttributes>();
             humanMachine = GetComponent<HumanMachine>();
+            mainObjectiveBackUP =mainObjective;
             RestoreOriginalValues();
         }//Closes Awake method
 
@@ -354,11 +360,24 @@ namespace Ozamanas.Machines
             return range <= Board.BoardExtender.DistanceTo(currentDestination, Board.Board.GetCellByPosition(transform.position));
         }
 
+        public void GoToBase()
+        {
+            if (mainObjective==humanBase) return;
+            mainObjective = humanBase;
+        }
+
+        public void GotoMainObjective()
+        {
+            if (mainObjective==mainObjectiveBackUP) return;
+            mainObjective = mainObjectiveBackUP;
+        }
+
         #endregion
 
         #region Speed Management
         public void RestoreOriginalValues()
         {
+            GotoMainObjective();
             currentSpeed = machineAttributes.GetMachineSpeed();
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
             if ( navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
