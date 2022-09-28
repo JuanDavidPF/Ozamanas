@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3066223922648580462}
   - component: {fileID: 8954387031796787070}
   - component: {fileID: 7062593395654487833}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Underground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,10 +110,9 @@ GameObject:
   - component: {fileID: 3816844547452470177}
   - component: {fileID: 7129835830327969712}
   - component: {fileID: 8087408256394067309}
-  - component: {fileID: 5129100687725344738}
   - component: {fileID: 7135108803021089788}
   - component: {fileID: 3940271413920700373}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: 'Cell_Forest '
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: 1e328639e69b7544f837ace002ed79b2, type: 3}
@@ -153,12 +152,12 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   activeTraits: []
   worldPosition:
-    x: 0.5
+    x: -1.5
     y: 0
-    z: 0.8662499
+    z: 6.06375
   gridPosition:
-    x: 0
-    y: 1
+    x: -2
+    y: 7
     z: 0
   isOccupied: 0
   OnCellDataChanged:
@@ -177,82 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellReference: {fileID: 7129835830327969712}
-  m_hoveredOutline:
-    mode: 2
-    outlineColor: {r: 1, g: 1, b: 1, a: 1}
-    width: 5
-  m_selectedOutline:
-    mode: 0
-    outlineColor: {r: 1, g: 0.8378445, b: 0, a: 1}
-    width: 10
---- !u!114 &5129100687725344738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590284334626953499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 2
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 5
-  precomputeOutline: 1
-  bakeKeys:
-  - {fileID: 3906130615805142554, guid: b334eaf616d5b84438f378762e42ab14, type: 3}
-  bakeValues:
-  - data:
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: -0.86602545, y: 0, z: 0.50000006}
-    - {x: 0, y: 0, z: 1}
-    - {x: -0.86602545, y: 0, z: -0.50000006}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: -0.86602545, y: 0, z: 0.50000006}
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: 0, z: -1}
-    - {x: -0.86602545, y: 0, z: -0.50000006}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: 0.86602545, y: 0, z: -0.50000006}
-    - {x: 0, y: 0, z: -1}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: 0.86602545, y: 0, z: -0.50000006}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0.86602545, y: 0, z: 0.50000006}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: 0, z: 1}
-    - {x: 0.86602545, y: 0, z: 0.50000006}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
+  hoverLayer: 21
+  selectedLayer: 22
 --- !u!95 &7135108803021089788
 Animator:
   serializedVersion: 4
@@ -301,7 +226,7 @@ GameObject:
   - component: {fileID: 9085948291367552546}
   - component: {fileID: 2294439670665766825}
   - component: {fileID: 1792907691258794979}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +325,7 @@ GameObject:
   - component: {fileID: 6664935724672905006}
   - component: {fileID: 8906551005183777764}
   - component: {fileID: 4901067671669060711}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

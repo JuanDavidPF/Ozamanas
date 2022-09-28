@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using Ozamanas.Extenders;
 using Ozamanas.Outlines;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,11 +10,11 @@ namespace Ozamanas.Board
 
     [RequireComponent(typeof(Cell))]
 
-    [RequireComponent(typeof(Outline))]
+
     public class CellSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
         [HideInInspector] public Cell cellReference;
-        private Outline outline;
+
 
 
         private static CellSelectionHandler m_currentCellSelected;
@@ -27,7 +27,7 @@ namespace Ozamanas.Board
             {
                 if (m_currentCellSelected)
                 {
-                    if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.ToggleOutline(false);
+                    if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.EraseOutline();
                     else m_currentCellHovered.DrawHoveredOutline();
                 }
 
@@ -44,49 +44,44 @@ namespace Ozamanas.Board
             set
             {
                 if (m_currentCellHovered && m_currentCellHovered != m_currentCellSelected)
-                    m_currentCellHovered.ToggleOutline(false);
+                    m_currentCellHovered.EraseOutline();
 
                 m_currentCellHovered = value;
 
                 if (m_currentCellHovered && m_currentCellHovered != m_currentCellSelected)
                 {
                     m_currentCellHovered.DrawHoveredOutline();
-                    m_currentCellHovered.ToggleOutline(true);
+
                 }
 
             }
         }
 
-        [SerializeField] private OutlineConfig m_hoveredOutline;
-        [SerializeField] private OutlineConfig m_selectedOutline;
 
+        [SerializeField] private int hoverLayer;
+        [SerializeField] private int selectedLayer;
         private void Awake()
         {
             cellReference = cellReference ? cellReference : GetComponent<Cell>();
-            outline = outline ? outline : GetComponent<Outline>();
-            outline.enabled = false;
+
         }//Closes Awake method
 
 
-        public void ToggleOutline(bool turnOn)
-        {
-            if (!outline) return;
-            outline.enabled = turnOn;
-        }//Closes ToggleOutline method
 
-        public void DrawOutline(OutlineConfig outlineConfig)
+        public void DrawOutline(int outlineLayer)
         {
-            outline.OutlineMode = outlineConfig.mode;
-            outline.OutlineColor = outlineConfig.outlineColor;
-            outline.OutlineWidth = outlineConfig.width;
+            gameObject.SetLayer(outlineLayer);
         }//Closes DrawOutline method
-        public void DrawHoveredOutline() => DrawOutline(m_hoveredOutline);
-        public void DrawSelectedOutline() => DrawOutline(m_selectedOutline);
+        public void DrawHoveredOutline() => DrawOutline(hoverLayer);
+        public void DrawSelectedOutline() => DrawOutline(selectedLayer);
+        public void EraseOutline() => DrawOutline(20);
 
 
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+
+
             currentCellHovered = this;
 
         }//Closes OnPointerEnter method

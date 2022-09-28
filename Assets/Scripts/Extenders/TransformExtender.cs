@@ -15,6 +15,15 @@ namespace Ozamanas.Extenders
             }
         }//Close ToVector method
 
+        public static void SetLayer(this GameObject go, int layerNumber)
+        {
+            if (go == null) return;
+            foreach (Transform trans in go.GetComponentsInChildren<Transform>(true))
+            {
+                trans.gameObject.layer = layerNumber;
+            }
+        }
+
         public static bool TryGetComponentInParent<T>(this Component transform, out T component)
         {
             component = transform.GetComponentInParent<T>();

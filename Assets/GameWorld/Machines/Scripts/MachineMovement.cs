@@ -84,26 +84,26 @@ namespace Ozamanas.Machines
 
         private void DebugPathProjection()
         {
-            if (debugPathFinding)
-            {
-                foreach (var cell in pathToDestination)
-                {
-                    if (!cell) continue;
+            // if (debugPathFinding)
+            // {
+            //     foreach (var cell in pathToDestination)
+            //     {
+            //         if (!cell) continue;
 
-                    cell.gameObject.SendMessage("DrawOutline", debugOutline);
-                    cell.gameObject.SendMessage("ToggleOutline", true);
-                }
-            }
-            else
-            {
-                foreach (var cell in pathToDestination)
-                {
-                    if (!cell) continue;
+            //         cell.gameObject.SendMessage("DrawOutline", debugOutline);
+            //         cell.gameObject.SendMessage("ToggleOutline", true);
+            //     }
+            // }
+            // else
+            // {
+            //     foreach (var cell in pathToDestination)
+            //     {
+            //         if (!cell) continue;
 
 
-                    cell.gameObject.SendMessage("ToggleOutline", false);
-                }
-            }
+            //         cell.gameObject.SendMessage("ToggleOutline", false);
+            //     }
+            // }
         }
 
         public void ResetPath()
@@ -361,7 +361,7 @@ namespace Ozamanas.Machines
         {
             currentSpeed = machineAttributes.GetMachineSpeed();
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-            if ( navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+            if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
         public void IncreaseMachineSpeed()

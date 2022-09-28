@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 4828400566628597791}
   - component: {fileID: 665083173}
   - component: {fileID: 8087408256394067309}
-  - component: {fileID: 5129100687725344738}
   - component: {fileID: 7135108803021089788}
   - component: {fileID: 3940271413920700373}
   - component: {fileID: 2632880509365148278}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Cell_Jungle's Heart
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: 1e328639e69b7544f837ace002ed79b2, type: 3}
@@ -57,12 +56,12 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   activeTraits: []
   worldPosition:
-    x: 0.5
+    x: -1
     y: 0
-    z: 4.317
+    z: 8.648251
   gridPosition:
-    x: 0
-    y: 5
+    x: -1
+    y: 10
     z: 0
   isOccupied: 0
   OnCellDataChanged:
@@ -158,82 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellReference: {fileID: 7129835830327969712}
-  m_hoveredOutline:
-    mode: 2
-    outlineColor: {r: 1, g: 1, b: 1, a: 1}
-    width: 5
-  m_selectedOutline:
-    mode: 0
-    outlineColor: {r: 1, g: 0.8378445, b: 0, a: 1}
-    width: 10
---- !u!114 &5129100687725344738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590284334626953499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 2
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 5
-  precomputeOutline: 1
-  bakeKeys:
-  - {fileID: 3906130615805142554, guid: b334eaf616d5b84438f378762e42ab14, type: 3}
-  bakeValues:
-  - data:
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: -0.86602545, y: 0, z: 0.50000006}
-    - {x: 0, y: 0, z: 1}
-    - {x: -0.86602545, y: 0, z: -0.50000006}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: -0.86602545, y: 0, z: 0.50000006}
-    - {x: -0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: -0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: 0, z: -1}
-    - {x: -0.86602545, y: 0, z: -0.50000006}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: 0, y: -0.5, z: -0.86602545}
-    - {x: 0.86602545, y: 0, z: -0.50000006}
-    - {x: 0, y: 0, z: -1}
-    - {x: 0.75, y: -0.5, z: -0.43301272}
-    - {x: 0.86602545, y: 0, z: -0.50000006}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0.86602545, y: 0, z: 0.50000006}
-    - {x: 0, y: -0.5, z: 0.86602545}
-    - {x: 0.75, y: -0.5, z: 0.43301272}
-    - {x: 0, y: 0, z: 1}
-    - {x: 0.86602545, y: 0, z: 0.50000006}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
-    - {x: 0.75, y: 0.5, z: 0.43301272}
-    - {x: 0.75, y: 0.5, z: -0.43301272}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: 0, y: 0.5, z: -0.86602545}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: -0.75, y: 0.5, z: -0.43301272}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: -0.75, y: 0.5, z: 0.43301272}
-    - {x: 0, y: 0.5, z: 0.86602545}
+  hoverLayer: 21
+  selectedLayer: 22
 --- !u!95 &7135108803021089788
 Animator:
   serializedVersion: 4
@@ -295,7 +220,7 @@ GameObject:
   - component: {fileID: 2761248290756857972}
   - component: {fileID: 4826418644552020214}
   - component: {fileID: 2613558454960175453}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Underground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +319,7 @@ GameObject:
   - component: {fileID: 8875196408650240069}
   - component: {fileID: 6292096236000038822}
   - component: {fileID: 3211732533708720598}
-  m_Layer: 6
+  m_Layer: 20
   m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,6 +475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7392225327938827759, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -7392225327938827759, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -563,6 +493,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.197
       objectReference: {fileID: 0}
+    - target: {fileID: -61967813345510309, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}
       propertyPath: m_Name
@@ -570,8 +505,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2798605382713886172, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2798605382713886172, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}
@@ -610,8 +555,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3681790978099765340, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681790978099765340, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327519614437959306, guid: 08378f08f90ccb545bff8b172dec6c6a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7327519614437959306, guid: 08378f08f90ccb545bff8b172dec6c6a,
         type: 3}

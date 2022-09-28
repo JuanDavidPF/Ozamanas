@@ -152,8 +152,8 @@ namespace Ozamanas.Forces
                     //Draw an outline on every valid cell
                     if (cellOnRange.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
                     {
-                        cellSelectionHandler.DrawOutline(rangeOutline);
-                        cellSelectionHandler.ToggleOutline(true);
+                        cellSelectionHandler.DrawOutline(21);
+
                         validCells.Add(cellOnRange);
                     }
                 }
@@ -170,7 +170,7 @@ namespace Ozamanas.Forces
 
                 if (cell.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
                 {
-                    cellSelectionHandler.ToggleOutline(false);
+                    cellSelectionHandler.EraseOutline();
                 }
             }
 
