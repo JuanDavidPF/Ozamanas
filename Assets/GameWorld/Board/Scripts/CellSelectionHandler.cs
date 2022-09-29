@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Extenders;
-using Ozamanas.Outlines;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityFx.Outline;
 
 namespace Ozamanas.Board
 {
@@ -27,7 +28,7 @@ namespace Ozamanas.Board
             {
                 if (m_currentCellSelected)
                 {
-                    if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.EraseOutline();
+                    if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.EraseOutline(2);
                     else m_currentCellHovered.DrawHoveredOutline();
                 }
 
@@ -44,7 +45,7 @@ namespace Ozamanas.Board
             set
             {
                 if (m_currentCellHovered && m_currentCellHovered != m_currentCellSelected)
-                    m_currentCellHovered.EraseOutline();
+                    m_currentCellHovered.EraseOutline(1);
 
                 m_currentCellHovered = value;
 
@@ -68,13 +69,10 @@ namespace Ozamanas.Board
 
 
 
-        public void DrawOutline(int outlineLayer)
-        {
-            gameObject.SetLayer(outlineLayer);
-        }//Closes DrawOutline method
-        public void DrawHoveredOutline() => DrawOutline(hoverLayer);
-        public void DrawSelectedOutline() => DrawOutline(selectedLayer);
-        public void EraseOutline() => DrawOutline(20);
+
+        public void DrawHoveredOutline() => OutlineBuilder.AddToLayer(hoverLayer, gameObject);
+        public void DrawSelectedOutline() => OutlineBuilder.AddToLayer(selectedLayer, gameObject);
+        public void EraseOutline(int layerIndex) => OutlineBuilder.Remove(layerIndex, gameObject);
 
 
 
@@ -95,6 +93,7 @@ namespace Ozamanas.Board
         public void OnPointerExit(PointerEventData eventData)
         {
             if (currentCellHovered == this) currentCellHovered = null;
+
         }//Closes OnPointerExit method
     }//Closes CellSelectionHandler class
 

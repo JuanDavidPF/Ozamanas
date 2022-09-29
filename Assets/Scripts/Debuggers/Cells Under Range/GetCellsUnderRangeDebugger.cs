@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using JuanPayan.Helpers;
 using Ozamanas.Board;
 using Ozamanas.Extenders;
-using Ozamanas.Outlines;
+
 using UnityEngine;
 
 
@@ -13,7 +13,6 @@ namespace Ozamanas.Debuggers
 
         [SerializeField] int range;
 
-        [SerializeField] private OutlineConfig debugOutline;
 
         [SerializeField] private List<Cell> cellsUnderRange = new List<Cell>();
 
@@ -55,8 +54,7 @@ namespace Ozamanas.Debuggers
 
             foreach (var cell in cellsUnderRange)
             {
-                cell.gameObject.SendMessage("DrawOutline", debugOutline);
-                cell.gameObject.SendMessage("ToggleOutline", true);
+
             }
         }
 
@@ -64,7 +62,7 @@ namespace Ozamanas.Debuggers
         {
             foreach (var cell in cellsUnderRange)
             {
-                cell.gameObject.SendMessage("ToggleOutline", false);
+
             }
 
         }

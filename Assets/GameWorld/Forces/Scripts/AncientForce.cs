@@ -27,7 +27,7 @@ namespace Ozamanas.Forces
 
         [SerializeField] private Vector3 draggedOffset;
         [SerializeField] private bool snapToGrid = true;
-        [SerializeField] private Outlines.OutlineConfig rangeOutline;
+
 
         [SerializeField] protected PlacementMode placementMode;
 
@@ -149,13 +149,10 @@ namespace Ozamanas.Forces
                     cell == CellSelectionHandler.currentCellSelected ||
                     !IsValidPlacement(cellOnRange)) continue;
 
-                    //Draw an outline on every valid cell
-                    if (cellOnRange.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
-                    {
-                        cellSelectionHandler.DrawOutline(21);
 
-                        validCells.Add(cellOnRange);
-                    }
+                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.gameObject);
+
+                    validCells.Add(cellOnRange);
                 }
             }
 
@@ -163,16 +160,7 @@ namespace Ozamanas.Forces
 
         private void EraseValidCells()
         {
-            //Undraws Previous range
-            foreach (var cell in validCells)
-            {
-                if (!cell || cell == CellSelectionHandler.currentCellHovered || cell == CellSelectionHandler.currentCellSelected) continue;
-
-                if (cell.TryGetComponent(out CellSelectionHandler cellSelectionHandler))
-                {
-                    cellSelectionHandler.EraseOutline();
-                }
-            }
+            UnityFx.Outline.OutlineBuilder.Remove(0, validCells);
 
         }//Closes s method
         protected virtual void OnDestroy()

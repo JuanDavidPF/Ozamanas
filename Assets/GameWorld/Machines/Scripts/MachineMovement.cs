@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DataStructures.PriorityQueue;
 using Ozamanas.Board;
 using Ozamanas.Machines;
-using Ozamanas.Outlines;
+
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -54,7 +54,7 @@ namespace Ozamanas.Machines
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
-        [SerializeField] private OutlineConfig debugOutline;
+
 
         public bool hasPathToMain
         {

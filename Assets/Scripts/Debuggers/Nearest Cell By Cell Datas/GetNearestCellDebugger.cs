@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.Helpers;
 using Ozamanas.Board;
-using Ozamanas.Outlines;
+
 using UnityEngine;
 
 
@@ -13,7 +13,6 @@ namespace Ozamanas.Debuggers
 
         [SerializeField] private CellData[] cellDatas = new CellData[0];
 
-        [SerializeField] private OutlineConfig debugOutline;
 
         private Cell cachedNearestCell;
 
@@ -28,8 +27,6 @@ namespace Ozamanas.Debuggers
 
             if (cachedNearestCell && nearestCell == cachedNearestCell)
             {
-                cachedNearestCell.SendMessage("DrawOutline", debugOutline, SendMessageOptions.DontRequireReceiver);
-                cachedNearestCell.SendMessage("ToggleOutline", true, SendMessageOptions.DontRequireReceiver);
 
                 return;
             }
@@ -38,8 +35,7 @@ namespace Ozamanas.Debuggers
 
 
             cachedNearestCell = nearestCell;
-            cachedNearestCell.SendMessage("DrawOutline", debugOutline, SendMessageOptions.DontRequireReceiver);
-            cachedNearestCell.SendMessage("ToggleOutline", true, SendMessageOptions.DontRequireReceiver);
+
 
 
 
