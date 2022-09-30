@@ -44,8 +44,8 @@ namespace Ozamanas.Board
             get { return m_currentCellHovered; }
             set
             {
-                if (m_currentCellHovered && m_currentCellHovered != m_currentCellSelected)
-                    m_currentCellHovered.EraseOutline(1);
+
+                if (m_currentCellHovered) m_currentCellHovered.EraseOutline(1);
 
                 m_currentCellHovered = value;
 

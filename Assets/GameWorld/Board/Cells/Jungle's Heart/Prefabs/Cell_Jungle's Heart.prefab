@@ -60,11 +60,14 @@ MonoBehaviour:
     y: 0
     z: 8.648251
   gridPosition:
-    x: 0
-    y: 0
+    x: -1
+    y: 10
     z: 0
   isOccupied: 0
   OnCellDataChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCellChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4828400566628597791
@@ -157,8 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellReference: {fileID: 7129835830327969712}
-  hoverLayer: 0
-  selectedLayer: 1
+  hoverLayer: 1
+  selectedLayer: 2
 --- !u!95 &7135108803021089788
 Animator:
   serializedVersion: 4
@@ -226,7 +229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6212993355460570977
 Transform:
   m_ObjectHideFlags: 0
@@ -325,7 +328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2158753984223865341
 Transform:
   m_ObjectHideFlags: 0

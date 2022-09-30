@@ -47,6 +47,8 @@ namespace Ozamanas.Forces
             g = gameObject;
             t = g.transform;
             cam = Camera.main;
+
+            CalculateArea();
         }//Closes Awake method
 
         Vector3 draggedPosition;
@@ -67,41 +69,34 @@ namespace Ozamanas.Forces
 
 
             t.position = draggedPosition;
-            DrawValidCells();
+
         }//Closes OnDrag method
 
         public virtual void FirstPlacement()
         {
             if (placementMode != PlacementMode.SinglePlacement) return;
 
-            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
-            {
-                OnSuccesfulPlacement?.Invoke(this);
-                isPlaced = true;
-            }
-
-            else OnFailedPlacement?.Invoke(this);
-            EraseValidCells();
+            FinalPlacement();
         }//Closes FirstPlacement method
 
         protected virtual void SecondPlacement()
         {
             if (placementMode != PlacementMode.DoublePlacement) return;
 
-            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
-            {
-                OnSuccesfulPlacement?.Invoke(this);
-                isPlaced = true;
-            }
-            else OnFailedPlacement?.Invoke(this);
-            EraseValidCells();
+            FinalPlacement();
         }//Closes SecondPlacement method
 
         protected virtual void ThirdPlacement()
         {
             if (placementMode != PlacementMode.TriplePlacement) return;
+            FinalPlacement();
 
-            if (Board.CellSelectionHandler.currentCellHovered && validCells.Contains(Board.CellSelectionHandler.currentCellHovered.cellReference))
+        }//Closes ThirdPlacement method
+
+
+        protected virtual void FinalPlacement()
+        {
+            if (Board.CellSelectionHandler.currentCellHovered && IsValidPlacement(Board.CellSelectionHandler.currentCellHovered.cellReference))
             {
                 OnSuccesfulPlacement?.Invoke(this);
                 isPlaced = true;
@@ -109,7 +104,8 @@ namespace Ozamanas.Forces
 
             else OnFailedPlacement?.Invoke(this);
             EraseValidCells();
-        }//Closes ThirdPlacement method
+        }
+
 
         protected virtual bool IsValidPlacement(Cell cell)
         {
@@ -122,25 +118,22 @@ namespace Ozamanas.Forces
 
 
 
-
+        List<Board.Cell> anchorCells = new List<Cell>();
         List<Board.Cell> validCells = new List<Cell>();
 
-        protected virtual void DrawValidCells()
+        protected virtual void CalculateArea()
         {
             if (!data) return;
 
 
-
-
-
-
-            EraseValidCells();
 
             //Gets plausibles cells to be placed based on range and conditions
             foreach (var cell in Board.Board.GetCellsByData(data.rangeAnchors.ToArray()))
             {
 
                 if (!cell) continue;
+
+                cell.OnCellChanged.AddListener(OnAnchorChanged);
 
                 foreach (var cellOnRange in cell.GetCellsOnRange(data.range.value, false))
                 {
@@ -151,18 +144,49 @@ namespace Ozamanas.Forces
 
 
                     UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.gameObject);
-
                     validCells.Add(cellOnRange);
+                    cellOnRange.OnCellChanged.AddListener(OnAreaChanged);
                 }
             }
 
         }//Closes DrawPlaceableCells method
 
+        private void OnAnchorChanged(Cell anchor)
+        {
+            anchor.OnCellChanged.RemoveListener(OnAnchorChanged);
+            EraseValidCells();
+            CalculateArea();
+        }
+        private void OnAreaChanged(Cell cell)
+        {
+            if (!cell) return;
+            if (!IsValidPlacement(cell)) UnityFx.Outline.OutlineBuilder.Remove(0, cell.gameObject);
+            else UnityFx.Outline.OutlineBuilder.AddToLayer(0, cell.gameObject);
+        }
+
+
+
         private void EraseValidCells()
         {
-            UnityFx.Outline.OutlineBuilder.Remove(0, validCells);
+            foreach (var anchor in anchorCells)
+            {
+                if (!anchor) continue;
+                anchor.OnCellChanged.RemoveListener(OnAnchorChanged);
+            }
+            anchorCells.Clear();
+
+            foreach (var valid in validCells)
+            {
+                if (!valid) continue;
+                valid.OnCellChanged.RemoveListener(OnAreaChanged);
+                UnityFx.Outline.OutlineBuilder.Remove(0, valid.gameObject);
+            }
+            validCells.Clear();
 
         }//Closes s method
+
+
+
         protected virtual void OnDestroy()
         {
             EraseValidCells();

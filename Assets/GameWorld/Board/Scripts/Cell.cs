@@ -23,6 +23,7 @@ namespace Ozamanas.Board
                 if (m_data == value) return;
                 m_data = value;
                 OnCellDataChanged?.Invoke(value);
+                OnCellChanged.Invoke(this);
             }
         }
 
@@ -38,7 +39,7 @@ namespace Ozamanas.Board
         [Space(15)]
         [Header("Events")]
         public UnityEvent<CellData> OnCellDataChanged;
-
+        public UnityEvent<Cell> OnCellChanged;
         private void Awake()
         {
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
@@ -58,6 +59,10 @@ namespace Ozamanas.Board
             Board.RemoveCellFromBoard(this);
         }//Closes OnDisable event
 
+        private void OnDestroy()
+        {
+            OnCellChanged.Invoke(this);
+        }
 
         public List<MachineTrait> GetCellTraits()
         {
