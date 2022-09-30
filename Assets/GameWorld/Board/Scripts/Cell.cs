@@ -21,9 +21,15 @@ namespace Ozamanas.Board
             set
             {
                 if (m_data == value) return;
+
+                CellData originalValue = m_data;
+
                 m_data = value;
-                OnCellDataChanged?.Invoke(value);
-                OnCellChanged.Invoke(this);
+
+                OnCellDataChanged?.Invoke(m_data);
+                OnCellChanged?.Invoke(this);
+
+                if (Board.reference) Board.SwappedCellData(this, originalValue, m_data);
             }
         }
 

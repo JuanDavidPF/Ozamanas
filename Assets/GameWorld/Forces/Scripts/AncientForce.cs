@@ -48,6 +48,7 @@ namespace Ozamanas.Forces
             t = g.transform;
             cam = Camera.main;
 
+            if (Board.Board.reference) Board.Board.reference.OnNewCellData.AddListener(OnNewCellData);
             CalculateArea();
         }//Closes Awake method
 
@@ -103,7 +104,11 @@ namespace Ozamanas.Forces
             }
 
             else OnFailedPlacement?.Invoke(this);
+
+            if (Board.Board.reference) Board.Board.reference.OnNewCellData.RemoveListener(OnNewCellData);
+
             EraseValidCells();
+
         }
 
 
@@ -126,9 +131,10 @@ namespace Ozamanas.Forces
             if (!data) return;
 
 
+            anchorCells = Board.Board.GetCellsByData(data.rangeAnchors.ToArray());
 
             //Gets plausibles cells to be placed based on range and conditions
-            foreach (var cell in Board.Board.GetCellsByData(data.rangeAnchors.ToArray()))
+            foreach (var cell in anchorCells)
             {
 
                 if (!cell) continue;
@@ -137,10 +143,7 @@ namespace Ozamanas.Forces
 
                 foreach (var cellOnRange in cell.GetCellsOnRange(data.range.value, false))
                 {
-                    if (!cellOnRange ||
-                    cell == CellSelectionHandler.currentCellHovered ||
-                    cell == CellSelectionHandler.currentCellSelected ||
-                    !IsValidPlacement(cellOnRange)) continue;
+                    if (!cellOnRange || !IsValidPlacement(cellOnRange)) continue;
 
 
                     UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.gameObject);
@@ -153,10 +156,22 @@ namespace Ozamanas.Forces
 
         private void OnAnchorChanged(Cell anchor)
         {
+
             anchor.OnCellChanged.RemoveListener(OnAnchorChanged);
             EraseValidCells();
             CalculateArea();
         }
+
+        private void OnNewCellData(Cell possibleAnchor)
+        {
+
+            if (!possibleAnchor || !possibleAnchor.data || !data || !data.rangeAnchors.Contains(possibleAnchor.data)) return;
+
+            EraseValidCells();
+            CalculateArea();
+
+        }
+
         private void OnAreaChanged(Cell cell)
         {
             if (!cell) return;

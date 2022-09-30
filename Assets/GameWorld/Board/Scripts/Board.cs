@@ -16,6 +16,8 @@ namespace Ozamanas.Board
     [RequireComponent(typeof(Grid))]
     public class Board : MonoBehaviour
     {
+        public UnityEvent<Cell> OnNewCell;
+        public UnityEvent<Cell> OnNewCellData;
         public static Board reference;
 
         public LevelData levelData;
@@ -84,7 +86,7 @@ namespace Ozamanas.Board
                 else cellsByData[cell.data] = new List<Cell>() { cell };
             }
 
-
+            OnNewCell?.Invoke(cell);
         }//Closes AddCellToCollection method
 
         public static void RemoveCellFromBoard(Cell cell)
@@ -104,6 +106,22 @@ namespace Ozamanas.Board
             if (Application.isPlaying) Destroy(cell.gameObject);
             else DestroyImmediate(cell.gameObject);
         }//Closes RemoveCellFromCollections method
+
+
+        public static void SwappedCellData(Cell cell, CellData oldData, CellData newData)
+        {
+            Board board = Board.reference;
+
+            if (!reference || !cell) return;
+
+
+            if (oldData && board.cellsByData.ContainsKey(oldData)) board.cellsByData[oldData].Remove(cell);
+
+            if (board.cellsByData.ContainsKey(newData)) board.cellsByData[newData].Add(cell);
+            else board.cellsByData[newData] = new List<Cell>() { cell };
+
+            if (newData) Board.reference.OnNewCellData?.Invoke(cell);
+        }
 
         public static List<Cell> GetCellsByData(params CellData[] datas)
         {
