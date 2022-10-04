@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace Ozamanas.Machines
 {
-
+    [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(MachineArmor))]
     [RequireComponent(typeof(MachineMovement))]
     [SelectionBase]
@@ -15,8 +15,6 @@ namespace Ozamanas.Machines
     {
         [SerializeField] private MachineState machine_status;
         [SerializeField] private HumanMachineToken machine_token;
-        public GameObject flag;
-
         [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
 
         public List<MachineTrait> activeTraits
@@ -32,9 +30,10 @@ namespace Ozamanas.Machines
 
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
+        private Animator animator;
 
         private Cell m_currentCell;
-        public Cell currentCell
+        public Cell CurrentCell
         {
             get { return m_currentCell; }
             set
@@ -47,6 +46,10 @@ namespace Ozamanas.Machines
 
         [Space(20)]
         [Header("Events")]
+
+        public UnityEvent OnBlockedMachine;
+        public UnityEvent OnIddlingMachine;
+        public UnityEvent OnRunningMachine;
         public UnityEvent<Cell> OnCurrentCellChanged;
         public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
         public void SetMachineStatus(MachineState status)
@@ -57,6 +60,7 @@ namespace Ozamanas.Machines
         {
             machineArmor = GetComponent<MachineArmor>();
             machineMovement = GetComponent<MachineMovement>();
+            animator = GetComponent<Animator>();
         }
 
 
@@ -84,23 +88,29 @@ namespace Ozamanas.Machines
         // Set Functions
         public void SetBlockedStatus()
         {
-            flag.SetActive(true);
             machine_status = MachineState.Blocked;
+            animator.SetInteger("MachineState",(int)machine_status);
+            OnBlockedMachine?.Invoke();
         }
 
         public void SetIdlingStatus()
         {
             machine_status = MachineState.Idling;
+            animator.SetInteger("MachineState",(int)machine_status);
+            OnIddlingMachine?.Invoke();
         }
 
         public void SetRunningStatus()
         {
             machine_status = MachineState.Running;
+            animator.SetInteger("MachineState",(int)machine_status);
+            OnRunningMachine?.Invoke();
         }
 
         public void SetActingStatus()
         {
             machine_status = MachineState.Acting;
+            animator.SetInteger("MachineState",(int)machine_status);
         }
 
         #endregion
@@ -146,7 +156,7 @@ namespace Ozamanas.Machines
             }
         }
 
-        private void SetMachineTraitsfromCell(Cell cell)
+        public void SetMachineTraitsfromCell(Cell cell)
         {
             activeTraits.AddRange(cell.GetCellTraits());
             foreach (MachineTrait trait in cell.GetCellTraits())
@@ -156,7 +166,7 @@ namespace Ozamanas.Machines
             SetMachineAttributes();
         }
 
-        private void RemoveMachineTraitsFromCell(Cell cell)
+        public void RemoveMachineTraitsFromCell(Cell cell)
         {
             foreach (MachineTrait trait in cell.GetCellTraits())
             {
@@ -209,61 +219,23 @@ namespace Ozamanas.Machines
         }
         #endregion
 
-        #region Trigger Manager
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag != "Cell") return;
-
-            if (other.TryGetComponent(out Cell cell))
-            {
-                currentCell = cell;
-                SetMachineTraitsfromCell(cell);
-            }
-        }//Closes OnTriggerEnter method
-
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.tag != "Cell") return;
-
-            if (other.TryGetComponent(out Cell cell))
-            {
-                if (currentCell == cell) currentCell = null;
-                RemoveMachineTraitsFromCell(cell);
-            }
-
-        }//Closes OnTriggerExit method
-
-
-        private void OnTriggerStay(Collider other)
-        {
-
-        }//Closes OnTriggerStay method
-
-        #endregion
-
-
+        
         private void OnDisable()
         {
-            if (currentCell) currentCell.isOccupied = false;
+            if (CurrentCell) CurrentCell.isOccupied = false;
         }//Closes OnDisable method
 
         public bool CheckIfCurrentCellEqualsTo(CellData token)
         {
-            return token == currentCell.data;
-        }
+            if(!CurrentCell || !CurrentCell.data) return false;
 
-        public bool CheckIfCurrentCellEqualsTo(Cell token)
-        {
-            return token == currentCell;
+            return token == CurrentCell.data;
         }
-
         public bool ReplaceCellDataToCurrent(CellData token)
         {
-            if (currentCell == null) return false;
+            if (CurrentCell == null) return false;
 
-            currentCell.data = token;
+            CurrentCell.data = token;
 
             return true;
         }

@@ -45,9 +45,22 @@ namespace Ozamanas.Tags
 
     public enum MachineState
     {
-        Running,
-        Blocked,
-        Idling,
-        Acting
+        Running = 1,
+        Blocked = 2,
+        Idling = 3,
+        Acting = 4
+    }
+
+     public enum TreeType
+    {
+        Tree = 1,
+        Flower = 2
+    }
+
+     public enum TreeState
+    {
+        Hidden = 1,
+        Expose = 2,
+        Destroyed =3
     }
 }

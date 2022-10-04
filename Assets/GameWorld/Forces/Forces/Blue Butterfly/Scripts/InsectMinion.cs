@@ -15,6 +15,8 @@ namespace Ozamanas.Forces
        private List<MachineTrait> traits;
         private Rigidbody rg;
         [SerializeField] private float m_Speed = 0.01f;
+
+        [SerializeField] private float lifeSpan = 20f;
         public GameObject Objective { get => objective; set => objective = value; }
         public List<MachineTrait> Traits { get => traits; set => traits = value; }
 
@@ -22,6 +24,8 @@ namespace Ozamanas.Forces
         void Start()
         {
             rg = GetComponent<Rigidbody>();
+
+           Destroy(gameObject,lifeSpan);
         }
 
         void FixedUpdate()

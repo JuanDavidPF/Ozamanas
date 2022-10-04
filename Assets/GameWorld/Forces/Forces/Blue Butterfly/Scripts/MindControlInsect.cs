@@ -16,8 +16,8 @@ namespace Ozamanas.Forces
 
         private enum ControlMode
         {
-            ChangeObjective,
-            Bait
+            Machine,
+            Cell
         }
 
         private Transform AOETransform;
@@ -44,7 +44,7 @@ namespace Ozamanas.Forces
           
             if (!isPlaced) return;
 
-            if (mode == ControlMode.ChangeObjective)
+            if (mode == ControlMode.Machine)
             {
                     foreach (var machine in machinesAffected.ToArray())
                     {
@@ -54,6 +54,13 @@ namespace Ozamanas.Forces
 
                     Destroy(gameObject);
             }
+            else if(mode == ControlMode.Machine)
+            {
+                Cell currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
+                InsectMinion temp = Instantiate(minion, transform.position, transform.rotation).GetComponent<InsectMinion>();
+                temp.Objective = currentCell.gameObject;
+                temp.Traits = traits;
+            }
 
         }//Closes FirstPlacement method
 
@@ -61,7 +68,7 @@ namespace Ozamanas.Forces
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("trigger");
+           
             if (isPlaced || other.tag != "Machine") return;
 
             if (other.TryGetComponentInParent(out Machines.HumanMachine machine))
@@ -76,7 +83,6 @@ namespace Ozamanas.Forces
 
         private void OnTriggerExit(Collider other)
         {
-            Debug.Log("trigger");
             if (isPlaced || other.tag != "Machine") return;
 
             if (other.TryGetComponentInParent(out Machines.HumanMachine machine))
@@ -122,7 +128,6 @@ namespace Ozamanas.Forces
         {
             if (!machine || machine.tag != "Machine") return;
 
-           // machine.TakeDamage(damageAmount);
             machinesAffected.Remove(machine);
             InsectMinion temp = Instantiate(minion, transform.position, transform.rotation).GetComponent<InsectMinion>();
             temp.Objective = machine.gameObject;

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DataStructures.PriorityQueue;
 using Ozamanas.Board;
-using Ozamanas.Machines;
 using Ozamanas.Outlines;
 using Unity.Mathematics;
 using UnityEngine;

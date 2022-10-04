@@ -119,6 +119,8 @@ MonoBehaviour:
     outlineColor: {r: 1, g: 1, b: 1, a: 1}
     width: 2
   placementMode: 0
+  traitRange: 1
+  traits: []
   OnSuccesfulPlacement:
     m_PersistentCalls:
       m_Calls: []
@@ -128,13 +130,12 @@ MonoBehaviour:
   mode: 1
   fillPath: 1
   ruleList:
-  - mode: 0
-    condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
-    cellToSwap: {fileID: 986721062166553442, guid: 762b593c26048c147a915085ebdb77f4,
-      type: 3}
-    tokenToSwap: {fileID: 0}
   - mode: 1
-    condition: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
+    condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+    cellToSwap: {fileID: 0}
+    tokenToSwap: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+  - mode: 1
+    condition: {fileID: 0}
     cellToSwap: {fileID: 0}
     tokenToSwap: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   speed:
