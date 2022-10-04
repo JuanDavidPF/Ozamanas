@@ -10,6 +10,7 @@ namespace Ozamanas.Machines
     [RequireComponent(typeof(MachineAttributes))]
     public class MachineArmor : MonoBehaviour
     {
+        private Transform _t;
         [Header("Armor")]
         [Space(15)]
         [SerializeField] private int m_armorPoints = 1;
@@ -34,8 +35,8 @@ namespace Ozamanas.Machines
         private bool broken = false;
 
         [SerializeField] private float lifeSpan = 2f;
-[Range(100, 1000)]
-         [SerializeField] private float explosionPower = 2f;
+        [Range(100, 1000)]
+        [SerializeField] private float explosionPower = 2f;
 
         [Space(15)]
 
@@ -48,6 +49,7 @@ namespace Ozamanas.Machines
 
         void Awake()
         {
+            _t = transform;
             machineAttributes = GetComponent<MachineAttributes>();
 
         }
@@ -108,12 +110,12 @@ namespace Ozamanas.Machines
 
         public void Destroy()
         {
-             if (broken) return;
+            if (broken) return;
 
-             if (replacement) 
-             {
+            if (replacement)
+            {
                 broken = true;
-                GameObject temp = Instantiate(replacement,transform.position,transform.rotation);
+                GameObject temp = Instantiate(replacement, transform.position, transform.rotation);
                 temp.SetActive(true);
                 temp.GetComponent<MachineOnDestroy>().DestructableSetup(lifeSpan);
                 Rigidbody[] rbs = temp.GetComponentsInChildren<Rigidbody>();
@@ -121,10 +123,19 @@ namespace Ozamanas.Machines
                 {
                     rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
                 }
-             }
+            }
             gameObject.SetActive(false);
             Destroy(gameObject);
-            
+
+        }
+
+
+
+
+        private void Update()
+        {
+            //Fall to void
+            if (_t.position.y <= -1) Destroy();
         }
 
     }
