@@ -22,6 +22,7 @@ namespace Ozamanas.Board
             {
                 if (m_data == value) return;
 
+
                 CellData originalValue = m_data;
 
                 m_data = value;
