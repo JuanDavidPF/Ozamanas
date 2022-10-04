@@ -12,7 +12,25 @@ namespace Ozamanas.Board
     public class BulldozerIndustryRotator : MonoBehaviour
     {
         [SerializeField] Transform meshToRotate;
+        private Animator animator;
 
+        void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+             if (other.tag != "Machine") return;
+
+            animator.SetBool("OpenDoor",true);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+             if (other.tag != "Machine") return;
+
+            animator.SetBool("OpenDoor",false);
+        }
         private void OnTriggerStay(Collider other)
         {
             if (other.tag == "Machine") RotateAtMachine(other.transform);

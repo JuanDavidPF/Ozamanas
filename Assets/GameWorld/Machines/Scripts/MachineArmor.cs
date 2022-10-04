@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 
 namespace Ozamanas.Machines
 {
@@ -26,9 +29,16 @@ namespace Ozamanas.Machines
         [SerializeField] private bool invulnerable = false;
         private MachineAttributes machineAttributes;
 
+        [SerializeField] private GameObject replacement;
+
+        private bool broken = false;
+
+        [SerializeField] private float lifeSpan = 2f;
+[Range(100, 1000)]
+         [SerializeField] private float explosionPower = 2f;
+
         [Space(15)]
 
-        [SerializeField] public UnityEvent OnMachineDestroyedEvent;
         [SerializeField] public UnityEvent OnMachineDamaged;
         [SerializeField] public UnityEvent OnMachineGainArmor;
         [SerializeField] public UnityEvent<int> OnArmorChanged;
@@ -98,9 +108,24 @@ namespace Ozamanas.Machines
 
         public void Destroy()
         {
+             if (broken) return;
+
+             if (replacement) 
+             {
+                broken = true;
+                GameObject temp = Instantiate(replacement,transform.position,transform.rotation);
+                temp.SetActive(true);
+                temp.GetComponent<MachineOnDestroy>().DestructableSetup(lifeSpan);
+                Rigidbody[] rbs = temp.GetComponentsInChildren<Rigidbody>();
+                foreach (Rigidbody rb in rbs)
+                {
+                    rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
+                }
+             }
             gameObject.SetActive(false);
             Destroy(gameObject);
-            OnMachineDestroyedEvent?.Invoke();
+            
         }
+
     }
 }

@@ -34,6 +34,8 @@ namespace Ozamanas.Board
             }
         }
 
+        public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
+
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
 
 
@@ -73,19 +75,19 @@ namespace Ozamanas.Board
 
         public List<MachineTrait> GetCellTraits()
         {
-            return activeTraits;
+            return ActiveTraits;
         }//Closes GetTraitsOnCell method
 
 
         public void AddTraitToMachine(MachineTrait trait)
         {
-            activeTraits.Add(trait);
+            ActiveTraits.Add(trait);
             if (!trait.isPermanetOnHolder) StartCoroutine(HandleTraitDuration(trait));
         }
 
         public void RemoveTraitToMachine(MachineTrait trait)
         {
-            activeTraits.Remove(trait);
+            ActiveTraits.Remove(trait);
         }
 
         IEnumerator HandleTraitDuration(MachineTrait trait)

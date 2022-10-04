@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DataStructures.PriorityQueue;
 using Ozamanas.Board;
-using Ozamanas.Machines;
-
+using Ozamanas.Outlines;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,8 +28,13 @@ namespace Ozamanas.Machines
         private NavMeshAgent navMeshAgent;
         private MachineAttributes machineAttributes;
         private HumanMachine humanMachine;
+
+     
         [Header("Setup")]
+        [SerializeField] private CellData humanBase;
         [SerializeField] private CellData mainObjective;
+
+        private CellData mainObjectiveBackUP;
         [Space(5)]
         [SerializeField] private CellData secondObjective;
         [SerializeField] private int secondObjectiveRange;
@@ -54,7 +58,7 @@ namespace Ozamanas.Machines
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
-
+        [SerializeField] private OutlineConfig debugOutline;
 
         public bool hasPathToMain
         {
@@ -73,6 +77,7 @@ namespace Ozamanas.Machines
             navMeshAgent = GetComponent<NavMeshAgent>();
             machineAttributes = GetComponent<MachineAttributes>();
             humanMachine = GetComponent<HumanMachine>();
+            mainObjectiveBackUP =mainObjective;
             RestoreOriginalValues();
         }//Closes Awake method
 
@@ -84,26 +89,26 @@ namespace Ozamanas.Machines
 
         private void DebugPathProjection()
         {
-            // if (debugPathFinding)
-            // {
-            //     foreach (var cell in pathToDestination)
-            //     {
-            //         if (!cell) continue;
+            if (debugPathFinding)
+            {
+                foreach (var cell in pathToDestination)
+                {
+                    if (!cell) continue;
 
-            //         cell.gameObject.SendMessage("DrawOutline", debugOutline);
-            //         cell.gameObject.SendMessage("ToggleOutline", true);
-            //     }
-            // }
-            // else
-            // {
-            //     foreach (var cell in pathToDestination)
-            //     {
-            //         if (!cell) continue;
+                    cell.gameObject.SendMessage("DrawOutline", debugOutline);
+                    cell.gameObject.SendMessage("ToggleOutline", true);
+                }
+            }
+            else
+            {
+                foreach (var cell in pathToDestination)
+                {
+                    if (!cell) continue;
 
 
-            //         cell.gameObject.SendMessage("ToggleOutline", false);
-            //     }
-            // }
+                    cell.gameObject.SendMessage("ToggleOutline", false);
+                }
+            }
         }
 
         public void ResetPath()
@@ -354,14 +359,27 @@ namespace Ozamanas.Machines
             return range <= Board.BoardExtender.DistanceTo(currentDestination, Board.Board.GetCellByPosition(transform.position));
         }
 
+        public void GoToBase()
+        {
+            if (mainObjective==humanBase) return;
+            mainObjective = humanBase;
+        }
+
+        public void GotoMainObjective()
+        {
+            if (mainObjective==mainObjectiveBackUP) return;
+            mainObjective = mainObjectiveBackUP;
+        }
+
         #endregion
 
         #region Speed Management
         public void RestoreOriginalValues()
         {
+            GotoMainObjective();
             currentSpeed = machineAttributes.GetMachineSpeed();
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
-            if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
+            if ( navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
         public void IncreaseMachineSpeed()
