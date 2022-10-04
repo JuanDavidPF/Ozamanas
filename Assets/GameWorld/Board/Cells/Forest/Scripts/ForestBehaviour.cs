@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,21 @@ using Ozamanas.Board;
 using Ozamanas.Tags;
 
 
+
 namespace Ozamanas.Forest
 {
      [RequireComponent(typeof(Cell))]
 public class ForestBehaviour : MonoBehaviour
 {
-
-   [SerializeField] private List<JungleTree> trees = new List<JungleTree>();
+        [Serializable]
+        private class TreeContainer
+        {
+            public Transform treeTransform;
+            public GameObject forestTree;
+            public GameObject expansionTree;
+            public GameObject currentTree;
+        }
+   [SerializeField] private List<TreeContainer> trees = new List<TreeContainer>();
     private Cell cellReference;
     [Space(15)]
         [Header("Cell identificators")]
@@ -22,8 +31,17 @@ public class ForestBehaviour : MonoBehaviour
 
     void Awake()
     {
-        JungleTree[] temp = GetComponentsInChildren<JungleTree>();
-        trees = new List<JungleTree>(temp);
+        DummyTree[] temp = GetComponentsInChildren<DummyTree>();
+        for(int i = 0;i<temp.Length;i++)
+        {
+            TreeContainer container = new TreeContainer();
+            container.treeTransform = temp[i].transform;
+            container.forestTree = temp[i].ForestTree;
+            container.expansionTree = temp[i].ExpansionTree;
+            container.currentTree = null;
+            trees.Add(container);
+            temp[i].gameObject.SetActive(false);
+        }
         cellReference = GetComponent<Cell>();
     }
     public void OnCellDataChange()
@@ -51,31 +69,29 @@ public class ForestBehaviour : MonoBehaviour
     private void ChangeToForest()
     {
         
-        foreach(JungleTree tree in trees)
+        for(int i = 0;i<trees.Count;i++)
         {
-            tree.ChangeTreeToExpansion(false);
-            if (tree.Tree_type == TreeType.Flower) tree.Hide();
+            if(trees[i].currentTree) Destroy(trees[i].currentTree);
+            GameObject temp = Instantiate(trees[i].forestTree,trees[i].treeTransform.position,trees[i].treeTransform.rotation);
+            trees[i].currentTree = temp;
         }
 
     }
 
     private void ChangeToExpansion()
     {
-        foreach(JungleTree tree in trees)
+        for(int i = 0;i<trees.Count;i++)
         {
-            tree.Show();
-            tree.ChangeTreeToExpansion(true);
+            if(trees[i].currentTree) Destroy(trees[i].currentTree);
+            GameObject temp = Instantiate(trees[i].expansionTree,trees[i].treeTransform.position,trees[i].treeTransform.rotation);
+            trees[i].currentTree = temp;
         }
     }
 
     private void ChangeToBarrier()
     {
 
-        foreach(JungleTree tree in trees)
-        {
-            tree.Hide();
-            tree.ChangeTreeToExpansion(false);
-        }
+        
     }
 }
 }
