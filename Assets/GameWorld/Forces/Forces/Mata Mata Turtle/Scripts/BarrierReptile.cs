@@ -37,7 +37,7 @@ namespace Ozamanas.Forces
 
         private void OnCollisionEnter(Collision other)
         {
-            Debug.Log("Other");
+
             if (!isPlaced || (other.transform.tag != "Machine")) return;
 
             if (other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))

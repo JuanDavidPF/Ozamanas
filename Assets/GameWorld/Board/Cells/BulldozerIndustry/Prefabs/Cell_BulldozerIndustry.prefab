@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 202609059502580113}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,11 +47,10 @@ GameObject:
   - component: {fileID: 1703777373}
   - component: {fileID: 4454315225927143526}
   - component: {fileID: 5170691469652966161}
-  - component: {fileID: 986721062166553443}
   - component: {fileID: 986721062166553440}
   - component: {fileID: 1703777372}
   - component: {fileID: 1703777374}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cell_BulldozerIndustry
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: 902776f58d466d84c909ef1ccde493aa, type: 3}
@@ -103,6 +102,9 @@ MonoBehaviour:
   OnCellDataChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnCellChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &986721062166553441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,14 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellReference: {fileID: 0}
-  m_hoveredOutline:
-    mode: 2
-    outlineColor: {r: 1, g: 1, b: 1, a: 1}
-    width: 5
-  m_selectedOutline:
-    mode: 0
-    outlineColor: {r: 1, g: 0.8378445, b: 0, a: 1}
-    width: 10
+  hoverLayer: 1
+  selectedLayer: 2
 --- !u!114 &1703777373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,24 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshToRotate: {fileID: 767874100488441521}
---- !u!114 &986721062166553443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986721062166553455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 5
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!95 &986721062166553440
 Animator:
   serializedVersion: 4
@@ -266,7 +244,7 @@ GameObject:
   - component: {fileID: 3750816158188185277}
   - component: {fileID: 3813636820152931237}
   - component: {fileID: 2836909086626733136}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 767874100488441521}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6276692084892077353}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +411,7 @@ GameObject:
   - component: {fileID: 6725145206727937595}
   - component: {fileID: 4057956582204731077}
   - component: {fileID: 970455733950154394}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Underground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,6 +510,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Machine_Smoke (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_RootOrder
@@ -621,6 +604,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Machine_Smoke (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
@@ -712,6 +700,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Machine_Smoke (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_RootOrder
@@ -799,8 +792,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 226998124761201124, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 226998124761201124, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 256280084880479415, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 256280084880479415, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
@@ -892,6 +895,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base_Zona1
       objectReference: {fileID: 0}
+    - target: {fileID: 2235415051458846004, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2512999820198239051, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -944,13 +952,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3572278082909253812, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572278082909253812, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4157255302067143676, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157255302067143676, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684749377049054920, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5240457944725212664, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
@@ -966,6 +989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -109.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5456967789217271333, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5457117887289675627, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
@@ -1001,6 +1029,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -92.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265339595043455490, guid: ba7584932ab61174bb5fc6582d5e5277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8265339595043455490, guid: ba7584932ab61174bb5fc6582d5e5277,
         type: 3}
@@ -1082,6 +1115,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'TileUnity '
       objectReference: {fileID: 0}
+    - target: {fileID: 6611325317734820038, guid: f1e0e6262ead8be48a178c6419ff5359,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e0e6262ead8be48a178c6419ff5359, type: 3}
 --- !u!1 &1536374272037643265 stripped
@@ -1121,6 +1159,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Machine_Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
@@ -1211,6 +1254,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Machine_Smoke (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
