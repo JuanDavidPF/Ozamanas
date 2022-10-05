@@ -13,6 +13,7 @@ namespace Ozamanas.Machines
     [SelectionBase]
     public class HumanMachine : MonoBehaviour
     {
+        public static List<HumanMachine> machines = new List<HumanMachine>();
         [SerializeField] private MachineState machine_status;
         [SerializeField] private HumanMachineToken machine_token;
         [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
@@ -61,7 +62,13 @@ namespace Ozamanas.Machines
             machineArmor = GetComponent<MachineArmor>();
             machineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
+
         }
+
+        private void OnEnable()
+        {
+            machines.Add(this);
+        }//Closes OnEnable method
 
 
         #region States Management
@@ -89,28 +96,28 @@ namespace Ozamanas.Machines
         public void SetBlockedStatus()
         {
             machine_status = MachineState.Blocked;
-            animator.SetInteger("MachineState",(int)machine_status);
+            animator.SetInteger("MachineState", (int)machine_status);
             OnBlockedMachine?.Invoke();
         }
 
         public void SetIdlingStatus()
         {
             machine_status = MachineState.Idling;
-            animator.SetInteger("MachineState",(int)machine_status);
+            animator.SetInteger("MachineState", (int)machine_status);
             OnIddlingMachine?.Invoke();
         }
 
         public void SetRunningStatus()
         {
             machine_status = MachineState.Running;
-            animator.SetInteger("MachineState",(int)machine_status);
+            animator.SetInteger("MachineState", (int)machine_status);
             OnRunningMachine?.Invoke();
         }
 
         public void SetActingStatus()
         {
             machine_status = MachineState.Acting;
-            animator.SetInteger("MachineState",(int)machine_status);
+            animator.SetInteger("MachineState", (int)machine_status);
         }
 
         #endregion
@@ -120,7 +127,7 @@ namespace Ozamanas.Machines
         public void AddTraitToMachine(MachineTrait trait)
         {
             activeTraits.Add(trait);
-            if (!trait.isPermanentOnMachine) StartCoroutine( WaitToRemoveTrait(trait));
+            if (!trait.isPermanentOnMachine) StartCoroutine(WaitToRemoveTrait(trait));
             SetMachineAttributes();
         }
 
@@ -219,15 +226,16 @@ namespace Ozamanas.Machines
         }
         #endregion
 
-        
+
         private void OnDisable()
         {
             if (CurrentCell) CurrentCell.isOccupied = false;
+            machines.Remove(this);
         }//Closes OnDisable method
 
         public bool CheckIfCurrentCellEqualsTo(CellData token)
         {
-            if(!CurrentCell || !CurrentCell.data) return false;
+            if (!CurrentCell || !CurrentCell.data) return false;
 
             return token == CurrentCell.data;
         }
