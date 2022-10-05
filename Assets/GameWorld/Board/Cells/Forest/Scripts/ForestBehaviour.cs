@@ -44,6 +44,15 @@ namespace Ozamanas.Forest
             }
             cellReference = GetComponent<Cell>();
         }
+
+        void Start()
+        {
+             if (!cellReference) return;
+            if (cellReference.data == expansionID) ChangeToExpansion();
+            if (cellReference.data == forestID) ChangeToForest();
+            if (cellReference.data == barrierID) ChangeToBarrier();
+        }
+
         public void OnCellDataChange()
         {
 
@@ -53,26 +62,30 @@ namespace Ozamanas.Forest
             if (cellReference.data == barrierID) ChangeToBarrier();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+   
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
+
+            if (!cellReference) return;
+
+            if (cellReference.data == forestID) return;
+
 
             ChangeToForest();
         }
 
         private void ChangeToForest()
         {
-
+            Debug.Log("ChangeToForest");
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].forestTree, trees[i].treeTransform.position, trees[i].treeTransform.rotation);
+                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
+                temp.transform.parent = gameObject.transform;
+                temp.gameObject.GetComponent<Rigidbody>().position = trees[i].treeTransform.position;
+                temp.gameObject.GetComponent<Rigidbody>().rotation = trees[i].treeTransform.rotation;
                 trees[i].currentTree = temp;
             }
 
@@ -80,14 +93,19 @@ namespace Ozamanas.Forest
 
         private void ChangeToExpansion()
         {
+             Debug.Log("ChangeToExpansion");
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].expansionTree, trees[i].treeTransform.position, trees[i].treeTransform.rotation);
+                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
+                temp.transform.parent = gameObject.transform;
+                temp.transform.position = trees[i].treeTransform.position;
+                temp.transform.rotation = trees[i].treeTransform.rotation;
                 trees[i].currentTree = temp;
             }
         }
 
+   
         private void ChangeToBarrier()
         {
 
