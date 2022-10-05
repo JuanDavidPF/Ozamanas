@@ -45,7 +45,7 @@ namespace Ozamanas.Machines
         [SerializeField] public UnityEvent<int> OnArmorChanged;
         [SerializeField] public UnityEvent OnMachineDisarm;
 
-
+        [SerializeField] public UnityEvent OnMachineDestroyed;
 
         void Awake()
         {
@@ -124,6 +124,8 @@ namespace Ozamanas.Machines
                     rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
                 }
             }
+
+            OnMachineDestroyed?.Invoke();
             gameObject.SetActive(false);
             Destroy(gameObject);
 

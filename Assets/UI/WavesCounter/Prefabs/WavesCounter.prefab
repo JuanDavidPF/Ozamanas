@@ -237,8 +237,7 @@ GameObject:
   - component: {fileID: 1754916418458094544}
   - component: {fileID: 1754916418458094546}
   - component: {fileID: 1754916418458094545}
-  - component: {fileID: 1589938539}
-  - component: {fileID: 3729323007238586970}
+  - component: {fileID: 1589938541}
   m_Layer: 5
   m_Name: WavesCounter
   m_TagString: Untagged
@@ -306,7 +305,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1589938539
+--- !u!114 &1589938541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,45 +314,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1754916418458094559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e910a437991b04e9a682eea6f7f443, type: 3}
+  m_Script: {fileID: 11500000, guid: c9bf7717b453ecb4e84f5795f33fc18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
   initialDelay:
     useConstant: 1
-    constantValue: 3
+    constantValue: 0
     variable: {fileID: 0}
   OnNewWave:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 8c8308d49641f094db0df7c0764d1d8f, type: 2}
-        m_TargetAssemblyTypeName: JuanPayan.References.GameEvents.GameEvent, Ozamanas.References
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   waveTMP: {fileID: 298988556}
   progressBar: {fileID: 1754916417459998944}
   waveProgressColor:
     serializedVersion: 2
-    key0: {r: 0, g: 1, b: 0.7015343, a: 1}
-    key1: {r: 0.25729796, g: 0.4688053, b: 0.9245283, a: 1}
-    key2: {r: 0.9960785, g: 0.29411766, b: 0.60784316, a: 0}
-    key3: {r: 0.9960785, g: 0.29411766, b: 0.60784316, a: 0}
+    key0: {r: 0, g: 0.37265158, b: 1, a: 1}
+    key1: {r: 0.033018887, g: 1, b: 0.1349842, a: 1}
+    key2: {r: 0.033018887, g: 1, b: 0.1349842, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 18311
+    ctime1: 65535
     ctime2: 65535
-    ctime3: 65535
+    ctime3: 0
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -367,37 +354,5 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
---- !u!114 &3729323007238586970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754916418458094559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggers: 0
-  events:
-  - {fileID: 11400000, guid: b0cf3fb0d51fc1a4398837523a0cafea, type: 2}
-  mode: 1
-  maxInvocations: 1
-  callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1589938539}
-        m_TargetAssemblyTypeName: Ozamanas.UI.WavesManager, Ozamanas.UI
-        m_MethodName: StartWaves
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

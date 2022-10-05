@@ -7,15 +7,12 @@ namespace Ozamanas.World
     public class GameEndingManager : MonoBehaviour
     {
 
-        public void OnMachineDestroyed()
+        public void VerifyGameEndingConditions()
         {
 
+            Debug.Log("Machine damaged");
         }//Closes OnMachineDestroyed method
 
-        public void OnMachineBlocked()
-        {
-
-        }//Closes OnMachineBlocked method
 
     }//Closes GameEndingManager method
 }//Closes Namespace declaration
