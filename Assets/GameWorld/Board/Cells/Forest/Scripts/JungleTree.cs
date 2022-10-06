@@ -7,41 +7,30 @@ using DG.Tweening;
 
 namespace Ozamanas.Board
 {
-    [RequireComponent(typeof(MeshRenderer))]
-    [RequireComponent(typeof(Rigidbody))]
+
     [RequireComponent(typeof(Collider))]
     public class JungleTree : MonoBehaviour
     {
             [SerializeField] private float lifetime = 5f;
-
             [SerializeField] private float growingTime = 2f;
             [SerializeField] private GameObject fragmentedModel;
-            
-            private bool alreadyTriggered;
-            private Rigidbody rb;
+            private bool alreadyTriggered = false;
             private Collider cd;
-
-            private MeshRenderer rd;
-
             [SerializeField] public UnityEvent OnDestruction;
 
 
         private void Awake()
             {
-                rb = GetComponent<Rigidbody>();
                 cd = GetComponent<Collider>();
-                rd = GetComponent<MeshRenderer>();
+                
             }//Closes Awake method
-            private void OnCollisionEnter(Collision other)
+            
+            private void OnTriggerEnter(Collider other)
             {
-
                 if ( other.transform.tag != "Machine") return;
 
                 DestroyTree();
-  
-            }//Closes OnColissionEnter method
-
-
+            }
             
             public void DestroyTree()
             {

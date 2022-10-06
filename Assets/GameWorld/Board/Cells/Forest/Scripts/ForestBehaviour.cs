@@ -16,12 +16,15 @@ namespace Ozamanas.Forest
         private class TreeContainer
         {
             public Transform treeTransform;
+            public TreeType tree_type; 
             public GameObject forestTree;
             public GameObject expansionTree;
             public GameObject currentTree;
         }
         [SerializeField] private List<TreeContainer> trees = new List<TreeContainer>();
         private Cell cellReference;
+
+        [SerializeField] private Transform visuals;
         [Space(15)]
         [Header("Cell identificators")]
         [SerializeField] private CellData expansionID;
@@ -39,6 +42,7 @@ namespace Ozamanas.Forest
                 container.forestTree = temp[i].ForestTree;
                 container.expansionTree = temp[i].ExpansionTree;
                 container.currentTree = null;
+                container.tree_type = temp[i].Tree_type;
                 trees.Add(container);
                 temp[i].gameObject.SetActive(false);
             }
@@ -55,7 +59,7 @@ namespace Ozamanas.Forest
 
         public void OnCellDataChange()
         {
-
+            
             if (!cellReference) return;
             if (cellReference.data == expansionID) ChangeToExpansion();
             if (cellReference.data == forestID) ChangeToForest();
@@ -68,6 +72,8 @@ namespace Ozamanas.Forest
         {
             if (other.tag != "Machine") return;
 
+          
+
             if (!cellReference) return;
 
             if (cellReference.data == forestID) return;
@@ -78,27 +84,29 @@ namespace Ozamanas.Forest
 
         private void ChangeToForest()
         {
-            Debug.Log("ChangeToForest");
+            
+            
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
-                temp.transform.parent = gameObject.transform;
-                temp.gameObject.GetComponent<Rigidbody>().position = trees[i].treeTransform.position;
-                temp.gameObject.GetComponent<Rigidbody>().rotation = trees[i].treeTransform.rotation;
+                if(trees[i].tree_type != TreeType.Flower) 
+                {
+                    GameObject temp = Instantiate(trees[i].forestTree, visuals);
+                temp.transform.position = trees[i].treeTransform.position;
+                temp.transform.rotation = trees[i].treeTransform.rotation;
                 trees[i].currentTree = temp;
+                }
+                 
             }
 
         }
 
         private void ChangeToExpansion()
         {
-             Debug.Log("ChangeToExpansion");
             for (int i = 0; i < trees.Count; i++)
             {
-                if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
-                temp.transform.parent = gameObject.transform;
+               if (trees[i].currentTree) Destroy(trees[i].currentTree);
+                GameObject temp = Instantiate(trees[i].expansionTree, visuals);
                 temp.transform.position = trees[i].treeTransform.position;
                 temp.transform.rotation = trees[i].treeTransform.rotation;
                 trees[i].currentTree = temp;
