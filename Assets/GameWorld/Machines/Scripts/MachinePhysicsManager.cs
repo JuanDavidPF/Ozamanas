@@ -83,8 +83,6 @@ namespace Ozamanas.Machines
             
             if (other.tag != "Cell") return;
 
-            Debug.Log("Machine OnTriggerEnter"+ other.tag + other.transform.position);
-
             CatReflexLanding();
 
             if (other.TryGetComponent(out Cell cell))

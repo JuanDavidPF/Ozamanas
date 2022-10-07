@@ -34,6 +34,24 @@ namespace Ozamanas.Forest
 
         void Awake()
         {
+            SelectPack();
+            PopulateTrees();
+            cellReference = GetComponent<Cell>();
+        }
+
+        private void SelectPack()
+        {
+            TreePack[] temp = GetComponentsInChildren<TreePack>();
+            
+            int random = UnityEngine.Random.Range(0, temp.Length);
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if(i!=random) temp[i].gameObject.SetActive(false);
+            }
+
+        }
+        private void PopulateTrees()
+        {
             DummyTree[] temp = GetComponentsInChildren<DummyTree>();
             for (int i = 0; i < temp.Length; i++)
             {
@@ -46,8 +64,7 @@ namespace Ozamanas.Forest
                 trees.Add(container);
                 temp[i].gameObject.SetActive(false);
             }
-            cellReference = GetComponent<Cell>();
-        }
+        } 
 
         void Start()
         {
