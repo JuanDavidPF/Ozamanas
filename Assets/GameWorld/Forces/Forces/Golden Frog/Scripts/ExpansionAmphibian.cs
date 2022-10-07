@@ -138,8 +138,9 @@ namespace Ozamanas.Forces
         protected override bool IsValidPlacement(Cell cell)
         {
             if (!base.IsValidPlacement(cell)) return false;
-
             //Insert aditional conditions for this Ancient Force inheritor class
+
+
             return true;
         }//Closes IsValidPlacement method
 

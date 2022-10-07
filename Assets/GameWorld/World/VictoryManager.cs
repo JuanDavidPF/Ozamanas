@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace Ozamanas.World
 {
-    public class GameOverManager : MonoBehaviour
+    public class VictoryManager : MonoBehaviour
     {
-        [SerializeField] GameEvent OnGameOver;
+        [SerializeField] GameEvent VictoryEvent;
         public void VerifyGameEndingConditions()
         {
+            Debug.Log(WavesManager.currentWave);
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
 
             foreach (var machine in Machines.HumanMachine.machines)
@@ -22,7 +23,7 @@ namespace Ozamanas.World
                 }
             }
 
-            if (OnGameOver) OnGameOver.Invoke();
+            if (VictoryEvent) VictoryEvent.Invoke();
 
         }//Closes OnMachineDestroyed method
 

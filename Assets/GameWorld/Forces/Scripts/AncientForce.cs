@@ -97,7 +97,12 @@ namespace Ozamanas.Forces
 
         protected virtual void FinalPlacement()
         {
-            if (Board.CellSelectionHandler.currentCellHovered && IsValidPlacement(Board.CellSelectionHandler.currentCellHovered.cellReference))
+            CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
+
+
+
+            if (cellHovered &&
+            IsValidPlacement(cellHovered.cellReference) && validCells.Contains(cellHovered.cellReference))
             {
                 OnSuccesfulPlacement?.Invoke(this);
                 isPlaced = true;
@@ -117,7 +122,6 @@ namespace Ozamanas.Forces
             if (!cell) return false;
             if (!data) return false;
             if (!data.whiteList.Contains(cell.data)) return false;
-
             return true;
         }//Closes IsValidPlacement method
 

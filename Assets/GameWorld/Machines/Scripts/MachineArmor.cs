@@ -124,7 +124,7 @@ namespace Ozamanas.Machines
                     rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
                 }
             }
-
+            Debug.Log("Halo");
             OnMachineDestroyed?.Invoke();
             gameObject.SetActive(false);
             Destroy(gameObject);
