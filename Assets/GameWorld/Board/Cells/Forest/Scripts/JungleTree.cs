@@ -12,7 +12,7 @@ namespace Ozamanas.Board
     public class JungleTree : MonoBehaviour
     {
             [SerializeField] private float lifetime = 5f;
-            [SerializeField] private float growingTime = 2f;
+            [SerializeField] private float growingTime = 10f;
             [SerializeField] private GameObject fragmentedModel;
             private bool alreadyTriggered = false;
             private Collider cd;
@@ -41,6 +41,12 @@ namespace Ozamanas.Board
                 GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
                 if(dummy) Destroy(dummy,lifetime);
 
+            }
+
+            public void HideAndDestroy()
+            {
+                gameObject.transform.transform.DOScaleY(0f, growingTime).From(1);
+                Destroy(gameObject,growingTime);
             }
            
 
