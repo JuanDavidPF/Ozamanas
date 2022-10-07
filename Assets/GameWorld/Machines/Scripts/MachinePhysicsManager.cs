@@ -51,14 +51,14 @@ namespace Ozamanas.Machines
             ActivatePhysics(!rb.IsSleeping());
         }
 
-       void OnCollisionEnter(Collision collision)
+        void OnCollisionEnter(Collision collision)
         {
             if (!rb || rb.isKinematic) return;
 
             foreach (ContactPoint contact in collision.contacts)
             {
                 collisionVFX.position = contact.point; //new Vector3(contact.point.x,collisionVFX.position.y,contact.point.z);
-                collisionVFX.rotation =  Quaternion.identity;
+                collisionVFX.rotation = Quaternion.identity;
                 OnActivatePhysics?.Invoke();
             }
         }
@@ -67,28 +67,30 @@ namespace Ozamanas.Machines
         {
             if (!rb || rb.isKinematic) return;
 
-            if( rb.velocity.y > 0) return;
+            if (rb.velocity.y > 0) return;
 
             Quaternion quaternion = Quaternion.Euler(0, transform.rotation.y, 0);
 
             rb.MoveRotation(quaternion);
         }
-       
+
 
         #region Trigger Manager
 
         private void OnTriggerEnter(Collider other)
         {
 
-            
+
             if (other.tag != "Cell") return;
 
             CatReflexLanding();
 
             if (other.TryGetComponent(out Cell cell))
             {
+
                 machine.CurrentCell = cell;
                 machine.SetMachineTraitsfromCell(cell);
+                cell.OnMachineEntered.Invoke(machine);
             }
         }//Closes OnTriggerEnter method
 
@@ -101,6 +103,7 @@ namespace Ozamanas.Machines
             {
                 if (machine.CurrentCell == cell) machine.CurrentCell = null;
                 machine.RemoveMachineTraitsFromCell(cell);
+                cell.OnMachineExited.Invoke(machine);
             }
 
         }//Closes OnTriggerExit method
