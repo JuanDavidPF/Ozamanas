@@ -8,52 +8,53 @@ using DG.Tweening;
 namespace Ozamanas.Board
 {
     [RequireComponent(typeof(MeshRenderer))]
-    [RequireComponent(typeof(Rigidbody))]
+
     [RequireComponent(typeof(Collider))]
     public class JungleTree : MonoBehaviour
     {
-            [SerializeField] private float lifetime = 5f;
+        [SerializeField] private float lifetime = 5f;
 
-            [SerializeField] private float growingTime = 2f;
-            [SerializeField] private GameObject fragmentedModel;
-            
-            private bool alreadyTriggered;
-            private Rigidbody rb;
-            private Collider cd;
+        [SerializeField] private float growingTime = 2f;
+        [SerializeField] private GameObject fragmentedModel;
 
-            private MeshRenderer rd;
+        private bool alreadyTriggered;
 
-            [SerializeField] public UnityEvent OnDestruction;
+        private Collider cd;
+
+        private MeshRenderer rd;
+
+        [SerializeField] public UnityEvent OnDestruction;
 
 
         private void Awake()
-            {
-                rb = GetComponent<Rigidbody>();
-                cd = GetComponent<Collider>();
-                rd = GetComponent<MeshRenderer>();
-            }//Closes Awake method
-            private void OnCollisionEnter(Collision other)
-            {
+        {
 
-                if ( other.transform.tag != "Machine") return;
-
-                DestroyTree();
-  
-            }//Closes OnColissionEnter method
+            cd = GetComponent<Collider>();
+            rd = GetComponent<MeshRenderer>();
+        }//Closes Awake method
+        private void OnCollisionEnter(Collision other)
+        {
 
 
-            
-            public void DestroyTree()
-            {
-                if(alreadyTriggered) return;
-                alreadyTriggered = true;
-                OnDestruction?.Invoke();
-                gameObject.SetActive(false);
-                GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
-                if(dummy) Destroy(dummy,lifetime);
+            if (other.transform.tag != "Machine") return;
 
-            }
-           
+            DestroyTree();
+
+        }//Closes OnColissionEnter method
+
+
+
+        public void DestroyTree()
+        {
+            if (alreadyTriggered) return;
+            alreadyTriggered = true;
+            OnDestruction?.Invoke();
+            gameObject.SetActive(false);
+            GameObject dummy = Instantiate(fragmentedModel, transform.position, transform.rotation);
+            if (dummy) Destroy(dummy, lifetime);
+
+        }
+
 
     }
 }

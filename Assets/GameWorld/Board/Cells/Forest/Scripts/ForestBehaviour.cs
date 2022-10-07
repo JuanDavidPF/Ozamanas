@@ -12,9 +12,12 @@ namespace Ozamanas.Forest
     [RequireComponent(typeof(Cell))]
     public class ForestBehaviour : MonoBehaviour
     {
+        public Transform container;
+
         [Serializable]
         private class TreeContainer
         {
+
             public Transform treeTransform;
             public GameObject forestTree;
             public GameObject expansionTree;
@@ -31,23 +34,25 @@ namespace Ozamanas.Forest
 
         void Awake()
         {
-            DummyTree[] temp = GetComponentsInChildren<DummyTree>();
-            for (int i = 0; i < temp.Length; i++)
+
+
+            foreach (var dummy in GetComponentsInChildren<DummyTree>())
             {
                 TreeContainer container = new TreeContainer();
-                container.treeTransform = temp[i].transform;
-                container.forestTree = temp[i].ForestTree;
-                container.expansionTree = temp[i].ExpansionTree;
+                container.treeTransform = dummy.transform;
+                container.forestTree = dummy.ForestTree;
+                container.expansionTree = dummy.ExpansionTree;
                 container.currentTree = null;
                 trees.Add(container);
-                temp[i].gameObject.SetActive(false);
+                dummy.gameObject.SetActive(false);
             }
+
             cellReference = GetComponent<Cell>();
         }
 
         void Start()
         {
-             if (!cellReference) return;
+            if (!cellReference) return;
             if (cellReference.data == expansionID) ChangeToExpansion();
             if (cellReference.data == forestID) ChangeToForest();
             if (cellReference.data == barrierID) ChangeToBarrier();
@@ -62,7 +67,7 @@ namespace Ozamanas.Forest
             if (cellReference.data == barrierID) ChangeToBarrier();
         }
 
-   
+
 
         private void OnTriggerEnter(Collider other)
         {
@@ -78,34 +83,30 @@ namespace Ozamanas.Forest
 
         private void ChangeToForest()
         {
-            Debug.Log("ChangeToForest");
-            for (int i = 0; i < trees.Count; i++)
+
+            foreach (var tree in trees)
             {
-                if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
-                temp.transform.parent = gameObject.transform;
-                temp.gameObject.GetComponent<Rigidbody>().position = trees[i].treeTransform.position;
-                temp.gameObject.GetComponent<Rigidbody>().rotation = trees[i].treeTransform.rotation;
-                trees[i].currentTree = temp;
+                if (tree.currentTree) Destroy(tree.currentTree);
+                GameObject temp = Instantiate(tree.forestTree, container);
+                tree.currentTree = temp;
+
             }
+
 
         }
 
         private void ChangeToExpansion()
         {
-             Debug.Log("ChangeToExpansion");
-            for (int i = 0; i < trees.Count; i++)
+
+            foreach (var tree in trees)
             {
-                if (trees[i].currentTree) Destroy(trees[i].currentTree);
-                GameObject temp = Instantiate(trees[i].forestTree, transform.position, transform.rotation);
-                temp.transform.parent = gameObject.transform;
-                temp.transform.position = trees[i].treeTransform.position;
-                temp.transform.rotation = trees[i].treeTransform.rotation;
-                trees[i].currentTree = temp;
+                if (tree.currentTree) Destroy(tree.currentTree);
+                GameObject temp = Instantiate(tree.expansionTree, container);
+                tree.currentTree = temp;
             }
         }
 
-   
+
         private void ChangeToBarrier()
         {
 

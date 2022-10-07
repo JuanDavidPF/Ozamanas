@@ -49,6 +49,10 @@ namespace Ozamanas.Board
         [Header("Events")]
         public UnityEvent<CellData> OnCellDataChanged;
         public UnityEvent<Cell> OnCellChanged;
+
+        public UnityEvent<HumanMachine> OnMachineEntered;
+        public UnityEvent<HumanMachine> OnMachineExited;
+
         private void Awake()
         {
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
@@ -96,7 +100,30 @@ namespace Ozamanas.Board
             RemoveTraitToMachine(trait);
         }
 
+        private void OnCollisionEnter(Collision other)
+        {
+            Transform otherTransform = other.transform;
 
+            //Machine entered
+            if (otherTransform.tag == "HumanMachine" &&
+            otherTransform.TryGetComponent<HumanMachine>(out HumanMachine machine))
+            {
+
+            }
+
+        }
+
+        private void OnCollisionExit(Collision other)
+        {
+            Transform otherTransform = other.transform;
+
+            //Machine exited
+            if (otherTransform.tag == "HumanMachine" &&
+           otherTransform.TryGetComponent<HumanMachine>(out HumanMachine machine))
+            {
+
+            }
+        }
 
     }//Closes Cell class
 }//Closes Namespace declaration
