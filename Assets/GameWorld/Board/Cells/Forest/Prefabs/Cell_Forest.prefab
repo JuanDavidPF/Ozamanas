@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 8011327601996724514}
   - component: {fileID: 8941111256928202675}
   - component: {fileID: 6483393295549353998}
+  - component: {fileID: 4981128643097539654}
   m_Layer: 9
   m_Name: Cell_Forest
   m_TagString: Cell
@@ -162,6 +163,12 @@ MonoBehaviour:
   OnCellChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnMachineEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineExited:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8011327601996724514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +221,19 @@ MonoBehaviour:
   expansionID: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
   forestID: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   barrierID: {fileID: 11400000, guid: b09eed38a9c09294dbbe44f2f5dab9db, type: 2}
+--- !u!135 &4981128643097539654
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2351509849828547924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3148783045801229139
 GameObject:
   m_ObjectHideFlags: 0

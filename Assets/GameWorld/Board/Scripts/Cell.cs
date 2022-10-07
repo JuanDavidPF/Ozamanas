@@ -100,30 +100,7 @@ namespace Ozamanas.Board
             RemoveTraitToMachine(trait);
         }
 
-        private void OnCollisionEnter(Collision other)
-        {
-            Transform otherTransform = other.transform;
 
-            //Machine entered
-            if (otherTransform.tag == "HumanMachine" &&
-            otherTransform.TryGetComponent<HumanMachine>(out HumanMachine machine))
-            {
-
-            }
-
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
-            Transform otherTransform = other.transform;
-
-            //Machine exited
-            if (otherTransform.tag == "HumanMachine" &&
-           otherTransform.TryGetComponent<HumanMachine>(out HumanMachine machine))
-            {
-
-            }
-        }
 
     }//Closes Cell class
 }//Closes Namespace declaration

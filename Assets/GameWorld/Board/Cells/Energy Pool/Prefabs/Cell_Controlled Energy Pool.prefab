@@ -21,7 +21,7 @@ GameObject:
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: d08e699306eca27478df3c9cccabacef, type: 3}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &986721062166553454
 Transform:
@@ -78,6 +78,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnCellChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineExited:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5619540907224393303
@@ -291,7 +297,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5033549705303372588
 Transform:
@@ -301,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5661326432208513430}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.044, y: 0.012, z: 0}
+  m_LocalPosition: {x: -0.044, y: -0.46499997, z: 0}
   m_LocalScale: {x: 0.72, y: 2.3225808, z: 0.72}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -386,7 +392,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8105093437931301133
 Transform:
@@ -445,7 +451,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f3d2b24759628944785d071830f3a8f0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.80399996
+      value: 0.327
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f3d2b24759628944785d071830f3a8f0,
         type: 3}
@@ -502,6 +508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flor_S (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f3d2b24759628944785d071830f3a8f0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d2b24759628944785d071830f3a8f0, type: 3}
 --- !u!4 &1676442287186673766 stripped
@@ -551,7 +562,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.721
+      value: 0.24400003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
@@ -608,6 +619,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flor_F
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0baf2733b693ee64093aeab2f8128d76,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0baf2733b693ee64093aeab2f8128d76, type: 3}
 --- !u!1 &3809441188475326630 stripped
@@ -642,7 +658,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5e8df54361837aa4e99fc1cf11a537a6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.477
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e8df54361837aa4e99fc1cf11a537a6,
         type: 3}
@@ -693,6 +709,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "Fuente_Energ\xEDa"
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5e8df54361837aa4e99fc1cf11a537a6,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e8df54361837aa4e99fc1cf11a537a6, type: 3}
@@ -757,7 +778,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8719999
+      value: 0.39499995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
@@ -814,6 +835,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flor_F (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0baf2733b693ee64093aeab2f8128d76,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0baf2733b693ee64093aeab2f8128d76, type: 3}
 --- !u!1 &6289387027907539584 stripped
@@ -863,7 +889,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.89947397
+      value: 0.422474
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0baf2733b693ee64093aeab2f8128d76,
         type: 3}
@@ -920,6 +946,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flor_F (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0baf2733b693ee64093aeab2f8128d76,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0baf2733b693ee64093aeab2f8128d76, type: 3}
 --- !u!4 &7137965459050988673 stripped
@@ -969,7 +1000,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f3d2b24759628944785d071830f3a8f0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.77299994
+      value: 0.29599997
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f3d2b24759628944785d071830f3a8f0,
         type: 3}
@@ -1025,6 +1056,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flor_S
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f3d2b24759628944785d071830f3a8f0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d2b24759628944785d071830f3a8f0, type: 3}

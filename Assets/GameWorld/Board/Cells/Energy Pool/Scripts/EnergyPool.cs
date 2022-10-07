@@ -68,6 +68,7 @@ namespace Ozamanas.Energy
         }//Closes OnCellDataChanged method
         public void OnCellDataChanged(CellData data)
         {
+
             if (!poolActive) return;
 
             if (data == emptyID) generatorReference.currentLevel = 0;
@@ -91,7 +92,7 @@ namespace Ozamanas.Energy
         private void HideFlowers()
         {
             Debug.Log("HideFlowers");
-            foreach(GameObject flower in flowers)
+            foreach (GameObject flower in flowers)
             {
                 flower.transform.DOScaleY(.3f, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
             }
