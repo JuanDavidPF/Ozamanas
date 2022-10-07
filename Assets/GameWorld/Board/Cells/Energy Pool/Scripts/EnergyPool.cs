@@ -15,7 +15,7 @@ namespace Ozamanas.Energy
         [SerializeField] private bool poolActive;
         private Cell cellReference;
         private EnergyGenerator generatorReference;
-
+        [SerializeField] private List<GameObject> flowers;
         [SerializeField] private Transform liquid;
         [SerializeField] private string liquidColorKey;
         [SerializeField] private Color inactiveColor;
@@ -76,6 +76,7 @@ namespace Ozamanas.Energy
             {
                 generatorReference.StopGeneration();
                 SetLiquidColor(inactiveColor);
+                HideFlowers();
             }
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
@@ -87,6 +88,14 @@ namespace Ozamanas.Energy
             liquidRenderer.material.SetColor(liquidColorKey, color);
         }//Closes SetLiquidColor method
 
+        private void HideFlowers()
+        {
+            Debug.Log("HideFlowers");
+            foreach(GameObject flower in flowers)
+            {
+                flower.transform.DOScaleY(.3f, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
+            }
+        }
 
 
     }//Closes EnergyPool class

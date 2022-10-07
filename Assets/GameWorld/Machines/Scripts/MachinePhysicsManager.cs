@@ -79,6 +79,8 @@ namespace Ozamanas.Machines
 
         private void OnTriggerEnter(Collider other)
         {
+
+            
             if (other.tag != "Cell") return;
 
             CatReflexLanding();

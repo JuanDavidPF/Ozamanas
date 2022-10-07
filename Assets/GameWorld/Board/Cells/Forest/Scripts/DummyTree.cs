@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Tags;
 
-namespace Ozamanas
+namespace Ozamanas.Forest
 {
     public class DummyTree : MonoBehaviour
     {
             [SerializeField] private GameObject expansionTree;
             [SerializeField] private GameObject forestTree;
-
             [SerializeField] private TreeType tree_type = TreeType.Tree; 
 
         public GameObject ForestTree { get => forestTree; set => forestTree = value; }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6611325317734820038
+--- !u!1 &294380842384182290
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5804002980509332092}
-  - component: {fileID: 7432116279191682521}
-  - component: {fileID: 4665967984417622291}
-  - component: {fileID: -4007155904032933846}
-  m_Layer: 9
-  m_Name: TileUnity1
-  m_TagString: Cell
+  - component: {fileID: 1107332993410471592}
+  - component: {fileID: 4103292633114351885}
+  - component: {fileID: 2239737763984502215}
+  - component: {fileID: 7807430639859203668}
+  - component: {fileID: 6139408874921703084}
+  m_Layer: 0
+  m_Name: Arbol1_N4 Expansion
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5804002980509332092
+--- !u!4 &1107332993410471592
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
-  m_LocalRotation: {x: 0, y: 0.25038, z: 0, w: 0.9681477}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8299999, y: 0.8299999, z: 0.8299999}
-  m_ConstrainProportionsScale: 1
+  m_GameObject: {fileID: 294380842384182290}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.08483141, y: 0.44560555, z: -0.08654775}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 29, z: 0}
---- !u!33 &7432116279191682521
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4103292633114351885
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
-  m_Mesh: {fileID: 2297425034801156755, guid: 979852f220fb3b94585dfaf84e70c5aa, type: 3}
---- !u!23 &4665967984417622291
+  m_GameObject: {fileID: 294380842384182290}
+  m_Mesh: {fileID: 2297425034801156755, guid: c313438873eb9f248b3f8030fa6affaa, type: 3}
+--- !u!23 &2239737763984502215
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
+  m_GameObject: {fileID: 294380842384182290}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9a03e8586a8b8d34d869edd2546a3a7d, type: 2}
+  - {fileID: 2100000, guid: cf5b687458163db40a9f38761f88372a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,17 +85,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &-4007155904032933846
+--- !u!64 &7807430639859203668
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
+  m_GameObject: {fileID: 294380842384182290}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2297425034801156755, guid: 979852f220fb3b94585dfaf84e70c5aa, type: 3}
+  m_Mesh: {fileID: 2297425034801156755, guid: c313438873eb9f248b3f8030fa6affaa, type: 3}
+--- !u!114 &6139408874921703084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294380842384182290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f460c89620342e4fb2b0c4d413d7871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 5
+  growingTime: 2
+  fragmentedModel: {fileID: 1633614465059954221, guid: 65e4da290eb16764c8819e9c20f34de3,
+    type: 3}
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
