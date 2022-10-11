@@ -12,7 +12,12 @@ namespace Ozamanas.Board
     public class BulldozerIndustryRotator : MonoBehaviour
     {
         [SerializeField] Transform meshToRotate;
+
+        [SerializeField] List<Transform> industryBlinds;
         private Animator animator;
+
+
+        List<Tween> tweeners = new List<Tween>();
 
         void Awake()
         {
@@ -20,20 +25,28 @@ namespace Ozamanas.Board
         }
         private void OnTriggerEnter(Collider other)
         {
-             if (other.tag != "Machine") return;
-
-            animator.SetBool("OpenDoor",true);
+            if (other.tag != "Machine") return;
+            StopTweeners();
+            foreach (var blind in industryBlinds)
+            {
+                tweeners.Add(blind.DOScaleY(0, .5f));
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-             if (other.tag != "Machine") return;
+            if (other.tag != "Machine") return;
+            StopTweeners();
+            foreach (var blind in industryBlinds)
+            {
+                tweeners.Add(blind.DOScaleY(1, 3f));
+            }
 
-            animator.SetBool("OpenDoor",false);
         }
         private void OnTriggerStay(Collider other)
         {
-            if (other.tag == "Machine") RotateAtMachine(other.transform);
+            if (other.tag != "Machine") return;
+            RotateAtMachine(other.transform);
 
         }//Closes OnTriggerStay method
 
@@ -48,5 +61,14 @@ namespace Ozamanas.Board
             meshToRotate.rotation = Quaternion.Slerp(meshToRotate.rotation, rotation, Time.deltaTime * 2f);
         }//Closes RotateAtMachine method
 
+
+        private void StopTweeners()
+        {
+            foreach (var tween in tweeners)
+            {
+                tween.Kill();
+            }
+            tweeners.Clear();
+        }
     }//Closes BulldozerIndustryRotator
 }//Closes namespace declaration
