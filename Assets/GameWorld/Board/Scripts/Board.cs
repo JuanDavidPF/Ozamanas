@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Ozamanas.Extenders;
 using Ozamanas.Levels;
 using Unity.Mathematics;
@@ -297,7 +298,7 @@ namespace Ozamanas.Board
 
         private void Start()
         {
-
+            if (!Application.isPlaying) return;
             SetReference();
             StartCoroutine(HandleBoardCreation());
         }//Closes Start method
@@ -312,7 +313,10 @@ namespace Ozamanas.Board
 
             foreach (var cell in new List<Cell>(cells))
             {
-                cell.SetAnimatorTrigger("Spawn");
+                if (!cell.visuals) continue;
+
+                cell.visuals.transform.DOMoveY(0, .3f).From(5);
+                cell.visuals.gameObject.SetActive(true);
                 yield return cooldown;
             }
 

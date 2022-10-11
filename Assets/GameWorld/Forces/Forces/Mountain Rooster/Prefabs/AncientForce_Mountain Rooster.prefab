@@ -345,11 +345,10 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: a802a912574e9334096d408adf721c62, type: 2}
   draggedOffset: {x: 0, y: 2.5, z: 0}
   snapToGrid: 1
-  rangeOutline:
-    mode: 2
-    outlineColor: {r: 1, g: 0.5326367, b: 0.062745094, a: 1}
-    width: 3
   placementMode: 0
+  traitRange: 1
+  traits:
+  - {fileID: 11400000, guid: 503a6b41fb80cc948ae531913943ad67, type: 2}
   OnSuccesfulPlacement:
     m_PersistentCalls:
       m_Calls: []
@@ -359,12 +358,9 @@ MonoBehaviour:
   mode: 0
   roosterSpeed: 10
   damageAmount: 1
-  elevationForce: {x: 0, y: 550, z: 0}
+  elevationForce: {x: 0, y: 70000, z: 0}
   torqueForce: {x: 10, y: 10, z: 10}
   AOERenderer: {fileID: 7136627122813514100}
-  traitRange: 1
-  traits:
-  - {fileID: 11400000, guid: 503a6b41fb80cc948ae531913943ad67, type: 2}
 --- !u!54 &3568118483022712811
 Rigidbody:
   m_ObjectHideFlags: 0

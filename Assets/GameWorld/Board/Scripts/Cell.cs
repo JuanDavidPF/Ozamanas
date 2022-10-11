@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using Ozamanas.Machines;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace Ozamanas.Board
 {
@@ -39,11 +40,11 @@ namespace Ozamanas.Board
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
 
 
-        public float3 worldPosition;
-        public int3 gridPosition;
+        public Transform visuals;
 
-
-        public bool isOccupied;
+        [HideInInspector] public float3 worldPosition;
+        [HideInInspector] public int3 gridPosition;
+        [HideInInspector] public bool isOccupied;
 
         [Space(15)]
         [Header("Events")]
@@ -57,13 +58,14 @@ namespace Ozamanas.Board
         {
             m_animator = m_animator ? m_animator : GetComponent<Animator>();
             OnCellDataChanged?.Invoke(m_data);
+
+
+            if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method
 
 
         public void SetAnimatorTrigger(string triggerName)
         {
-            if (!m_animator) return;
-            m_animator.SetTrigger(triggerName);
 
         }//Closes SetAnimatorTrigger method
 

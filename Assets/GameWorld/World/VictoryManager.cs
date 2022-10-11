@@ -10,7 +10,7 @@ namespace Ozamanas.World
         [SerializeField] GameEvent VictoryEvent;
         public void VerifyGameEndingConditions()
         {
-            Debug.Log(WavesManager.currentWave);
+
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
 
             foreach (var machine in Machines.HumanMachine.machines)
