@@ -39,7 +39,7 @@ namespace Ozamanas.Board
             StopTweeners();
             foreach (var blind in industryBlinds)
             {
-                tweeners.Add(blind.DOScaleY(1, 3f));
+                tweeners.Add(blind.DOScaleY(1, .5f).SetDelay(1f));
             }
 
         }
