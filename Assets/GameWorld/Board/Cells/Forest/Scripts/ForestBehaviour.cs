@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Board;
 using Ozamanas.Tags;
+using Ozamanas.Machines;
 
 
 
@@ -22,8 +23,7 @@ namespace Ozamanas.Forest
             public GameObject currentTree;
         }
         [SerializeField] private List<TreeContainer> trees = new List<TreeContainer>();
-        private Cell cellReference;
-
+         private Cell cellReference;
         [SerializeField] private Transform visuals;
         [Space(15)]
         [Header("Cell identificators")]
@@ -68,50 +68,56 @@ namespace Ozamanas.Forest
 
         void Start()
         {
-             if (!cellReference) return;
+            StartForestByToken();
+        }
+
+        private void StartForestByToken()
+        {
+           
+            if (!cellReference) return;
             if (cellReference.data == expansionID) ChangeToExpansion();
             if (cellReference.data == forestID) ChangeToForest();
             if (cellReference.data == barrierID) ChangeToBarrier();
         }
 
-        public void OnCellDataChange()
+        public void OnCellDataChange(CellData data)
         {
             
-            if (!cellReference) return;
-            if (cellReference.data == expansionID) ChangeToExpansion();
-            if (cellReference.data == forestID) ChangeToForest();
-            if (cellReference.data == barrierID) ChangeToBarrier();
+            if (!data) return;
+            if (data == expansionID) ChangeToExpansion();
+            if (data == forestID) ChangeToForest();
+            if (data == barrierID) ChangeToBarrier();
         }
 
-   
-
-        private void OnTriggerEnter(Collider other)
+        public void OnMachineEnter(HumanMachine machine)
         {
-            if (other.tag != "Machine") return;
-
-          
-
-            if (!cellReference) return;
-
             if (cellReference.data == forestID) return;
-
 
             ChangeToForest();
         }
 
+        public void OnMachineExit(HumanMachine machine)
+        {
+            
+        }
+       
         private void ChangeToForest()
         {
             
-            
             for (int i = 0; i < trees.Count; i++)
             {
-                if (trees[i].currentTree) Destroy(trees[i].currentTree);
+                
                 if(trees[i].tree_type != TreeType.Flower) 
                 {
+                    if (trees[i].currentTree) Destroy(trees[i].currentTree);
                     GameObject temp = Instantiate(trees[i].forestTree, visuals);
-                temp.transform.position = trees[i].treeTransform.position;
-                temp.transform.rotation = trees[i].treeTransform.rotation;
-                trees[i].currentTree = temp;
+                    temp.transform.position = trees[i].treeTransform.position;
+                    temp.transform.rotation = trees[i].treeTransform.rotation;
+                    trees[i].currentTree = temp;
+                }
+                else
+                {
+                   if (trees[i].currentTree) Destroy(trees[i].currentTree);
                 }
                  
             }

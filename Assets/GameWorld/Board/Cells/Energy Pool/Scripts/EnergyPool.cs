@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
+using Ozamanas.Machines;
 using UnityEngine;
 using DG;
 using DG.Tweening;
@@ -16,6 +17,8 @@ namespace Ozamanas.Energy
         private Cell cellReference;
         private EnergyGenerator generatorReference;
         [SerializeField] private List<GameObject> flowers;
+
+        [SerializeField] private List<GameObject> whispers;
         [SerializeField] private Transform liquid;
         [SerializeField] private string liquidColorKey;
         [SerializeField] private Color inactiveColor;
@@ -41,6 +44,9 @@ namespace Ozamanas.Energy
             SetLiquidColor(inactiveColor);
         }//Closes Awake methods
 
+        void Start()
+        {
+        }
 
         public void UpdateLiquidLevel(int level)
         {
@@ -68,16 +74,22 @@ namespace Ozamanas.Energy
         }//Closes OnCellDataChanged method
         public void OnCellDataChanged(CellData data)
         {
-
             if (!poolActive) return;
 
-            if (data == emptyID) generatorReference.currentLevel = 0;
-            else if (data == activeID) generatorReference.ResumeGeneration();
+            if (data == emptyID)
+            {
+                generatorReference.currentLevel = 0;
+            } 
+            else if (data == activeID)
+            {
+                generatorReference.ResumeGeneration();
+                SetVisualsForActivePool();
+            } 
             else if (data == inactiveID)
             {
                 generatorReference.StopGeneration();
                 SetLiquidColor(inactiveColor);
-                HideFlowers();
+                SetVisualsForInactivePool();
             }
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
@@ -89,13 +101,40 @@ namespace Ozamanas.Energy
             liquidRenderer.material.SetColor(liquidColorKey, color);
         }//Closes SetLiquidColor method
 
-        private void HideFlowers()
+        private void SetVisualsForInactivePool()
         {
-            Debug.Log("HideFlowers");
-            foreach (GameObject flower in flowers)
+            
+            foreach(GameObject flower in flowers)
             {
-                flower.transform.DOScaleY(.3f, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
+                flower.SetActive(true);
             }
+
+             foreach(GameObject whisper in whispers)
+            {
+                whisper.SetActive(false);
+            }
+        }
+
+        private void SetVisualsForActivePool()
+        {
+            foreach(GameObject flower in flowers)
+            {
+                flower.SetActive(false);
+            }
+
+            foreach(GameObject whisper in whispers)
+            {
+                whisper.SetActive(true);
+            }
+        }
+
+        public void OnMachineEnter(HumanMachine machine)
+        {
+            Debug.Log("OnMachineEnter");
+             
+            if(cellReference.data != activeID) return;
+
+            cellReference.data = inactiveID;
         }
 
 
