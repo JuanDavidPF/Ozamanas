@@ -6,23 +6,26 @@ using Ozamanas.Extenders;
 using Ozamanas.Board;
 namespace Ozamanas.Forces
 {
-    public class EmbraceReptile :  AncientForce
+    public class EmbraceReptile : AncientForce
     {
-        Collider collider;
+        Collider clld;
         [SerializeField] private float duration = 2f;
         [SerializeField] private float riseTime = 0.2f;
         private Cell currentCell;
 
-         protected override void Awake()
+        private SnakeController[] controllers;
+
+        protected override void Awake()
         {
             base.Awake();
-            collider = GetComponentInChildren<Collider>();
-            collider.enabled = false;
+            clld = GetComponentInChildren<Collider>();
+            clld.enabled = false;
+            controllers = GetComponentsInChildren<SnakeController>();
         }
         public override void FirstPlacement()
         {
             base.FirstPlacement();
-            collider.enabled = true;
+            clld.enabled = true;
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
@@ -30,12 +33,31 @@ namespace Ozamanas.Forces
 
             transform.position = currentCell.worldPosition;
 
-            transform.DOScaleY(.5f, riseTime).From(0);
+
 
             ActivateTraits(currentCell);
 
+
+
+
             StartCoroutine(WaitToRemoveSnake());
         }//Closes FistPlacement method
+
+        Transform machineAffected;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!isPlaced || (other.transform.tag != "Machine")) return;
+
+            foreach (var snake in controllers)
+            {
+                if (!snake) continue;
+                snake.Bite(other.transform);
+            }
+
+            Debug.Log("other");
+        }
+
 
         private void OnCollisionEnter(Collision other)
         {
@@ -44,6 +66,7 @@ namespace Ozamanas.Forces
 
             if (other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
+
                 physics.ActivatePhysics(true);
             }
 
@@ -52,9 +75,9 @@ namespace Ozamanas.Forces
         IEnumerator WaitToRemoveSnake()
         {
             yield return new WaitForSeconds(duration);
-            transform.DOScaleY(0f, riseTime);
-            if(currentCell) currentCell.isOccupied = false;
-            base.OnDestroy();
+
+            if (currentCell) currentCell.isOccupied = false;
+            Destroy(gameObject);
 
         }
 

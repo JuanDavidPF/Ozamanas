@@ -41,6 +41,7 @@ namespace Ozamanas.Machines
             nma.enabled = activate;
             rb.isKinematic = activate;
             physicsCollider.enabled = !activate;
+
             machine.SetIdlingStatus();
 
         }//Closes ActivatePhysics method
