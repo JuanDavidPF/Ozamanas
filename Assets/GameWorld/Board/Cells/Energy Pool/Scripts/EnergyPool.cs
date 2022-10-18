@@ -79,12 +79,12 @@ namespace Ozamanas.Energy
             if (data == emptyID)
             {
                 generatorReference.currentLevel = 0;
-            } 
+            }
             else if (data == activeID)
             {
                 generatorReference.ResumeGeneration();
                 SetVisualsForActivePool();
-            } 
+            }
             else if (data == inactiveID)
             {
                 generatorReference.StopGeneration();
@@ -103,13 +103,13 @@ namespace Ozamanas.Energy
 
         private void SetVisualsForInactivePool()
         {
-            
-            foreach(GameObject flower in flowers)
+
+            foreach (GameObject flower in flowers)
             {
                 flower.SetActive(true);
             }
 
-             foreach(GameObject whisper in whispers)
+            foreach (GameObject whisper in whispers)
             {
                 whisper.SetActive(false);
             }
@@ -117,12 +117,12 @@ namespace Ozamanas.Energy
 
         private void SetVisualsForActivePool()
         {
-            foreach(GameObject flower in flowers)
+            foreach (GameObject flower in flowers)
             {
                 flower.SetActive(false);
             }
 
-            foreach(GameObject whisper in whispers)
+            foreach (GameObject whisper in whispers)
             {
                 whisper.SetActive(true);
             }
@@ -130,9 +130,8 @@ namespace Ozamanas.Energy
 
         public void OnMachineEnter(HumanMachine machine)
         {
-            Debug.Log("OnMachineEnter");
-             
-            if(cellReference.data != activeID) return;
+
+            if (cellReference.data != activeID) return;
 
             cellReference.data = inactiveID;
         }
