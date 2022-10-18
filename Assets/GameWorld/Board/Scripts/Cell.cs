@@ -9,11 +9,11 @@ using DG.Tweening;
 namespace Ozamanas.Board
 {
     [SelectionBase]
-    [RequireComponent(typeof(Animator))]
+
     public class Cell : MonoBehaviour
     {
 
-        private Animator m_animator;
+
 
         [SerializeField] private CellData m_data;
         public CellData data
@@ -56,18 +56,12 @@ namespace Ozamanas.Board
 
         private void Awake()
         {
-            m_animator = m_animator ? m_animator : GetComponent<Animator>();
             OnCellDataChanged?.Invoke(m_data);
 
 
             if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method
 
-
-        public void SetAnimatorTrigger(string triggerName)
-        {
-
-        }//Closes SetAnimatorTrigger method
 
         private void OnDisable()
         {
