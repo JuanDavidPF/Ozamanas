@@ -39,6 +39,7 @@ namespace Ozamanas.Machines
             get { return m_currentCell; }
             set
             {
+
                 if (m_currentCell == value) return;
                 m_currentCell = value;
                 OnCurrentCellChanged?.Invoke(value);

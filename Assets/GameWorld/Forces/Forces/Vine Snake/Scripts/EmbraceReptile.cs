@@ -55,7 +55,7 @@ namespace Ozamanas.Forces
                 snake.Bite(other.transform);
             }
 
-            Debug.Log("other");
+
         }
 
 
