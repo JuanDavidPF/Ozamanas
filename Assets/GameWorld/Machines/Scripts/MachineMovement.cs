@@ -289,8 +289,7 @@ namespace Ozamanas.Machines
             if (pathToDestination.Count == 0) return;
 
             nextCellOnPath = pathToDestination[0];
-            Vector3 altitude = GetAltitudeModifier();
-            navMeshAgent.SetDestination(nextCellOnPath.transform.position + altitude);
+            navMeshAgent.SetDestination(nextCellOnPath.transform.position);
             pathToDestination.RemoveAt(0);
         }
 
@@ -300,46 +299,24 @@ namespace Ozamanas.Machines
         {
             if (currentAltitude == MachineType.Aerial) return;
             currentAltitude = MachineType.Aerial;
-            Vector3 altitude = GetAltitudeModifier();
-            navMeshAgent.Warp(transform.position + altitude);
         }
 
         public void GoTerrestrial()
         {
             if (currentAltitude == MachineType.Terrestrial) return;
 
-            Vector3 altitude = GetAltitudeModifier() * -1;
 
             currentAltitude = MachineType.Terrestrial;
-
-            Vector3 temp = Board.Board.GetCellByPosition(transform.position + altitude).transform.position;
-
-            navMeshAgent.Warp(temp);
         }
 
         public void GoSubterrestrial()
         {
-            if (currentAltitude == MachineType.Subterrestrial) return;
+           if (currentAltitude == MachineType.Subterrestrial) return;
 
             currentAltitude = MachineType.Subterrestrial;
-
-            Vector3 altitude = GetAltitudeModifier();
-
-            navMeshAgent.Warp(transform.position + altitude);
         }
 
-        private Vector3 GetAltitudeModifier()
-        {
-            switch (currentAltitude)
-            {
-                case MachineType.Aerial:
-                    return new Vector3(0f, height, 0f);
-                case MachineType.Subterrestrial:
-                    return new Vector3(0f, -height, 0f);
-                default:
-                    return new Vector3(0f, 0f, 0f);
-            }
-        }
+        
         #endregion
 
         #region Objectives Management
