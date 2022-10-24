@@ -42,7 +42,7 @@ namespace Ozamanas.Forces
 
             if (other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
-                physics.ActivatePhysics(true);
+                physics.SetPhysical();
             }
 
         }

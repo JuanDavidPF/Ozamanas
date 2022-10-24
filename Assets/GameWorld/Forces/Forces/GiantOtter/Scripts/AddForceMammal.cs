@@ -23,20 +23,20 @@ namespace Ozamanas.Forces
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
 
-         [SerializeField] private float mammalSpeed = 2f;
-         [Range(100, 1000)]
-         [SerializeField] private int mammalForce = 1000;
-          private Tween mammalTween;
+        [SerializeField] private float mammalSpeed = 2f;
+        [Range(100, 1000)]
+        [SerializeField] private int mammalForce = 1000;
+        private Tween mammalTween;
 
-          
-         [SerializeField] private GameObject pullArrows;
+
+        [SerializeField] private GameObject pullArrows;
         [SerializeField] private GameObject pushArrows;
-         protected override void Awake()
+        protected override void Awake()
         {
             base.Awake();
             if (AOERenderer) AOETransform = AOERenderer.transform;
 
-            if(mode == MammalForceMode.Push) pushArrows.SetActive(true);
+            if (mode == MammalForceMode.Push) pushArrows.SetActive(true);
             else pullArrows.SetActive(true);
         }//Closes Awake method
 
@@ -48,18 +48,18 @@ namespace Ozamanas.Forces
             AOERenderer.gameObject.SetActive(false);
             mammalTween = transform.DOMoveY(0, mammalSpeed, false).SetSpeedBased();
 
-          
-                mammalTween.OnComplete(() =>
-                {
-                    ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-                    foreach (var machine in machinesAffected.ToArray())
-                    {
-                        if (!machine) continue;
-                        AddForceToMachine(machine);
-                    }
 
-                    Destroy(gameObject);
-                });
+            mammalTween.OnComplete(() =>
+            {
+                ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
+                foreach (var machine in machinesAffected.ToArray())
+                {
+                    if (!machine) continue;
+                    AddForceToMachine(machine);
+                }
+
+                Destroy(gameObject);
+            });
 
         }//Closes FirstPlacement method
 
@@ -89,12 +89,12 @@ namespace Ozamanas.Forces
 
             if (machine.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
-                physics.ActivatePhysics(true);
+                physics.SetPhysical();
                 if (physics.rb)
                 {
                     Vector3 force = machine.transform.position - gameObject.transform.position;
-                    force= force.normalized * mammalForce;
-                    if(mode == MammalForceMode.Pull) force = force*-1;
+                    force = force.normalized * mammalForce;
+                    if (mode == MammalForceMode.Pull) force = force * -1;
                     physics.rb.AddForce(force + elevationForce, ForceMode.Impulse);
                     physics.rb.AddTorque(torqueForce, ForceMode.Impulse);
                 }
@@ -117,7 +117,7 @@ namespace Ozamanas.Forces
             UpdateAOEColor();
         }//Closes OnTriggerEnter method
 
-         private void UpdateAOEColor()
+        private void UpdateAOEColor()
         {
             if (!AOERenderer) return;
             if (machinesAffected.Count == 0) AOERenderer.material.color = Color.blue;
@@ -149,5 +149,5 @@ namespace Ozamanas.Forces
     }
 
 
-    
+
 }

@@ -19,13 +19,13 @@ namespace Ozamanas.Forces
         {
             base.Awake();
             clld = GetComponentInChildren<Collider>();
-            clld.enabled = false;
+
             controllers = GetComponentsInChildren<SnakeController>();
         }
         public override void FirstPlacement()
         {
             base.FirstPlacement();
-            clld.enabled = true;
+
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
@@ -43,34 +43,50 @@ namespace Ozamanas.Forces
             StartCoroutine(WaitToRemoveSnake());
         }//Closes FistPlacement method
 
-        Transform machineAffected;
-
-        private void OnTriggerEnter(Collider other)
+        protected override void FinalPlacement()
         {
-            if (!isPlaced || (other.transform.tag != "Machine")) return;
+
+            base.FinalPlacement();
+            clld.enabled = false;
+
+
+            if (!nearMachine)
+            {
+                Destroy(gameObject);
+                return;
+
+            }
 
             foreach (var snake in controllers)
             {
                 if (!snake) continue;
-                snake.Bite(other.transform);
+                snake.Bite(nearMachine);
             }
-
 
         }
 
+        Transform nearMachine;
 
-        private void OnCollisionEnter(Collision other)
+
+        private void OnTriggerEnter(Collider other)
         {
 
-            if (!isPlaced || (other.transform.tag != "Machine")) return;
+            if (isPlaced || other.transform.tag != "Machine") return;
 
-            if (other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))
-            {
 
-                physics.ActivatePhysics(true);
-            }
+            nearMachine = other.transform;
+
 
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+
+            if (isPlaced || other.transform.tag != "Machine" || other != nearMachine) return;
+
+            nearMachine = null;
+        }
+
 
         IEnumerator WaitToRemoveSnake()
         {

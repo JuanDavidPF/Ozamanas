@@ -16,6 +16,15 @@ namespace Ozamanas.Machines
 
     public class MachinePhysicsManager : MonoBehaviour
     {
+
+        public enum PhysicMode
+        {
+            Kinematic,
+            Physical,
+            Intelligent,
+        }
+
+        public PhysicMode state = PhysicMode.Intelligent;
         public FSMOwner fsm;
         public NavMeshAgent nma;
         public Rigidbody rb;
@@ -25,6 +34,8 @@ namespace Ozamanas.Machines
         public UnityEvent OnActivatePhysics;
 
         private bool guard = false;
+
+
         private void Awake()
         {
             if (!rb) rb = GetComponent<Rigidbody>();
@@ -33,23 +44,55 @@ namespace Ozamanas.Machines
             if (!machine) machine = GetComponent<HumanMachine>();
         }//Closes Awake Methods
 
-        public void ActivatePhysics(bool activate)
+
+        public void SetKinematic()
         {
-            if (!fsm || !nma || !rb || !machine || !physicsCollider) return;
-            activate = !activate;
-            fsm.enabled = activate;
-            nma.enabled = activate;
-            rb.isKinematic = activate;
-            physicsCollider.enabled = !activate;
+
+            state = PhysicMode.Kinematic;
+
+            if (rb) rb.isKinematic = true;
+            if (physicsCollider) physicsCollider.enabled = false;
+            if (fsm) fsm.enabled = false;
+            if (nma) nma.enabled = false;
 
             machine.SetIdlingStatus();
 
+        }//Closes SetKinematic method
+
+
+        public void SetIntelligent()
+        {
+            state = PhysicMode.Intelligent;
+
+            if (rb) rb.isKinematic = true;
+            if (physicsCollider) physicsCollider.enabled = false;
+            if (fsm) fsm.enabled = true;
+            if (nma) nma.enabled = true;
+
+
+            machine.SetIdlingStatus();
+
+        }//Closes SetKinematic method
+
+
+        public void SetPhysical()
+        {
+            state = PhysicMode.Physical;
+
+            if (rb) rb.isKinematic = false;
+            if (fsm) fsm.enabled = false;
+            if (nma) nma.enabled = false;
+            if (physicsCollider) physicsCollider.enabled = true;
+
+            machine.SetIdlingStatus();
         }//Closes ActivatePhysics method
 
         private void FixedUpdate()
         {
-            if (!rb || rb.isKinematic) return;
-            ActivatePhysics(!rb.IsSleeping());
+            if (state != PhysicMode.Physical ||
+            !rb || rb.isKinematic || !rb.IsSleeping()) return;
+
+            SetIntelligent();
         }
 
         void OnCollisionEnter(Collision collision)

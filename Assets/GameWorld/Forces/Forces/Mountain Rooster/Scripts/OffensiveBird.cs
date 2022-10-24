@@ -167,7 +167,7 @@ namespace Ozamanas.Forces
 
             if (machine.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
-                physics.ActivatePhysics(true);
+                physics.SetPhysical();
                 if (physics.rb)
                 {
 
