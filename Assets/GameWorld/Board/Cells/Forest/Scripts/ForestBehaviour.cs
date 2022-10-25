@@ -20,6 +20,8 @@ namespace Ozamanas.Forest
             public TreeType tree_type; 
             public GameObject forestTree;
             public GameObject expansionTree;
+
+            public GameObject trunk;
             public GameObject currentTree;
         }
         [SerializeField] private List<TreeContainer> trees = new List<TreeContainer>();
@@ -59,6 +61,7 @@ namespace Ozamanas.Forest
                 container.treeTransform = temp[i].transform;
                 container.forestTree = temp[i].ForestTree;
                 container.expansionTree = temp[i].ExpansionTree;
+                container.trunk = temp[i].Trunk;
                 container.currentTree = null;
                 container.tree_type = temp[i].Tree_type;
                 trees.Add(container);
@@ -113,6 +116,7 @@ namespace Ozamanas.Forest
                     GameObject temp = Instantiate(trees[i].forestTree, visuals);
                     temp.transform.position = trees[i].treeTransform.position;
                     temp.transform.rotation = trees[i].treeTransform.rotation;
+                    temp.GetComponentInChildren<JungleTree>().ForestIndex = i;
                     trees[i].currentTree = temp;
                 }
                 else
@@ -124,6 +128,17 @@ namespace Ozamanas.Forest
 
         }
 
+        public void SetTrunk(int i)
+        {
+            if(i<0 || i>= trees.Count) return;
+
+            if (trees[i].currentTree) Destroy(trees[i].currentTree);
+            GameObject temp = Instantiate(trees[i].trunk, visuals);
+            temp.transform.position = trees[i].treeTransform.position;
+            temp.transform.rotation = trees[i].treeTransform.rotation;
+            trees[i].currentTree = temp;
+        }
+
         private void ChangeToExpansion()
         {
             for (int i = 0; i < trees.Count; i++)
@@ -132,6 +147,7 @@ namespace Ozamanas.Forest
                 GameObject temp = Instantiate(trees[i].expansionTree, visuals);
                 temp.transform.position = trees[i].treeTransform.position;
                 temp.transform.rotation = trees[i].treeTransform.rotation;
+                    temp.GetComponentInChildren<JungleTree>().ForestIndex = i;
                 trees[i].currentTree = temp;
             }
         }

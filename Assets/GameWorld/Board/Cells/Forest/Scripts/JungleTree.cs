@@ -5,23 +5,30 @@ using UnityEngine.Events;
 using Ozamanas.Tags;
 using DG.Tweening;
 
-namespace Ozamanas.Board
+namespace Ozamanas.Forest
 {
 
     [RequireComponent(typeof(Collider))]
     public class JungleTree : MonoBehaviour
     {
-            [SerializeField] private float lifetime = 5f;
+            [SerializeField] private float lifetime = 3f;
             [SerializeField] private float growingTime = 10f;
             [SerializeField] private GameObject fragmentedModel;
             private bool alreadyTriggered = false;
             private Collider cd;
             [SerializeField] public UnityEvent OnDestruction;
 
+            private int forestIndex = 0;
+
+            private ForestBehaviour forestBehaviour;
+
+            public int ForestIndex { get => forestIndex; set => forestIndex = value; }
 
         private void Awake()
             {
                 cd = GetComponent<Collider>();
+
+                forestBehaviour = GetComponentInParent<ForestBehaviour>();
                 
             }//Closes Awake method
             
@@ -36,6 +43,7 @@ namespace Ozamanas.Board
             {
                 if(alreadyTriggered) return;
                 alreadyTriggered = true;
+                forestBehaviour.SetTrunk(forestIndex);
                 OnDestruction?.Invoke();
                 gameObject.SetActive(false);
                 GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
