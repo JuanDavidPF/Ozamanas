@@ -46,7 +46,7 @@ namespace Ozamanas.Forces
             bittedMachine.SetParent(maw, true);
             Vector3 machineOriginalScale = bittedMachine.localScale;
 
-            tweener = transform.DOLocalMove(new Vector3(0, 10, 0), movementSpeed)
+            tweener = transform.DOLocalMove(new Vector3(0, 1, 0), movementSpeed)
                             .SetSpeedBased(true)
                             .OnUpdate(() =>
                             {
