@@ -129,7 +129,7 @@ namespace Ozamanas.Forest
                     GameObject temp = Instantiate(trees[i].forestTree, visuals);
                     temp.transform.position = trees[i].treeTransform.position;
                     temp.transform.rotation = trees[i].treeTransform.rotation;
-                    if (temp.transform.TryGetComponentInParent(out Forest.JungleTree jungleTree))
+                if (temp.transform.TryGetComponentInChildren(out Forest.JungleTree jungleTree))
                 {
                     jungleTree.ForestIndex = i;
                 }
@@ -173,7 +173,7 @@ namespace Ozamanas.Forest
                 GameObject temp = Instantiate(trees[i].expansionTree, visuals);
                 temp.transform.position = trees[i].treeTransform.position;
                 temp.transform.rotation = trees[i].treeTransform.rotation;
-                if (temp.transform.TryGetComponentInParent(out Forest.JungleTree jungleTree))
+                if (temp.transform.TryGetComponentInChildren(out Forest.JungleTree jungleTree))
                 {
                     jungleTree.ForestIndex = i;
                 }
@@ -185,8 +185,10 @@ namespace Ozamanas.Forest
    
         private void ChangeToBarrier()
         {
-
-
+             for (int i = 0; i < trees.Count; i++)
+            {
+               if (trees[i].currentTree) Destroy(trees[i].currentTree);
+            }
         }
     }
 }

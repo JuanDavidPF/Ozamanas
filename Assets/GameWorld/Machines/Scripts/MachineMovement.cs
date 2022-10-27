@@ -293,6 +293,13 @@ namespace Ozamanas.Machines
             pathToDestination.RemoveAt(0);
         }
 
+        public bool CheckIfNextCellOnPath(CellData cell)
+        {
+            if (pathToDestination.Count == 0) return false;
+
+            return pathToDestination[0].data == cell;
+        }
+
         #region Height Management
 
         public void GoAerial()
