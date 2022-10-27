@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Ozamanas.Board;
-using Ozamanas.Machines;
 using UnityEngine;
-using DG;
+using Ozamanas.Board;
+using Ozamanas.Tags;
+using Ozamanas.Machines;
+using Ozamanas.Forest;
 using DG.Tweening;
+using Ozamanas.Extenders;
+using UnityEngine.Events;
 
 namespace Ozamanas.Energy
 {
@@ -13,16 +17,31 @@ namespace Ozamanas.Energy
     [RequireComponent(typeof(EnergyGenerator))]
     public class EnergyPool : MonoBehaviour
     {
+
+        [Serializable]
+        private class FlowerContainer
+        {
+            public Transform flowerTransform;
+            public GameObject activeFlower;
+            public GameObject inactiveFlower;
+            public GameObject currentFlower;
+        }
+
+        [SerializeField] private List<FlowerContainer> flowers = new List<FlowerContainer>();
+        [SerializeField] private Transform visuals;
+
+        [SerializeField] private GameObject whisper;
+
+        [SerializeField] private int flowersLimit = 4;
+
         [SerializeField] private bool poolActive;
         private Cell cellReference;
         private EnergyGenerator generatorReference;
-        [SerializeField] private List<GameObject> flowers;
 
-        [SerializeField] private List<GameObject> whispers;
         [SerializeField] private Transform liquid;
         [SerializeField] private string liquidColorKey;
         [SerializeField] private Color inactiveColor;
-        [SerializeField] private Gradient activeColor;
+        [SerializeField] private Color activeColor;
         private MeshRenderer liquidRenderer;
         private float scaleMultiplier;
 
@@ -31,40 +50,73 @@ namespace Ozamanas.Energy
         [SerializeField] private CellData inactiveID;
         [SerializeField] private CellData activeID;
         [SerializeField] private CellData emptyID;
+        [SerializeField] private CellData invadedID;
 
+        [Space(15)]
+        [Header("Events")]
+        public UnityEvent PlayVFX;
+        public UnityEvent StopVFX;
         private void Awake()
         {
             cellReference = GetComponent<Cell>();
             generatorReference = GetComponent<EnergyGenerator>();
 
             generatorReference.StopGeneration();
+            
+            PopulateFlowers();
 
             if (liquid) scaleMultiplier = liquid.transform.localScale.y;
             if (liquid) liquidRenderer = liquid.GetComponent<MeshRenderer>();
             SetLiquidColor(inactiveColor);
         }//Closes Awake methods
 
-        void Start()
+        private void PopulateFlowers()
         {
-        }
+            DummyTree[] temp = GetComponentsInChildren<DummyTree>();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                FlowerContainer container = new FlowerContainer();
+                container.flowerTransform = temp[i].transform;
+                container.inactiveFlower = temp[i].ForestTree;
+                container.activeFlower = temp[i].ExpansionTree;
+                container.currentFlower = null;
+                flowers.Add(container);
+                temp[i].gameObject.SetActive(false);
+            }
+        } 
 
-        public void UpdateLiquidLevel(int level)
+        private void UpdateLiquidLevel(int level)
         {
+            float normalizedLevel = (float)level
+                                     / (float)generatorReference.fullLevel.value;
+
+            SetLiquidColor(activeColor);
+
+            liquid.DOScaleY(normalizedLevel * scaleMultiplier, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
+
+            
+        }//Closes UpdateLiquidLevel
+
+        private void UpdateFlowersNumbers(int level)
+        {
+                if(level >= flowers.Count) return;
+               DestroyCurrentFlower(level);
+                flowersLimit = level;
+        }
+        public void UpdateEnergyLevel(int level)
+        {
+           
             if (!poolActive) return;
             if (!generatorReference
                  || generatorReference.lifetime != EnergyGenerator.LifetimeConfig.Limited
                  || !liquid) return;
 
-            float normalizedLevel = (float)level
-                                     / (float)generatorReference.fullLevel.value;
-
-            SetLiquidColor(activeColor.Evaluate(normalizedLevel));
-
-            liquid.DOScaleY(normalizedLevel * scaleMultiplier, .3f).SetSpeedBased(true).SetEase(Ease.OutQuad);
-
+            UpdateFlowersNumbers(level);
+            UpdateLiquidLevel( level);
+        
             if (level == 0 && emptyID) cellReference.data = emptyID;
-        }//Closes UpdateLiquidLevel
 
+        } 
 
         public void ActivatePool(bool active)
         {
@@ -79,10 +131,12 @@ namespace Ozamanas.Energy
             if (data == emptyID)
             {
                 generatorReference.currentLevel = 0;
+                SetVisualsForEmptyPool();
             } 
             else if (data == activeID)
             {
                 generatorReference.ResumeGeneration();
+                SetLiquidColor(activeColor);
                 SetVisualsForActivePool();
             } 
             else if (data == inactiveID)
@@ -90,6 +144,12 @@ namespace Ozamanas.Energy
                 generatorReference.StopGeneration();
                 SetLiquidColor(inactiveColor);
                 SetVisualsForInactivePool();
+            }
+            else if (data == invadedID)
+            {
+                generatorReference.StopGeneration();
+                SetLiquidColor(inactiveColor);
+                 SetVisualsForInvadedPool();
             }
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
@@ -101,38 +161,75 @@ namespace Ozamanas.Energy
             liquidRenderer.material.SetColor(liquidColorKey, color);
         }//Closes SetLiquidColor method
 
+         private void SetVisualsForEmptyPool()
+        {
+            StopVFX?.Invoke();
+        }
+
         private void SetVisualsForInactivePool()
         {
-            
-            foreach(GameObject flower in flowers)
+            StopVFX?.Invoke();
+            for (int i = 0; i < flowers.Count; i++)
             {
-                flower.SetActive(true);
-            }
-
-             foreach(GameObject whisper in whispers)
-            {
-                whisper.SetActive(false);
+               DestroyCurrentFlower(i);
+                if(i<flowersLimit)
+               {
+                GameObject temp = Instantiate(flowers[i].inactiveFlower, visuals);
+                temp.transform.position = flowers[i].flowerTransform.position;
+                temp.transform.rotation = flowers[i].flowerTransform.rotation;
+                temp.GetComponentInChildren<JungleTree>().ForestIndex = i;
+                flowers[i].currentFlower = temp;
+               }
             }
         }
 
         private void SetVisualsForActivePool()
         {
-            foreach(GameObject flower in flowers)
+            PlayVFX?.Invoke();
+            for (int i = 0; i < flowers.Count; i++)
             {
-                flower.SetActive(false);
+               DestroyCurrentFlower(i);
+               if(i<flowersLimit)
+               {
+                    GameObject temp = Instantiate(flowers[i].activeFlower, visuals);
+                    temp.transform.position = flowers[i].flowerTransform.position;
+                    temp.transform.rotation = flowers[i].flowerTransform.rotation;
+                    temp.GetComponentInChildren<JungleTree>().ForestIndex = i;
+                    flowers[i].currentFlower = temp;
+                }
             }
+        }
 
-            foreach(GameObject whisper in whispers)
+         private void SetVisualsForInvadedPool()
+        {
+            StopVFX?.Invoke();
+            for (int i = 0; i < flowers.Count; i++)
             {
-                whisper.SetActive(true);
+               DestroyCurrentFlower(i);
+            }
+        }
+
+        private void DestroyCurrentFlower(int i)
+        {
+            if (!flowers[i].currentFlower) return;
+
+            if (flowers[i].currentFlower.transform.TryGetComponentInChildren(out Forest.JungleTree jungleTree))
+            {
+                jungleTree.HideAndDestroy();
             }
         }
 
         public void OnMachineEnter(HumanMachine machine)
         {
-            Debug.Log("OnMachineEnter");
              
-            if(cellReference.data != activeID) return;
+            if(cellReference.data == emptyID || cellReference.data == invadedID ) return;
+
+            cellReference.data = invadedID;
+        }
+
+        public void OnMachineExit(HumanMachine machine)
+        {
+            if(cellReference.data == emptyID) return;
 
             cellReference.data = inactiveID;
         }

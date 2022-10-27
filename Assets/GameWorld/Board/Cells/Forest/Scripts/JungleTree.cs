@@ -15,6 +15,8 @@ namespace Ozamanas.Forest
             [SerializeField] private float growingTime = 10f;
             [SerializeField] private GameObject fragmentedModel;
             private bool alreadyTriggered = false;
+
+            private Animator animator;
             private Collider cd;
             [SerializeField] public UnityEvent OnDestruction;
 
@@ -27,6 +29,8 @@ namespace Ozamanas.Forest
         private void Awake()
             {
                 cd = GetComponent<Collider>();
+
+                animator = GetComponentInParent<Animator>();
 
                 forestBehaviour = GetComponentInParent<ForestBehaviour>();
                 
@@ -43,7 +47,7 @@ namespace Ozamanas.Forest
             {
                 if(alreadyTriggered) return;
                 alreadyTriggered = true;
-                forestBehaviour.SetTrunk(forestIndex);
+                if(forestBehaviour) forestBehaviour.SetTrunk(forestIndex);
                 OnDestruction?.Invoke();
                 gameObject.SetActive(false);
                 GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
@@ -53,8 +57,9 @@ namespace Ozamanas.Forest
 
             public void HideAndDestroy()
             {
-                gameObject.transform.transform.DOScaleY(0f, growingTime).From(1);
-                Destroy(gameObject,growingTime);
+                animator.Play("Hide");
+               Destroy(gameObject,animator.GetCurrentAnimatorClipInfo(0).Length);
+                //Destroy(gameObject);
             }
            
 
