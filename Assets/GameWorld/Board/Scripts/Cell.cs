@@ -9,11 +9,8 @@ using DG.Tweening;
 namespace Ozamanas.Board
 {
     [SelectionBase]
-
     public class Cell : MonoBehaviour
     {
-
-
 
         [SerializeField] private CellData m_data;
         public CellData data
@@ -57,11 +54,8 @@ namespace Ozamanas.Board
         private void Awake()
         {
             OnCellDataChanged?.Invoke(m_data);
-
-
             if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method
-
 
         private void OnDisable()
         {

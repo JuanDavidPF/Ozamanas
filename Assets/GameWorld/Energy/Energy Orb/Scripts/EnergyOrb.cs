@@ -12,13 +12,15 @@ namespace Ozamanas.Energy
         [SerializeField] private Ease movementEase;
         private Tweener tweener;
 
+
+
+        
         private void Start()
         {
+
             Transform absorber = EnergyAbsorber.mainAbsorber;
+
             if (!goToCounter || !absorber) return;
-
-
-
             tweener = transform.DOMove(absorber.position, movementSpeed)
             .SetSpeedBased(true)
             .SetEase(movementEase);

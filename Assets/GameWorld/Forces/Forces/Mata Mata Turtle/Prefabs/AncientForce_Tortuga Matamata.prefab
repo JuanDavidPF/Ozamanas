@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5781539411262280919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.532273, y: 0, z: 3.0061955}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -148,10 +148,6 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 8998b3554bf1c7a469be903a35f50ced, type: 2}
   draggedOffset: {x: 0, y: 0.5, z: 0}
   snapToGrid: 1
-  rangeOutline:
-    mode: 0
-    outlineColor: {r: 0, g: 0, b: 0, a: 0}
-    width: 0
   placementMode: 0
   traitRange: 1
   traits: []
@@ -159,6 +155,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnFailedPlacement:
+    m_PersistentCalls:
+      m_Calls: []
+  lifetime: 1
+  fragmentedModel: {fileID: 5878651588068245928, guid: f5e24ff84a336a14ead10f0af0d4d6ae,
+    type: 3}
+  barrierID: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
+  forestID: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  OnDestruction:
     m_PersistentCalls:
       m_Calls: []
 --- !u!54 &8256875140076655523
