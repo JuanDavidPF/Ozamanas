@@ -43,7 +43,7 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
-            Debug.Log("other");
+            mawTrigger.enabled = false;
             tweener.Kill();
             MachinePhysicsManager physics = other.GetComponentInParent<MachinePhysicsManager>();
             physics.SetKinematic();
@@ -52,6 +52,7 @@ namespace Ozamanas.Forces
 
 
             bittedMachine.SetParent(maw, true);
+            bittedMachine.localRotation = Quaternion.Euler(0, 0, 0);
             bittedMachine.localPosition = Vector3.zero;
 
             Vector3 machineOriginalScale = bittedMachine.localScale;
