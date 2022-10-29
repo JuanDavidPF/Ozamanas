@@ -38,7 +38,7 @@ namespace Ozamanas
 
             if (conditionalPathing)
             {
-                trail.emitting = Validate(cell);
+                if (trail) trail.emitting = Validate(cell);
             }
 
         }//Closes OnNewCell method
