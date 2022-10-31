@@ -11,7 +11,7 @@ namespace Ozamanas.Forest
     [RequireComponent(typeof(Collider))]
     public class JungleTree : MonoBehaviour
     {
-            [SerializeField] private float lifetime = 3f;
+            [SerializeField] private float lifetime = 1f;
             [SerializeField] private float growingTime = 10f;
             [SerializeField] private GameObject fragmentedModel;
             private bool alreadyTriggered = false;

@@ -8,7 +8,7 @@ using Ozamanas.Board;
 namespace Ozamanas.Forces
 {
 
-
+  [RequireComponent(typeof(Animator))]
     public class OffensiveBird : AncientForce
     {
 
@@ -25,6 +25,7 @@ namespace Ozamanas.Forces
         List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
         private Tween roosterTween;
 
+        private Animator animator;
         [SerializeField] private OffensiveMode mode;
         [SerializeField] private float roosterSpeed = 2f;
         [SerializeField] private int damageAmount;
@@ -36,12 +37,13 @@ namespace Ozamanas.Forces
         {
             base.Awake();
             if (AOERenderer) AOETransform = AOERenderer.transform;
+            animator=gameObject.GetComponent<Animator>();
         }//Closes Awake method
 
 
         public override void FirstPlacement()
         {
-
+            animator.SetTrigger("Release");
             base.FirstPlacement();
 
             AOERenderer.gameObject.SetActive(false);
@@ -50,6 +52,7 @@ namespace Ozamanas.Forces
             if (mode == OffensiveMode.Hitscan)
                 roosterTween.OnComplete(() =>
                 {
+                    animator.SetTrigger("Attack");
                     ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
                     {
@@ -129,7 +132,7 @@ namespace Ozamanas.Forces
 
             if (!isPlaced || (other.transform.tag != "Machine" && other.transform.tag != "Cell")) return;
 
-
+            animator.SetTrigger("Attack");
             if (other.transform.TryGetComponent(out Machines.MachineArmor machine))
             {
                 AttackMachine(machine);
