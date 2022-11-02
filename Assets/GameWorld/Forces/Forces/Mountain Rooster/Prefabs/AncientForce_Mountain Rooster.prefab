@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 8658834029813518716}
   - component: {fileID: 5229564924430542389}
   - component: {fileID: 3568118483022712811}
+  - component: {fileID: 5929859122067981648}
   m_Layer: 0
   m_Name: AncientForce_Mountain Rooster
   m_TagString: Untagged
@@ -361,6 +362,7 @@ MonoBehaviour:
   elevationForce: {x: 0, y: 7500, z: 0}
   torqueForce: {x: 100, y: 100, z: 100}
   AOERenderer: {fileID: 7136627122813514100}
+  posY: 0
 --- !u!54 &3568118483022712811
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -377,3 +379,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &5929859122067981648
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658834029813518704}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
