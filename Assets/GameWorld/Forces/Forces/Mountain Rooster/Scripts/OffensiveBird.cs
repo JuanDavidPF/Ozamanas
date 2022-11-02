@@ -8,7 +8,7 @@ using Ozamanas.Board;
 namespace Ozamanas.Forces
 {
 
-
+  [RequireComponent(typeof(Animator))]
     public class OffensiveBird : AncientForce
     {
 
@@ -23,33 +23,42 @@ namespace Ozamanas.Forces
         private Transform AOETransform;
 
         List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
-        private Tween roosterTween;
+        private Tween birdTween;
 
+        private Animator animator;
         [SerializeField] private OffensiveMode mode;
         [SerializeField] private float roosterSpeed = 2f;
         [SerializeField] private int damageAmount;
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
         [SerializeField] private MeshRenderer AOERenderer;
+        [SerializeField] private float posY = 0f;
 
         protected override void Awake()
         {
             base.Awake();
             if (AOERenderer) AOETransform = AOERenderer.transform;
+
+            animator=gameObject.GetComponent<Animator>();
         }//Closes Awake method
 
+       
 
         public override void FirstPlacement()
         {
-
+           
             base.FirstPlacement();
+            
+            animator.SetTrigger("Release");
 
             AOERenderer.gameObject.SetActive(false);
-            roosterTween = transform.DOMoveY(0, roosterSpeed, false).SetSpeedBased();
+
+            birdTween = transform.DOMoveY(0, roosterSpeed, false).SetSpeedBased();
 
             if (mode == OffensiveMode.Hitscan)
-                roosterTween.OnComplete(() =>
+                birdTween.OnComplete(() =>
                 {
+                              
                     ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
                     {
@@ -57,7 +66,7 @@ namespace Ozamanas.Forces
                         AttackMachine(machine);
                     }
 
-                    Destroy(gameObject);
+                   Destroy(gameObject);
                 });
 
         }//Closes FirstPlacement method
@@ -104,13 +113,14 @@ namespace Ozamanas.Forces
         private void Update()
         {
             if (isPlaced || !AOETransform) return;
+
             Ray AOERay = new Ray(transform.position, -transform.up);
 
 
             foreach (var hit in Physics.RaycastAll(AOERay))
             {
                 if (hit.transform.tag != "Cell") return;
-                AOETransform.position = hit.point;
+                AOETransform.position = new Vector3(hit.point.x,posY,hit.point.z);
                 break;
             }
 
@@ -119,7 +129,8 @@ namespace Ozamanas.Forces
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (roosterTween != null) roosterTween.Kill();
+            if (birdTween != null) birdTween.Kill();
+            Destroy(gameObject);
         }//Closes OnDestroy method
 
 
@@ -129,13 +140,12 @@ namespace Ozamanas.Forces
 
             if (!isPlaced || (other.transform.tag != "Machine" && other.transform.tag != "Cell")) return;
 
-
             if (other.transform.TryGetComponent(out Machines.MachineArmor machine))
             {
                 AttackMachine(machine);
             }
 
-            Destroy(gameObject);
+           Destroy(gameObject);
         }//Closes OnCollisionEnter method
 
         private void ActivateTraits(Cell origin)
