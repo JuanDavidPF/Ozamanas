@@ -11,7 +11,7 @@ namespace Ozamanas.Levels
     {
 
 
-        [HideInInspector] public GameObject board;
+        public GameObject board;
         [SerializeField] private LevelReference saveAt;
         public FloatReference creationDelay;
         public IntegerReference creationRate;
