@@ -8,14 +8,14 @@ using Ozamanas.Board;
 namespace Ozamanas.Forces
 {
 
-  [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator))]
     public class MultipleOffensiveBird : AncientForce
     {
 
 
         [Space(15)]
         [Header("Visuals Setup")]
-        
+
         [SerializeField] private Transform attackIndicator;
         [SerializeField] private Transform birdPosition;
         [SerializeField] private List<Transform> thunderPositions;
@@ -26,8 +26,8 @@ namespace Ozamanas.Forces
 
         private Animator animator;
         [SerializeField] private float waitingTime = 0.2f;
-        
-         [Space(15)]
+
+        [Space(15)]
         [Header("Attack Setup")]
         [Range(1, 7)]
         [SerializeField] private int totalThunders;
@@ -39,39 +39,38 @@ namespace Ozamanas.Forces
         protected override void Awake()
         {
             base.Awake();
-            animator=gameObject.GetComponent<Animator>();
+            animator = gameObject.GetComponent<Animator>();
             thunderPositions.Shuffle(7);
 
         }//Closes Awake method
 
-       
+
 
         public override void FirstPlacement()
         {
-           
+
             base.FirstPlacement();
 
             animator.SetTrigger("Release");
 
             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
 
-            birdPosition.position = new Vector3(gameObject.transform.position.x,posY,gameObject.transform.position.z);
-          
-            StartCoroutine(InstantiateThunder());  
-           
+
+            StartCoroutine(InstantiateThunder());
+
         }//Closes FirstPlacement method
 
-       IEnumerator InstantiateThunder()
-       {
-            for (int i =0;i<totalThunders;i++)
+        IEnumerator InstantiateThunder()
+        {
+            for (int i = 0; i < totalThunders; i++)
             {
-               yield return new WaitForSeconds(waitingTime);
-               Instantiate(thunder,thunderPositions[i]);
-            }       
-             
-             Destroy(gameObject);
-       }
-       
+                yield return new WaitForSeconds(waitingTime);
+                Instantiate(thunder, thunderPositions[i]);
+            }
+
+            Destroy(gameObject);
+        }
+
         private void Update()
         {
             if (isPlaced || !attackIndicator) return;
@@ -83,7 +82,8 @@ namespace Ozamanas.Forces
             foreach (var hit in Physics.RaycastAll(AOERay))
             {
                 if (hit.transform.tag != "Cell") return;
-                attackIndicator.position = new Vector3(hit.point.x,posY,hit.point.z);
+
+                attackIndicator.position = new Vector3(hit.point.x, posY, hit.point.z);
                 break;
             }
 
@@ -98,8 +98,8 @@ namespace Ozamanas.Forces
 
         private void OnCollisionEnter(Collision other)
         {
-          
-           if (!isPlaced || other.transform.tag != "Machine" ) return;
+
+            if (!isPlaced || other.transform.tag != "Machine") return;
 
             if (other.transform.TryGetComponent(out Machines.MachineArmor machine))
             {
