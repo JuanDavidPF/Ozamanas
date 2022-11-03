@@ -10,7 +10,7 @@ namespace Ozamanas
     [RequireComponent(typeof(TrailRenderer))]
     public class PathRenderer : MonoBehaviour
     {
-        private Rigidbody parentPhysics;
+        private MachinePhysicsManager parentPhysics;
         private TrailRenderer trail;
 
 
@@ -23,7 +23,7 @@ namespace Ozamanas
         private void Awake()
         {
             trail = GetComponent<TrailRenderer>();
-            parentPhysics = GetComponentInParent<Rigidbody>();
+            parentPhysics = GetComponentInParent<MachinePhysicsManager>();
 
             //This prevents ZFighting 
             Vector3 newPosition = transform.position;
@@ -38,7 +38,7 @@ namespace Ozamanas
 
             if (conditionalPathing)
             {
-                trail.emitting = Validate(cell);
+                if (trail) trail.emitting = Validate(cell);
             }
 
         }//Closes OnNewCell method
@@ -46,12 +46,9 @@ namespace Ozamanas
 
         public bool Validate(Cell cell)
         {
-
             return cell && cell.data
             && allowedCells.Contains(cell.data)
-            && (!parentPhysics ||
-            (parentPhysics.isKinematic) ||
-             (parentPhysics.IsSleeping()));
+            && (!parentPhysics || parentPhysics.state == MachinePhysicsManager.PhysicMode.Intelligent);
         }//Closes Validate method
 
         [ContextMenu("Reset")]

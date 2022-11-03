@@ -104,9 +104,14 @@ namespace Ozamanas.Forces
 
             float3 positionReference = transform.position;
 
+
+
             reptileTween = DOTween.To(setter: value =>
                        {
-                           transform.position = Parabol.EvaluateParabole(positionReference, reptilePath[0].GridToUnity(), jumpHeight, value);
+                           Vector3 positionOnParabol = Parabol.EvaluateParabole(positionReference, reptilePath[0].GridToUnity(), jumpHeight, value);
+
+                           transform.LookAt(positionOnParabol);
+                           transform.position = positionOnParabol;
                        }, startValue: 0, endValue: 1, duration: speed.value)
                .SetSpeedBased(true);
 

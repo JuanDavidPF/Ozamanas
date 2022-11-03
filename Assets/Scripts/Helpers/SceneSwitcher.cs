@@ -16,7 +16,7 @@ namespace JuanPayan.Helpers
 
         public override void Behaviour()
         {
-            SceneManager.UnloadSceneAsync(sceneToLoad);
+            if (SceneManager.GetSceneByName(sceneToLoad).isLoaded) SceneManager.UnloadSceneAsync(sceneToLoad);
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad, mode);
             if (sceneToBeActivated == sceneToLoad) loadOperation.allowSceneActivation = true;

@@ -13,12 +13,16 @@ namespace Ozamanas.Forces
         {
             birdTween = transform.DOMoveY(0, thunderSpeed, false).SetSpeedBased();
             thunder.Play();
-            birdTween.OnComplete(() =>
-            {
-                Destroy(gameObject);
-            });
+            birdTween.OnComplete(() => Destroy(gameObject));
         }
 
-   
-    }   
+        private void OnDestroy()
+        {
+
+            birdTween.Kill();
+
+
+
+        }
+    }
 }

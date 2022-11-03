@@ -71,6 +71,7 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
 
+
             if (isPlaced || other.transform.tag != "Machine") return;
 
 

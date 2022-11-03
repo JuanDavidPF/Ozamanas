@@ -50,7 +50,7 @@ namespace Ozamanas.UI.WavesCounter
 
         }//Closes UpdateWaveCounter method
 
-
+ 
 
     }//Closes WavesManager class
 }//Closes namespace declaration
