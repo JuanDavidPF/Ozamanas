@@ -4,6 +4,7 @@ using UnityEngine;
 using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
+using UnityEngine.Events;
 using Ozamanas.Machines;
 
 namespace Ozamanas.Forces
@@ -20,7 +21,7 @@ namespace Ozamanas.Forces
         public GameObject Objective { get => objective; set => objective = value; }
         public List<MachineTrait> Traits { get => traits; set => traits = value; }
 
-
+        [SerializeField] public UnityEvent OnMinionDestruction;
         void Start()
         {
             rg = GetComponent<Rigidbody>();
@@ -35,6 +36,12 @@ namespace Ozamanas.Forces
             Vector3 heading = objective.transform.position - transform.position;
             float distance = heading.magnitude;
             Vector3 direction = heading / distance;   
+
+             
+
+        // the second argument, upwards, defaults to Vector3.up
+            Quaternion rotation = Quaternion.LookRotation(heading, Vector3.up);
+            transform.rotation = rotation;
             rg.MovePosition(transform.position+(direction*m_Speed*Time.deltaTime));
         }
 
@@ -49,6 +56,8 @@ namespace Ozamanas.Forces
                 {
                     machine.AddTraitToMachine(trait);
                 }
+                
+                OnMinionDestruction?.Invoke();
                 Destroy(gameObject);
             }
             else return;

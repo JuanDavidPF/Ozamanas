@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3205282906656895977}
   - component: {fileID: 2005412759027940428}
   - component: {fileID: 4337070957374310534}
-  - component: {fileID: 3788440740866734527}
+  - component: {fileID: 6353014381582710299}
   m_Layer: 9
   m_Name: TileUnity1
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3788440740866734527
-MeshCollider:
+--- !u!65 &6353014381582710299
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,10 +94,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2297425034801156755, guid: 979852f220fb3b94585dfaf84e70c5aa, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.3896731, y: 0.06415608, z: 1.2056209}
+  m_Center: {x: -0.0013663828, y: 0.48253393, z: -0.001063979}
 --- !u!1 &3258983835883263882
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +144,7 @@ GameObject:
   - component: {fileID: 665083173}
   - component: {fileID: 8087408256394067309}
   - component: {fileID: 4094226310656495479}
+  - component: {fileID: 8760806921429151094}
   m_Layer: 9
   m_Name: Cell_Jungle's Heart
   m_TagString: Cell
@@ -323,6 +323,26 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &8760806921429151094
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590284334626953499}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 474d8fbecffca4f4d817eebd54b618a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5130503046464062437
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,40 +667,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1653636275}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &55054997
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147587826146}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7869237757719781145, guid: d590f3612cee0c5418ff1c60c69d519f, type: 3}
---- !u!95 &55054998
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147587826146}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 474d8fbecffca4f4d817eebd54b618a4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &55054996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,3 +686,17 @@ MonoBehaviour:
   OnDestruction:
     m_PersistentCalls:
       m_Calls: []
+--- !u!136 &3425015454697388033
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147587826146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5621997
+  m_Height: 1.660581
+  m_Direction: 1
+  m_Center: {x: -0.0012673252, y: 0.9115106, z: -0.06535226}

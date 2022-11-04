@@ -4,6 +4,7 @@ using UnityEngine;
 using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
+using Ozamanas.Forest;
 
 namespace Ozamanas.Forces
 {
@@ -19,12 +20,13 @@ namespace Ozamanas.Forces
         [SerializeField] private MeshRenderer AOERenderer;
         [SerializeField] private MammalForceMode mode;
         List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
+        List<Forest.JungleTree> treesAffected = new List<Forest.JungleTree>();
 
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
 
         [SerializeField] private float mammalSpeed = 2f;
-        [Range(100, 1000)]
+        [Range(2000, 10000)]
         [SerializeField] private int mammalForce = 1000;
         private Tween mammalTween;
 
@@ -52,6 +54,13 @@ namespace Ozamanas.Forces
             mammalTween.OnComplete(() =>
             {
                 ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
+                
+                foreach (var tree in treesAffected.ToArray())
+                {
+                    if (!tree) continue;
+                    AddForceToTree(tree);
+                }
+
                 foreach (var machine in machinesAffected.ToArray())
                 {
                     if (!machine) continue;
@@ -81,6 +90,27 @@ namespace Ozamanas.Forces
 
         }//Closes ActivateTraits method
 
+        private void AddForceToTree(Forest.JungleTree tree)
+        {
+           
+             if (!tree || tree.tag != "Tree") return;
+
+            treesAffected.Remove(tree);
+
+            GameObject destroyedTree = tree.DestroyTree();
+
+            Vector3 force = tree.transform.position - gameObject.transform.position;
+            force = force.normalized * mammalForce;
+            if (mode == MammalForceMode.Pull) force = force * -1;
+
+            Rigidbody[] rb = destroyedTree.GetComponentsInChildren<Rigidbody>();
+
+            for (int i =0;i<rb.Length;i++)
+            {
+                rb[i].AddForce(force + elevationForce, ForceMode.Impulse);
+                rb[i].AddTorque(torqueForce, ForceMode.Impulse);
+            }
+        }
         private void AddForceToMachine(Machines.MachineArmor machine)
         {
             if (!machine || machine.tag != "Machine") return;
@@ -105,18 +135,40 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
 
-            if (isPlaced || other.tag != "Machine") return;
-
-            if (other.TryGetComponentInParent(out Machines.MachineArmor armor))
+            if (isPlaced) return;
+            
+            if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
             {
                 if (!machinesAffected.Contains(armor)) machinesAffected.Add(armor);
 
+            }
+            else if (other.tag == "Tree" && other.TryGetComponent(out Forest.JungleTree tree))
+            { 
+                if (!treesAffected.Contains(tree)) treesAffected.Add(tree);
             }
             else return;
 
             UpdateAOEColor();
         }//Closes OnTriggerEnter method
 
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (isPlaced) return;
+            
+            if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
+            {
+                machinesAffected.Remove(armor);
+
+            }
+            else if (other.tag == "Tree" && other.TryGetComponent(out Forest.JungleTree tree))
+            {
+                treesAffected.Remove(tree);
+            }
+            else return;
+
+            UpdateAOEColor();
+        }
         private void UpdateAOEColor()
         {
             if (!AOERenderer) return;

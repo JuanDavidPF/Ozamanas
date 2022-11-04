@@ -44,6 +44,8 @@ namespace Ozamanas.Forces
           
             if (!isPlaced) return;
 
+            Debug.Log("FisrPlacement");
+
             if (mode == ControlMode.Machine)
             {
                     foreach (var machine in machinesAffected.ToArray())
@@ -54,7 +56,7 @@ namespace Ozamanas.Forces
 
                     Destroy(gameObject);
             }
-            else if(mode == ControlMode.Machine)
+            else if(mode != ControlMode.Machine)
             {
                 Cell currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
                 InsectMinion temp = Instantiate(minion, transform.position, transform.rotation).GetComponent<InsectMinion>();
@@ -95,8 +97,8 @@ namespace Ozamanas.Forces
         private void UpdateAOEColor()
         {
             if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = Color.red;
-            else AOERenderer.material.color = Color.green;
+            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.6f);
+            else AOERenderer.material.color = new Vector4(0,1,0,0.6f);
         }//Closes UpdateAOEColor method
 
 

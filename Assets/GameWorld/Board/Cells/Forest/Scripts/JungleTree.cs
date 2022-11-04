@@ -42,17 +42,18 @@ namespace Ozamanas.Forest
 
                 DestroyTree();
             }
+
             
-            public void DestroyTree()
+            public GameObject DestroyTree()
             {
-                if(alreadyTriggered) return;
+                if(alreadyTriggered) return null;
                 alreadyTriggered = true;
                 if(forestBehaviour) forestBehaviour.SetTrunk(forestIndex);
                 OnDestruction?.Invoke();
                 gameObject.SetActive(false);
                 GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
                 if(dummy) Destroy(dummy,lifetime);
-
+                return dummy;
             }
 
             public void HideAndDestroy()
