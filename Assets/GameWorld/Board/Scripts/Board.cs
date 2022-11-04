@@ -30,8 +30,8 @@ namespace Ozamanas.Board
         private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
-
-        private void SetReference()
+ 
+      private void SetReference()
         {
             if (reference && reference != this)
             {
