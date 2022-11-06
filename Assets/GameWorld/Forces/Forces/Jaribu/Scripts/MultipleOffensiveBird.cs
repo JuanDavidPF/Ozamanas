@@ -53,7 +53,7 @@ namespace Ozamanas.Forces
 
             animator.SetTrigger("Release");
 
-            birdPosition.position = new Vector3(birdPosition.position.x,-2.5f,birdPosition.position.z);
+            birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
 
             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
 

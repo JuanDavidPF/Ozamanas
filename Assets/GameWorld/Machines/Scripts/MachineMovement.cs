@@ -47,6 +47,9 @@ namespace Ozamanas.Machines
         [SerializeField] private MachineSpeed currentSpeed;
         [SerializeField] public MachineType currentAltitude;
         [SerializeField] private float height = 5f;
+        
+        [SerializeField] private float timeMaxToReachDestination = 5f;
+        private float timeToReachDestination = 0f;
 
         [Space(15)]
         [Header("Parameters")]
@@ -127,7 +130,10 @@ namespace Ozamanas.Machines
 
         public bool CheckIfReachDestination()
         {
+
             if (navMeshAgent.pathPending) return false;
+
+            if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
 
             return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.2f;
         }
@@ -291,6 +297,7 @@ namespace Ozamanas.Machines
             nextCellOnPath = pathToDestination[0];
             navMeshAgent.SetDestination(nextCellOnPath.transform.position);
             pathToDestination.RemoveAt(0);
+            timeToReachDestination = Time.time;
         }
 
         public bool CheckIfNextCellOnPath(CellData cell)
@@ -372,6 +379,7 @@ namespace Ozamanas.Machines
             speed++;
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
+            if(! navMeshAgent.isActiveAndEnabled) return;
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
         }
 
@@ -381,11 +389,13 @@ namespace Ozamanas.Machines
             speed--;
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
+             if(! navMeshAgent.isActiveAndEnabled) return;
             navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
         }
 
         public void StopMachine()
         {
+            if(! navMeshAgent.isActiveAndEnabled) return;
             navMeshAgent.isStopped = true;
         }
 

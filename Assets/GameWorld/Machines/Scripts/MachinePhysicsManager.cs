@@ -68,9 +68,7 @@ namespace Ozamanas.Machines
             if (physicsCollider) physicsCollider.enabled = false;
             if (fsm) fsm.enabled = true;
             if (nma) nma.enabled = true;
-
-
-            machine.SetIdlingStatus();
+            machine.SetRunningStatus();
 
         }//Closes SetKinematic method
 

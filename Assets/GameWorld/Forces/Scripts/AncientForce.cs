@@ -42,6 +42,8 @@ namespace Ozamanas.Forces
         public UnityEvent<AncientForce> OnSuccesfulPlacement;
         public UnityEvent<AncientForce> OnFailedPlacement;
 
+        public UnityEvent OnForceDestroy;
+
         protected virtual void Awake()
         {
             g = gameObject;
@@ -72,6 +74,11 @@ namespace Ozamanas.Forces
             t.position = draggedPosition;
 
         }//Closes OnDrag method
+
+        protected virtual void DestroyForce()
+        {
+            Destroy(gameObject);
+        }
 
         public virtual void FirstPlacement()
         {
