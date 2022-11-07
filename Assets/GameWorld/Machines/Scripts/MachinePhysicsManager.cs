@@ -66,8 +66,8 @@ namespace Ozamanas.Machines
 
             if (rb) rb.isKinematic = true;
             if (physicsCollider) physicsCollider.enabled = false;
-            if (fsm) fsm.enabled = true;
             if (nma) nma.enabled = true;
+            if (fsm) fsm.enabled = true;
             machine.SetRunningStatus();
 
         }//Closes SetKinematic method
@@ -151,11 +151,7 @@ namespace Ozamanas.Machines
         }//Closes OnTriggerExit method
 
 
-        private void OnTriggerStay(Collider other)
-        {
-
-        }//Closes OnTriggerStay method
-
+       
         #endregion
 
 
