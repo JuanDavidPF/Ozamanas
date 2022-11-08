@@ -11,58 +11,58 @@ namespace Ozamanas.Forest
     [RequireComponent(typeof(Collider))]
     public class JungleTree : MonoBehaviour
     {
-            [SerializeField] private float lifetime = 1f;
-            [SerializeField] private float growingTime = 10f;
-            [SerializeField] private GameObject fragmentedModel;
-            private bool alreadyTriggered = false;
+        [SerializeField] private float lifetime = 1f;
+        [SerializeField] private float growingTime = 10f;
+        [SerializeField] private GameObject fragmentedModel;
+        private bool alreadyTriggered = false;
 
-            private Animator animator;
-            private Collider cd;
-            [SerializeField] public UnityEvent OnDestruction;
+        private Animator animator;
+        private Collider cd;
+        [SerializeField] public UnityEvent OnDestruction;
 
-            private int forestIndex = 0;
+        private int forestIndex = 0;
 
-            private ForestBehaviour forestBehaviour;
+        private ForestBehaviour forestBehaviour;
 
-            public int ForestIndex { get => forestIndex; set => forestIndex = value; }
+        public int ForestIndex { get => forestIndex; set => forestIndex = value; }
 
         private void Awake()
-            {
-                cd = GetComponent<Collider>();
+        {
+            cd = GetComponent<Collider>();
 
-                animator = GetComponentInParent<Animator>();
+            animator = GetComponentInParent<Animator>();
 
-                forestBehaviour = GetComponentInParent<ForestBehaviour>();
-                
-            }//Closes Awake method
-            
-            private void OnTriggerEnter(Collider other)
-            {
-                if ( other.transform.tag != "Machine") return;
+            forestBehaviour = GetComponentInParent<ForestBehaviour>();
 
-                DestroyTree();
-            }
+        }//Closes Awake method
 
-            
-            public GameObject DestroyTree()
-            {
-                if(alreadyTriggered) return null;
-                alreadyTriggered = true;
-                if(forestBehaviour) forestBehaviour.SetTrunk(forestIndex);
-                OnDestruction?.Invoke();
-                gameObject.SetActive(false);
-                GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
-                if(dummy) Destroy(dummy,lifetime);
-                return dummy;
-            }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.transform.tag != "Machine") return;
 
-            public void HideAndDestroy()
-            {
-                animator.Play("Hide");
-               Destroy(gameObject,animator.GetCurrentAnimatorClipInfo(0).Length);
-                //Destroy(gameObject);
-            }
-           
+            DestroyTree();
+        }
+
+
+        public GameObject DestroyTree()
+        {
+            if (alreadyTriggered) return null;
+            alreadyTriggered = true;
+            if (forestBehaviour) forestBehaviour.SetTrunk(forestIndex);
+            OnDestruction?.Invoke();
+            gameObject.SetActive(false);
+            GameObject dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
+            if (dummy) Destroy(dummy, lifetime);
+            return dummy;
+        }
+
+        public void HideAndDestroy()
+        {
+            animator.Play("Hide");
+            Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0).Length);
+            //Destroy(gameObject);
+        }
+
 
     }
 }
