@@ -9,7 +9,6 @@ using UnityFx.Outline;
 namespace Ozamanas.Board
 {
 
-    [RequireComponent(typeof(Cell))]
 
 
     public class CellSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
@@ -63,7 +62,7 @@ namespace Ozamanas.Board
         [SerializeField] private int selectedLayer;
         private void Awake()
         {
-            cellReference = cellReference ? cellReference : GetComponent<Cell>();
+            cellReference = cellReference ? cellReference : GetComponentInParent<Cell>();
 
         }//Closes Awake method
 
