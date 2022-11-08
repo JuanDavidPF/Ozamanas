@@ -10,6 +10,10 @@ namespace Ozamanas
     [RequireComponent(typeof(TrailRenderer))]
     public class PathRenderer : MonoBehaviour
     {
+        private Transform _t;
+        private Vector3 newPosition;
+
+        private Transform machineTransform;
         private MachinePhysicsManager parentPhysics;
         private TrailRenderer trail;
 
@@ -19,18 +23,31 @@ namespace Ozamanas
 
         [SerializeField] private bool conditionalPathing;
         [SerializeField] private List<CellData> allowedCells = new List<CellData>();
+        float yOffset = Random.Range(0f, .01f);
 
         private void Awake()
         {
-            trail = GetComponent<TrailRenderer>();
-            parentPhysics = GetComponentInParent<MachinePhysicsManager>();
+            _t = transform;
 
-            //This prevents ZFighting 
-            Vector3 newPosition = transform.position;
-            newPosition.y = Random.Range(0f, .01f) + newPosition.y;
-            transform.position = newPosition;
+            trail = GetComponent<TrailRenderer>();
+
+            parentPhysics = GetComponentInParent<MachinePhysicsManager>();
+            if (parentPhysics) machineTransform = parentPhysics.transform;
+
+
+            _t.SetParent(null);
 
         }//Closes Awake method
+
+        private void Update()
+        {
+            if (!machineTransform) return;
+
+            newPosition = machineTransform.position;
+            newPosition.y = yOffset;
+            _t.position = newPosition;
+        }
+
 
 
         public void OnNewCell(Cell cell)

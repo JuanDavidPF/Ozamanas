@@ -632,7 +632,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2128968838648328183}
   - component: {fileID: 2883458995167185029}
-  - component: {fileID: 4281185427031302219}
   - component: {fileID: 2909511492244580054}
   m_Layer: 0
   m_Name: MachineTrail
@@ -649,7 +648,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5425421992480798085}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -747,26 +746,14 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 2
+    numCapVertices: 0
     alignment: 1
     textureMode: 3
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.35
+  m_MinVertexDistance: 0.3
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &4281185427031302219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5425421992480798085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a8c90ee6cd8b544844921ee025e5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2909511492244580054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853eb9ea67878e4e9af3d70c6e8fef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conditionalPathing: 1
+  conditionalPathing: 0
   allowedCells:
   - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - {fileID: 11400000, guid: faea426da89dc8b4484738c81fa4e078, type: 2}
