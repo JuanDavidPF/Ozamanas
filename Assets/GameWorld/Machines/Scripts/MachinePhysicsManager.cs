@@ -151,7 +151,7 @@ namespace Ozamanas.Machines
         }//Closes OnTriggerExit method
 
 
-       
+
         #endregion
 
 

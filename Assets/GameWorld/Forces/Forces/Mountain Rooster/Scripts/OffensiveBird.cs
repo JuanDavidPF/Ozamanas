@@ -8,7 +8,7 @@ using Ozamanas.Board;
 namespace Ozamanas.Forces
 {
 
-  [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator))]
     public class OffensiveBird : AncientForce
     {
 
@@ -39,16 +39,16 @@ namespace Ozamanas.Forces
             base.Awake();
             if (AOERenderer) AOETransform = AOERenderer.transform;
 
-            animator=gameObject.GetComponent<Animator>();
+            animator = gameObject.GetComponent<Animator>();
         }//Closes Awake method
 
-       
+
 
         public override void FirstPlacement()
         {
-           
+
             base.FirstPlacement();
-            
+
             animator.SetTrigger("Release");
 
             AOERenderer.gameObject.SetActive(false);
@@ -58,7 +58,7 @@ namespace Ozamanas.Forces
             if (mode == OffensiveMode.Hitscan)
                 birdTween.OnComplete(() =>
                 {
-                              
+
                     ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
                     {
@@ -66,7 +66,7 @@ namespace Ozamanas.Forces
                         AttackMachine(machine);
                     }
 
-                   Destroy(gameObject);
+                    Destroy(gameObject);
                 });
 
         }//Closes FirstPlacement method
@@ -120,7 +120,7 @@ namespace Ozamanas.Forces
             foreach (var hit in Physics.RaycastAll(AOERay))
             {
                 if (hit.transform.tag != "Cell") return;
-                AOETransform.position = new Vector3(hit.point.x,posY,hit.point.z);
+                AOETransform.position = new Vector3(hit.point.x, posY, hit.point.z);
                 break;
             }
 
@@ -145,7 +145,7 @@ namespace Ozamanas.Forces
                 AttackMachine(machine);
             }
 
-           Destroy(gameObject);
+            Destroy(gameObject);
         }//Closes OnCollisionEnter method
 
         private void ActivateTraits(Cell origin)
