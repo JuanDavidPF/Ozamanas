@@ -23,10 +23,12 @@ namespace Ozamanas
 
         [SerializeField] private bool conditionalPathing;
         [SerializeField] private List<CellData> allowedCells = new List<CellData>();
-        float yOffset = Random.Range(0f, .01f);
+        private float yOffset;
 
         private void Awake()
         {
+            yOffset = Random.Range(0f, .01f);
+
             _t = transform;
 
             trail = GetComponent<TrailRenderer>();

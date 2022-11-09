@@ -33,9 +33,10 @@ namespace Ozamanas.Board
         }
 
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
+        public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
 
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
-
+        [SerializeField] private MeshFilter tileMeshFilter;
 
         public Transform visuals;
 

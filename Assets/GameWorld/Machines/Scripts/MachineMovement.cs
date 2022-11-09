@@ -160,8 +160,6 @@ namespace Ozamanas.Machines
             */
             Cell start = Board.Board.GetCellByPosition(transform.position);
 
-
-
             Cell goal = currentDestination;
 
             PriorityQueue<Cell, int> frontier = new PriorityQueue<Cell, int>(0);

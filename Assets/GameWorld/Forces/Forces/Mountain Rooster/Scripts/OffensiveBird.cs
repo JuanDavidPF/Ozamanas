@@ -32,7 +32,11 @@ namespace Ozamanas.Forces
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
         [SerializeField] private MeshRenderer AOERenderer;
+
+        [SerializeField] private Transform visuals;
         [SerializeField] private float posY = 0f;
+
+
 
         protected override void Awake()
         {
@@ -49,8 +53,8 @@ namespace Ozamanas.Forces
 
             base.FirstPlacement();
 
-            animator.SetTrigger("Release");
-
+            
+            visuals.gameObject.SetActive(false);
             AOERenderer.gameObject.SetActive(false);
 
             birdTween = transform.DOMoveY(0, roosterSpeed, false).SetSpeedBased();
@@ -58,15 +62,14 @@ namespace Ozamanas.Forces
             if (mode == OffensiveMode.Hitscan)
                 birdTween.OnComplete(() =>
                 {
-
+                    visuals.gameObject.SetActive(true);
+                    animator.SetTrigger("OnRelease");
                     ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                     foreach (var machine in machinesAffected.ToArray())
                     {
                         if (!machine) continue;
                         AttackMachine(machine);
                     }
-
-                    Destroy(gameObject);
                 });
 
         }//Closes FirstPlacement method
@@ -103,8 +106,8 @@ namespace Ozamanas.Forces
         private void UpdateAOEColor()
         {
             if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = Color.red;
-            else AOERenderer.material.color = Color.green;
+            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1f,0f,0f,.6f);
+            else AOERenderer.material.color = new Vector4(0f,1f,0f,.6f);;
         }//Closes UpdateAOEColor method
 
 
@@ -145,7 +148,6 @@ namespace Ozamanas.Forces
                 AttackMachine(machine);
             }
 
-            Destroy(gameObject);
         }//Closes OnCollisionEnter method
 
         private void ActivateTraits(Cell origin)
