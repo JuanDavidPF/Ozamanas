@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
 using Ozamanas.Machines;
+using Ozamanas.Tags;
 using UnityEngine;
 
 namespace Ozamanas
@@ -67,7 +68,7 @@ namespace Ozamanas
         {
             return cell && cell.data
             && allowedCells.Contains(cell.data)
-            && (!parentPhysics || parentPhysics.state == MachinePhysicsManager.PhysicMode.Intelligent);
+            && (!parentPhysics || parentPhysics.state == PhysicMode.Intelligent);
         }//Closes Validate method
 
         [ContextMenu("Reset")]

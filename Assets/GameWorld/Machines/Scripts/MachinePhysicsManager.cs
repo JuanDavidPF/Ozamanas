@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using Ozamanas.Board;
+using Ozamanas.Tags;
 
 
 namespace Ozamanas.Machines
@@ -17,13 +18,7 @@ namespace Ozamanas.Machines
     public class MachinePhysicsManager : MonoBehaviour
     {
 
-        public enum PhysicMode
-        {
-            Kinematic,
-            Physical,
-            Intelligent,
-        }
-
+       
         public PhysicMode state = PhysicMode.Intelligent;
         public FSMOwner fsm;
         public NavMeshAgent nma;
