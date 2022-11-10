@@ -17,7 +17,7 @@ namespace JuanPayan.Helpers
                 Scene scene = SceneManager.GetSceneAt(i);
                 screenStack.Add(scene.name);
             }
-
+            DontDestroyOnLoad(this.gameObject);
         }//Closes Start method
 
         private void OnDestroy()

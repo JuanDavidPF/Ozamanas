@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ozamanas.Entenders;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CreditsHandler : MonoBehaviour
@@ -39,8 +40,7 @@ public class CreditsHandler : MonoBehaviour
     }//Closes Awake method
     private void Update()
     {
-        // if (Input.anyKeyDown && animator) animator.SetTrigger("Skip");
-
+        if (Keyboard.current.anyKey.IsPressed() && animator) animator.SetTrigger("Skip");
 
         SetScrollSpeed();
         CheckSkipDecision();
