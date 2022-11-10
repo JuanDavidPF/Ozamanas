@@ -305,6 +305,15 @@ namespace Ozamanas.InputSystem
             ""id"": ""b6e3be19-62d2-4bf4-b8b5-c385e797d594"",
             ""actions"": [
                 {
+                    ""name"": ""Pause"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e91876fb-6b68-4b06-b998-a4d4ea2e9067"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Navigate"",
                     ""type"": ""PassThrough"",
                     ""id"": ""a369ce03-fefc-4c46-ab4c-c3bf366acef7"",
@@ -813,6 +822,17 @@ namespace Ozamanas.InputSystem
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf800559-3b37-4210-bee1-052cb8aa7e7f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -927,6 +947,7 @@ namespace Ozamanas.InputSystem
             m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
             m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
             m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
@@ -1056,6 +1077,7 @@ namespace Ozamanas.InputSystem
         // UI
         private readonly InputActionMap m_UI;
         private IUIActions m_UIActionsCallbackInterface;
+        private readonly InputAction m_UI_Pause;
         private readonly InputAction m_UI_Navigate;
         private readonly InputAction m_UI_Submit;
         private readonly InputAction m_UI_Cancel;
@@ -1070,6 +1092,7 @@ namespace Ozamanas.InputSystem
         {
             private @InputManager m_Wrapper;
             public UIActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Pause => m_Wrapper.m_UI_Pause;
             public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
             public InputAction @Submit => m_Wrapper.m_UI_Submit;
             public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
@@ -1089,6 +1112,9 @@ namespace Ozamanas.InputSystem
             {
                 if (m_Wrapper.m_UIActionsCallbackInterface != null)
                 {
+                    @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                     @Navigate.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                     @Navigate.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                     @Navigate.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
@@ -1123,6 +1149,9 @@ namespace Ozamanas.InputSystem
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
                 {
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                     @Navigate.started += instance.OnNavigate;
                     @Navigate.performed += instance.OnNavigate;
                     @Navigate.canceled += instance.OnNavigate;
@@ -1244,6 +1273,7 @@ namespace Ozamanas.InputSystem
         }
         public interface IUIActions
         {
+            void OnPause(InputAction.CallbackContext context);
             void OnNavigate(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);

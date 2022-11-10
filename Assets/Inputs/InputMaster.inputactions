@@ -281,6 +281,15 @@
             "id": "b6e3be19-62d2-4bf4-b8b5-c385e797d594",
             "actions": [
                 {
+                    "name": "Pause",
+                    "type": "PassThrough",
+                    "id": "e91876fb-6b68-4b06-b998-a4d4ea2e9067",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Navigate",
                     "type": "PassThrough",
                     "id": "a369ce03-fefc-4c46-ab4c-c3bf366acef7",
@@ -787,6 +796,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf800559-3b37-4210-bee1-052cb8aa7e7f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

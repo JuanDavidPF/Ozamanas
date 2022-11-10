@@ -7,8 +7,9 @@ namespace JuanPayan.Helpers
 {
     public class SceneSwitcher : MonobehaviourEvents
     {
+
         [SerializeField] private string sceneToLoad;
-        [SerializeField] private string sceneToBeActivated;
+
 
         [SerializeField] private LoadSceneMode mode;
 
@@ -16,13 +17,23 @@ namespace JuanPayan.Helpers
 
         public override void Behaviour()
         {
-            if (SceneManager.GetSceneByName(sceneToLoad).isLoaded) SceneManager.UnloadSceneAsync(sceneToLoad);
+            Debug.Log("Attempting to load scene: " + sceneToLoad);
+            if (!IsAddeableToStack()) return;
+            if (mode == LoadSceneMode.Single) SceneStackManager.screenStack.Clear();
 
+            SceneStackManager.screenStack.Add(sceneToLoad);
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad, mode);
-            if (sceneToBeActivated == sceneToLoad) loadOperation.allowSceneActivation = true;
         }//Closes Behaviour method
 
+        private bool IsAddeableToStack()
+        {
+            if (mode == LoadSceneMode.Single) return true;
 
+
+            if (SceneStackManager.screenStack.Contains(sceneToLoad)) return false;
+            if (SceneManager.GetSceneByName(sceneToLoad).isLoaded) return false;
+            return true;
+        }//Closes IsAddeableToStack method
 
     }//Closes SceneSwitcher class
 }//Closes namespace declaration

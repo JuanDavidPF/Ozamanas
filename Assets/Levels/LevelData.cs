@@ -24,6 +24,12 @@ namespace Ozamanas.Levels
 
         }//Closes SelectLevel method
 
+        public void BakeCells()
+        {
+            if (board) return;
+
+        }//Closes SelectLevel method
+
     }//Closes LevelData class
 
 }//Closes Namespace declaration
