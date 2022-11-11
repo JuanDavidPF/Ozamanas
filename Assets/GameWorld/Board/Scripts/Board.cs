@@ -10,7 +10,7 @@ using UnityEngine.Events;
 
 namespace Ozamanas.Board
 {
-    [ExecuteInEditMode]
+
 
 
 
@@ -26,7 +26,7 @@ namespace Ozamanas.Board
         public UnityEvent OnBoardCreated;
 
         [HideInInspector] public Grid grid;
-        private List<Cell> cells = new List<Cell>();
+        [SerializeField] private List<Cell> cells = new List<Cell>();
         private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
@@ -284,24 +284,19 @@ namespace Ozamanas.Board
 
 
 
-        private void Update()
+        private void Awake()
         {
-            if (!Application.isEditor) return;
+            SetReference();
             grid = GetComponent<Grid>();
-            if (levelData) levelData.board = gameObject;
-            // SetReference();
+
+
             BakeCollections();
 
+            StartCoroutine(HandleBoardCreation());
         }//Closes Awake method
 
 
 
-        private void Start()
-        {
-            if (!Application.isPlaying) return;
-            SetReference();
-            StartCoroutine(HandleBoardCreation());
-        }//Closes Start method
 
         private IEnumerator HandleBoardCreation()
         {

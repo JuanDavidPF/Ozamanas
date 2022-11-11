@@ -16,7 +16,7 @@ namespace Ozamanas.Forest
         private class TreeContainer
         {
             public Transform treeTransform;
-            public TreeType tree_type; 
+            public TreeType tree_type;
             public GameObject forestTree;
             public GameObject expansionTree;
 
@@ -24,7 +24,7 @@ namespace Ozamanas.Forest
             public GameObject currentTree;
         }
         [SerializeField] private List<TreeContainer> trees = new List<TreeContainer>();
-         private Cell cellReference;
+        private Cell cellReference;
         [SerializeField] private Transform visuals;
         [Space(15)]
         [Header("Cell identificators")]
@@ -35,22 +35,30 @@ namespace Ozamanas.Forest
         [SerializeField] private List<GameObject> bushes = new List<GameObject>();
         [SerializeField] private List<Transform> bushesPositions = new List<Transform>();
 
-        void Awake()
+        private void Awake()
         {
+            cellReference = GetComponent<Cell>();
+        }
+
+        void Start()
+        {
+
             PopulateBushes();
             SelectPack();
             PopulateTrees();
-            cellReference = GetComponent<Cell>();
+
+            StartForestByToken();
         }
+
 
         private void SelectPack()
         {
             TreePack[] temp = GetComponentsInChildren<TreePack>();
-            
+
             int random = UnityEngine.Random.Range(0, temp.Length);
             for (int i = 0; i < temp.Length; i++)
             {
-                if(i!=random) temp[i].gameObject.SetActive(false);
+                if (i != random) temp[i].gameObject.SetActive(false);
             }
 
         }
@@ -69,27 +77,23 @@ namespace Ozamanas.Forest
                 trees.Add(container);
                 temp[i].gameObject.SetActive(false);
             }
-        } 
+        }
 
         private void PopulateBushes()
         {
-            if(bushes.Count == 0 || bushesPositions.Count == 0 ) return;
+            if (bushes.Count == 0 || bushesPositions.Count == 0) return;
 
-            foreach(Transform pos in bushesPositions)
+            foreach (Transform pos in bushesPositions)
             {
-                Instantiate(bushes[UnityEngine.Random.Range(0, bushes.Count)],pos);
+                Instantiate(bushes[UnityEngine.Random.Range(0, bushes.Count)], pos);
             }
 
         }
 
-        void Start()
-        {
-            StartForestByToken();
-        }
 
         private void StartForestByToken()
         {
-           
+
             if (!cellReference) return;
             if (cellReference.data == expansionID) ChangeToExpansion();
             if (cellReference.data == forestID) ChangeToForest();
@@ -98,7 +102,7 @@ namespace Ozamanas.Forest
 
         public void OnCellDataChange(CellData data)
         {
-            
+
             if (!data) return;
             if (data == expansionID) ChangeToExpansion();
             if (data == forestID) ChangeToForest();
@@ -114,37 +118,37 @@ namespace Ozamanas.Forest
 
         public void OnMachineExit(HumanMachine machine)
         {
-            
+
         }
-       
+
         private void ChangeToForest()
         {
-            
+
             for (int i = 0; i < trees.Count; i++)
             {
-                
-                if(trees[i].tree_type != TreeType.Flower) 
+
+                if (trees[i].tree_type != TreeType.Flower)
                 {
                     if (trees[i].currentTree) Destroy(trees[i].currentTree);
                     GameObject temp = Instantiate(trees[i].forestTree, visuals);
                     temp.transform.position = trees[i].treeTransform.position;
                     temp.transform.rotation = trees[i].treeTransform.rotation;
-                if (temp.transform.TryGetComponentInChildren(out Forest.JungleTree jungleTree))
-                {
-                    jungleTree.ForestIndex = i;
-                }
+                    if (temp.transform.TryGetComponentInChildren(out Forest.JungleTree jungleTree))
+                    {
+                        jungleTree.ForestIndex = i;
+                    }
                     trees[i].currentTree = temp;
                 }
                 else
                 {
-                   DestroyCurrentFlower(i);
+                    DestroyCurrentFlower(i);
                 }
-                 
+
             }
 
         }
 
-         private void DestroyCurrentFlower(int i)
+        private void DestroyCurrentFlower(int i)
         {
             if (!trees[i].currentTree) return;
 
@@ -156,7 +160,7 @@ namespace Ozamanas.Forest
 
         public void SetTrunk(int i)
         {
-            if(i<0 || i>= trees.Count) return;
+            if (i < 0 || i >= trees.Count) return;
 
             if (trees[i].currentTree) Destroy(trees[i].currentTree);
             GameObject temp = Instantiate(trees[i].trunk, visuals);
@@ -169,7 +173,7 @@ namespace Ozamanas.Forest
         {
             for (int i = 0; i < trees.Count; i++)
             {
-               if (trees[i].currentTree) Destroy(trees[i].currentTree);
+                if (trees[i].currentTree) Destroy(trees[i].currentTree);
                 GameObject temp = Instantiate(trees[i].expansionTree, visuals);
                 temp.transform.position = trees[i].treeTransform.position;
                 temp.transform.rotation = trees[i].treeTransform.rotation;
@@ -177,17 +181,17 @@ namespace Ozamanas.Forest
                 {
                     jungleTree.ForestIndex = i;
                 }
-                
+
                 trees[i].currentTree = temp;
             }
         }
 
-   
+
         private void ChangeToBarrier()
         {
-             for (int i = 0; i < trees.Count; i++)
+            for (int i = 0; i < trees.Count; i++)
             {
-               if (trees[i].currentTree) Destroy(trees[i].currentTree);
+                if (trees[i].currentTree) Destroy(trees[i].currentTree);
             }
         }
     }

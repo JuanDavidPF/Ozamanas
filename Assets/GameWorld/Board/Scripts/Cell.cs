@@ -53,6 +53,7 @@ namespace Ozamanas.Board
 
         private void Awake()
         {
+            Debug.Log("Cell Awake");
             OnCellDataChanged?.Invoke(m_data);
             if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method
