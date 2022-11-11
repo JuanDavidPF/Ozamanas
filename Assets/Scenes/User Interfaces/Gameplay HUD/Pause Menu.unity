@@ -569,6 +569,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 199936573}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Behaviour
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: JuanPayan.Helpers.SceneSwitcher, JuanPayan.Helpers
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4816401835176243014, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
         type: 3}
       propertyPath: m_text
@@ -582,6 +617,27 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 199936570}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &199936572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4816401835176243008, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 199936570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &199936573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199936572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdee6b06641d0244da2263f94e473f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  sceneToLoad: Camp
+  mode: 0
 --- !u!1 &237313592
 GameObject:
   m_ObjectHideFlags: 0
