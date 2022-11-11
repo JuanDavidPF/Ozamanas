@@ -4,6 +4,7 @@ using Ozamanas.Entenders;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 public class CreditsHandler : MonoBehaviour
@@ -15,7 +16,7 @@ public class CreditsHandler : MonoBehaviour
 
     [Header("Faster Scrolling")]
     [Space(20)]
-    [SerializeField] KeyCode fasterKey;
+    [SerializeField] Key fasterKey;
     private float originalSpeed = 100;
     [SerializeField] float scrollSpeed = 100;
     [SerializeField] float scrollSpeedMultiplier = 2;
@@ -26,7 +27,7 @@ public class CreditsHandler : MonoBehaviour
 
     [Header("Skip Credits")]
     [Space(20)]
-    [SerializeField] KeyCode skipKey;
+    [SerializeField] Key skipKey;
     float skipProgress = 0;
     [SerializeField] float triggerSkipValue = 3f;
     [SerializeField] TextMeshProUGUI skipLabel;
@@ -37,6 +38,8 @@ public class CreditsHandler : MonoBehaviour
     private void Awake()
     {
         originalSpeed = 100;
+
+
     }//Closes Awake method
     private void Update()
     {
@@ -50,18 +53,20 @@ public class CreditsHandler : MonoBehaviour
     private void CheckSkipDecision()
     {
         if (!isScrolling) return;
-        // if (Input.GetKeyDown(skipKey)) skipProgress = 0;
-        // else if (Input.GetKeyUp(skipKey))
-        // {
-        //     if (skipProgress == triggerSkipValue) FinishCredits();
-        //     else skipProgress = 0;
-        // }
 
-        // if (Input.GetKey(skipKey))
-        // {
-        //     skipProgress += Time.deltaTime;
-        //     skipProgress = Mathf.Min(skipProgress, triggerSkipValue);
-        // }
+        if (Keyboard.current[skipKey].wasPressedThisFrame) skipProgress = 0;
+        else if (Keyboard.current[skipKey].wasReleasedThisFrame)
+        {
+            if (skipProgress == triggerSkipValue) FinishCredits();
+            else skipProgress = 0;
+        }
+        if (Keyboard.current[skipKey].isPressed)
+        {
+
+            skipProgress += Time.deltaTime;
+            skipProgress = Mathf.Min(skipProgress, triggerSkipValue);
+        }
+
         if (skipHoldProgress) skipHoldProgress.fillAmount = MathUtils.Map(skipProgress, 0, triggerSkipValue, 0, 1);
 
 
@@ -70,14 +75,19 @@ public class CreditsHandler : MonoBehaviour
     private void SetScrollSpeed()
     {
         if (!isScrolling) return;
-        // if (Input.GetKeyDown(fasterKey)) scrollSpeed *= scrollSpeedMultiplier;
-        // else if (Input.GetKeyUp(fasterKey)) scrollSpeed = originalSpeed;
-        // if (Input.GetKey(fasterKey))
-        // {
-        //     scrollSpeed += Time.deltaTime * scrollSpeedAcceleration;
-        //     scrollSpeed = Mathf.Min(scrollSpeed, maxScrollSpeed);
-        // }
+
+
+        if (Keyboard.current[fasterKey].wasPressedThisFrame) scrollSpeed *= scrollSpeedMultiplier;
+        else if (Keyboard.current[fasterKey].wasReleasedThisFrame) scrollSpeed = originalSpeed;
+
+        if (Keyboard.current[fasterKey].isPressed)
+        {
+            scrollSpeed += Time.deltaTime * scrollSpeedAcceleration;
+            scrollSpeed = Mathf.Min(scrollSpeed, maxScrollSpeed);
+        }
+
         if (fastForwardProgress) fastForwardProgress.fillAmount = MathUtils.Map(scrollSpeed, originalSpeed, maxScrollSpeed, 0, 1);
+
 
     }//Closes SetScrollSpeed method
 
@@ -112,14 +122,12 @@ public class CreditsHandler : MonoBehaviour
     {
         if (!fastForwardLabel) return;
         fastForwardLabel.text = "<b>[ " + fasterKey.ToString() + " ]</b>" + " " + label;
-        // fastForwardLabel.transform.parent.GetComponent<ContentSizeFitter>().UpdateContentSizeFitter();
     }//Closes UpdateFastForwardLabel method
 
     public void UpdateSkipLabel(string label)
     {
         if (!skipLabel) return;
         skipLabel.text = "<b>[ " + skipKey.ToString() + " ]</b>" + " " + label;
-        // skipLabel.transform.parent.GetComponent<ContentSizeFitter>().UpdateContentSizeFitter();
     }//Closes UpdateFastForwardLabel method
 
 

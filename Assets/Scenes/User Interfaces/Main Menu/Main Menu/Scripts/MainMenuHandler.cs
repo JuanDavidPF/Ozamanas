@@ -7,7 +7,7 @@ public class MainMenuHandler : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    private static bool sawIntro;
+
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class MainMenuHandler : MonoBehaviour
 
     private void Start()
     {
-        if (sawIntro) SkipIntro();
+
     }//Closes Start method
 
     void Update()
@@ -30,9 +30,5 @@ public class MainMenuHandler : MonoBehaviour
         if (animator) animator.SetTrigger("Skip");
     }//Closes SkipIntro method
 
-    public void SawIntro()
-    {
-        sawIntro = true;
-    }//Closes SawIntro method
 
 }//Closes MainMenuHandler method
