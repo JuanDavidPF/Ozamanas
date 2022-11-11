@@ -51,9 +51,9 @@ namespace Ozamanas.Board
         public UnityEvent<HumanMachine> OnMachineEntered;
         public UnityEvent<HumanMachine> OnMachineExited;
 
-        private void Awake()
+        private void Start()
         {
-            Debug.Log("Cell Awake");
+
             OnCellDataChanged?.Invoke(m_data);
             if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method

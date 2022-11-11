@@ -30,7 +30,7 @@ namespace Ozamanas.Levels
         public void SpawnLevel()
         {
             if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
-            Debug.Log(levelSelected.level.board);
+
             currentLevel = Instantiate(levelSelected.level.board);
 
         }//Closes SpawnLevel method

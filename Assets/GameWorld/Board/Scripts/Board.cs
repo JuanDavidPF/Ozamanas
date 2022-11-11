@@ -31,16 +31,7 @@ namespace Ozamanas.Board
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
 
-        private void SetReference()
-        {
-            if (reference && reference != this)
-            {
-                Debug.LogWarning("A Board reference is already load up, try to unload the previous reference first");
-                Destroy(gameObject);
-            }
 
-            reference = this;
-        }//Closes SetReference method
 
         private void BakeCollections()
         {
@@ -286,7 +277,8 @@ namespace Ozamanas.Board
 
         private void Awake()
         {
-            SetReference();
+            if (reference) Destroy(reference.gameObject);
+            reference = this;
             grid = GetComponent<Grid>();
 
 
@@ -314,7 +306,6 @@ namespace Ozamanas.Board
                 cell.visuals.gameObject.SetActive(true);
                 yield return cooldown;
             }
-
             OnBoardCreated?.Invoke();
         }//Closes HandleBoardCreation method
 

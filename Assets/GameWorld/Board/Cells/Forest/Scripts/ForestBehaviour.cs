@@ -35,6 +35,10 @@ namespace Ozamanas.Forest
         [SerializeField] private List<GameObject> bushes = new List<GameObject>();
         [SerializeField] private List<Transform> bushesPositions = new List<Transform>();
 
+
+        [SerializeField] private List<TreePack> treePack = new List<TreePack>();
+        [SerializeField] private List<DummyTree> dummyTree = new List<DummyTree>();
+
         private void Awake()
         {
             cellReference = GetComponent<Cell>();
@@ -46,7 +50,6 @@ namespace Ozamanas.Forest
             PopulateBushes();
             SelectPack();
             PopulateTrees();
-
             StartForestByToken();
         }
 
@@ -56,26 +59,27 @@ namespace Ozamanas.Forest
             TreePack[] temp = GetComponentsInChildren<TreePack>();
 
             int random = UnityEngine.Random.Range(0, temp.Length);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (i != random) temp[i].gameObject.SetActive(false);
-            }
 
+            foreach (var tree in treePack)
+            {
+                tree.gameObject.SetActive(false);
+            }
         }
+
+
         private void PopulateTrees()
         {
-            DummyTree[] temp = GetComponentsInChildren<DummyTree>();
-            for (int i = 0; i < temp.Length; i++)
+            foreach (var temp in dummyTree)
             {
                 TreeContainer container = new TreeContainer();
-                container.treeTransform = temp[i].transform;
-                container.forestTree = temp[i].ForestTree;
-                container.expansionTree = temp[i].ExpansionTree;
-                container.trunk = temp[i].Trunk;
+                container.treeTransform = temp.transform;
+                container.forestTree = temp.ForestTree;
+                container.expansionTree = temp.ExpansionTree;
+                container.trunk = temp.Trunk;
                 container.currentTree = null;
-                container.tree_type = temp[i].Tree_type;
+                container.tree_type = temp.Tree_type;
                 trees.Add(container);
-                temp[i].gameObject.SetActive(false);
+                temp.gameObject.SetActive(false);
             }
         }
 
