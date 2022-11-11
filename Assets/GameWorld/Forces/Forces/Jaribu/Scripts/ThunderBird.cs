@@ -1,28 +1,19 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 namespace Ozamanas.Forces
 {
     public class ThunderBird : MonoBehaviour
     {
-        [SerializeField] private ParticleSystem thunder;
-        private Tween birdTween;
-        [SerializeField] private float thunderSpeed = 2f;
-
+        public UnityEvent OnRelease;
         public void Start()
         {
-            birdTween = transform.DOMoveY(0, thunderSpeed, false).SetSpeedBased();
-            thunder.Play();
-            birdTween.OnComplete(() => Destroy(gameObject));
+            transform.position = new Vector3(transform.position.x,0,transform.position.z);   
+            OnRelease?.Invoke();
+            Destroy(gameObject,1f);
         }
 
-        private void OnDestroy()
-        {
-
-            birdTween.Kill();
-
-
-
-        }
+   
     }
 }

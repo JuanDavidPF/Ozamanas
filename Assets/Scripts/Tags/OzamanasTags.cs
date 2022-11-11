@@ -6,6 +6,13 @@ using UnityEngine;
 namespace Ozamanas.Tags
 {
 
+ public enum PhysicMode
+        {
+            Kinematic,
+            Physical,
+            Intelligent,
+        }
+
         public enum MachineType
     {
         Aerial = -1,

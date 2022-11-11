@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
 using Ozamanas.Machines;
+using Ozamanas.Tags;
 using UnityEngine;
 
 namespace Ozamanas
@@ -27,6 +28,8 @@ namespace Ozamanas
 
         private void Awake()
         {
+            yOffset = Random.Range(0f, .01f);
+
             _t = transform;
             yOffset = Random.Range(0f, .01f);
             trail = GetComponent<TrailRenderer>();
@@ -65,7 +68,7 @@ namespace Ozamanas
         {
             return cell && cell.data
             && allowedCells.Contains(cell.data)
-            && (!parentPhysics || parentPhysics.state == MachinePhysicsManager.PhysicMode.Intelligent);
+            && (!parentPhysics || parentPhysics.state == PhysicMode.Intelligent);
         }//Closes Validate method
 
         [ContextMenu("Reset")]

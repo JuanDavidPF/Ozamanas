@@ -4,6 +4,7 @@ using UnityEngine;
 using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Forces
 {
@@ -21,7 +22,6 @@ namespace Ozamanas.Forces
         [SerializeField] private List<Transform> thunderPositions;
         [SerializeField] private GameObject thunder;
 
-        List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
         private Tween birdTween;
 
         private Animator animator;
@@ -131,13 +131,10 @@ namespace Ozamanas.Forces
         {
             if (!machine || machine.tag != "Machine") return;
 
-            machine.TakeDamage(damageAmount);
-            machinesAffected.Remove(machine);
-
-
-
             if (machine.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
+                if(physics.state == PhysicMode.Physical) return;
+                machine.TakeDamage(damageAmount);
                 physics.SetPhysical();
                 if (physics.rb)
                 {
