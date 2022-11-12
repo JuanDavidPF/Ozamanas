@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6611325317734820038
+--- !u!1 &553464385726226054
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5804002980509332092}
-  - component: {fileID: 7432116279191682521}
-  - component: {fileID: 4665967984417622291}
-  - component: {fileID: 894426585815877032}
+  - component: {fileID: 929320704090489916}
+  - component: {fileID: 4272306176528862105}
+  - component: {fileID: 2066783467863359315}
+  - component: {fileID: 5766803838918161384}
   m_Layer: 0
-  m_Name: TileUnity1
+  m_Name: TileUnity1_Hollow
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &5804002980509332092
+--- !u!4 &929320704090489916
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
+  m_GameObject: {fileID: 553464385726226054}
   m_LocalRotation: {x: 0, y: 0.25038, z: 0, w: 0.9681477}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8299999, y: 0.8299999, z: 0.8299999}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1417767300084090138}
+  - {fileID: 5747299479384929114}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 29, z: 0}
---- !u!33 &7432116279191682521
+--- !u!33 &4272306176528862105
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
-  m_Mesh: {fileID: -5068708522842800093, guid: 374e9c84080b8ea4e8603cccf90b8680, type: 3}
---- !u!23 &4665967984417622291
+  m_GameObject: {fileID: 553464385726226054}
+  m_Mesh: {fileID: -6484202892683101100, guid: a62a2434e348b1941b6d79688cad46fa, type: 3}
+--- !u!23 &2066783467863359315
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
+  m_GameObject: {fileID: 553464385726226054}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -85,25 +85,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &894426585815877032
+--- !u!65 &5766803838918161384
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6611325317734820038}
+  m_GameObject: {fileID: 553464385726226054}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.3896731, y: 0.1382525, z: 1.2056208}
   m_Center: {x: -0.0013663826, y: 0.44548523, z: -0.001063979}
---- !u!1001 &4793381260455989109
+--- !u!1001 &2228133273368115509
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5804002980509332092}
+    m_TransformParent: {fileID: 929320704090489916}
     m_Modifications:
     - target: {fileID: 5848321061880531567, guid: 2c2f401e0bcc08e41b4e68a9afea8b08,
         type: 3}
@@ -118,7 +118,7 @@ PrefabInstance:
     - target: {fileID: 5848321061880531567, guid: 2c2f401e0bcc08e41b4e68a9afea8b08,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.509
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 5848321061880531567, guid: 2c2f401e0bcc08e41b4e68a9afea8b08,
         type: 3}
@@ -167,9 +167,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c2f401e0bcc08e41b4e68a9afea8b08, type: 3}
---- !u!4 &1417767300084090138 stripped
+--- !u!4 &5747299479384929114 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5848321061880531567, guid: 2c2f401e0bcc08e41b4e68a9afea8b08,
     type: 3}
-  m_PrefabInstance: {fileID: 4793381260455989109}
+  m_PrefabInstance: {fileID: 2228133273368115509}
   m_PrefabAsset: {fileID: 0}
