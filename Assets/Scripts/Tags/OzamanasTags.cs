@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Ozamanas.Tags
 {
 
+
  public enum PhysicMode
         {
             Kinematic,

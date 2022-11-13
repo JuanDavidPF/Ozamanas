@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -46,6 +47,8 @@ MonoBehaviour:
     audioClipManagementMode: 1
     audioClipUnloadInterval: 60
     overrideAudioClipManagement: 0
+    volume: 1
+    hasVolume: 1
   buses:
   - id: 134839093
     name: Sample2Bus
@@ -56,6 +59,7 @@ MonoBehaviour:
     polyphony: 4
     unfolded: 1
     allowVoiceStealing: 1
+    playLimitInterval: 0
   busIndices: 00000000
   soundManagementMode: 1
   soundUnloadInterval: 60
