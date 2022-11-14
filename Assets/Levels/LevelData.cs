@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Levels
 {
@@ -17,6 +18,11 @@ namespace Ozamanas.Levels
         public IntegerReference creationRate;
         public IntegerReference wavesAmount;
         public IntegerReference wavesCooldown;
+        public LevelState state = LevelState.Blocked;
+
+        public float index =0f;
+
+        public string levelName;
 
         public void SelectLevel()
         {

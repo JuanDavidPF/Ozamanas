@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Ozamanas.Board
+namespace Ozamanas.Forest
 {
 public class DestructubleSimple : MonoBehaviour
 {

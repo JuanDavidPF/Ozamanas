@@ -6,6 +6,14 @@ using UnityEngine;
 namespace Ozamanas.Tags
 {
 
+public enum LevelState
+{
+
+    Blocked = 0,
+    Playable = 1,
+    Finished = 2,
+
+}
 
  public enum PhysicMode
         {
