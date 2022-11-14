@@ -11,7 +11,10 @@ namespace Ozamanas.Board
     public class CellData : ScriptableObject
     {
         [Header("UI Config")]
-        public Sprite machineIcon;
+        public Sprite cellIcon;
+        public Sprite cellArt;
+        public Sprite cellCard;
+
         public LocalizedString cellName;
         public LocalizedString cellDescription;
 
