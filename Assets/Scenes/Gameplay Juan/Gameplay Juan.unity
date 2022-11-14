@@ -999,6 +999,7 @@ Transform:
   - {fileID: 1095944856}
   - {fileID: 83561016}
   - {fileID: 255114937}
+  - {fileID: 1844583985}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6501,6 +6502,136 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outlineLayers: {fileID: 11400000, guid: 059d229f23209a74687769672d1084b8, type: 2}
   _content: []
+--- !u!1 &1844583984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1844583985}
+  - component: {fileID: 1844583986}
+  - component: {fileID: 1844583987}
+  - component: {fileID: 1844583989}
+  - component: {fileID: 1844583988}
+  m_Layer: 0
+  m_Name: EndGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1844583985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844583984}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1420631926}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1844583986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844583984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6e14192947573419ae92f573ee331a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneSwitcher: {fileID: 1844583988}
+  winSceneToLoad: Win Menu
+  loseSceneToLoad: Lose Menu
+  levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
+--- !u!114 &1844583987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844583984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  events:
+  - {fileID: 11400000, guid: e3b694abcaac6774e84ec894048de981, type: 2}
+  mode: 1
+  maxInvocations: 1
+  callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1844583986}
+        m_TargetAssemblyTypeName: Ozamanas.World.EndGameManager, Ozamanas.World
+        m_MethodName: CallDefeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1844583988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844583984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdee6b06641d0244da2263f94e473f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  sceneToLoad: 
+  mode: 1
+--- !u!114 &1844583989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844583984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  events:
+  - {fileID: 11400000, guid: d6128669287144d498a2201f88457e65, type: 2}
+  mode: 1
+  maxInvocations: 1
+  callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1844583986}
+        m_TargetAssemblyTypeName: Ozamanas.World.EndGameManager, Ozamanas.World
+        m_MethodName: CallVictory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2008263066
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ using Ozamanas.Extenders;
 namespace Ozamanas.Forest
 {
     [RequireComponent(typeof(Cell))]
+
     public class ForestBehaviour : MonoBehaviour
     {
         [Serializable]
@@ -32,12 +33,12 @@ namespace Ozamanas.Forest
         [SerializeField] private CellData forestID;
         [SerializeField] private CellData barrierID;
         // Start is called before the first frame update
+                [Space(15)]
+        [Header("Forest Lists")]
         [SerializeField] private List<GameObject> bushes = new List<GameObject>();
         [SerializeField] private List<Transform> bushesPositions = new List<Transform>();
-
-
-        [SerializeField] private List<TreePack> treePack = new List<TreePack>();
-        [SerializeField] private List<DummyTree> dummyTree = new List<DummyTree>();
+        [SerializeField] private List<TreePack> treePacks = new List<TreePack>();
+        [SerializeField] private List<DummyTree> dummyTrees = new List<DummyTree>();
 
         private void Awake()
         {
@@ -46,30 +47,29 @@ namespace Ozamanas.Forest
 
         void Start()
         {
-
             PopulateBushes();
             SelectPack();
             PopulateTrees();
             StartForestByToken();
         }
 
-
         private void SelectPack()
         {
-            TreePack[] temp = GetComponentsInChildren<TreePack>();
+            int random = UnityEngine.Random.Range(0, treePacks.Count);
 
-            int random = UnityEngine.Random.Range(0, temp.Length);
-
-            foreach (var tree in treePack)
+            foreach (var tree in treePacks)
             {
                 tree.gameObject.SetActive(false);
             }
-        }
+
+            treePacks[random].gameObject.SetActive(true);
+            dummyTrees = treePacks[random].DummyTreeList;
+        }   
 
 
         private void PopulateTrees()
         {
-            foreach (var temp in dummyTree)
+            foreach (var temp in dummyTrees)
             {
                 TreeContainer container = new TreeContainer();
                 container.treeTransform = temp.transform;
