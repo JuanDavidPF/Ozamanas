@@ -9,8 +9,8 @@ namespace Ozamanas.Machines
 public class HumanMachineToken : ScriptableObject
 {
     public Sprite machineIcon;
-    public Sprite codexArt;
-    public Sprite codexCard;
+    public Sprite machineArt;
+    public Sprite machineCard;
     public LocalizedString machineName = new LocalizedString();
     public LocalizedString machineDescription = new LocalizedString();
     //public NotificationStruct Notification_MachineSpawned;

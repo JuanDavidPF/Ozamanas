@@ -24,6 +24,9 @@ namespace Ozamanas.Forces
         public Sprite forceArt;
         public Sprite forceCard;
 
+        public Sprite forceConstellation;
+        public GameObject stars;
+
         [Space(10)]
         [Header("Config")]
         public List<CellData> whiteList = new List<CellData>();
