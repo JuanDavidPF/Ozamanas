@@ -12,8 +12,13 @@ namespace Broccoli.Pipe {
     [System.Serializable]
     public class VariationGroup {
         #region Vars
+        /// <summary>
+        /// Characters used to generate a random name for the framing.
+        /// </summary>
+        const string glyphs= "abcdefghijklmnopqrstuvwxyz0123456789";
         public int id = 0;
         public string name = "";
+        public bool enabled = true;
         public int seed = 0;
         public int minFrequency = 1;
         public int maxFrequency = 4;
@@ -29,8 +34,8 @@ namespace Broccoli.Pipe {
         public float orientationRandomness = 0f;
         public float minScaleAtCenter = 1f;
         public float maxScaleAtCenter = 1f;
-        public float minScaleAtPeriphery = 1f;
-        public float maxScaleAtPeriphery = 1f;
+        public float minScaleAtBorder = 1f;
+        public float maxScaleAtBorder = 1f;
         public enum BendMode {
             CenterToPeriphery,
             PeripheryToCenter,
@@ -40,8 +45,8 @@ namespace Broccoli.Pipe {
         public BendMode bendMode = BendMode.CenterToPeriphery;
         public float minBendAtCenter = 0f;
         public float maxBendAtCenter = 0f;
-        public float minBendAtPeriphery = 0f;
-        public float maxBendAtPeriphery = 0f;
+        public float minBendAtBorder = 0f;
+        public float maxBendAtBorder = 0f;
         #endregion
 
         #region Constructor
@@ -56,6 +61,7 @@ namespace Broccoli.Pipe {
             VariationGroup clone = new VariationGroup ();
             clone.id = id;
             clone.name = name;
+            clone.enabled = enabled;
             clone.seed = seed;
             clone.minFrequency = minFrequency;
             clone.maxFrequency = maxFrequency;
@@ -65,14 +71,26 @@ namespace Broccoli.Pipe {
             clone.orientationRandomness = orientationRandomness;
             clone.minScaleAtCenter = minScaleAtCenter;
             clone.maxScaleAtCenter = maxScaleAtCenter;
-            clone.minScaleAtPeriphery = minScaleAtPeriphery;
-            clone.maxScaleAtPeriphery = maxScaleAtPeriphery;
+            clone.minScaleAtBorder = minScaleAtBorder;
+            clone.maxScaleAtBorder = maxScaleAtBorder;
             clone.bendMode = bendMode;
             clone.minBendAtCenter = minBendAtCenter;
             clone.maxBendAtCenter = maxBendAtCenter;
-            clone.minBendAtPeriphery = minBendAtPeriphery;
-            clone.maxBendAtPeriphery = maxBendAtPeriphery;
+            clone.minBendAtBorder = minBendAtBorder;
+            clone.maxBendAtBorder = maxBendAtBorder;
             return clone;
+        }
+        /// <summary>
+		/// Get a random string name.
+		/// </summary>
+		/// <param name="length">Number of characters.</param>
+		/// <returns>Random string name.</returns>
+        public static string GetRandomName (int length = 6) {
+            string randomName = "";
+            for(int i = 0; i < 6; i++) {
+                randomName += glyphs [Random.Range (0, glyphs.Length)];
+            }
+            return randomName;
         }
         #endregion
     }

@@ -28,8 +28,8 @@ namespace Broccoli.Base
 		public static string minorVersion = "5";
 		/// <summary>
 		/// The patch version.
+		public static string patchVersion = "10";
 		/// </summary>
-		public static string patchVersion = "9";
 		/// <summary>
 		/// The complete version string of this extension.
 		/// </summary>
