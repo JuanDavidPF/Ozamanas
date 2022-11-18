@@ -22,11 +22,14 @@ namespace Ozamanas.Forces
          [SerializeField] public UnityEvent OnDestruction;
 
          private Cell currentCell;
+
+         private Animator animator;
         protected override void Awake()
         {
             base.Awake();
             collider = GetComponentInChildren<Collider>();
             collider.enabled = false;
+            animator = GetComponent<Animator>();
         }
 
         public override void FirstPlacement()
@@ -38,9 +41,11 @@ namespace Ozamanas.Forces
 
             if (barrierID) currentCell.data = barrierID;
 
+            animator.SetTrigger("OnRelease");
+
             transform.position = currentCell.worldPosition;
 
-            reptileTween = transform.DOScaleY(.5f, .5f).From(0);
+            reptileTween = transform.DOScaleY(.5f, 1.1f).From(0);
 
             reptileTween.OnComplete(() =>
             {

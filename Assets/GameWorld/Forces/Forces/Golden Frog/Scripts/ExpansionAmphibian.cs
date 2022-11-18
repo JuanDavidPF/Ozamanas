@@ -7,6 +7,7 @@ using UnityEngine;
 using DG.Tweening;
 using JuanPayan.References;
 using JuanPayan.Utilities;
+using UnityEngine.Events;
 namespace Ozamanas.Forces
 {
     public class ExpansionAmphibian : AncientForce
@@ -33,7 +34,7 @@ namespace Ozamanas.Forces
 
         }
 
-
+         [SerializeField] public UnityEvent OnEnterCell;
 
         [Space(10)]
         [Header("Expansion Parameters")]
@@ -45,6 +46,16 @@ namespace Ozamanas.Forces
         int3 reptileOrigin;
         int3 reptileDestiny;
         private List<int3> reptilePath = new List<int3>();
+
+
+        private Animator animator;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            animator = GetComponent<Animator>();
+
+        }
 
         private void Expand()
         {
@@ -104,7 +115,9 @@ namespace Ozamanas.Forces
 
             float3 positionReference = transform.position;
 
+OnEnterCell?.Invoke();
 
+animator.SetTrigger("OnRelease");
 
             reptileTween = DOTween.To(setter: value =>
                        {
@@ -112,6 +125,7 @@ namespace Ozamanas.Forces
 
                            transform.LookAt(positionOnParabol);
                            transform.position = positionOnParabol;
+                        
                        }, startValue: 0, endValue: 1, duration: speed.value)
                .SetSpeedBased(true);
 
@@ -182,6 +196,9 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
             if (!isPlaced) return;
+
+
+
             Cell cellArrived = other.transform.GetComponentInParent<Cell>();
 
             if (!cellArrived
@@ -192,10 +209,14 @@ namespace Ozamanas.Forces
 
             reptilePath.Remove(cellArrived.gridPosition);
 
+             
+
             if (!TryMutateCell(cellArrived)) if (mode == ExpansionMode.Throw) Destroy(gameObject);
 
             if (!cellArrived.gridPosition.Equals(reptileDestiny)) Jump();
             else Destroy(gameObject);
+
+           
 
         }//Closes OnTriggerEnter method
 
