@@ -15,6 +15,7 @@ namespace Ozamanas.Machines
         [Space(15)]
         [SerializeField] private int m_armorPoints = 1;
 
+        private HumanMachine machine; 
         public int armorPoints
         {
             get { return m_armorPoints; }
@@ -49,6 +50,7 @@ namespace Ozamanas.Machines
 
         void Awake()
         {
+            machine = GetComponent<HumanMachine>();
             _t = transform;
             machineAttributes = GetComponent<MachineAttributes>();
 
@@ -124,7 +126,7 @@ namespace Ozamanas.Machines
                     rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
                 }
             }
-
+            machine.Machine_status = Tags.MachineState.Destroyed;
             OnMachineDestroyed?.Invoke();
             gameObject.SetActive(false);
             Destroy(gameObject);

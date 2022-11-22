@@ -24,7 +24,7 @@ namespace Ozamanas.Machines
         public NavMeshAgent nma;
         public Rigidbody rb;
         public HumanMachine machine;
-        public Transform collisionVFX;
+        public Transform physicsVFX;
         public Collider physicsCollider;
         public UnityEvent OnActivatePhysics;
 
@@ -94,8 +94,10 @@ namespace Ozamanas.Machines
 
             foreach (ContactPoint contact in collision.contacts)
             {
-                collisionVFX.position = contact.point; //new Vector3(contact.point.x,collisionVFX.position.y,contact.point.z);
-                collisionVFX.rotation = Quaternion.identity;
+
+                if (!physicsVFX) continue;
+                physicsVFX.position = contact.point; //new Vector3(contact.point.x,collisionVFX.position.y,contact.point.z);
+                physicsVFX.rotation = Quaternion.identity;
                 OnActivatePhysics?.Invoke();
             }
         }

@@ -46,6 +46,8 @@ namespace Ozamanas.Machines
             }
         }
 
+        public MachineState Machine_status { get => machine_status; set => machine_status = value; }
+
         [Space(20)]
         [Header("Events")]
 
@@ -55,7 +57,7 @@ namespace Ozamanas.Machines
         public UnityEvent<Cell> OnCurrentCellChanged;
         public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
         public void SetMachineStatus(MachineState status)
-        { machine_status = status; }
+        { Machine_status = status; }
 
 
         void Awake()
@@ -77,48 +79,48 @@ namespace Ozamanas.Machines
         // Check Functions
         public bool CheckIfBlocked()
         {
-            return machine_status == MachineState.Blocked;
+            return Machine_status == MachineState.Blocked;
         }
 
         public bool CheckIfIdle()
         {
-            return machine_status == MachineState.Idling;
+            return Machine_status == MachineState.Idling;
         }
         public bool CheckIfRunning()
         {
-            return machine_status == MachineState.Running;
+            return Machine_status == MachineState.Running;
         }
         public bool CheckIfActing()
         {
-            return machine_status == MachineState.Acting;
+            return Machine_status == MachineState.Acting;
         }
 
         // Set Functions
         public void SetBlockedStatus()
         {
-            machine_status = MachineState.Blocked;
-            animator.SetInteger("MachineState", (int)machine_status);
+            Machine_status = MachineState.Blocked;
+            animator.SetInteger("MachineState", (int)Machine_status);
             OnBlockedMachine?.Invoke();
         }
 
         public void SetIdlingStatus()
         {
-            machine_status = MachineState.Idling;
-            animator.SetInteger("MachineState", (int)machine_status);
+            Machine_status = MachineState.Idling;
+            animator.SetInteger("MachineState", (int)Machine_status);
             OnIddlingMachine?.Invoke();
         }
 
         public void SetRunningStatus()
         {
-            machine_status = MachineState.Running;
-            animator.SetInteger("MachineState", (int)machine_status);
+            Machine_status = MachineState.Running;
+            animator.SetInteger("MachineState", (int)Machine_status);
             OnRunningMachine?.Invoke();
         }
 
         public void SetActingStatus()
         {
-            machine_status = MachineState.Acting;
-            animator.SetInteger("MachineState", (int)machine_status);
+            Machine_status = MachineState.Acting;
+            animator.SetInteger("MachineState", (int)Machine_status);
         }
 
         #endregion

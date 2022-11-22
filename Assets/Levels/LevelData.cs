@@ -24,6 +24,8 @@ namespace Ozamanas.Levels
 
         public string levelName;
 
+        public string levelSceneName;
+
         public void SelectLevel()
         {
             if (saveAt) saveAt.level = this;

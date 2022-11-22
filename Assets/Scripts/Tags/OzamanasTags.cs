@@ -64,7 +64,9 @@ public enum LevelState
         Running = 1,
         Blocked = 2,
         Idling = 3,
-        Acting = 4
+        Acting = 4,
+
+        Destroyed = 5
     }
 
      public enum TreeType
