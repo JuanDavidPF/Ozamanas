@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
+using Ozamanas.Tags;
 
 namespace Ozamanas.World
 {
@@ -10,18 +11,27 @@ namespace Ozamanas.World
         [SerializeField] GameEvent VictoryEvent;
         public void VerifyGameEndingConditions()
         {
+           
+            
 
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
+
+            
 
             foreach (var machine in Machines.HumanMachine.machines)
             {
                 if (!machine) continue;
 
-                if (machine.TryGetComponent(out Machines.MachineMovement movement))
+                 
+
+                if (machine.TryGetComponent(out Machines.HumanMachine humanMachine))
                 {
-                    if (!movement.CheckIfMachineIsBlocked()) return;
+                   
+                    if (humanMachine.Machine_status != MachineState.Blocked && humanMachine.Machine_status != MachineState.Destroyed  ) return;
+
                 }
             }
+
 
             if (VictoryEvent) VictoryEvent.Invoke();
 

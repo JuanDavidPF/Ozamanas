@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JuanPayan.Helpers;
+using System;
 
 namespace Ozamanas.Levels
 {
     public class LevelHolder : MonoBehaviour
     {
         public LevelReference levelSelected;
+
+        public SceneSwitcher sceneSwitcher;
 
         private static GameObject m_currentLevel;
         public static GameObject currentLevel
@@ -27,13 +31,33 @@ namespace Ozamanas.Levels
             }
         }
 
+        void Awake()
+        {
+            sceneSwitcher = GetComponent<SceneSwitcher>();
+        }
+
         public void SpawnLevel()
         {
             if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
 
             currentLevel = Instantiate(levelSelected.level.board);
 
-        }//Closes SpawnLevel method
+        }
+        
+        public void InstantiateLevel()
+        {
+
+  
+                if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
+
+                if(String.IsNullOrEmpty(levelSelected.level.levelSceneName)) return;
+
+                sceneSwitcher.SceneToLoad = levelSelected.level.levelSceneName;
+
+                sceneSwitcher.Behaviour();
+        }
+        
+        //Closes SpawnLevel method
 
 
     }//Closes LevelHolder method
