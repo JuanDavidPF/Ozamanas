@@ -14,20 +14,21 @@ namespace JuanPayan.Helpers
         [SerializeField] private LoadSceneMode mode;
 
         public string SceneToLoad { get => sceneToLoad; set => sceneToLoad = value; }
+        public LoadSceneMode Mode { get => mode; set => mode = value; }
 
         public override void Behaviour()
         {
             Debug.Log("Attempting to load scene: " + SceneToLoad);
             if (!IsAddeableToStack()) return;
-            if (mode == LoadSceneMode.Single) SceneStackManager.screenStack.Clear();
+            if (Mode == LoadSceneMode.Single) SceneStackManager.screenStack.Clear();
 
             SceneStackManager.screenStack.Add(SceneToLoad);
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(SceneToLoad, mode);
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(SceneToLoad, Mode);
         }//Closes Behaviour method
 
         private bool IsAddeableToStack()
         {
-            if (mode == LoadSceneMode.Single) return true;
+            if (Mode == LoadSceneMode.Single) return true;
 
 
             if (SceneStackManager.screenStack.Contains(SceneToLoad)) return false;
