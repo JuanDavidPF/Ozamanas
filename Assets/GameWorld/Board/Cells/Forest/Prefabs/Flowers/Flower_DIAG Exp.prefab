@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6538122738497358039}
   - component: {fileID: 3166057101161977605}
-  - component: {fileID: 1769676292383193223}
   - component: {fileID: 6900510798317900024}
+  - component: {fileID: 1928708668665823168}
   m_Layer: 0
-  m_Name: polySurface265
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,20 +90,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.02655801, y: 0.0052208044, z: 0.00011357665}
     m_Extent: {x: 0.028993206, y: 0.01920156, z: 0.010519218}
   m_DirtyAABB: 0
---- !u!64 &1769676292383193223
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086518948225962069}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2210741166738272985, guid: b2eba330af77c29408efeff523f85eb9, type: 3}
 --- !u!114 &6900510798317900024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +109,19 @@ MonoBehaviour:
   OnDestruction:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &1928708668665823168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086518948225962069}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.021112889, y: 0.057986453, z: 0.021038458}
+  m_Center: {x: -0.007020601, y: 0.026558027, z: -0.00011357666}
 --- !u!1 &2400288646917752426
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 3122823844388225881}
   - component: {fileID: 126186905943435833}
   - component: {fileID: 3870052354302917001}
+  - component: {fileID: 8325506729842898965}
   m_Layer: 0
   m_Name: tractorShovel
   m_TagString: Machine
@@ -148,8 +149,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machine_status: 0
   machine_token: {fileID: 0}
-  flag: {fileID: 511473094932665437}
   m_activeTraits: []
+  OnBlockedMachine:
+    m_PersistentCalls:
+      m_Calls: []
+  OnIddlingMachine:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRunningMachine:
+    m_PersistentCalls:
+      m_Calls: []
   OnCurrentCellChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -180,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fecf47e7717d394aad78b78594168a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  humanBase: {fileID: 0}
   mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   secondObjective: {fileID: 0}
   secondObjectiveRange: 0
@@ -191,15 +201,12 @@ MonoBehaviour:
   currentSpeed: 0
   currentAltitude: 0
   height: 5
+  timeMaxToReachDestination: 5
   result: 0
   currentDestination: {fileID: 0}
   nextCellOnPath: {fileID: 0}
   pathToDestination: []
   debugPathFinding: 0
-  debugOutline:
-    mode: 0
-    outlineColor: {r: 0, g: 0, b: 0, a: 1}
-    width: 6
 --- !u!195 &613886794944842997
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -293,9 +300,9 @@ MonoBehaviour:
   maxArmorPoints: 1
   doubleDamage: 0
   invulnerable: 0
-  OnMachineDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  replacement: {fileID: 0}
+  lifeSpan: 2
+  explosionPower: 2
   OnMachineDamaged:
     m_PersistentCalls:
       m_Calls: []
@@ -318,6 +325,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnMachineDisarm:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineDestroyed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &126186905943435833
@@ -361,6 +371,59 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &8325506729842898965
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307827077080126711}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &511473094932665437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed6b60ed17f3e9c4a980628aa07efd64,
+    type: 3}
+  m_PrefabInstance: {fileID: 853563795965782284}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 887999389787868903}
+  m_Layer: 0
+  m_Name: 'flagCheckersSmall (Missing Prefab with guid: ed6b60ed17f3e9c4a980628aa07efd64)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &887999389787868903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed6b60ed17f3e9c4a980628aa07efd64,
+    type: 3}
+  m_PrefabInstance: {fileID: 853563795965782284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511473094932665437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084892198633983565}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2301607515106509846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,18 +1391,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed6b60ed17f3e9c4a980628aa07efd64, type: 3}
---- !u!1 &511473094932665437 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed6b60ed17f3e9c4a980628aa07efd64,
-    type: 3}
-  m_PrefabInstance: {fileID: 853563795965782284}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &887999389787868903 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed6b60ed17f3e9c4a980628aa07efd64,
-    type: 3}
-  m_PrefabInstance: {fileID: 853563795965782284}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1155206254655926491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1480,12 +1531,12 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
