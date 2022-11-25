@@ -50,7 +50,7 @@ namespace Ozamanas.Energy
         [SerializeField] private CellData inactiveID;
         [SerializeField] private CellData activeID;
         [SerializeField] private CellData emptyID;
-
+        [SerializeField] private CellData invadedID;
 
         [Space(15)]
         [Header("Events")]
@@ -145,6 +145,12 @@ namespace Ozamanas.Energy
                 SetLiquidColor(inactiveColor);
                 SetVisualsForInactivePool();
             }
+            else if (data == invadedID)
+            {
+                generatorReference.StopGeneration();
+                SetLiquidColor(inactiveColor);
+                 SetVisualsForInvadedPool();
+            }
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
 
@@ -166,7 +172,7 @@ namespace Ozamanas.Energy
             for (int i = 0; i < flowers.Count; i++)
             {
                DestroyCurrentFlower(i);
-                if( i <flowersLimit)
+                if(i<flowersLimit)
                {
                 GameObject temp = Instantiate(flowers[i].inactiveFlower, visuals);
                 temp.transform.position = flowers[i].flowerTransform.position;
@@ -216,11 +222,9 @@ namespace Ozamanas.Energy
         public void OnMachineEnter(HumanMachine machine)
         {
              
-            if(cellReference.data == emptyID) return;
+            if(cellReference.data == emptyID || cellReference.data == invadedID ) return;
 
-            cellReference.data = inactiveID;
-
-            SetVisualsForInvadedPool();
+            cellReference.data = invadedID;
         }
 
         public void OnMachineExit(HumanMachine machine)
@@ -228,9 +232,6 @@ namespace Ozamanas.Energy
             if(cellReference.data == emptyID) return;
 
             cellReference.data = inactiveID;
-
-           SetVisualsForInactivePool();
-            
         }
 
 

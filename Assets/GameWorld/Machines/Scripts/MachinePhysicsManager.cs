@@ -126,11 +126,10 @@ namespace Ozamanas.Machines
 
             if (other.TryGetComponent(out Cell cell))
             {
-                if(machine.CurrentCell == cell) return;   
 
                 machine.CurrentCell = cell;
                 machine.SetMachineTraitsfromCell(cell);
-                cell.SetOnMachineEnter(machine);
+                cell.OnMachineEntered.Invoke(machine);
             }
         }//Closes OnTriggerEnter method
 
@@ -142,11 +141,8 @@ namespace Ozamanas.Machines
             if (other.TryGetComponent(out Cell cell))
             {
                 if (machine.CurrentCell == cell) machine.CurrentCell = null;
-                
-                    
-                    machine.RemoveMachineTraitsFromCell(cell);
-                    cell.SetOnMachineExit(machine);
-                
+                machine.RemoveMachineTraitsFromCell(cell);
+                cell.OnMachineExited.Invoke(machine);
             }
 
         }//Closes OnTriggerExit method

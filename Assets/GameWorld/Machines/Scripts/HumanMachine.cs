@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
 using Ozamanas.Tags;
-using Ozamanas.Energy;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -250,18 +249,6 @@ namespace Ozamanas.Machines
             CurrentCell.data = token;
 
             return true;
-        }
-
-        public bool ReduceEnergyLevelOnCurrentCell()
-        {
-            if (CurrentCell == null) return false;
-
-            if(CurrentCell.TryGetComponent<EnergyGenerator>(out EnergyGenerator energyGenerator))
-            {
-                energyGenerator.currentLevel--;
-            }
-
-            return false;
         }
 
 
