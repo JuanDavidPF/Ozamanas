@@ -33,11 +33,13 @@ public enum PlayerState
 
         public enum MachineType
     {
-        Aerial = -1,
-        Terrestrial = 0,
-        Subterrestrial = 1,
-        Nautical = 2,
-        SubNautical = 3,
+        Terrestrial ,
+
+        Aerial,
+        Subterrestrial, 
+        Destructor ,
+        Boss 
+       
     }
 
     public enum MachineHierarchy

@@ -24,7 +24,6 @@ namespace Ozamanas.Machines
         {
             if (spawnQueue.Count == 0 || !spawnQueue[0]) return;
 
-
             Instantiate(spawnQueue[0], _t.position, _t.rotation);
             spawnQueue.RemoveAt(0);
         }//Closes SpawnNextMachineOnQueue method

@@ -9,9 +9,9 @@ public class DestructubleSimple : MonoBehaviour
 {
 
      private void OnTriggerEnter(Collider other)
-            {
-                if ( other.transform.tag != "Machine") return;
-                Destroy(gameObject);
-            }
+    {
+        if ( other.transform.tag != "Machine") return;
+        Destroy(gameObject);
+    }
 }
 }

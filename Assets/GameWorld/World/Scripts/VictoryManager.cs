@@ -9,14 +9,12 @@ namespace Ozamanas.World
     public class VictoryManager : MonoBehaviour
     {
         [SerializeField] GameEvent VictoryEvent;
-        public void VerifyGameEndingConditions()
+        public void VerifyConditions()
         {
-           
-            
 
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
 
-            
+            Debug.Log("VictoryManager");
 
             foreach (var machine in Machines.HumanMachine.machines)
             {
@@ -35,7 +33,20 @@ namespace Ozamanas.World
 
             if (VictoryEvent) VictoryEvent.Invoke();
 
-        }//Closes OnMachineDestroyed method
+        }
+        
+        IEnumerator VerifyVictoryConditions()
+        {
+             yield return null;
+            VerifyConditions();
+        }
+
+        public void VerifyGameEndingConditions()
+        {
+            StartCoroutine(VerifyVictoryConditions());
+        }
+        
+        //Closes OnMachineDestroyed method
 
 
     }//Closes GameEndingManager method

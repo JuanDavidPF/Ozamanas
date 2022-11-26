@@ -40,6 +40,8 @@ namespace Ozamanas.Forest
         [SerializeField] private List<TreePack> treePacks = new List<TreePack>();
         [SerializeField] private List<DummyTree> dummyTrees = new List<DummyTree>();
 
+        private List<GameObject> activeBushes = new List<GameObject>();
+
         private void Awake()
         {
             cellReference = GetComponent<Cell>();
@@ -89,7 +91,8 @@ namespace Ozamanas.Forest
 
             foreach (Transform pos in bushesPositions)
             {
-                Instantiate(bushes[UnityEngine.Random.Range(0, bushes.Count)], pos);
+               GameObject temp = Instantiate(bushes[UnityEngine.Random.Range(0, bushes.Count)], pos);
+               activeBushes.Add(temp);
             }
 
         }
@@ -196,6 +199,11 @@ namespace Ozamanas.Forest
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
+            }
+
+            foreach( GameObject bush in activeBushes)
+            {
+                Destroy(bush);
             }
         }
     }

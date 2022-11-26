@@ -5,6 +5,7 @@ using DG.Tweening;
 using Ozamanas.Extenders;
 using Ozamanas.Board;
 using UnityEngine.Events;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Forces
 {
@@ -67,13 +68,17 @@ namespace Ozamanas.Forces
                 physics.SetPhysical();
             }
 
-            if(isReady) DestroyBarrier();
+            if(isReady && other.transform.TryGetComponent(out Machines.HumanMachine machine)) 
+            {
+                if(machine.GetMachineType() == MachineType.Destructor ) DestroyBarrier();
+            }
 
         }
 
         private void DestroyBarrier()
         {
             if(alreadyTriggered) return;
+
                 alreadyTriggered = true;
                 OnDestruction?.Invoke();
                 GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
