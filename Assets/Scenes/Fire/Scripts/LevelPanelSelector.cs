@@ -6,11 +6,14 @@ using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 using Ozamanas.Tags;
 using Ozamanas.Levels;
+using DG.Tweening;
 
 public class LevelPanelSelector : MonoBehaviour
 {
    private LevelData level;
    private LocalizeStringEvent localizedStringEvent;
+
+   private CanvasGroup canvasGroup;
 
 
    [Header("ID panel components references")]
@@ -23,19 +26,13 @@ public class LevelPanelSelector : MonoBehaviour
         [SerializeField] private List<string> stateKeys;
 
 
-   void Awake()
-   {
-        level = GetComponentInParent<LevelSelectionHandler>().LevelData;
-        localizedStringEvent = panelLevelState.GetComponent<LocalizeStringEvent>();
-   }
+          void Awake()
+          {
+               localizedStringEvent = panelLevelState.GetComponent<LocalizeStringEvent>();
+               canvasGroup = GetComponent<CanvasGroup>();
+          }
 
-   void Start()
-   {
-        SetInfoPanelData();
-       
-   }
-
-    public void SetInfoPanelData()
+    public void SetInfoPanelData(LevelData level)
     {
         panelLevelIndex.text = "Level " +level.index;
         panelLevelName.text = level.levelName;
@@ -53,6 +50,18 @@ public class LevelPanelSelector : MonoBehaviour
           break;
         }
 
+    }
+
+    public void Show(Vector3 pos)
+    {
+      gameObject.GetComponent<RectTransform>().position = pos;
+     canvasGroup.DOFade(1f,0.2f).From(0f);
+          
+    }
+
+    public void Hide()
+    {
+           canvasGroup.DOFade(0f,0.2f).From(1f);
     }
 
 }

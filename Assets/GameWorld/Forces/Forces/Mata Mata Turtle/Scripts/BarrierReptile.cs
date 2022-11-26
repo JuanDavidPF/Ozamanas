@@ -10,7 +10,7 @@ namespace Ozamanas.Forces
 {
     public class BarrierReptile : AncientForce
     {
-        Collider collider;
+        Collider reptileCollider;
         [SerializeField] private float lifetime = 1f;
         private bool alreadyTriggered = false;
         private Tween reptileTween;
@@ -27,15 +27,15 @@ namespace Ozamanas.Forces
         protected override void Awake()
         {
             base.Awake();
-            collider = GetComponentInChildren<Collider>();
-            collider.enabled = false;
+            reptileCollider = GetComponentInChildren<Collider>();
+            reptileCollider.enabled = false;
             animator = GetComponent<Animator>();
         }
 
         public override void FirstPlacement()
         {
             base.FirstPlacement();
-            collider.enabled = true;
+            reptileCollider.enabled = true;
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 

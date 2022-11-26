@@ -1,90 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &957463400744517847
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6352204605266104995}
-  - component: {fileID: 8608699605404257077}
-  m_Layer: 0
-  m_Name: Llanta.001
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6352204605266104995
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957463400744517847}
-  m_LocalRotation: {x: -0.4862294, y: -0.512798, z: -0.49713972, w: 0.50345933}
-  m_LocalPosition: {x: -1.6940846, y: 3.804162, z: -0.11985756}
-  m_LocalScale: {x: -0.078835785, y: -0.086558975, z: -0.08655896}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6146481207586987398}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &8608699605404257077
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957463400744517847}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 3e340c0971ea1d640ae32d7784188a8f, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 1
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 681885166797890522, guid: c0c1925b547f2c546a271a8efd5752af, type: 3}
-  m_Bones: []
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: 3.0205326, y: 0.5248976, z: -1.4872818}
-    m_Extent: {x: 18.625261, y: 10.47582, z: 9.884926}
-  m_DirtyAABB: 0
 --- !u!1 &5964465111648050693
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6146481207586987398}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45.743, y: 90, z: 90}
 --- !u!108 &5964465111648050698
 Light:
@@ -211,6 +126,7 @@ GameObject:
   - component: {fileID: 6146481207586987398}
   - component: {fileID: 1424867569853929217}
   - component: {fileID: 3992290637209890011}
+  - component: {fileID: 5643281524937649937}
   m_Layer: 0
   m_Name: TotemEscabadora (13)
   m_TagString: Selectable
@@ -231,7 +147,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8993224827428613569}
-  - {fileID: 6352204605266104995}
   - {fileID: 5964465111648050692}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -261,6 +176,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 092044f60d3c2b147a3ee2e66abe9593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  machineData: {fileID: 0}
+  forceData: {fileID: 0}
+  cellData: {fileID: 0}
+  panel: {fileID: 0}
+--- !u!95 &5643281524937649937
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6775490522261112636}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4745c7b781e14124ead7c8141e4cd35d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8090993496633908603
 GameObject:
   m_ObjectHideFlags: 0

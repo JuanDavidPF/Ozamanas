@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Ozamanas.Tags;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,15 +11,28 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
-    private Vector3 currentDestination;
+    private Vector3 currentDestination = new Vector3(0f,-10f,0f);
 
     private List<Vector3> playerPath = new List<Vector3>();
 
     [SerializeField] List<float> playerJumps = new List<float>();
     
     [SerializeField] float speed = 2f;
+
+     [SerializeField]  private PlayerState playerState = PlayerState.Idling;
+
+
+    public PlayerState PlayerState { get => playerState; set => playerState = value; }
+
+    public void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+    
     public void MoveToDestination(Vector3 destination)
     {
+        if(destination == transform.position) return;
+
         if(currentDestination != destination) currentDestination = destination;
 
         foreach(float jump in playerJumps)
@@ -29,12 +43,12 @@ public class PlayerController : MonoBehaviour
 
         gameObject.transform.LookAt(destination);
         animator.SetTrigger("Jump");
-        Jump();
+        PlayerState = PlayerState.Running;
 
 
     }
 
-    private void Jump()
+    public void Jump()
     {
         if (playerPath.Count == 0) return;
 
@@ -44,9 +58,9 @@ public class PlayerController : MonoBehaviour
 
         playerTween.OnComplete(() =>
         {
-                playerPath.RemoveAt(0);
-                Jump();     
-        });     
+            playerPath.RemoveAt(0);
+        });
+
     }
 
      private void OnTriggerStay(Collider other)
@@ -57,6 +71,8 @@ public class PlayerController : MonoBehaviour
 
          if(other.TryGetComponent<LevelHandler>(out LevelHandler level))
          {
+            PlayerState = PlayerState.Idling;
+            animator.SetTrigger("Idle");
             level.PlayLevel();
          }
     }

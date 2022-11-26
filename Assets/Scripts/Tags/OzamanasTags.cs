@@ -15,6 +15,15 @@ public enum LevelState
 
 }
 
+public enum PlayerState
+{
+
+    Running = 1,
+        Idling = 2
+       
+
+}
+
  public enum PhysicMode
         {
             Kinematic,
