@@ -40,6 +40,8 @@ namespace Ozamanas.Board
 
         public Transform visuals;
 
+        private List<HumanMachine> currentHumanMachines;
+
         [HideInInspector] public float3 worldPosition;
         [HideInInspector] public int3 gridPosition;
         [HideInInspector] public bool isOccupied;
@@ -54,7 +56,7 @@ namespace Ozamanas.Board
 
         private void Start()
         {
-
+            currentHumanMachines = new List<HumanMachine>();
             OnCellDataChanged?.Invoke(m_data);
             if (visuals) visuals.gameObject.SetActive(false);
         }//Closes Awake method
@@ -90,6 +92,24 @@ namespace Ozamanas.Board
         {
             yield return new WaitForSeconds(trait.holderTimer);
             RemoveTraitToMachine(trait);
+        }
+
+        public void SetOnMachineEnter(HumanMachine machine)
+        {
+            if(currentHumanMachines.Contains(machine)) return;
+
+            currentHumanMachines.Add(machine);
+
+            OnMachineEntered?.Invoke(machine);
+        }
+
+        public void SetOnMachineExit(HumanMachine machine)
+        {
+            if(!currentHumanMachines.Contains(machine)) return;
+
+             currentHumanMachines.Remove(machine);
+
+            OnMachineExited?.Invoke(machine);
         }
 
 
