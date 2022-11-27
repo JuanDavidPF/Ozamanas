@@ -14,7 +14,6 @@ namespace Ozamanas.World
 
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
 
-            Debug.Log("VictoryManager");
 
             foreach (var machine in Machines.HumanMachine.machines)
             {

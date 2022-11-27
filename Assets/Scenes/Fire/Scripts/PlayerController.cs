@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
      [SerializeField]  private PlayerState playerState = PlayerState.Idling;
 
-
+    private bool onLevelTriggerEnter = false;
     public PlayerState PlayerState { get => playerState; set => playerState = value; }
 
     public void Awake()
@@ -69,8 +69,11 @@ public class PlayerController : MonoBehaviour
 
          if(transform.position != currentDestination ) return;
 
+         if(onLevelTriggerEnter) return;
+         
          if(other.TryGetComponent<LevelHandler>(out LevelHandler level))
          {
+            onLevelTriggerEnter = true;     
             PlayerState = PlayerState.Idling;
             animator.SetTrigger("Idle");
             level.PlayLevel();

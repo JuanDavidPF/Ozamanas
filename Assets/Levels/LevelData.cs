@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
 using Ozamanas.Tags;
+using Ozamanas; 
 
 namespace Ozamanas.Levels
 {
@@ -11,7 +12,8 @@ namespace Ozamanas.Levels
     public class LevelData : ScriptableObject
     {
 
-
+        [Space(20)]
+        [Header("Level Data")]
         public GameObject board;
         [SerializeField] private LevelReference saveAt;
         public FloatReference creationDelay;
@@ -25,6 +27,14 @@ namespace Ozamanas.Levels
         public string levelName;
 
         public string levelSceneName;
+
+        [Space(20)]
+        [Header("Tutorial")]
+
+        
+        public List<TutorialAction> tutorialActions;
+
+        public TutorialAction currentAction;
 
         public void SelectLevel()
         {
