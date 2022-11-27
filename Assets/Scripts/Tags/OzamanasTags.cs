@@ -6,6 +6,12 @@ using UnityEngine;
 namespace Ozamanas.Tags
 {
 
+    public enum TutorialType
+{
+    Explicative,
+    Interactuable
+}
+
 public enum LevelState
 {
 
