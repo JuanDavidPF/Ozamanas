@@ -154,7 +154,7 @@ Transform:
   - {fileID: 1920135251}
   - {fileID: 9185212656748946091}
   m_Father: {fileID: 380222374011553738}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2039494962
 MonoBehaviour:
@@ -259,12 +259,12 @@ Transform:
   m_GameObject: {fileID: 173123747070739523}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 16, y: 16, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8081027029335529909}
-  m_Father: {fileID: 380222374011553738}
-  m_RootOrder: 4
+  m_Father: {fileID: 1547267732912648534}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537908866829401581
 GameObject:
@@ -393,11 +393,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745366391323740144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3085240399450278079}
+  - {fileID: 2801605588466566508}
   m_Father: {fileID: 380222374011553738}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -525,7 +526,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 380222374011553738}
-  - component: {fileID: 6474880028955423243}
   - component: {fileID: 201654012075509107}
   - component: {fileID: 5196132032095778411}
   - component: {fileID: 201654012075509106}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 359735910}
   - component: {fileID: 359735909}
   - component: {fileID: 4358694461147482124}
-  - component: {fileID: 7447395425625674012}
+  - component: {fileID: 6594659303542921413}
   m_Layer: 0
   m_Name: Machine_BossMD
   m_TagString: Machine
@@ -554,7 +554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012468311011433840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -562,101 +562,10 @@ Transform:
   - {fileID: 8796018093513126626}
   - {fileID: 5444976564532648550}
   - {fileID: 1547267732912648534}
-  - {fileID: 2801605588466566508}
   - {fileID: 2039494963}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6474880028955423243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012468311011433840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c535bfbf8e6b94687a6de6cd29ec19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  machine_status: 0
-  machine_token: {fileID: 11400000, guid: 1e3042331b473984baded90245965b79, type: 2}
-  m_activeTraits: []
-  OnBlockedMachine:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8081027029320326389}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnIddlingMachine:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8081027029320326389}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRunningMachine:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8081027029320326389}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnCurrentCellChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2710986175584581564}
-        m_TargetAssemblyTypeName: Ozamanas.PathRenderer, Ozamanas.World
-        m_MethodName: OnNewCell
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnTraitsUpdated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2964294338007575710}
-        m_TargetAssemblyTypeName: Ozamanas.UI.MachineStatusBar, Ozamanas.UI.MachineStatusBar
-        m_MethodName: UpdateTraits
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &201654012075509107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,7 +612,7 @@ MonoBehaviour:
   fsm: {fileID: 1292539710144540592}
   nma: {fileID: 201654012075509106}
   rb: {fileID: 9129453228484020602}
-  machine: {fileID: 6474880028955423243}
+  machine: {fileID: 0}
   physicsVFX: {fileID: 0}
   physicsCollider: {fileID: 5809932349609730669}
   OnActivatePhysics:
@@ -756,11 +665,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters:
-  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.HumanMachine,
-      Ozamanas.World, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
-    _references:
-    - {fileID: 0}
-    - {fileID: 6474880028955423243}
   - _json: '{"_targetVariableID":"27bd31f8-c2c3-45b6-afe5-36fe73eaf36a","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.MachineMovement,
       Ozamanas.World, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references:
@@ -776,6 +680,11 @@ MonoBehaviour:
     _references:
     - {fileID: 0}
     - {fileID: 4358694461147482124}
+  - _json: '{"_targetVariableID":"02778adf-c266-426f-9f6b-6ff6a3a73fc4","_value":1,"$type":"NodeCanvas.Framework.ExposedParameter`1[[Ozamanas.Machines.HumanMachine,
+      Ozamanas.World, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 6594659303542921413}
   _boundGraphSerialization: 
   _boundGraphObjectReferences: []
   _boundGraphSource:
@@ -887,7 +796,7 @@ MonoBehaviour:
   _color: {r: 0, g: 0, b: 0, a: 0}
   maxArmorPoints: 5
   armorPoints: 2
-  machineSpeed: 2
+  machineSpeed: 0
   special: 0
   alphaArmorPoints: 1
   alphaMachineSpeed: 3
@@ -1006,7 +915,7 @@ MonoBehaviour:
   - {fileID: 6474880028955423243, guid: 2a7b1ee19c70b79478d712441358c7a3, type: 3}
   - {fileID: 6474880028955423243, guid: 2a7b1ee19c70b79478d712441358c7a3, type: 3}
   - {fileID: 6474880028955423243, guid: 2a7b1ee19c70b79478d712441358c7a3, type: 3}
---- !u!114 &7447395425625674012
+--- !u!114 &6594659303542921413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1015,10 +924,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012468311011433840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78ff45b8006cd8e419ca9f689d3d65d7, type: 3}
+  m_Script: {fileID: 11500000, guid: a4c535bfbf8e6b94687a6de6cd29ec19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  machine_status: 1
+  machine_status: 0
   machine_token: {fileID: 11400000, guid: 1e3042331b473984baded90245965b79, type: 2}
   m_activeTraits: []
   OnBlockedMachine:
@@ -1034,9 +943,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnTraitsUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAttack:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1971404772115537735
@@ -3106,13 +3012,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.008
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.862
+      value: 1.8620001
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
@@ -3211,12 +3132,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52c55fb5ee7815458e031e76a67a74e, type: 3}
---- !u!198 &8081027029320326389 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 603026040695973807, guid: c52c55fb5ee7815458e031e76a67a74e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8681800685517912922}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8081027029335529909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,

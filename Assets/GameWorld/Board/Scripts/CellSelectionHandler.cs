@@ -73,7 +73,7 @@ namespace Ozamanas.Board
         public void DrawSelectedOutline() => OutlineBuilder.AddToLayer(selectedLayer, gameObject);
         public void EraseOutline(int layerIndex) => OutlineBuilder.Remove(layerIndex, gameObject);
 
-
+        
 
         public void OnPointerEnter(PointerEventData eventData)
         {

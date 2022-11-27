@@ -12,6 +12,11 @@ namespace Ozamanas.Machines
 
         }
 
-         public UnityEvent OnAttack;
+        public UnityEvent OnAttack;
+
+        void OnTriggerEnter()
+        {
+            Debug.Log("sdasdas");
+        }
     }
 }
