@@ -14,6 +14,8 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
 
+    [SerializeField] private string gameplayScene;
+
      [Space(15)]
     [Header("Followings Levels Data")]
     [SerializeField] private List<LevelHandler> nextLevels;
@@ -87,6 +89,10 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if(state == LevelState.Blocked) return;
 
         levelController.level = levelData;
+
+        sceneSwither.SceneToLoad = gameplayScene;
+
+        sceneSwither.SetSingleMode();
 
         sceneSwither.Behaviour();
     }

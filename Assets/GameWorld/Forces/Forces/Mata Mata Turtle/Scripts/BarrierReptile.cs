@@ -40,23 +40,20 @@ namespace Ozamanas.Forces
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
-            if (barrierID) currentCell.data = barrierID;
-
             animator.SetTrigger("OnRelease");
 
             transform.position = currentCell.worldPosition;
 
-            reptileTween = transform.DOScaleY(.5f, 1.1f).From(0);
-
-            reptileTween.OnComplete(() =>
-            {
-                ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-                isReady = true;    
-            });
+           
         }//Closes FistPlacement method
 
 
-
+        public void ChangeTokenToCuurentCell()
+        {
+            if (barrierID) currentCell.data = barrierID;
+            ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
+                isReady = true;    
+        }
 
         private void OnCollisionEnter(Collision other)
         {
@@ -67,24 +64,6 @@ namespace Ozamanas.Forces
             {
                 physics.SetPhysical();
             }
-
-            if(isReady && other.transform.TryGetComponent(out Machines.HumanMachine machine)) 
-            {
-                if(machine.GetMachineType() == MachineType.Destructor ) DestroyBarrier();
-            }
-
-        }
-
-        private void DestroyBarrier()
-        {
-            if(alreadyTriggered) return;
-
-                alreadyTriggered = true;
-                OnDestruction?.Invoke();
-                GameObject dummy = Instantiate(fragmentedModel,transform.position,transform.rotation);
-                if(dummy) Destroy(dummy,lifetime);
-                if(currentCell && forestID) currentCell.data = forestID;
-                Destroy(gameObject);
         }
 
         private void ActivateTraits(Cell origin)
@@ -104,6 +83,8 @@ namespace Ozamanas.Forces
 
 
         }//Closes ActivateTraits method
+
+  
 
     }//Closes BarrierReptile class
 }//Closes Namespace declaration

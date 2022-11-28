@@ -17,6 +17,11 @@ namespace Ozamanas.SaveSystem
         public List<ForceData> unlockedForces = new List<ForceData>();
         public List<ForceData> selectedForces = new List<ForceData>();
 
+        [Space(5)]
+        [Header("Narrative")]
+
+        public string currentDialogueCode;
+
         public void ClearData(PlayerData emptyState)
         {
             if (!emptyState) return;

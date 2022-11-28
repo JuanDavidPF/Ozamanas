@@ -28,6 +28,18 @@ namespace Ozamanas.Levels
 
         public string levelSceneName;
 
+         [Space(20)]
+        [Header("Narrative")]
+
+        public string ifLoseReturnToScene = "Fire";
+
+        public string ifLoseSetDialogue;
+
+        public string ifWinReturnToScene = "Fire";
+
+        public string ifWinSetDialogue;
+
+
         [Space(20)]
         [Header("Tutorial")]
 

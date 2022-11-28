@@ -395,7 +395,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 199936573}
+      objectReference: {fileID: 199936574}
     - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -404,12 +404,12 @@ PrefabInstance:
     - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Behaviour
+      value: SwitchToScene
       objectReference: {fileID: 0}
     - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: JuanPayan.Helpers.SceneSwitcher, JuanPayan.Helpers
+      value: OnLoseSceneSelector, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4816401835176243013, guid: b99bb03ca4c58c04ea54e1a5e300a7e2,
         type: 3}
@@ -460,6 +460,20 @@ MonoBehaviour:
   triggers: 0
   sceneToLoad: Fire
   mode: 0
+--- !u!114 &199936574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199936572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e515fc43fa2cc74f8e42bdbc31180db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSaveState: {fileID: 11400000, guid: e083bde92afef8a4fb6d342a4c32d645, type: 2}
+  sceneSwitcher: {fileID: 199936573}
 --- !u!1 &237313592
 GameObject:
   m_ObjectHideFlags: 0

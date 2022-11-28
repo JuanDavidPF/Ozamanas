@@ -39,6 +39,7 @@ namespace Ozamanas.Forest
         [SerializeField] private List<Transform> bushesPositions = new List<Transform>();
         [SerializeField] private List<TreePack> treePacks = new List<TreePack>();
         [SerializeField] private List<DummyTree> dummyTrees = new List<DummyTree>();
+        [SerializeField] private GameObject mountain;
 
         private List<GameObject> activeBushes = new List<GameObject>();
 
@@ -196,6 +197,13 @@ namespace Ozamanas.Forest
 
         private void ChangeToBarrier()
         {
+            GameObject temp = Instantiate(mountain, visuals);
+
+            if(temp.TryGetComponent<Mountain>(out Mountain _mountain))
+            {
+                _mountain.CurrentCell = cellReference;
+            }
+
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
