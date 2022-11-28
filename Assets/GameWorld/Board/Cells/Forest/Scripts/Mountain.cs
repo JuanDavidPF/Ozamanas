@@ -13,6 +13,8 @@ namespace Ozamanas.Forest
         [SerializeField] private float lifetime = 1f;
         [SerializeField] private GameObject fragmentedModel;
 
+        [SerializeField] private CellData forestId;
+
         private Cell currentCell;
 
         [SerializeField] public UnityEvent OnDestruction;
@@ -40,6 +42,7 @@ namespace Ozamanas.Forest
             if (alreadyTriggered) return;
             alreadyTriggered = true;
             OnDestruction?.Invoke();
+            currentCell.data = forestId;
             gameObject.SetActive(false);
             GameObject dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
             if (dummy) Destroy(dummy, lifetime);
