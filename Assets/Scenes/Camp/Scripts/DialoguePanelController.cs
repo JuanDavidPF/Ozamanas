@@ -6,6 +6,7 @@ using System.Linq;
 using NodeCanvas.DialogueTrees;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using TMPro;
 
 
 
@@ -34,8 +35,8 @@ using UnityEngine.Localization.Settings;
         //Group...
         [Header("Subtitles")]
         public RectTransform subtitlesGroup;
-        public Text actorSpeech;
-        public Text actorName;
+        public TextMeshProUGUI actorSpeech;
+        public TextMeshProUGUI actorName;
         public Image actorPortrait;
         public RectTransform waitInputIndicator;
         public SubtitleDelays subtitleDelays = new SubtitleDelays();
@@ -281,7 +282,7 @@ using UnityEngine.Localization.Settings;
 
             optionsGroup.gameObject.SetActive(true);
             var buttonHeight = optionButton.GetComponent<RectTransform>().rect.height;
-            optionsGroup.sizeDelta = new Vector2(optionsGroup.sizeDelta.x, (info.options.Values.Count * buttonHeight) + 20);
+            optionsGroup.sizeDelta = new Vector2(optionsGroup.sizeDelta.x, (info.options.Values.Count * buttonHeight) + 30);
 
             cachedButtons = new Dictionary<Button, int>();
             int i = 0;
@@ -293,7 +294,7 @@ using UnityEngine.Localization.Settings;
                 btn.transform.SetParent(optionsGroup.transform, false);
                 btn.transform.localPosition = (Vector3)optionButton.transform.localPosition - new Vector3(0, buttonHeight * i, 0);
                 string temp = LocalizationSettings.StringDatabase.GetLocalizedString( tableName,  pair.Key.text);
-                btn.GetComponentInChildren<Text>().text = temp;
+                btn.GetComponent<TextMeshProUGUI>().text = temp;
                 cachedButtons.Add(btn, pair.Value);
                 btn.onClick.AddListener(() => { Finalize(info, cachedButtons[btn]); });
                 i++;
@@ -303,7 +304,7 @@ using UnityEngine.Localization.Settings;
             {
                 subtitlesGroup.gameObject.SetActive(true);
                 var newY = optionsGroup.position.y + optionsGroup.sizeDelta.y + 1;
-                subtitlesGroup.position = new Vector3(subtitlesGroup.position.x, newY, subtitlesGroup.position.z);
+                //subtitlesGroup.position = new Vector3(subtitlesGroup.position.x, newY, subtitlesGroup.position.z);
             }
 
             if (info.availableTime > 0)

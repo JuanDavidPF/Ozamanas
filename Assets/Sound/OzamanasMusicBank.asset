@@ -21,11 +21,32 @@ MonoBehaviour:
   showPlayers: 1
   playlists:
   - id: 274869749
-    name: MainMenuPlaylist
+    name: MenuPlaylist
     tracks:
     - clip: {fileID: 8300000, guid: e486946b86fb14447a296cd43f571c4a, type: 3}
       volume: 1
-    unfolded: 1
+    unfolded: 0
+    audioClipManagementMode: 1
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 1563094899
+    name: NarrativePlayList
+    tracks: []
+    unfolded: 0
+    audioClipManagementMode: 1
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 1008063549
+    name: WinPlayList
+    tracks: []
+    unfolded: 0
+    audioClipManagementMode: 1
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 2010778514
+    name: LosePlayList
+    tracks: []
+    unfolded: 0
     audioClipManagementMode: 1
     audioClipUnloadInterval: 60
     overrideAudioClipManagement: 0
@@ -35,8 +56,8 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     syncGroup: 0
     playbackMode: 1
-    shuffle: 0
-    loop: 0
+    shuffle: 1
+    loop: 1
     playOnStart: 1
     fade: 0.5
     volume: 0
