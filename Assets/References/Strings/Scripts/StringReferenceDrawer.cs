@@ -1,9 +1,11 @@
 ﻿
+ #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
 namespace JuanPayan.References
 {
+   
     [CustomPropertyDrawer(typeof(StringReference))]
     public class StringReferenceDrawer : PropertyDrawer
     {
@@ -59,4 +61,6 @@ namespace JuanPayan.References
             EditorGUI.EndProperty();
         }
     }
+   
 }
+ #endif

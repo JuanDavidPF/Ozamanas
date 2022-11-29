@@ -1,3 +1,4 @@
+    #if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 namespace JuanPayan.References
 {
+
     [CustomEditor(typeof(GameEvent))]
     public class GameEventDrawer : Editor
     {
@@ -19,5 +21,8 @@ namespace JuanPayan.References
 
         }//Closes OnInspectorGUI method
 
-    }//Closes GameEvent class
+    }
+    
+    //Closes GameEvent class
 }//Closes Namespace declaration
+#endif

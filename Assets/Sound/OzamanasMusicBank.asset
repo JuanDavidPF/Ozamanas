@@ -20,50 +20,120 @@ MonoBehaviour:
   showPlaylists: 1
   showPlayers: 1
   playlists:
-  - id: 274869749
-    name: MenuPlaylist
-    tracks:
-    - clip: {fileID: 8300000, guid: e486946b86fb14447a296cd43f571c4a, type: 3}
-      volume: 1
-    unfolded: 0
-    audioClipManagementMode: 1
-    audioClipUnloadInterval: 60
-    overrideAudioClipManagement: 0
   - id: 1563094899
     name: NarrativePlayList
-    tracks: []
+    tracks:
+    - clip: {fileID: 8300000, guid: acf9a2f7a1a43494898d70e1fe843c4b, type: 3}
+      volume: 1
     unfolded: 0
     audioClipManagementMode: 1
     audioClipUnloadInterval: 60
     overrideAudioClipManagement: 0
   - id: 1008063549
     name: WinPlayList
-    tracks: []
+    tracks:
+    - clip: {fileID: 8300000, guid: 68deca11abd11f149afb64dea245b5cd, type: 3}
+      volume: 1
     unfolded: 0
     audioClipManagementMode: 1
     audioClipUnloadInterval: 60
     overrideAudioClipManagement: 0
   - id: 2010778514
     name: LosePlayList
-    tracks: []
+    tracks:
+    - clip: {fileID: 8300000, guid: cbe21fb55bd4cbc43b0728ddb7cabeb4, type: 3}
+      volume: 1
     unfolded: 0
     audioClipManagementMode: 1
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 799308936
+    name: GamePlayList
+    tracks:
+    - clip: {fileID: 8300000, guid: 1e2540b45cfeb644daa6340e424745e5, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: f8fb47a2346ebc54788d2bc72663407c, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: cf51aa7e1f0cd6d4eb71473bb46f7209, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: 9da8bd84b6555314899e7d2fb06e356a, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: f9417f5f59eb2b84a8dccc418cde8369, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: fe5232fae6d243e4b8d0601e9fe0a2f6, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: 2e45e6128a47c4d459024ef1f8ed1665, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: 0afaec269dc3b4d48a3925ff4d9eb2c4, type: 3}
+      volume: 1
+    unfolded: 0
+    audioClipManagementMode: 1
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 972805885
+    name: MenuPlayList
+    tracks:
+    - clip: {fileID: 8300000, guid: 4bdebf80265d9814383bb86ef8f0bb39, type: 3}
+      volume: 1
+    unfolded: 0
+    audioClipManagementMode: 0
+    audioClipUnloadInterval: 60
+    overrideAudioClipManagement: 0
+  - id: 683521194
+    name: AmbienceList
+    tracks:
+    - clip: {fileID: 8300000, guid: 806222975bf283e48b27024a5699280b, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: 38a230630e8460545a0d41bfb860b231, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: b8974e144984bac448833e6994eaeb22, type: 3}
+      volume: 1
+    - clip: {fileID: 8300000, guid: f7c14d91defb22d439b95f643d8992b2, type: 3}
+      volume: 1
+    unfolded: 0
+    audioClipManagementMode: 0
     audioClipUnloadInterval: 60
     overrideAudioClipManagement: 0
   players:
   - id: 1933653189
     name: MainMusicPlayer
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 9eb518351ebadf442aa70746c247fe79, type: 2}
     syncGroup: 0
-    playbackMode: 1
+    playbackMode: 0
     shuffle: 1
     loop: 1
     playOnStart: 1
     fade: 0.5
-    volume: 0
+    volume: 1
     muted: 0
-    soloed: 0
+    soloed: 1
     unfolded: 1
-  playlistIndices: 00000000
-  playlistManagementMode: 1
+  - id: 1038790347
+    name: AmbienceMusicPlayer_1
+    mixerGroup: {fileID: 24300002, guid: bcc53bb2400431b44939f9d94ee969f6, type: 2}
+    syncGroup: 1
+    playbackMode: 0
+    shuffle: 0
+    loop: 1
+    playOnStart: 0
+    fade: 0.5
+    volume: 0.094
+    muted: 0
+    soloed: 1
+    unfolded: 1
+  - id: 1839932659
+    name: AmbienceMusicPlayer_2
+    mixerGroup: {fileID: 24300002, guid: bcc53bb2400431b44939f9d94ee969f6, type: 2}
+    syncGroup: 1
+    playbackMode: 0
+    shuffle: 0
+    loop: 1
+    playOnStart: 0
+    fade: 0.5
+    volume: 0.415
+    muted: 0
+    soloed: 1
+    unfolded: 1
+  playlistIndices: 040000000500000005000000
+  playlistManagementMode: 0
   playlistUnloadInterval: 60

@@ -1166,6 +1166,7 @@ Transform:
   - {fileID: 1844583985}
   - {fileID: 988746145}
   - {fileID: 658343619}
+  - {fileID: 1823398840}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6548,7 +6549,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801715648}
-  m_LocalRotation: {x: 0.38268346, y: -0.000000015896623, z: 0.0000000065845964, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: 0.000000015896623, z: -0.0000000065845964, w: 0.92387956}
   m_LocalPosition: {x: 11.78, y: 4, z: -5.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6668,6 +6669,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outlineLayers: {fileID: 11400000, guid: 059d229f23209a74687769672d1084b8, type: 2}
   _content: []
+--- !u!1 &1823398839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1823398840}
+  - component: {fileID: 1823398841}
+  m_Layer: 0
+  m_Name: MusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1823398840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823398839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1420631926}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1823398841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823398839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738dfab48e7476644b9bc70a8b5e7231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playlistId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 799308936
+  onDestroyPlaylist:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  musicPlayerId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 1933653189
+  ambiencePlayerId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 1038790347
+  ambienceSound1: Gameplay
+  ambiencePlayerId2:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 1839932659
+  ambienceSound2: 
 --- !u!1 &1844583984
 GameObject:
   m_ObjectHideFlags: 0
@@ -6897,7 +6974,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008263066}
-  m_LocalRotation: {x: 0.38268346, y: -0.000000015896623, z: 0.0000000065845964, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: 0.000000015896623, z: -0.0000000065845964, w: 0.92387956}
   m_LocalPosition: {x: 11.78, y: 4, z: -5.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
