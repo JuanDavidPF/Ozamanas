@@ -8,7 +8,6 @@ public class MainMenuHandler : MonoBehaviour
     [SerializeField] private Animator animator;
 
 
-
     private void Awake()
     {
         if (!animator) animator = GetComponent<Animator>();
@@ -21,7 +20,7 @@ public class MainMenuHandler : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.anyKey.IsPressed()) SkipIntro();
+        //if (Keyboard.current.anyKey.IsPressed()) SkipIntro();
     }//Closes Update method
 
 

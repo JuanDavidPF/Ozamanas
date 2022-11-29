@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 87330989}
   - component: {fileID: 87330988}
   - component: {fileID: 87330987}
+  - component: {fileID: 87330990}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -494,6 +495,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 87330990}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &87330988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +545,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87330985}
   m_CullTransparentMesh: 1
+--- !u!114 &87330990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87330985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1 &139606219
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +577,7 @@ GameObject:
   - component: {fileID: 139606223}
   - component: {fileID: 139606222}
   - component: {fileID: 139606221}
+  - component: {fileID: 139606224}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -643,6 +677,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 139606224}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &139606222
 MonoBehaviour:
@@ -682,6 +728,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139606219}
   m_CullTransparentMesh: 0
+--- !u!114 &139606224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139606219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1001 &170523323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -817,7 +883,7 @@ PrefabInstance:
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
@@ -826,12 +892,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 609368552}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 255150539}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
@@ -841,8 +922,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
@@ -851,7 +942,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072912, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
@@ -1101,7 +1202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 448.8813, y: 0}
+  m_AnchoredPosition: {x: 332.50726, y: 0}
   m_SizeDelta: {x: 334.00854, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246006694
@@ -1391,11 +1492,16 @@ PrefabInstance:
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
@@ -1405,7 +1511,17 @@ PrefabInstance:
       objectReference: {fileID: 727607491}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 255150539}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
@@ -1415,12 +1531,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SettingsHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053646322184072750, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7053646322184072912, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
@@ -1441,6 +1572,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 255150537}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &255150539 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8033747057071227591, guid: 09f94c308fdfe8b4e9b8197ee0b0db4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 255150537}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &290213178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,8 +1621,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290213180
 MonoBehaviour:
@@ -1635,8 +1778,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &474054972
 MonoBehaviour:
@@ -1703,6 +1846,7 @@ GameObject:
   - component: {fileID: 490016086}
   - component: {fileID: 490016085}
   - component: {fileID: 490016084}
+  - component: {fileID: 490016087}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -1792,6 +1936,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 87330990}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &490016085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1830,6 +1986,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490016082}
   m_CullTransparentMesh: 1
+--- !u!114 &490016087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490016082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1 &520244273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2358,7 @@ GameObject:
   - component: {fileID: 578242595}
   - component: {fileID: 578242594}
   - component: {fileID: 578242593}
+  - component: {fileID: 578242596}
   m_Layer: 5
   m_Name: LeftButton
   m_TagString: Untagged
@@ -2265,6 +2442,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 578242596}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &578242594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2303,6 +2492,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578242591}
   m_CullTransparentMesh: 1
+--- !u!114 &578242596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578242591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1 &609368547
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,8 +2783,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647252478
 MonoBehaviour:
@@ -2663,8 +2872,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 644.947, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 557.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &654287691
 MonoBehaviour:
@@ -3243,8 +3452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 259.14102, y: 0}
-  m_SizeDelta: {x: 518.28204, y: 0}
+  m_AnchoredPosition: {x: 215.50076, y: 0}
+  m_SizeDelta: {x: 431.00153, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921038573
 MonoBehaviour:
@@ -3435,8 +3644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967470903
 MonoBehaviour:
@@ -3515,8 +3724,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1031916650
 MonoBehaviour:
@@ -3595,8 +3804,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1228915900
 MonoBehaviour:
@@ -3824,8 +4033,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 264.2135, y: 0}
-  m_SizeDelta: {x: 528.427, y: 0}
+  m_AnchoredPosition: {x: 220.57324, y: 0}
+  m_SizeDelta: {x: 441.14648, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322274715
 MonoBehaviour:
@@ -4461,8 +4670,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1426485833
 MonoBehaviour:
@@ -4831,8 +5040,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712484204
 MonoBehaviour:
@@ -5265,8 +5474,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1757062315
 MonoBehaviour:
@@ -5460,8 +5669,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1947602460
 MonoBehaviour:
@@ -5539,8 +5748,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 494.94702, y: 0}
-  m_SizeDelta: {x: 989.89404, y: 0}
+  m_AnchoredPosition: {x: 407.6665, y: 0}
+  m_SizeDelta: {x: 815.333, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1955987864
 MonoBehaviour:
@@ -5592,6 +5801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1997321034}
   - component: {fileID: 1997321035}
+  - component: {fileID: 1997321036}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -5679,7 +5889,39 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1997321036}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
+--- !u!114 &1997321036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997321033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1 &1997972367
 GameObject:
   m_ObjectHideFlags: 0
@@ -5692,6 +5934,7 @@ GameObject:
   - component: {fileID: 1997972371}
   - component: {fileID: 1997972370}
   - component: {fileID: 1997972369}
+  - component: {fileID: 1997972372}
   m_Layer: 5
   m_Name: RightButton
   m_TagString: Untagged
@@ -5775,6 +6018,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 578242596}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1997972370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5813,6 +6068,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997972367}
   m_CullTransparentMesh: 1
+--- !u!114 &1997972372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997972367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    bankGuidA: -78944323
+    bankGuidB: 1300813943
+    bankGuidC: 270280869
+    bankGuidD: 154837678
+    itemId: 1955862955
+  spawnTarget: {fileID: 0}
+  playOnStart: 0
 --- !u!1 &2009076398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5850,8 +6125,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 277.04602, y: 0}
-  m_SizeDelta: {x: 554.09204, y: 0}
+  m_AnchoredPosition: {x: 233.40576, y: 0}
+  m_SizeDelta: {x: 466.81152, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009076400
 MonoBehaviour:
@@ -6042,8 +6317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 270.786, y: 0}
-  m_SizeDelta: {x: 541.572, y: 0}
+  m_AnchoredPosition: {x: 227.14575, y: 0}
+  m_SizeDelta: {x: 454.2915, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064775116
 MonoBehaviour:

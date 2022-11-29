@@ -1,10 +1,14 @@
 ﻿
+    #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using JuanPayan.References;
 
-namespace JuanPayan.References
+namespace JuanPayan.Helpers
 {
+
     [CustomPropertyDrawer(typeof(FloatReference))]
+
     public class FloatReferenceDrawer : PropertyDrawer
     {
         /// <summary>
@@ -59,4 +63,6 @@ namespace JuanPayan.References
             EditorGUI.EndProperty();
         }
     }
+    
 }
+#endif
