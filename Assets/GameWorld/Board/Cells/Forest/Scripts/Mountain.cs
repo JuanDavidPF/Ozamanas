@@ -29,12 +29,15 @@ namespace Ozamanas.Forest
         {
             if (other.transform.tag != "Machine") return;
 
+Debug.Log("sdfsds");
+
             if(other.transform.TryGetComponent(out Machines.HumanMachine machine)) 
             {
-                if(machine.GetMachineType() == MachineType.Destructor ) DestroyMountain();
+               
+
+ if(machine.GetMachineType() == MachineType.Destructor ) DestroyMountain();
             }
             
-            DestroyMountain();
         }
 
         public void DestroyMountain()

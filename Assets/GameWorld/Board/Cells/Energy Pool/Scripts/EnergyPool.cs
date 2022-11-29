@@ -30,8 +30,6 @@ namespace Ozamanas.Energy
         [SerializeField] private List<FlowerContainer> flowers = new List<FlowerContainer>();
         [SerializeField] private Transform visuals;
 
-        [SerializeField] private GameObject whisper;
-
         [SerializeField] private int flowersLimit = 4;
 
         [SerializeField] private bool poolActive;

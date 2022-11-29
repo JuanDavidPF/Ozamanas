@@ -70,11 +70,40 @@ using TMPro;
 #endif
             }
         }
+        [SerializeField] private string narratorTag ="Narrator";
+        private bool narratorIsPresent = false;
+        private NarratorAnimationController narrator;
 
-        void Awake() { Subscribe(); Hide(); }
+        void Awake() 
+        { 
+            Subscribe(); 
+            Hide(); 
+            FindNarrator();
+        }
         void OnEnable() { UnSubscribe(); Subscribe(); }
         void OnDisable() { UnSubscribe(); }
 
+        void FindNarrator()
+        {
+            GameObject temp = GameObject.FindGameObjectWithTag(narratorTag);
+
+            if(!temp) 
+            {
+                narratorIsPresent = false;
+                return;
+            }
+
+            narrator = temp.GetComponent<NarratorAnimationController>();
+
+            if(!narrator) 
+            {
+                narratorIsPresent = false;
+                return;
+            }
+            
+            narratorIsPresent = true;
+
+        }
         void Subscribe()
         {
             DialogueTree.OnDialogueStarted += OnDialogueStarted;
@@ -104,7 +133,7 @@ using TMPro;
 
         void OnDialogueStarted(DialogueTree dlg)
         {
-            //nothing special...
+                    if(narratorIsPresent) narrator.StartTalking();
         }
 
         void OnDialoguePaused(DialogueTree dlg)
@@ -113,6 +142,7 @@ using TMPro;
             optionsGroup.gameObject.SetActive(false);
             StopAllCoroutines();
             if (playSource != null) playSource.Stop();
+            if(narratorIsPresent) narrator.StopTalking();
         }
 
         void OnDialogueFinished(DialogueTree dlg)
@@ -132,6 +162,8 @@ using TMPro;
             }
             StopAllCoroutines();
             if (playSource != null) playSource.Stop();
+
+           if(narratorIsPresent) narrator.StopTalking();
         }
 
 
@@ -279,6 +311,7 @@ using TMPro;
 
         void OnMultipleChoiceRequest(MultipleChoiceRequestInfo info)
         {
+            if(narratorIsPresent) narrator.StopTalking();
 
             optionsGroup.gameObject.SetActive(true);
             var buttonHeight = optionButton.GetComponent<RectTransform>().rect.height;
