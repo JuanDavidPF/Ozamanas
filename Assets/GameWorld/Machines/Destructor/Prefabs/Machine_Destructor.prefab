@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2801605588466566508}
   m_Layer: 0
   m_Name: VFX
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2032829373861287649}
   m_Layer: 5
   m_Name: MachineUI
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,6 +293,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8081027029320326389}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: a4a62d2c42e74604fa18cc77cd45e5a8, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
+        m_MethodName: Invoke
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -673,7 +685,7 @@ GameObject:
   - component: {fileID: 2710986175584581564}
   m_Layer: 0
   m_Name: MachineTrail
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1084,7 +1096,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1099,7 +1111,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1191,6 +1203,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7652803696673734278, guid: b0b6652949be0c5489d16f9191ef6739,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
+      objectReference: {fileID: 0}
     - target: {fileID: 8670366512408643165, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_Layer
@@ -1232,6 +1249,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Machine_Collision
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292157580998813610, guid: 259d618ecf7ecdd449eca9ba0225f52c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
       objectReference: {fileID: 0}
     - target: {fileID: 5292157580998917002, guid: 259d618ecf7ecdd449eca9ba0225f52c,
         type: 3}
@@ -1470,6 +1492,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603026040676286159, guid: c52c55fb5ee7815458e031e76a67a74e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}

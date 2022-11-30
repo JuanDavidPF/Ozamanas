@@ -15,6 +15,12 @@ public class SkyInformationPanel : MonoBehaviour
     [SerializeField] TMP_Text titleString;
     [SerializeField] TMP_Text descriptionString;
 
+    [SerializeField] TMP_Text price;
+
+    [SerializeField] TMP_Text range;
+
+    [SerializeField] TMP_Text coolDown;
+
     public void UpdatePanel(ForceData force)
     {
 
@@ -30,6 +36,12 @@ public class SkyInformationPanel : MonoBehaviour
       
 
        if (descriptionString) descriptionString.text = force.forceDescription.GetLocalizedString();
+
+       price.text = force.price.ToString();
+
+       range.text = force.range.ToString();
+
+       coolDown.text = force.cooldown.ToString();
 
 
     }//Closes UpdatePanel method

@@ -20,6 +20,9 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Followings Levels Data")]
     [SerializeField] private List<LevelHandler> nextLevels;
 
+    private List<LevelHandler> predecesorsLevels = new List<LevelHandler>();
+
+
     [Space(15)]
     [Header("Level Settings")]
     [SerializeField] private GameObject dottedLine;
@@ -44,6 +47,9 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
+    public List<LevelHandler> NextLevels { get => nextLevels; set => nextLevels = value; }
+    public List<LevelHandler> PredecesorsLevels { get => predecesorsLevels; set => predecesorsLevels = value; }
+
     public void Awake()
     {
         sceneSwither = gameObject.GetComponentInParent<SceneSwitcher>();
@@ -64,6 +70,16 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         BringPlayerToLevel();
 
+        SetUpPredecesors();
+
+    }
+
+    private void SetUpPredecesors()
+    {
+        foreach ( LevelHandler next in NextLevels)
+        {
+            next.PredecesorsLevels.Add(this);
+        }
     }
 
     private void BringPlayerToLevel()
@@ -75,7 +91,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void PrintDottedLines()
     {
-        foreach(LevelHandler level in nextLevels)
+        foreach(LevelHandler level in NextLevels)
         {
             DottedLine line = Instantiate(dottedLine, gameObject.transform).GetComponent<DottedLine>();
             line.SetPositions(ClosestPointOnBounds(level.transform.position), level.ClosestPointOnBounds(gameObject.transform.position));
@@ -104,17 +120,31 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
      void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
+       if(levelData.state == LevelState.Blocked) return;
        
-
-         if(levelData.state == LevelState.Blocked) return;
-       
-       if(player.transform.position == gameObject.transform.position ) return;
+       if(player.transform.position == gameObject.transform.position ) PlayLevel();
 
        if (player.PlayerState == PlayerState.Running) return;
 
-       player.MoveToDestination(gameObject.transform.position);
+       
+
+       if(MovementApproval(player.transform.position)) player.MoveToDestination(gameObject.transform.position);
     }
 
+    private bool MovementApproval(Vector3 position)
+    {
+        foreach(LevelHandler level in PredecesorsLevels)
+        {
+            if(level.transform.position == position) return true;
+        }
+
+        foreach(LevelHandler level in NextLevels)
+        {
+            if(level.transform.position == position) return true;
+        }
+
+        return false;
+    }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
        animator.SetTrigger("Selected");

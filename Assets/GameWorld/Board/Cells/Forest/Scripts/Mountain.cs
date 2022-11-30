@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Ozamanas.Tags;
 using Ozamanas.Board;
+using Ozamanas.Extenders;
 
 namespace Ozamanas.Forest
 {
@@ -29,13 +30,11 @@ namespace Ozamanas.Forest
         {
             if (other.transform.tag != "Machine") return;
 
-Debug.Log("sdfsds");
-
-            if(other.transform.TryGetComponent(out Machines.HumanMachine machine)) 
+  
+            if(other.transform.TryGetComponentInParent(out Machines.HumanMachine machine)) 
             {
-               
-
- if(machine.GetMachineType() == MachineType.Destructor ) DestroyMountain();
+                        
+                if(machine.GetMachineType() == MachineType.Destructor ) DestroyMountain();
             }
             
         }

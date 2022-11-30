@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private List<Vector3> playerPath = new List<Vector3>();
 
-    [SerializeField] List<float> playerJumps = new List<float>();
+    [SerializeField] float jumpDistance ;
     
     [SerializeField] float speed = 2f;
 
@@ -35,9 +35,13 @@ public class PlayerController : MonoBehaviour
 
         if(currentDestination != destination) currentDestination = destination;
 
-        foreach(float jump in playerJumps)
+        float distance =Vector3.Distance(gameObject.transform.position,destination);
+        float jumps = distance / jumpDistance;
+
+        for(int i = 1; i <= jumps + 1 ; i++)
         {
-            Vector3 temp = Vector3.Lerp(transform.position,currentDestination,jump);
+            float value = Mathf.Clamp(((i*jumpDistance)/distance),0f,1f);
+            Vector3 temp = Vector3.Lerp(transform.position,currentDestination,value);
             playerPath.Add(temp);
         }
 

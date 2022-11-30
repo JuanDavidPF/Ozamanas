@@ -19,8 +19,6 @@ namespace Ozamanas.World
             {
                 if (!machine) continue;
 
-                 
-
                 if (machine.TryGetComponent(out Machines.HumanMachine humanMachine))
                 {
                    
