@@ -26,7 +26,17 @@ namespace Ozamanas.Machines
         public HumanMachine machine;
         public Transform physicsVFX;
         public Collider physicsCollider;
-        public UnityEvent OnActivatePhysics;
+         [Space(15)]
+        [Header("Physical timeout")]
+        [SerializeField] private float timeMaxInPhysical = 3f;
+        private float timeInToPhysical = 0f;
+
+         [Space(15)]
+        [Header("Events")]
+        public UnityEvent OnActivatePhysical;
+        public UnityEvent OnActivateIntelligent;
+
+        public UnityEvent OnActivateKinematic;
 
         private bool guard = false;
 
@@ -49,7 +59,7 @@ namespace Ozamanas.Machines
             if (physicsCollider) physicsCollider.enabled = false;
             if (fsm) fsm.enabled = false;
             if (nma) nma.enabled = false;
-
+            OnActivateKinematic?.Invoke();
             machine.SetIdlingStatus();
 
         }//Closes SetKinematic method
@@ -63,6 +73,7 @@ namespace Ozamanas.Machines
             if (physicsCollider) physicsCollider.enabled = false;
             if (nma) nma.enabled = true;
             if (fsm) fsm.enabled = true;
+            OnActivateIntelligent?.Invoke();
             machine.SetRunningStatus();
 
         }//Closes SetKinematic method
@@ -76,18 +87,27 @@ namespace Ozamanas.Machines
             if (fsm) fsm.enabled = false;
             if (nma) nma.enabled = false;
             if (physicsCollider) physicsCollider.enabled = true;
-
+            OnActivatePhysical?.Invoke();
             machine.SetIdlingStatus();
+            timeInToPhysical = Time.time;
         }//Closes ActivatePhysics method
 
         private void FixedUpdate()
         {
-            if (state != PhysicMode.Physical ||
-            !rb || rb.isKinematic || !rb.IsSleeping()) return;
+            if( state != PhysicMode.Physical ) return;
+
+            if (!rb || rb.isKinematic ) return;
+
+            if (!rb.IsSleeping()) return;
+
+         //   if (Time.time - timeInToPhysical < timeMaxInPhysical) return;
 
             SetIntelligent();
         }
 
+       
+
+        
         void OnCollisionEnter(Collision collision)
         {
             if (!rb || rb.isKinematic) return;
@@ -98,7 +118,6 @@ namespace Ozamanas.Machines
                 if (!physicsVFX) continue;
                 physicsVFX.position = contact.point; //new Vector3(contact.point.x,collisionVFX.position.y,contact.point.z);
                 physicsVFX.rotation = Quaternion.identity;
-                OnActivatePhysics?.Invoke();
             }
         }
 
