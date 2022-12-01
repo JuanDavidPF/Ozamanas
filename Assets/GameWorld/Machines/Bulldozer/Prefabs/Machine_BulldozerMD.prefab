@@ -430,21 +430,16 @@ MonoBehaviour:
   machine: {fileID: 6474880028955423243}
   physicsVFX: {fileID: 0}
   physicsCollider: {fileID: 5809932349609730669}
-  OnActivatePhysics:
+  timeMaxInPhysical: 3
+  OnActivatePhysical:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7176509597569760239}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnActivateIntelligent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnActivateKinematic:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &201654012075509106
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1219,12 +1214,12 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1450,12 +1445,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 259d618ecf7ecdd449eca9ba0225f52c, type: 3}
---- !u!198 &7176509597569760239 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5292157581018316490, guid: 259d618ecf7ecdd449eca9ba0225f52c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3092161168650732837}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7176509597589159599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5292157580998917002, guid: 259d618ecf7ecdd449eca9ba0225f52c,

@@ -37,11 +37,11 @@ public class SkyInformationPanel : MonoBehaviour
 
        if (descriptionString) descriptionString.text = force.forceDescription.GetLocalizedString();
 
-       price.text = force.price.ToString();
+       price.text = force.price.value.ToString();
 
-       range.text = force.range.ToString();
+       range.text = force.range.value.ToString();
 
-       coolDown.text = force.cooldown.ToString();
+       coolDown.text = force.cooldown.value.ToString();
 
 
     }//Closes UpdatePanel method

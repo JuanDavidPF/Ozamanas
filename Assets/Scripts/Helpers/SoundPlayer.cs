@@ -14,6 +14,9 @@ public class SoundPlayer : MonoBehaviour
     [SoundID, SerializeField]
     internal Stem.ID sound2 = Stem.ID.None;
 
+    [SoundID, SerializeField]
+    internal Stem.ID sound3 = Stem.ID.None;
+
     [SerializeField]
     internal Transform spawnTarget = null;
 
@@ -35,6 +38,13 @@ public class SoundPlayer : MonoBehaviour
     public void Play2()
     {
         if (spawnTarget) SoundManager.Play3D(sound2, spawnTarget.position);
+        else SoundManager.Play(sound2);
+
+    }
+
+    public void Play3()
+    {
+        if (spawnTarget) SoundManager.Play3D(sound3, spawnTarget.position);
         else SoundManager.Play(sound2);
 
     }

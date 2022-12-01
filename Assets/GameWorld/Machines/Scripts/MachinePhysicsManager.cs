@@ -98,16 +98,10 @@ namespace Ozamanas.Machines
 
             if (!rb || rb.isKinematic ) return;
 
-            if (!rb.IsSleeping()) return;
-
-         //   if (Time.time - timeInToPhysical < timeMaxInPhysical) return;
-
-            SetIntelligent();
+            if (rb.IsSleeping() || Time.time - timeInToPhysical >= timeMaxInPhysical) SetIntelligent();
         }
 
-       
-
-        
+  
         void OnCollisionEnter(Collision collision)
         {
             if (!rb || rb.isKinematic) return;

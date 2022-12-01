@@ -43,6 +43,7 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
+            
             mawTrigger.enabled = false;
             tweener.Kill();
             MachinePhysicsManager physics = other.GetComponentInParent<MachinePhysicsManager>();

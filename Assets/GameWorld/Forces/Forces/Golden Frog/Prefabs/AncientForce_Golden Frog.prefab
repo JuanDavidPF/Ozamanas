@@ -277,18 +277,6 @@ MonoBehaviour:
   OnEnterCell:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 35409391096869251}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1904514810816092932}
         m_TargetAssemblyTypeName: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
         m_MethodName: Play
@@ -377,6 +365,12 @@ MonoBehaviour:
     bankGuidC: 270280869
     bankGuidD: 154837678
     itemId: 65947666
+  sound3:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
   spawnTarget: {fileID: 0}
   playOnStart: 0
 --- !u!1001 &1310555620145422524
@@ -675,17 +669,17 @@ PrefabInstance:
     - target: {fileID: 2746386661914021957, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 8.1853836e-11
+      value: 0.00002390566
       objectReference: {fileID: 0}
     - target: {fileID: 2746386661914021957, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90.00001
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 2746386661914021957, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -84.47904
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 2920911138625819501, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
@@ -815,7 +809,7 @@ PrefabInstance:
     - target: {fileID: 6283627641570305231, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.0000102453105
+      value: 0.000010245283
       objectReference: {fileID: 0}
     - target: {fileID: 6283627641570305231, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
@@ -970,17 +964,17 @@ PrefabInstance:
     - target: {fileID: 8762400091744749611, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 8.1853836e-11
+      value: 0.00002390566
       objectReference: {fileID: 0}
     - target: {fileID: 8762400091744749611, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90.00001
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8762400091744749611, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -84.47904
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8931590725496011440, guid: 68a37a84077d7254786ac92e80d28984,
         type: 3}
@@ -1048,6 +1042,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR3 Hit Leaves A (Lit, Simple) 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6043025642867062316, guid: 586bc7729862dd243944926540d12cdd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6043025642867062319, guid: 586bc7729862dd243944926540d12cdd,
         type: 3}
       propertyPath: cameraShake.useMainCamera
@@ -1110,12 +1109,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 586bc7729862dd243944926540d12cdd, type: 3}
---- !u!198 &35409391096869251 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6043025642847825740, guid: 586bc7729862dd243944926540d12cdd,
-    type: 3}
-  m_PrefabInstance: {fileID: 6026079537158151887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &35409391115220163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6043025642867223052, guid: 586bc7729862dd243944926540d12cdd,

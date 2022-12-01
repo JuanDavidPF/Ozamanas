@@ -55,6 +55,8 @@ namespace Ozamanas.Forces
 
             birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
 
+            attackIndicator.gameObject.SetActive(false);
+
             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
 
 

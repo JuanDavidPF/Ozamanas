@@ -9,6 +9,8 @@ namespace Ozamanas.Forces
     public class EmbraceReptile : AncientForce
     {
         Collider clld;
+
+         [SerializeField] private Transform pointer ;
         [SerializeField] private float duration = 2f;
         [SerializeField] private float riseTime = 0.2f;
         private Cell currentCell;
@@ -26,7 +28,8 @@ namespace Ozamanas.Forces
         {
             base.FirstPlacement();
 
-
+            pointer.gameObject.SetActive(false);
+            
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
             currentCell.isOccupied = true;
