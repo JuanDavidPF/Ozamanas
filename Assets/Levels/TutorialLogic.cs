@@ -5,17 +5,27 @@ using JuanPayan.Helpers;
 using Ozamanas.Tags;
 using DG.Tweening;
 using Ozamanas.Board;
+using JuanPayan.References;
 
 
 namespace Ozamanas.Levels
 {
 public class TutorialLogic : MonoBehaviour
 {
+     public enum TutorialState
+        {
+            Inactive,
+            Active,
+            Waiting
+        }
+
+    [SerializeField] private TutorialState state;
     [SerializeField] private LevelReference levelSelected;
     [SerializeField] private string explicativeScene;
     [SerializeField] private string interactuableScene;
     [Range(0.1f,10f)]
     [SerializeField] private float focusSpeed = 0.2f;
+
     private SceneSwitcher sceneSwitcher;
 
     private CameraAnchor cameraAnchor;
@@ -32,18 +42,53 @@ public class TutorialLogic : MonoBehaviour
         cameraAnchor = FindObjectOfType<CameraAnchor>();
     }
 
+    private void Start()
+    {
+        if( levelSelected.level.tutorialActions.Count == 0) state = TutorialState.Inactive;
+        else state = TutorialState.Active;
+    }
+
+
+    public void ListenToEventToPlayAction(GameEvent gameEvent)
+    {
+        if(state != TutorialState.Waiting) return;
+
+        if(levelSelected.level.currentAction.trigger != gameEvent ) return;
+
+        state = TutorialState.Active;
+
+        ExecuteCurrentAction();
+    }
 
     private void PlayNextAction()
     {   
-
-
-        if( currentActionIndex >= levelSelected.level.tutorialActions.Count ) return;
-
-       
+        if(state == TutorialState.Inactive) return;
+        
+        if( currentActionIndex >= levelSelected.level.tutorialActions.Count ) 
+        {
+            state = TutorialState.Inactive;
+            return;
+        }
 
         levelSelected.level.currentAction = levelSelected.level.tutorialActions[currentActionIndex];
 
-        switch(levelSelected.level.currentAction.tutorialType)
+        if(levelSelected.level.currentAction.trigger != null)
+        {
+            state = TutorialState.Waiting;
+            return;
+        }
+        else
+        {
+            state = TutorialState.Active;
+        }
+
+        ExecuteCurrentAction();
+       
+    }
+
+    private void ExecuteCurrentAction()
+    {
+         switch(levelSelected.level.currentAction.tutorialType)
         {
             case TutorialType.Explicative:
             sceneSwitcher.SceneToLoad = explicativeScene;
@@ -54,7 +99,6 @@ public class TutorialLogic : MonoBehaviour
         }
 
         StartCoroutine(InitDelay());
-
     }
 
     IEnumerator InitDelay()

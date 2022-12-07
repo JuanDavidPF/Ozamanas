@@ -15,12 +15,10 @@ public class CodexInformationPanel : MonoBehaviour
      private  HumanMachineToken _machineSelected; 
 
      private  CellData _cellSelected; 
-
-
     [SerializeField] UnityEngine.UI.Image panelIcon;
     [SerializeField] TMP_Text titleString;
     [SerializeField] TMP_Text descriptionString;
-      [SerializeField] private float fadeTime = 0.01f;
+    [SerializeField] private float fadeTime = 0.01f;
 
     private CanvasGroup canvasGroup;
 

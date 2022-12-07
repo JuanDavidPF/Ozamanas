@@ -539,7 +539,19 @@ MonoBehaviour:
   explosionPower: 301
   OnMachineDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: bf30b5fe137251648a380b4a435b2b0a, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnMachineGainArmor:
     m_PersistentCalls:
       m_Calls: []
