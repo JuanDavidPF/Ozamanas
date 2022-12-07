@@ -16,7 +16,9 @@ public class TutorialLogic : MonoBehaviour
         {
             Inactive,
             Active,
-            Waiting
+            Waiting, 
+            
+            Complete
         }
 
     [SerializeField] private TutorialState state;
@@ -66,7 +68,7 @@ public class TutorialLogic : MonoBehaviour
         
         if( currentActionIndex >= levelSelected.level.tutorialActions.Count ) 
         {
-            state = TutorialState.Inactive;
+            state = TutorialState.Complete;
             return;
         }
 
