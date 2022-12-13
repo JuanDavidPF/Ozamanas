@@ -105,7 +105,8 @@ namespace Ozamanas.Forces
         protected virtual void FinalPlacement()
         {
             CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
-            cellHovered.cellReference.Pointer.SetActive(false);
+            
+            if(cellHovered && cellHovered.cellReference && cellHovered.cellReference.Pointer) cellHovered.cellReference.Pointer.SetActive(false);
 
 
             if (cellHovered &&

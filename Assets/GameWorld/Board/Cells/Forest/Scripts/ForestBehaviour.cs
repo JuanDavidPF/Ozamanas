@@ -132,7 +132,8 @@ namespace Ozamanas.Forest
         {
             if (cellReference.data == forestID) return;
 
-            ChangeToForest();
+            cellReference.data = forestID;
+
         }
 
         public void OnMachineExit(HumanMachine machine)
