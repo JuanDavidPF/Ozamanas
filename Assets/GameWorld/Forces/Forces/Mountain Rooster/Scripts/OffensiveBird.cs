@@ -44,6 +44,9 @@ namespace Ozamanas.Forces
             if (AOERenderer) AOETransform = AOERenderer.transform;
 
             animator = gameObject.GetComponent<Animator>();
+
+            AOETransform.position = AOETransform.position- DraggedOffset;
+
         }//Closes Awake method
 
 
@@ -109,26 +112,6 @@ namespace Ozamanas.Forces
             if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1f,0f,0f,.6f);
             else AOERenderer.material.color = new Vector4(0f,1f,0f,.6f);;
         }//Closes UpdateAOEColor method
-
-
-
-
-        private void Update()
-        {
-            if (isPlaced || !AOETransform) return;
-
-            Ray AOERay = new Ray(transform.position, -transform.up);
-
-
-            foreach (var hit in Physics.RaycastAll(AOERay))
-            {
-                if (hit.transform.tag != "Cell") return;
-                AOETransform.position = new Vector3(hit.point.x, posY, hit.point.z);
-                break;
-            }
-
-
-        }//Closes Update Method
 
         protected override void OnDestroy()
         {

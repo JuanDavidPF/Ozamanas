@@ -19,7 +19,6 @@ namespace Ozamanas.UI.ForceDeck
         [Header("Events")]
         [SerializeField] private UnityEvent OnIsNotAffordable;
         [SerializeField] private UnityEvent OnIsOnCollDown;
-
         [SerializeField] private UnityEvent OnForceFailedPlacement;
 
          [Space(15)]

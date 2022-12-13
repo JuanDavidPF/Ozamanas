@@ -62,11 +62,11 @@ namespace Ozamanas.Forces
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
                 draggedPosition = (ray.origin + ray.direction * Mathf.Abs(cam.transform.position.z));
-                if (!snapToGrid) draggedPosition += draggedOffset;
+                if (!snapToGrid) draggedPosition += DraggedOffset;
             }
             else
             {
-                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + draggedOffset;
+                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + DraggedOffset;
                 Board.CellSelectionHandler.currentCellHovered.cellReference.Pointer.SetActive(true);
             }
 
@@ -136,6 +136,8 @@ namespace Ozamanas.Forces
 
         List<Board.Cell> anchorCells = new List<Cell>();
         List<Board.Cell> validCells = new List<Cell>();
+
+        public Vector3 DraggedOffset { get => draggedOffset; set => draggedOffset = value; }
 
         protected virtual void CalculateArea()
         {
