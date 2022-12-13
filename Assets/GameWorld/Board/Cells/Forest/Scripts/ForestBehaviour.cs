@@ -41,6 +41,17 @@ namespace Ozamanas.Forest
         [SerializeField] private List<DummyTree> dummyTrees = new List<DummyTree>();
         [SerializeField] private GameObject mountain;
 
+        [Space(15)]
+        [Header("Textures")]
+
+  
+
+        [SerializeField] private MeshRenderer tileMeshRenderer;
+
+        [SerializeField] private Texture GAIATexture;
+
+        [SerializeField] private Texture EXPTexture;
+
         private List<GameObject> activeBushes = new List<GameObject>();
 
         private void Awake()
@@ -154,6 +165,8 @@ namespace Ozamanas.Forest
 
             }
 
+            tileMeshRenderer.material.mainTexture = GAIATexture;
+
         }
 
         private void DestroyCurrentFlower(int i)
@@ -192,6 +205,8 @@ namespace Ozamanas.Forest
 
                 trees[i].currentTree = temp;
             }
+
+            tileMeshRenderer.material.mainTexture = EXPTexture;
         }
 
 
@@ -213,6 +228,8 @@ namespace Ozamanas.Forest
             {
                 Destroy(bush);
             }
+
+            tileMeshRenderer.material.mainTexture = EXPTexture;
         }
     }
 }

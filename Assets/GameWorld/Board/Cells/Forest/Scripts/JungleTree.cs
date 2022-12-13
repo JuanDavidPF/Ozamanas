@@ -12,7 +12,6 @@ namespace Ozamanas.Forest
     public class JungleTree : MonoBehaviour
     {
         [SerializeField] private float lifetime = 1f;
-        [SerializeField] private float growingTime = 10f;
         [SerializeField] private GameObject fragmentedModel;
         private bool alreadyTriggered = false;
 

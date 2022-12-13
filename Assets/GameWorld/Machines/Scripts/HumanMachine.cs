@@ -235,6 +235,21 @@ namespace Ozamanas.Machines
 
                 }
             }
+
+            InstantiateTraitVFX(trait);
+        }
+
+        private void InstantiateTraitVFX(MachineTrait trait)
+        {
+            if(!trait.traitVFX) return;
+
+            if(trait.isPermanentOnMachine) return;
+
+            GameObject traitVFX = Instantiate(trait.traitVFX,transform);
+
+            traitVFX.transform.position += new Vector3(0,0.5f,0);
+
+            Destroy(traitVFX,trait.machineTimer);
         }
         #endregion
 

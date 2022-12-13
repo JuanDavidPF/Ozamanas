@@ -5,13 +5,15 @@ using Unity.Mathematics;
 using Ozamanas.Machines;
 using UnityEngine.Events;
 using DG.Tweening;
+using Ozamanas.Extenders;
 
 namespace Ozamanas.Board
 {
     [SelectionBase]
     public class Cell : MonoBehaviour
     {
-
+        [SerializeField] private GameObject cellOverLay;
+        [SerializeField] private GameObject pointer;
         [SerializeField] private CellData m_data;
         public CellData data
         {
@@ -34,6 +36,8 @@ namespace Ozamanas.Board
 
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
+        public GameObject CellOverLay { get => cellOverLay; set => cellOverLay = value; }
+        public GameObject Pointer { get => pointer; set => pointer = value; }
 
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
         [SerializeField] private MeshFilter tileMeshFilter;
@@ -54,6 +58,20 @@ namespace Ozamanas.Board
         public UnityEvent<HumanMachine> OnMachineEntered;
         public UnityEvent<HumanMachine> OnMachineExited;
 
+
+        private void Awake()
+        {
+            if(!cellOverLay && gameObject.transform.TryGetComponentInChildren( out Overlay cell ))
+            {
+                cellOverLay = cell.gameObject;
+            }
+
+            if(!pointer && gameObject.transform.TryGetComponentInChildren( out Pointer temp ))
+            {
+                pointer = temp.gameObject;
+            }
+
+        }
         private void Start()
         {
             currentHumanMachines = new List<HumanMachine>();

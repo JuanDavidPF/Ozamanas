@@ -9,13 +9,9 @@ using UnityFx.Outline;
 namespace Ozamanas.Board
 {
 
-
-
     public class CellSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
-    {
+    {   
         [HideInInspector] public Cell cellReference;
-
-
 
         private static CellSelectionHandler m_currentCellSelected;
         private static CellSelectionHandler m_currentCellHovered;
@@ -57,28 +53,25 @@ namespace Ozamanas.Board
             }
         }
 
+    
 
         [SerializeField] private int hoverLayer;
         [SerializeField] private int selectedLayer;
+
         private void Awake()
         {
             cellReference = cellReference ? cellReference : GetComponentInParent<Cell>();
 
         }//Closes Awake method
 
-
-
-
         public void DrawHoveredOutline() => OutlineBuilder.AddToLayer(hoverLayer, gameObject);
         public void DrawSelectedOutline() => OutlineBuilder.AddToLayer(selectedLayer, gameObject);
         public void EraseOutline(int layerIndex) => OutlineBuilder.Remove(layerIndex, gameObject);
 
-        
+       
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-
-
             currentCellHovered = this;
 
         }//Closes OnPointerEnter method
@@ -87,11 +80,16 @@ namespace Ozamanas.Board
         {
             currentCellSelected = this;
 
+            Debug.Log("OnPointerClick");
+
         }//Closes OnPointerClick method
 
+       
         public void OnPointerExit(PointerEventData eventData)
         {
             if (currentCellHovered == this) currentCellHovered = null;
+
+           cellReference.Pointer.SetActive(false);
 
         }//Closes OnPointerExit method
     }//Closes CellSelectionHandler class

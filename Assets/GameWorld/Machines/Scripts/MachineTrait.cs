@@ -19,6 +19,7 @@ namespace Ozamanas.Machines
         public float machineTimer = 0f;
         public bool isPermanetOnHolder = false;
         public float holderTimer = 0f;
+        public GameObject traitVFX;
 
     }
 }

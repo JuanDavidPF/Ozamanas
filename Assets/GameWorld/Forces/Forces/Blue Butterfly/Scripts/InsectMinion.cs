@@ -21,7 +21,7 @@ namespace Ozamanas.Forces
         public GameObject Objective { get => objective; set => objective = value; }
         public List<MachineTrait> Traits { get => traits; set => traits = value; }
 
-        [SerializeField] public UnityEvent OnMinionDestruction;
+        [SerializeField] public GameObject OnMinionDestructionVFX;
         void Start()
         {
             rg = GetComponent<Rigidbody>();
@@ -57,7 +57,7 @@ namespace Ozamanas.Forces
                     machine.AddTraitToMachine(trait);
                 }
                 
-                OnMinionDestruction?.Invoke();
+                Instantiate(OnMinionDestructionVFX,transform.position,transform.rotation);
                 Destroy(gameObject);
             }
             else return;

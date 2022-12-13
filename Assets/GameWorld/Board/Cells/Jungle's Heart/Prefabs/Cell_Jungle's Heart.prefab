@@ -45,10 +45,9 @@ GameObject:
   - component: {fileID: 7129835830327969712}
   - component: {fileID: 4828400566628597791}
   - component: {fileID: 665083173}
-  - component: {fileID: 8087408256394067309}
   - component: {fileID: 4094226310656495479}
   - component: {fileID: 8760806921429151094}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Cell_Jungle's Heart
   m_TagString: Cell
   m_Icon: {fileID: 2800000, guid: 1e328639e69b7544f837ace002ed79b2, type: 3}
@@ -83,6 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf7d381cf54be6488fa0a333eeae6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellOverLay: {fileID: 8207773324976627658}
+  pointer: {fileID: 8748408406115033851}
   m_data: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   activeTraits: []
   tileMeshFilter: {fileID: 1019162957393411507}
@@ -197,21 +198,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8087408256394067309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590284334626953499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795410a6a14a41c45a34ca93c36f2cf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellReference: {fileID: 7129835830327969712}
-  hoverLayer: 1
-  selectedLayer: 2
 --- !u!135 &4094226310656495479
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -337,10 +323,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 2ea3ce51bbf8e8b4583be0b42f0a1c12, type: 2}
+    - target: {fileID: -2797864980895152918, guid: d590f3612cee0c5418ff1c60c69d519f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -412989040442181847, guid: d590f3612cee0c5418ff1c60c69d519f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d590f3612cee0c5418ff1c60c69d519f,
         type: 3}
       propertyPath: m_Name
       value: JunglesHeart
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d590f3612cee0c5418ff1c60c69d519f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4918753458281921464, guid: d590f3612cee0c5418ff1c60c69d519f,
         type: 3}
@@ -411,6 +412,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7057439761361123306}
     m_Modifications:
+    - target: {fileID: 1794468352863575968, guid: f1e0e6262ead8be48a178c6419ff5359,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244749036252825635, guid: f1e0e6262ead8be48a178c6419ff5359,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5804002980509332092, guid: f1e0e6262ead8be48a178c6419ff5359,
         type: 3}
       propertyPath: m_RootOrder
@@ -481,6 +492,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileUnity1
       objectReference: {fileID: 0}
+    - target: {fileID: 6611325317734820038, guid: f1e0e6262ead8be48a178c6419ff5359,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e0e6262ead8be48a178c6419ff5359, type: 3}
 --- !u!33 &1019162957393411507 stripped
@@ -492,6 +508,18 @@ MeshFilter:
 --- !u!4 &4146426410910921238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5804002980509332092, guid: f1e0e6262ead8be48a178c6419ff5359,
+    type: 3}
+  m_PrefabInstance: {fileID: 7566299366780403818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8207773324976627658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1794468352863575968, guid: f1e0e6262ead8be48a178c6419ff5359,
+    type: 3}
+  m_PrefabInstance: {fileID: 7566299366780403818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8748408406115033851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1182320484909490833, guid: f1e0e6262ead8be48a178c6419ff5359,
     type: 3}
   m_PrefabInstance: {fileID: 7566299366780403818}
   m_PrefabAsset: {fileID: 0}

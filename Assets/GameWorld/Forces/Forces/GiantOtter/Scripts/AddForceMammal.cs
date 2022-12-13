@@ -19,7 +19,9 @@ namespace Ozamanas.Forces
         private Transform AOETransform;
         [SerializeField] private MeshRenderer AOERenderer;
         [SerializeField] private MammalForceMode mode;
-        List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
+        private List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
+
+        private List<JungleTree> treesAffected = new List<JungleTree>();
 
         [SerializeField] private Vector3 elevationForce;
         [SerializeField] private Vector3 torqueForce;
@@ -56,15 +58,22 @@ namespace Ozamanas.Forces
                 ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                 animator.SetTrigger("OnRelease");
                 
+                
+                 foreach (JungleTree tree in treesAffected.ToArray())
+                {
+                    if (tree) AddForceToTrees(tree);
+                }
 
                 foreach (var machine in machinesAffected.ToArray())
                 {
                     if (!machine) continue;
-                    AddForceToMachine(machine);
+                    AddForceToMachine(machine);                    
                 }
 
-               // Destroy(gameObject);
+               
             });
+
+           
 
         }//Closes FirstPlacement method
 
@@ -86,8 +95,40 @@ namespace Ozamanas.Forces
 
         }//Closes ActivateTraits method
 
+
+        private void AddForceToTrees(JungleTree tree)
+        {
+             if (!tree || tree.tag != "Tree") return;
+
+            
+            GameObject destroyedTree = tree.DestroyTree();
+
+            if(!destroyedTree) return;
+
+      
+
+
+            Vector3 force = tree.transform.position - gameObject.transform.position;
+            force = force.normalized * mammalForce;
+            if (mode == MammalForceMode.Pull) force = force * -1;
+            
+            Rigidbody[] rigidbodies = destroyedTree.GetComponentsInChildren<Rigidbody>();
+
+                
+
+            for(int i =0;i<rigidbodies.Length;i++)
+            {
+                rigidbodies[i].AddForce(force + elevationForce, ForceMode.Impulse);
+                rigidbodies[i].AddTorque(torqueForce, ForceMode.Impulse);
+            }
+
+             treesAffected.Remove(tree);
+
+
+        }
         private void AddForceToMachine(Machines.MachineArmor machine)
         {
+           
             if (!machine || machine.tag != "Machine") return;
 
             machinesAffected.Remove(machine);
@@ -112,6 +153,11 @@ namespace Ozamanas.Forces
 
             if (isPlaced) return;
             
+            if(other.tag =="Tree" && other.TryGetComponentInParent(out JungleTree tree))
+            {
+                if (!treesAffected.Contains(tree)) treesAffected.Add(tree);
+            }
+
             if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
             {
                 if (!machinesAffected.Contains(armor)) machinesAffected.Add(armor);
@@ -126,6 +172,11 @@ namespace Ozamanas.Forces
         private void OnTriggerExit(Collider other)
         {
             if (isPlaced) return;
+
+             if(other.tag =="Tree" && other.TryGetComponentInParent(out JungleTree tree))
+            {
+                 treesAffected.Remove(tree);
+            }
             
             if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
             {
@@ -139,8 +190,8 @@ namespace Ozamanas.Forces
         private void UpdateAOEColor()
         {
             if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = Color.blue;
-            else AOERenderer.material.color = Color.green;
+            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.2f);
+            else AOERenderer.material.color  = new Vector4(0,1,0,0.2f);
         }//Closes UpdateAOEColor method
 
         private void Update()
@@ -155,6 +206,8 @@ namespace Ozamanas.Forces
                 AOETransform.position = hit.point;
                 break;
             }
+
+             AOETransform.position = new Vector3(AOETransform.position.x,0,AOETransform.position.z);
 
         }//Closes Update Method
 

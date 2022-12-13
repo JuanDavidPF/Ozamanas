@@ -67,7 +67,7 @@ namespace Ozamanas.Forces
             else
             {
                 draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + draggedOffset;
-
+                Board.CellSelectionHandler.currentCellHovered.cellReference.Pointer.SetActive(true);
             }
 
 
@@ -105,7 +105,7 @@ namespace Ozamanas.Forces
         protected virtual void FinalPlacement()
         {
             CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
-
+            cellHovered.cellReference.Pointer.SetActive(false);
 
 
             if (cellHovered &&
@@ -157,7 +157,7 @@ namespace Ozamanas.Forces
                     if (!cellOnRange || !IsValidPlacement(cellOnRange)) continue;
 
 
-                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.gameObject);
+                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.CellOverLay);
                     validCells.Add(cellOnRange);
                     cellOnRange.OnCellChanged.AddListener(OnAreaChanged);
                 }
@@ -186,8 +186,8 @@ namespace Ozamanas.Forces
         private void OnAreaChanged(Cell cell)
         {
             if (!cell) return;
-            if (!IsValidPlacement(cell)) UnityFx.Outline.OutlineBuilder.Remove(0, cell.gameObject);
-            else UnityFx.Outline.OutlineBuilder.AddToLayer(0, cell.gameObject);
+            if (!IsValidPlacement(cell)) UnityFx.Outline.OutlineBuilder.Remove(0, cell.CellOverLay);
+            else UnityFx.Outline.OutlineBuilder.AddToLayer(0, cell.CellOverLay);
         }
 
 
@@ -205,7 +205,7 @@ namespace Ozamanas.Forces
             {
                 if (!valid) continue;
                 valid.OnCellChanged.RemoveListener(OnAreaChanged);
-                UnityFx.Outline.OutlineBuilder.Remove(0, valid.gameObject);
+                UnityFx.Outline.OutlineBuilder.Remove(0, valid.CellOverLay);
             }
             validCells.Clear();
 

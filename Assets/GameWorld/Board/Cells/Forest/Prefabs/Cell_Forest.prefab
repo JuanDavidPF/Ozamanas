@@ -658,6 +658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf7d381cf54be6488fa0a333eeae6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellOverLay: {fileID: 8432064486068907177}
+  pointer: {fileID: 9046602158807273880}
   m_data: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   activeTraits: []
   tileMeshFilter: {fileID: 776766400459034320}
@@ -758,6 +760,9 @@ MonoBehaviour:
   dummyTrees: []
   mountain: {fileID: 1125922317519692524, guid: 6f8e8f360f63667409f2ca6e6a67cd0a,
     type: 3}
+  tileMeshRenderer: {fileID: 3252539722454612506}
+  GAIATexture: {fileID: 2800000, guid: 52fe603ccd3dc48499ee337052012fb9, type: 3}
+  EXPTexture: {fileID: 2800000, guid: ca75fb1d1d4b8c646a564688cc323ede, type: 3}
 --- !u!135 &4981128643097539654
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7211,9 +7216,27 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 7918329301832823561}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3252539722454612506 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4665967984417622291, guid: f1e0e6262ead8be48a178c6419ff5359,
+    type: 3}
+  m_PrefabInstance: {fileID: 7918329301832823561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4424922396647932277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5804002980509332092, guid: f1e0e6262ead8be48a178c6419ff5359,
+    type: 3}
+  m_PrefabInstance: {fileID: 7918329301832823561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8432064486068907177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1794468352863575968, guid: f1e0e6262ead8be48a178c6419ff5359,
+    type: 3}
+  m_PrefabInstance: {fileID: 7918329301832823561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9046602158807273880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1182320484909490833, guid: f1e0e6262ead8be48a178c6419ff5359,
     type: 3}
   m_PrefabInstance: {fileID: 7918329301832823561}
   m_PrefabAsset: {fileID: 0}

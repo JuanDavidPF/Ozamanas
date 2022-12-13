@@ -17,7 +17,6 @@ namespace Ozamanas.Forces
         [Space(15)]
         [Header("Visuals Setup")]
 
-        [SerializeField] private Transform attackIndicator;
         [SerializeField] private Transform birdPosition;
         [SerializeField] private List<Transform> thunderPositions;
         [SerializeField] private GameObject thunder;
@@ -55,7 +54,6 @@ namespace Ozamanas.Forces
 
             birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
 
-            attackIndicator.gameObject.SetActive(false);
 
             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
 
@@ -75,23 +73,7 @@ namespace Ozamanas.Forces
             Destroy(gameObject);
         }
 
-        private void Update()
-        {
-            if (isPlaced || !attackIndicator) return;
-
-
-            Ray AOERay = new Ray(transform.position, -transform.up);
-
-
-            foreach (var hit in Physics.RaycastAll(AOERay))
-            {
-                if (hit.transform.tag != "Cell") return;
-
-                attackIndicator.position = new Vector3(hit.point.x, posY, hit.point.z);
-                break;
-            }
-
-        }//Closes Update Method
+       
 
         protected override void OnDestroy()
         {

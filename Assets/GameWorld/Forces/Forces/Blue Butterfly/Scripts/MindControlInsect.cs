@@ -97,8 +97,8 @@ namespace Ozamanas.Forces
         private void UpdateAOEColor()
         {
             if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.6f);
-            else AOERenderer.material.color = new Vector4(0,1,0,0.6f);
+            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.2f);
+            else AOERenderer.material.color = new Vector4(0,1,0,0.2f);
         }//Closes UpdateAOEColor method
 
 
@@ -107,8 +107,10 @@ namespace Ozamanas.Forces
         private void Update()
         {
             if (isPlaced || !AOETransform) return;
+            
             Ray AOERay = new Ray(transform.position, -transform.up);
 
+            
 
             foreach (var hit in Physics.RaycastAll(AOERay))
             {
@@ -116,6 +118,8 @@ namespace Ozamanas.Forces
                 AOETransform.position = hit.point;
                 break;
             }
+
+            AOETransform.position = new Vector3(AOETransform.position.x,0,AOETransform.position.z);
 
         }//Closes Update Method
 

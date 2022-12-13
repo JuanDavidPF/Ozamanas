@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7482008031746470302}
   - component: {fileID: 5799146742126558779}
   - component: {fileID: 8619399809104726769}
-  - component: {fileID: 1590593211585344657}
-  - component: {fileID: 5839483159192592549}
+  - component: {fileID: 7638179746702008710}
+  - component: {fileID: 1434098687408773777}
   m_Layer: 0
-  m_Name: plant_01 1
+  m_Name: Bush_2
   m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7826902132181592868}
-  m_Mesh: {fileID: -1230460117931343062, guid: acf1216e380918c44986436caa8c3a7f, type: 3}
+  m_Mesh: {fileID: 8643978968022383469, guid: b1b8fdad73e97ad4e809d5aaf64cc3d6, type: 3}
 --- !u!23 &8619399809104726769
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85,19 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1590593211585344657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7826902132181592868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2456ee1bdeec99544af0ebccb9b1c407, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &5839483159192592549
+--- !u!65 &7638179746702008710
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,5 +96,22 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.38165227, y: 0.2698843, z: 0.386372}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.4405349, y: 0.31902736, z: 0.4672132}
+  m_Center: {x: 0.009215079, y: -0.000000007450581, z: 0.000000037252903}
+--- !u!114 &1434098687408773777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826902132181592868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f460c89620342e4fb2b0c4d413d7871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 0
+  fragmentedModel: {fileID: 0}
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []

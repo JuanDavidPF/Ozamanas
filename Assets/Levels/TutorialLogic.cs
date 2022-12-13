@@ -6,6 +6,7 @@ using Ozamanas.Tags;
 using DG.Tweening;
 using Ozamanas.Board;
 using JuanPayan.References;
+using Ozamanas.Extenders;
 
 
 namespace Ozamanas.Levels
@@ -124,7 +125,7 @@ public class TutorialLogic : MonoBehaviour
         if(!temp) return;
         anchorTween = cameraAnchor.transform.DOMove(temp.transform.position,focusSpeed,false);
 
-        if(temp.TryGetComponent<CellSelectionHandler>(out CellSelectionHandler selection))
+        if(temp.transform.TryGetComponentInChildren<CellSelectionHandler>(out CellSelectionHandler selection))
         {
             CellSelectionHandler.currentCellSelected = selection;
         }
