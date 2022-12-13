@@ -8,13 +8,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Ozamanas.UI.ForceDeck
 {
     public class ForceCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
 
+        [Space(15)]
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnIsNotAffordable;
+        [SerializeField] private UnityEvent OnIsOnCollDown;
 
+        [SerializeField] private UnityEvent OnForceFailedPlacement;
+
+         [Space(15)]
+        [Header("Card Setup")]
         [SerializeField] private ForceData m_forceData;
 
         [SerializeField] private IntegerVariable energyCounter;
@@ -80,6 +89,10 @@ namespace Ozamanas.UI.ForceDeck
 
         private bool IsCardAvailable()
         {
+            if(!isAffordable) OnIsNotAffordable?.Invoke();
+
+            if(isOnCooldown) OnIsOnCollDown?.Invoke();
+
             return !isOnCooldown && isAffordable;
         }//Closes IsCardAvailable method
 
@@ -118,6 +131,7 @@ namespace Ozamanas.UI.ForceDeck
             force.OnFailedPlacement.RemoveListener(OnFailedPlacement);
             force.OnSuccesfulPlacement.RemoveListener(OnSuccesfulPlacement);
             if (forceBeingPlaced == force) forceBeingPlaced = null;
+            OnForceFailedPlacement?.Invoke();
 
         }//Closes OnCancelledPlacement method
         private void OnSuccesfulPlacement(AncientForce force)

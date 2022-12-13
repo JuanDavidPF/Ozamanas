@@ -44,6 +44,7 @@ namespace Ozamanas.World
         [Space(15)]
         [Header("On New Wave event")]
         [SerializeField] private UnityEvent<int> OnNewWave;
+        [SerializeField] private UnityEvent OnLastWave;
 
 
         private void Awake()
@@ -96,8 +97,11 @@ namespace Ozamanas.World
         private bool WavesRemaining()
         {
             if (!levelSelected || !levelSelected.level) return false;
-            if (currentWave >= levelSelected.level.wavesAmount.value) return false;
-            return true;
+            if (currentWave >= levelSelected.level.wavesAmount.value) 
+            {
+                OnLastWave?.Invoke();
+                return false;
+            }return true;
         }//Closes WavesRemainig method
 
     }//Closes WavesManager class

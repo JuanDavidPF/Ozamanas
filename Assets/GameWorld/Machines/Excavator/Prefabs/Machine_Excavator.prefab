@@ -405,6 +405,34 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   nextCellOnPath: {fileID: 0}
   pathToDestination: []
+  OnCloseToJungleHeart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 5485abbea49e1e34791a89d6ede926e7, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  distanceToHeart: 2
   debugPathFinding: 0
 --- !u!114 &5196132032095778411
 MonoBehaviour:
@@ -425,21 +453,16 @@ MonoBehaviour:
   machine: {fileID: 6474880028955423243}
   physicsVFX: {fileID: 0}
   physicsCollider: {fileID: 5809932349609730669}
-  OnActivatePhysics:
+  timeMaxInPhysical: 3
+  OnActivatePhysical:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7676608239687716216}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnActivateIntelligent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnActivateKinematic:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &201654012075509106
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1405,12 +1428,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 259d618ecf7ecdd449eca9ba0225f52c, type: 3}
---- !u!198 &7676608239687716216 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5292157581018316490, guid: 259d618ecf7ecdd449eca9ba0225f52c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2592190756807570354}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7676608239701870648 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5292157580998917002, guid: 259d618ecf7ecdd449eca9ba0225f52c,

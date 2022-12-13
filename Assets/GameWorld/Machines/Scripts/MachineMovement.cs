@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DataStructures.PriorityQueue;
 using Ozamanas.Board;
-
+using UnityEngine.Events;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -57,6 +57,13 @@ namespace Ozamanas.Machines
         [SerializeField] private Cell currentDestination;
         [SerializeField] private Cell nextCellOnPath;
         [SerializeField] private List<Cell> pathToDestination = new List<Cell>();
+
+
+        [Space(15)]
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnCloseToJungleHeart;
+
+         [SerializeField] private int distanceToHeart = 0;
 
         [Space(15)]
         [Header("Debug")]
@@ -292,10 +299,24 @@ namespace Ozamanas.Machines
         {
             if (pathToDestination.Count == 0) return;
 
+           
             nextCellOnPath = pathToDestination[0];
             navMeshAgent.SetDestination(nextCellOnPath.transform.position);
             pathToDestination.RemoveAt(0);
             timeToReachDestination = Time.time;
+             CheckIfIsCloseToJungleHeart();
+            
+        }
+
+        private void CheckIfIsCloseToJungleHeart()
+        {
+            if(distanceToHeart >= pathToDestination.Count) return;
+           
+            if(pathToDestination[distanceToHeart].data == mainObjectiveBackUP)
+            {
+                OnCloseToJungleHeart?.Invoke();
+            }
+           
         }
 
         public bool CheckIfNextCellOnPath(CellData cell)

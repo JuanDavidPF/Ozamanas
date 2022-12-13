@@ -54,6 +54,8 @@ namespace Ozamanas.Energy
         [Header("Events")]
         public UnityEvent PlayVFX;
         public UnityEvent StopVFX;
+
+        public UnityEvent OnEmptyEnergyPool;
         private void Awake()
         {
             cellReference = GetComponent<Cell>();
@@ -130,6 +132,7 @@ namespace Ozamanas.Energy
             {
                 generatorReference.currentLevel = 0;
                 SetVisualsForEmptyPool();
+                OnEmptyEnergyPool?.Invoke();
             } 
             else if (data == activeID)
             {
