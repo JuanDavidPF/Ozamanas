@@ -142,7 +142,7 @@ namespace Ozamanas.Machines
 
             if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
 
-            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.2f;
+            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.01f;
         }
 
 

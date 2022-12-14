@@ -6,6 +6,7 @@ using Ozamanas.Extenders;
 using Ozamanas.Board;
 using UnityEngine.Events;
 using Ozamanas.Tags;
+using Ozamanas.Forest;
 
 namespace Ozamanas.Forces
 {
@@ -25,6 +26,7 @@ namespace Ozamanas.Forces
          private Cell currentCell;
 
          private Animator animator;
+
         protected override void Awake()
         {
             base.Awake();
@@ -36,11 +38,16 @@ namespace Ozamanas.Forces
         public override void FirstPlacement()
         {
             base.FirstPlacement();
+
+            if(!isPlaced) return;
+
             reptileCollider.enabled = true;
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
             animator.SetTrigger("OnRelease");
+
+            ChangeTokenToCurrentCell();
 
             transform.position = currentCell.worldPosition;
 
@@ -48,11 +55,23 @@ namespace Ozamanas.Forces
         }//Closes FistPlacement method
 
 
-        public void ChangeTokenToCuurentCell()
+        public void ChangeTokenToCurrentCell()
         {
+
             if (barrierID) currentCell.data = barrierID;
             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-                isReady = true;    
+                         
+        }
+
+        public void InstantiateBarrier()
+        {
+            isReady = true;   
+            if(currentCell.TryGetComponent<ForestBehaviour>(out ForestBehaviour forest))
+            {
+                forest.InstantiateBarrier();
+            }
+
+            
         }
 
         private void OnCollisionEnter(Collision other)
@@ -60,7 +79,7 @@ namespace Ozamanas.Forces
 
             if (!isPlaced || (other.transform.tag != "Machine")) return;
 
-            if (!isReady && other.transform.TryGetComponent(out Machines.MachinePhysicsManager physics))
+            if (!isReady && other.transform.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
             {
                 physics.SetPhysical();
             }

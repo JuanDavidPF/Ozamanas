@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 8256875140076655523}
   - component: {fileID: 8903683191693950701}
   - component: {fileID: 2550046748517215609}
+  - component: {fileID: 7375169277571652429}
   m_Layer: 0
   m_Name: AncientForce_MataMata_Turtle
   m_TagString: Force
@@ -296,6 +297,35 @@ MonoBehaviour:
     itemId: 0
   spawnTarget: {fileID: 0}
   playOnStart: 0
+--- !u!114 &7375169277571652429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781539411262280919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f7ef41e96302e49afde5434c5819c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  processes:
+  - key: Barrier
+    processes:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7490164039290490440}
+          m_TargetAssemblyTypeName: Ozamanas.Forces.BarrierReptile, Ozamanas.World
+          m_MethodName: InstantiateBarrier
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &2536292265501043409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -631,8 +661,22 @@ MeshCollider:
   m_GameObject: {fileID: 4084103242213009392}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1956660125356746593, guid: 2206cfdec7d52bb45ac9c3e867ccfa52, type: 3}
+--- !u!136 &6750175000700856229
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084103242213009392}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2130483
+  m_Height: 1.0007145
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.0703522, z: -0.0019542708}

@@ -109,14 +109,18 @@ namespace Ozamanas.Forest
 
         }
 
-
         private void StartForestByToken()
         {
 
             if (!cellReference) return;
             if (cellReference.data == expansionID) ChangeToExpansion();
             if (cellReference.data == forestID) ChangeToForest();
-            if (cellReference.data == barrierID) ChangeToBarrier();
+            if (cellReference.data == barrierID) 
+            {
+                ChangeToBarrier();
+                InstantiateBarrier();
+            }
+
         }
 
         public void OnCellDataChange(CellData data)
@@ -130,7 +134,7 @@ namespace Ozamanas.Forest
 
         public void OnMachineEnter(HumanMachine machine)
         {
-            if (cellReference.data == forestID) return;
+            if (cellReference.data == forestID || cellReference.data == barrierID) return;
 
             cellReference.data = forestID;
 
@@ -213,13 +217,7 @@ namespace Ozamanas.Forest
 
         private void ChangeToBarrier()
         {
-            GameObject temp = Instantiate(mountain, visuals);
-
-            if(temp.TryGetComponent<Mountain>(out Mountain _mountain))
-            {
-                _mountain.CurrentCell = cellReference;
-            }
-
+            
             for (int i = 0; i < trees.Count; i++)
             {
                 if (trees[i].currentTree) Destroy(trees[i].currentTree);
@@ -231,6 +229,17 @@ namespace Ozamanas.Forest
             }
 
             tileMeshRenderer.material.mainTexture = EXPTexture;
+
+        }
+
+        public void InstantiateBarrier()
+        {
+            GameObject temp = Instantiate(mountain, visuals);
+
+            if(temp.TryGetComponent<Mountain>(out Mountain _mountain))
+            {
+                _mountain.CurrentCell = cellReference;
+            }
         }
     }
 }

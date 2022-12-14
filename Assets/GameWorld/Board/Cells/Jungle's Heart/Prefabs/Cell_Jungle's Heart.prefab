@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 665083173}
   - component: {fileID: 4094226310656495479}
   - component: {fileID: 8760806921429151094}
+  - component: {fileID: 3470332085339052966}
   m_Layer: 0
   m_Name: Cell_Jungle's Heart
   m_TagString: Cell
@@ -106,10 +107,10 @@ MonoBehaviour:
   OnMachineEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: e3b694abcaac6774e84ec894048de981, type: 2}
-        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
-        m_MethodName: Invoke
-        m_Mode: 1
+      - m_Target: {fileID: 3470332085339052966}
+        m_TargetAssemblyTypeName: Ozamanas.Board.JunglesHeartController, Ozamanas.World
+        m_MethodName: CheckForMachineEnter
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -231,6 +232,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3470332085339052966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590284334626953499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328f90f2c6442364ca7c6b07f039079c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: e3b694abcaac6774e84ec894048de981, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1653636275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -386,25 +414,6 @@ CapsuleCollider:
   m_Height: 1.660581
   m_Direction: 1
   m_Center: {x: -0.0012673252, y: 0.9115106, z: -0.06535226}
---- !u!114 &55054996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147587826146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f460c89620342e4fb2b0c4d413d7871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 5
-  growingTime: 2
-  fragmentedModel: {fileID: 8222015825547047051, guid: 5ef4626d64d285c47bb47a43bbacf7f8,
-    type: 3}
-  OnDestruction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &7566299366780403818
 PrefabInstance:
   m_ObjectHideFlags: 0

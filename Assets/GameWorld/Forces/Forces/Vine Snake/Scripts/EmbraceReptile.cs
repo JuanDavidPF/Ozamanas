@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Ozamanas.Extenders;
 using Ozamanas.Board;
+using Ozamanas.Tags;
 namespace Ozamanas.Forces
 {
     public class EmbraceReptile : AncientForce
@@ -11,7 +12,6 @@ namespace Ozamanas.Forces
         Collider clld;
 
         [SerializeField] private float duration = 2f;
-        [SerializeField] private float riseTime = 0.2f;
         private Cell currentCell;
 
         private SnakeController[] controllers;
@@ -74,10 +74,14 @@ namespace Ozamanas.Forces
 
 
             if (isPlaced || other.transform.tag != "Machine") return;
-
-
-            nearMachine = other.transform;
-
+            Debug.Log("OnTriggerEnter");
+            
+            if(other.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
+            {
+                if(physics.state == PhysicMode.Intelligent)    nearMachine = other.transform;
+            }
+            
+            
 
         }
 
