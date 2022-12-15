@@ -6,6 +6,7 @@ using Ozamanas.Machines;
 using UnityEngine.Events;
 using DG.Tweening;
 using Ozamanas.Extenders;
+using Ozamanas.World;
 
 namespace Ozamanas.Board
 {
@@ -34,6 +35,26 @@ namespace Ozamanas.Board
             }
         }
 
+        [SerializeField] private GameplayState m_gameplayState;
+
+        public GameplayState gameplayState
+        {
+            get { return m_gameplayState; }
+            set
+            {
+                if (m_gameplayState == value) return;
+
+
+                GameplayState originalValue = m_gameplayState;
+
+                m_gameplayState = value;
+
+                OnCellGameStateChanged?.Invoke(m_gameplayState);
+                OnCellChanged?.Invoke(this);
+
+            }
+        }
+
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
         public GameObject CellOverLay { get => cellOverLay; set => cellOverLay = value; }
@@ -54,7 +75,7 @@ namespace Ozamanas.Board
         [Header("Events")]
         public UnityEvent<CellData> OnCellDataChanged;
         public UnityEvent<Cell> OnCellChanged;
-
+        public UnityEvent<GameplayState> OnCellGameStateChanged;
         public UnityEvent<HumanMachine> OnMachineEntered;
         public UnityEvent<HumanMachine> OnMachineExited;
 

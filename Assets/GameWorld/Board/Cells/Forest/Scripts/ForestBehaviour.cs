@@ -6,6 +6,7 @@ using Ozamanas.Board;
 using Ozamanas.Tags;
 using Ozamanas.Machines;
 using Ozamanas.Extenders;
+using Ozamanas.World;
 
 namespace Ozamanas.Forest
 {
@@ -32,6 +33,12 @@ namespace Ozamanas.Forest
         [SerializeField] private CellData expansionID;
         [SerializeField] private CellData forestID;
         [SerializeField] private CellData barrierID;
+
+        [SerializeField] private GameplayState winState;
+
+         [SerializeField] private GameplayState loseState;
+
+
         // Start is called before the first frame update
                 [Space(15)]
         [Header("Forest Lists")]
@@ -130,6 +137,13 @@ namespace Ozamanas.Forest
             if (data == expansionID) ChangeToExpansion();
             if (data == forestID) ChangeToForest();
             if (data == barrierID) ChangeToBarrier();
+        }
+
+        public void OnCellGameStateChange(GameplayState state)
+        {
+            if (!state) return;
+            if (state == winState) ChangeToExpansion();
+            if (state == loseState) ChangeToForest();
         }
 
         public void OnMachineEnter(HumanMachine machine)

@@ -133,6 +133,8 @@ namespace Ozamanas.Board
 
         }//Closes GetCellsByData method
 
+    
+
         public static Cell GetNearestCell(float3 origin, params CellData[] datas)
         {
 

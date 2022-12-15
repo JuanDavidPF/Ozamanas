@@ -23,6 +23,14 @@ namespace Ozamanas.Forces
 
          [SerializeField] public UnityEvent OnDestruction;
 
+        [Space(15)]
+        [Header("Intro Force")]
+         [SerializeField] private float explosionForce = 1f;
+
+          [SerializeField] private float explosionRadius = 1f;
+
+           [SerializeField] private float upwardsModifier = 1f;
+
          private Cell currentCell;
 
          private Animator animator;
@@ -82,6 +90,10 @@ namespace Ozamanas.Forces
             if (!isReady && other.transform.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
             {
                 physics.SetPhysical();
+                if (physics.rb)
+                {
+                    physics.rb.AddExplosionForce(explosionForce,gameObject.transform.position,explosionRadius,upwardsModifier);
+                }
             }
         }
 

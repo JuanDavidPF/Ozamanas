@@ -9,6 +9,7 @@ using Ozamanas.Forest;
 using DG.Tweening;
 using Ozamanas.Extenders;
 using UnityEngine.Events;
+using Ozamanas.World;
 
 namespace Ozamanas.Energy
 {
@@ -48,6 +49,10 @@ namespace Ozamanas.Energy
         [SerializeField] private CellData inactiveID;
         [SerializeField] private CellData activeID;
         [SerializeField] private CellData emptyID;
+
+                [SerializeField] private GameplayState winState;
+
+         [SerializeField] private GameplayState loseState;
 
 
         [Space(15)]
@@ -149,6 +154,12 @@ namespace Ozamanas.Energy
             else Debug.LogWarning("Invalid cell data for a Energy source");
         }//Closes OnCellDataChanged method
 
+        public void OnCellGameStateChange(GameplayState state)
+        {
+            if (!state) return;
+            if (state == winState) SetVisualsForActivePool();
+            if (state == loseState)  SetVisualsForInactivePool();
+        }
 
         private void SetLiquidColor(Color color)
         {

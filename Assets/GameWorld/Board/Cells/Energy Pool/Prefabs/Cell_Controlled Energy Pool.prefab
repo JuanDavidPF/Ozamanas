@@ -53,6 +53,7 @@ MonoBehaviour:
   cellOverLay: {fileID: 5770919925854180087}
   pointer: {fileID: 6384173919287160774}
   m_data: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
+  m_gameplayState: {fileID: 0}
   activeTraits: []
   tileMeshFilter: {fileID: 8247526179719756937}
   visuals: {fileID: 8105093437931301133}
@@ -95,6 +96,21 @@ MonoBehaviour:
   OnCellChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnCellGameStateChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2030776744}
+        m_TargetAssemblyTypeName: Ozamanas.Energy.EnergyPool, Ozamanas.World
+        m_MethodName: OnCellGameStateChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnMachineEntered:
     m_PersistentCalls:
       m_Calls:
@@ -205,6 +221,8 @@ MonoBehaviour:
   inactiveID: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
   activeID: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   emptyID: {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
+  winState: {fileID: 11400000, guid: 2db2249f4119f804a999733f23d8cc3c, type: 2}
+  loseState: {fileID: 11400000, guid: 80887539b1657f44ba2dba76b3275141, type: 2}
   PlayVFX:
     m_PersistentCalls:
       m_Calls:

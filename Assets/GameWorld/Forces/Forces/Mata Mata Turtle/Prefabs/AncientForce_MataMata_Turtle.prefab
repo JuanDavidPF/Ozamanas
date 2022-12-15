@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5781539409426563927
 Transform:
   m_ObjectHideFlags: 0
@@ -229,6 +229,9 @@ MonoBehaviour:
   OnDestruction:
     m_PersistentCalls:
       m_Calls: []
+  explosionForce: 10
+  explosionRadius: 0.5
+  upwardsModifier: 10
 --- !u!54 &8256875140076655523
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -652,20 +655,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3777622418901539489}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &8289924335278947851
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4084103242213009392}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1956660125356746593, guid: 2206cfdec7d52bb45ac9c3e867ccfa52, type: 3}
 --- !u!136 &6750175000700856229
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -680,3 +669,17 @@ CapsuleCollider:
   m_Height: 1.0007145
   m_Direction: 1
   m_Center: {x: 0, y: -0.0703522, z: -0.0019542708}
+--- !u!64 &8289924335278947851
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084103242213009392}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1956660125356746593, guid: 2206cfdec7d52bb45ac9c3e867ccfa52, type: 3}

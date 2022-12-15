@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
+using Ozamanas.World;
 
 
 namespace Ozamanas.Board
@@ -11,13 +13,20 @@ namespace Ozamanas.Board
 
     public class BulldozerIndustryRotator : MonoBehaviour
     {
+        [SerializeField] private GameplayState winState;
+
+         [SerializeField] private GameplayState loseState;
         [SerializeField] Transform meshToRotate;
 
         [SerializeField] List<Transform> industryBlinds;
         private Animator animator;
 
-
         List<Tween> tweeners = new List<Tween>();
+
+        [Space(15)]
+        [Header("Events")]
+        public UnityEvent OnIndustryTurnOff;
+        public UnityEvent OnIndustryTurnOn;
 
         void Awake()
         {
@@ -70,5 +79,30 @@ namespace Ozamanas.Board
             }
             tweeners.Clear();
         }
+
+
+         public void OnCellGameStateChange(GameplayState state)
+        {
+            if (!state) return;
+            if (state == winState) TurnOffIndustry();
+            if (state == loseState) TurnOnIndustry();
+        }
+
+        private void TurnOffIndustry()
+        {
+            OnIndustryTurnOff?.Invoke();
+             StopTweeners();
+            foreach (var blind in industryBlinds)
+            {
+                tweeners.Add(blind.DOScaleY(1, .5f).SetDelay(1f));
+            }
+
+        }
+
+        private void TurnOnIndustry()
+        {
+            OnIndustryTurnOn?.Invoke();
+        }
+
     }//Closes BulldozerIndustryRotator
 }//Closes namespace declaration
