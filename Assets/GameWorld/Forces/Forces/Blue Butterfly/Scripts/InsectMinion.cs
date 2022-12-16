@@ -57,6 +57,12 @@ namespace Ozamanas.Forces
                     machine.AddTraitToMachine(trait);
                 }
                 
+                if(other.transform.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
+                {
+                    physics.SetPhysical();
+                    physics.SetIntelligent();    
+                }
+
                 Instantiate(OnMinionDestructionVFX,transform.position,transform.rotation);
                 Destroy(gameObject);
             }

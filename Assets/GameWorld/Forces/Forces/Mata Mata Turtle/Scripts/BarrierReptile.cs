@@ -90,10 +90,6 @@ namespace Ozamanas.Forces
             if (!isReady && other.transform.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
             {
                 physics.SetPhysical();
-                if (physics.rb)
-                {
-                    physics.rb.AddExplosionForce(explosionForce,gameObject.transform.position,explosionRadius,upwardsModifier);
-                }
             }
         }
 

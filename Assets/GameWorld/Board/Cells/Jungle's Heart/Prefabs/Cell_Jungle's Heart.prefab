@@ -306,6 +306,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4828400566628597791}
+        m_TargetAssemblyTypeName: Ozamanas.Energy.EnergyGenerator, Ozamanas.World
+        m_MethodName: StopGeneration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLoseState:
     m_PersistentCalls:
       m_Calls:
@@ -337,6 +349,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4828400566628597791}
+        m_TargetAssemblyTypeName: Ozamanas.Energy.EnergyGenerator, Ozamanas.World
+        m_MethodName: StopGeneration
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1830,6 +1854,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.00000054169624
       objectReference: {fileID: 0}
+    - target: {fileID: 1374799738678103181, guid: 7d5f282f8f5f1fe438f9e0cbe3f94801,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a0ec7125e3d90648917353b7b33a2b6, type: 2}
     - target: {fileID: 1795026408444125328, guid: 7d5f282f8f5f1fe438f9e0cbe3f94801,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2569,7 +2598,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57425ea9b0c69694aaade1cfe3b235a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 2e2c8f282950aa14d872cb59aa0fcbd6, type: 2}
     - target: {fileID: 8778708192228502363, guid: 7d5f282f8f5f1fe438f9e0cbe3f94801,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

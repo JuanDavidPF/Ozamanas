@@ -143,7 +143,7 @@ namespace Ozamanas.Forest
         {
             if (!state) return;
             if (state == winState) ChangeToExpansion();
-            if (state == loseState) ChangeToForest();
+            if (state == loseState && cellReference.data != forestID) ChangeToForest();
         }
 
         public void OnMachineEnter(HumanMachine machine)
