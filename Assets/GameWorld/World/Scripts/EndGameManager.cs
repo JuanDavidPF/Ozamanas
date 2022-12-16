@@ -5,17 +5,29 @@ using JuanPayan.Helpers;
 using Ozamanas.Levels;
 using Ozamanas.Board;
 using UnityEngine.Events;
+using DG.Tweening;
 
 
 namespace Ozamanas.World
 {
     public class EndGameManager : MonoBehaviour
     {
+
+        
+
+         [SerializeField] private string ObjectToFocus;
+
+          [SerializeField] private float focusSpeed = 0.2f;
+        [SerializeField] private CameraAnchor cameraAnchor;
+        [SerializeField] private CameraZoom cameraZoom;
         [Space(15)]
         [Header("Scene Switcher")]
+        [SerializeField] private float sceneSwitcherDelay = 3f;
          [SerializeField] SceneSwitcher sceneSwitcher;
+         [SerializeField] SceneUnloader sceneUnloader;
          [SerializeField] private string winSceneToLoad;
         [SerializeField] private string loseSceneToLoad;
+        [SerializeField] private string gameplayHUD;
 
         [Space(15)]
         [Header("Game States")]
@@ -35,36 +47,92 @@ namespace Ozamanas.World
         public UnityEvent OnWinLevel;
         public UnityEvent OnLoseLevel;
 
+        void Awake()
+        {
+            if(!sceneSwitcher) sceneSwitcher = GetComponent<SceneSwitcher>();
+            if(!sceneUnloader) sceneUnloader = GetComponent<SceneUnloader>();
+            if(!cameraZoom) cameraZoom = FindObjectOfType<CameraZoom>();
+            if(!cameraAnchor) cameraAnchor = FindObjectOfType<CameraAnchor>();
+        }
+
         public void CallVictory()
         {
-            // Step 1
+           
             levelSelected.level.state = Tags.LevelState.Finished;
-            // Step 2
-            List<Cell> cells = Board.Board.GetCellsByData(cellsData.ToArray());
-            foreach(Cell cell in cells)
-            {
-                cell.gameplayState = winState;
-            }
+
+            UnloadGameplayHUD();
 
             OnWinLevel?.Invoke();
+
+            SetCameraZoom();
+
+            SetCameraFocus();
+           
+            StartCoroutine(UpdateCellGameState(winState));
+
+            StartCoroutine(LoadScene(winSceneToLoad));
+            
             
         }
 
-        public void CallDefeat()
+         public void CallDefeat()
         {
+            UnloadGameplayHUD();
+
+            OnLoseLevel?.Invoke();
+
+            SetCameraZoom();
+
+            SetCameraFocus();
            
+            StartCoroutine(UpdateCellGameState(loseState));
+
+            StartCoroutine(LoadScene(loseSceneToLoad));
         }
 
-        public void LoadWinScene()
+
+        IEnumerator UpdateCellGameState(GameplayState state)
         {
-            sceneSwitcher.SceneToLoad = winSceneToLoad;
+            List<Cell> cells = Board.Board.GetCellsByData(cellsData.ToArray());
+            foreach(Cell cell in cells)
+            {
+                cell.gameplayState = state;
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+        }
+
+        private void SetCameraFocus()
+        {
+            if(string.IsNullOrEmpty(ObjectToFocus)) return;
+        
+            GameObject temp = GameObject.Find(ObjectToFocus);
+
+            if(!temp) return;
+
+            cameraAnchor.transform.DOMove(temp.transform.position,focusSpeed,false);
+
+        }
+        private void SetCameraZoom()
+        {
+            cameraZoom.UpdateCameraZoom(0f);
+        }
+
+        private void UnloadGameplayHUD()
+        {
+            sceneUnloader.SceneToUnload = gameplayHUD;
+            sceneUnloader.Behaviour();
+        }
+
+       
+
+        IEnumerator LoadScene(string scene)
+        {
+            yield return new WaitForSeconds(sceneSwitcherDelay);
+            sceneSwitcher.SceneToLoad = scene;
             sceneSwitcher.Behaviour();
         }
 
-         public void LoadLoseScene()
-        {
-             sceneSwitcher.SceneToLoad = loseSceneToLoad;
-            sceneSwitcher.Behaviour();
-        }
+       
     }
 }

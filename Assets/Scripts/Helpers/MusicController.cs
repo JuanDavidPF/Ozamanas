@@ -4,16 +4,14 @@ using UnityEngine;
 
 namespace JuanPayan.Helpers
 {
-    public class MusicController : MonoBehaviour
+    public class MusicController : MonobehaviourEvents
     {
         [Space(15)]
         [Header("Music")]
 
         [Stem.PlaylistID]
 	    public Stem.ID playlistId = Stem.ID.None;
-        [Stem.PlaylistID]
-	    public Stem.ID onDestroyPlaylist = Stem.ID.None;
-
+    
 	    [Stem.MusicPlayerID]
 	    public Stem.ID musicPlayerId = Stem.ID.None;
 
@@ -29,7 +27,8 @@ namespace JuanPayan.Helpers
 
          [SerializeField] private string ambienceSound2;
         // Start is called before the first frame update
-        void Start()
+        
+        public override void Behaviour()
         {
             if(musicPlayerId !=Stem.ID.None && playlistId !=Stem.ID.None) Stem.MusicManager.SetPlaylist(musicPlayerId, playlistId);
 
@@ -46,17 +45,9 @@ namespace JuanPayan.Helpers
 
            if(string.IsNullOrEmpty(ambienceSound1)) Stem.MusicManager.Stop(ambiencePlayerId);
            
-            if(string.IsNullOrEmpty(ambienceSound1)) Stem.MusicManager.Stop(ambiencePlayerId2);
+           if(string.IsNullOrEmpty(ambienceSound1)) Stem.MusicManager.Stop(ambiencePlayerId2);
 
-        }
-
-        void OnDestroy()
-        {
-            if(musicPlayerId !=Stem.ID.None && onDestroyPlaylist !=Stem.ID.None)  Stem.MusicManager.SetPlaylist(musicPlayerId, onDestroyPlaylist);
-
-           
-
-        }
+        }//Closes Behaviour method
 
        
     }

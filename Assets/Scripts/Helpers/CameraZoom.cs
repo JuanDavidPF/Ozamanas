@@ -53,8 +53,8 @@ namespace JuanPayan.Helpers
             _scrollInput.action.started -= UpdateScroll;
         }//Closes OnDisable method
 
-
-        private void UpdateCameraZoom(float value)
+        
+        public void UpdateCameraZoom(float value)
         {
 
 

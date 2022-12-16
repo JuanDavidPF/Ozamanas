@@ -9,14 +9,15 @@ namespace JuanPayan.Helpers
     {
         [SerializeField] private string sceneToUnload;
 
+        public string SceneToUnload { get => sceneToUnload; set => sceneToUnload = value; }
 
         public override void Behaviour()
         {
-            Debug.Log("Attempting to unload scene: " + sceneToUnload);
-            if (!SceneManager.GetSceneByName(sceneToUnload).isLoaded) return;
+            Debug.Log("Attempting to unload scene: " + SceneToUnload);
+            if (!SceneManager.GetSceneByName(SceneToUnload).isLoaded) return;
 
-            SceneStackManager.screenStack.Remove(sceneToUnload);
-            SceneManager.UnloadSceneAsync(sceneToUnload);
+            SceneStackManager.screenStack.Remove(SceneToUnload);
+            SceneManager.UnloadSceneAsync(SceneToUnload);
 
         }//Closes Behaviour method
 

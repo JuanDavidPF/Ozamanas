@@ -1301,6 +1301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 801693823}
   - component: {fileID: 801693822}
+  - component: {fileID: 801693824}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -1320,18 +1321,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738dfab48e7476644b9bc70a8b5e7231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggers: 4
   playlistId:
     bankGuidA: -927729604
     bankGuidB: 1192340987
     bankGuidC: 577644435
     bankGuidD: -627413270
     itemId: 972805885
-  onDestroyPlaylist:
-    bankGuidA: -927729604
-    bankGuidB: 1192340987
-    bankGuidC: 577644435
-    bankGuidD: -627413270
-    itemId: 799308936
   musicPlayerId:
     bankGuidA: -927729604
     bankGuidB: 1192340987
@@ -1367,6 +1363,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &801693824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801693821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738dfab48e7476644b9bc70a8b5e7231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 16384
+  playlistId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 799308936
+  musicPlayerId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 1933653189
+  ambiencePlayerId:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  ambienceSound1: 
+  ambiencePlayerId2:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  ambienceSound2: 
 --- !u!1 &852554413
 GameObject:
   m_ObjectHideFlags: 0

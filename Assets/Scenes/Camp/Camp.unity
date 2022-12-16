@@ -4690,6 +4690,7 @@ Transform:
   - {fileID: 1690571453}
   - {fileID: 1358919022}
   - {fileID: 866235146}
+  - {fileID: 1664607155}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7602,6 +7603,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1072584321}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1664607154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1664607155}
+  - component: {fileID: 1664607156}
+  m_Layer: 0
+  m_Name: MusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1664607155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664607154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753040237}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1664607156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664607154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738dfab48e7476644b9bc70a8b5e7231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 4
+  playlistId:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  musicPlayerId:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  ambiencePlayerId:
+    bankGuidA: -927729604
+    bankGuidB: 1192340987
+    bankGuidC: 577644435
+    bankGuidD: -627413270
+    itemId: 1038790347
+  ambienceSound1: Camp
+  ambiencePlayerId2:
+    bankGuidA: 0
+    bankGuidB: 0
+    bankGuidC: 0
+    bankGuidD: 0
+    itemId: 0
+  ambienceSound2: 
 --- !u!1001 &1679779969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8588,7 +8660,7 @@ PrefabInstance:
     - target: {fileID: 1547900896249510030, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1547900896249510030, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
@@ -8618,7 +8690,7 @@ PrefabInstance:
     - target: {fileID: 5876020667322457192, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5876020667322457192, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
@@ -8763,7 +8835,7 @@ PrefabInstance:
     - target: {fileID: 6474183463697106060, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 213.68
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6474183463697106060, guid: a075f73f48442ac4284b5c69d4f22217,
         type: 3}
