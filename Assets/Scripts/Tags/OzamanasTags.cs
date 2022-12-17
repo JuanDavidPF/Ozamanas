@@ -37,21 +37,19 @@ public enum PlayerState
             Intelligent,
         }
 
-        public enum MachineType
+        public enum MachineAltitude
     {
         Terrestrial ,
-
         Aerial,
-        Subterrestrial, 
-        Destructor ,
-        Boss 
+        Subterrestrial
        
     }
 
     public enum MachineHierarchy
 {
     Boss = 0,
-    Regular =1
+    Regular =1,
+    Destructor
 }
 
     public enum MachineSpeed

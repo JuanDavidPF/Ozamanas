@@ -48,7 +48,7 @@ namespace Ozamanas.Machines
         }
 
         public MachineState Machine_status { get => machine_status; set => machine_status = value; }
-        public MachineAttributes MachineAttributes { get => machineAttributes; set => machineAttributes = value; }
+        public HumanMachineToken Machine_token { get => machine_token; set => machine_token = value; }
 
         [Space(20)]
         [Header("Events")]
@@ -61,14 +61,11 @@ namespace Ozamanas.Machines
         public void SetMachineStatus(MachineState status)
         { Machine_status = status; }
 
-         private MachineAttributes machineAttributes;
-
         void Awake()
         {
             machineArmor = GetComponent<MachineArmor>();
             machineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
-            MachineAttributes = GetComponent<MachineAttributes>();
 
         }
 
@@ -80,9 +77,9 @@ namespace Ozamanas.Machines
 
         #region States Management
 
-        public MachineType GetMachineType()
+        public MachineHierarchy GetMachineType()
         {
-            return MachineAttributes.MachineType;
+            return machine_token.machineHierarchy;
         }
 
         // Check Functions

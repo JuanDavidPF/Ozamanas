@@ -7,12 +7,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using Ozamanas.Tags;
+using Sirenix.OdinInspector;
 
 
 namespace Ozamanas.Machines
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(MachineAttributes))]
+    [RequireComponent(typeof(HumanMachine))]
     public class MachineMovement : MonoBehaviour
     {
 
@@ -26,33 +27,25 @@ namespace Ozamanas.Machines
         }//Closes
 
         private NavMeshAgent navMeshAgent;
-        private MachineAttributes machineAttributes;
         private HumanMachine humanMachine;
-
-
-        [Header("Setup")]
-        [SerializeField] private CellData humanBase;
-        [SerializeField] private CellData mainObjective;
-
+        private CellData humanBase;
+        private CellData mainObjective;
         private CellData mainObjectiveBackUP;
-        [Space(5)]
-        [SerializeField] private CellData secondObjective;
-        [SerializeField] private int secondObjectiveRange;
-        [Space(5)]
-        [SerializeField] private CellData thirdObjective;
-        [SerializeField] private int thirdObjectiveRange;
-        [Space(15)]
-        [SerializeField] private List<CellData> blacklist = new List<CellData>();
-        [SerializeField] private MachineSpeedValues speedValues;
-        [SerializeField] private MachineSpeed currentSpeed;
-        [SerializeField] public MachineType currentAltitude;
-        [SerializeField] private float height = 5f;
-        
-        [SerializeField] private float timeMaxToReachDestination = 5f;
+        private CellData secondObjective;
+        private int secondObjectiveRange;
+        private CellData thirdObjective;
+        private int thirdObjectiveRange;
+        private List<CellData> blacklist = new List<CellData>();
+        private MachineSpeedValues speedValues;
+        private MachineSpeed currentSpeed;
+        private MachineAltitude currentAltitude;
+        private float height = 5f;
+        private float timeMaxToReachDestination = 5f;
         private float timeToReachDestination = 0f;
 
         [Space(15)]
         [Header("Parameters")]
+
         public PathFindingResult result = PathFindingResult.NonCalculated;
         [SerializeField] private Cell currentDestination;
         [SerializeField] private Cell nextCellOnPath;
@@ -63,7 +56,7 @@ namespace Ozamanas.Machines
         [Header("Events")]
         [SerializeField] private UnityEvent OnCloseToJungleHeart;
 
-         [SerializeField] private int distanceToHeart = 0;
+        private int distanceToHeart = 0;
 
         [Space(15)]
         [Header("Debug")]
@@ -78,6 +71,9 @@ namespace Ozamanas.Machines
             }
         }
 
+        public MachineAltitude CurrentAltitude { get => currentAltitude; set => currentAltitude = value; }
+
+
 
 
 
@@ -85,12 +81,39 @@ namespace Ozamanas.Machines
         void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            machineAttributes = GetComponent<MachineAttributes>();
             humanMachine = GetComponent<HumanMachine>();
-            mainObjectiveBackUP = mainObjective;
-            RestoreOriginalValues();
+            
         }//Closes Awake method
 
+        void Start()
+        {
+            LoadMachineObjectivesInformation();
+           LoadMachineSpeedInformation();
+            RestoreOriginalValues();
+           
+        }
+
+        private void LoadMachineObjectivesInformation()
+        {
+            humanBase=humanMachine.Machine_token.humanBase;
+            mainObjective=humanMachine.Machine_token.mainObjective;
+            mainObjectiveBackUP = mainObjective;
+            secondObjective=humanMachine.Machine_token.secondObjective;
+            secondObjectiveRange=humanMachine.Machine_token.secondObjectiveRange;
+            thirdObjective=humanMachine.Machine_token.thirdObjective;
+            thirdObjectiveRange=humanMachine.Machine_token.thirdObjectiveRange;
+            blacklist=humanMachine.Machine_token.cellBlacklist;
+            distanceToHeart=humanMachine.Machine_token.OnDistanceToHeartNotification;
+        }
+
+        private void LoadMachineSpeedInformation()
+        {
+            speedValues=humanMachine.Machine_token.speedValues;
+            currentSpeed=humanMachine.Machine_token.currentSpeed;
+            CurrentAltitude=humanMachine.Machine_token.currentAltitude;
+            height =humanMachine.Machine_token.height;
+            timeMaxToReachDestination =humanMachine.Machine_token.timeMaxToReachDestination;
+        }
 
         private void Update()
         {
@@ -190,8 +213,8 @@ namespace Ozamanas.Machines
                 {
 
                     if (!next) continue;
-                    if (currentAltitude == MachineType.Terrestrial && next.data && blacklist.Contains(next.data)) continue;
-                    if (currentAltitude == MachineType.Terrestrial && next.isOccupied) continue;
+                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.data && blacklist.Contains(next.data)) continue;
+                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.isOccupied) continue;
                     /*Implement here early exits for board cell that dont met the conditions*/
 
 
@@ -330,23 +353,23 @@ namespace Ozamanas.Machines
 
         public void GoAerial()
         {
-            if (currentAltitude == MachineType.Aerial) return;
-            currentAltitude = MachineType.Aerial;
+            if (CurrentAltitude == MachineAltitude.Aerial) return;
+            CurrentAltitude = MachineAltitude.Aerial;
         }
 
         public void GoTerrestrial()
         {
-            if (currentAltitude == MachineType.Terrestrial) return;
+            if (CurrentAltitude == MachineAltitude.Terrestrial) return;
 
 
-            currentAltitude = MachineType.Terrestrial;
+            CurrentAltitude = MachineAltitude.Terrestrial;
         }
 
         public void GoSubterrestrial()
         {
-           if (currentAltitude == MachineType.Subterrestrial) return;
+           if (CurrentAltitude == MachineAltitude.Subterrestrial) return;
 
-            currentAltitude = MachineType.Subterrestrial;
+            CurrentAltitude = MachineAltitude.Subterrestrial;
         }
 
         
@@ -387,8 +410,8 @@ namespace Ozamanas.Machines
         public void RestoreOriginalValues()
         {
             GotoMainObjective();
-            currentSpeed = machineAttributes.GetMachineSpeed();
-            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+            currentSpeed=humanMachine.Machine_token.currentSpeed;
+            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
             if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
@@ -399,7 +422,7 @@ namespace Ozamanas.Machines
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
             if(! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
         }
 
         public void DecreaseMachineSpeed()
@@ -409,7 +432,7 @@ namespace Ozamanas.Machines
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
              if(! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = speedValues.GetSpeed(machineAttributes.GetMachineSpeed());
+            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
         }
 
         public void StopMachine()

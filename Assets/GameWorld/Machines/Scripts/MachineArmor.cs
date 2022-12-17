@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 
 namespace Ozamanas.Machines
 {
 
-    [RequireComponent(typeof(MachineAttributes))]
+    [RequireComponent(typeof(HumanMachine))]
     public class MachineArmor : MonoBehaviour
     {
         private Transform _t;
-        [Header("Armor")]
-        [Space(15)]
-        [SerializeField] private int m_armorPoints = 1;
+
+       private int m_armorPoints = 1;
 
         private HumanMachine machine; 
         public int armorPoints
@@ -26,21 +26,19 @@ namespace Ozamanas.Machines
                 OnArmorChanged?.Invoke(value);
             }
         }
-        [SerializeField] private int maxArmorPoints = 1;
-        [SerializeField] private bool doubleDamage = false;
-        [SerializeField] private bool invulnerable = false;
-        private MachineAttributes machineAttributes;
+         private int maxArmorPoints = 1;
+         private bool doubleDamage = false;
+        private bool invulnerable = false;
 
-        [SerializeField] private GameObject replacement;
+        private GameObject replacement;
 
         private bool broken = false;
 
-        [SerializeField] private float lifeSpan = 2f;
-        [Range(100, 1000)]
-        [SerializeField] private float explosionPower = 2f;
+        private float lifeSpan = 2f;
+        private float explosionPower = 2f;
 
         [Space(15)]
-
+        [Title("Events")]
         [SerializeField] public UnityEvent OnMachineDamaged;
         [SerializeField] public UnityEvent OnMachineGainArmor;
         [SerializeField] public UnityEvent<int> OnArmorChanged;
@@ -52,13 +50,17 @@ namespace Ozamanas.Machines
         {
             machine = GetComponent<HumanMachine>();
             _t = transform;
-            machineAttributes = GetComponent<MachineAttributes>();
 
         }
         private void Start()
         {
-            armorPoints = machineAttributes.GetMachineArmorPoints();
-            maxArmorPoints = machineAttributes.maxArmorPoints;
+            if(!machine || !machine.Machine_token) return;
+
+            armorPoints = machine.Machine_token.armorPoints;
+            maxArmorPoints = machine.Machine_token.maxArmorPoints;
+            lifeSpan = machine.Machine_token.lifeSpan;
+            explosionPower = machine.Machine_token.explosionPower;
+            replacement = machine.Machine_token.destroyedMachine;
         }
 
         void OnEnable()
