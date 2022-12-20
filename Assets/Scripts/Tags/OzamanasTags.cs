@@ -54,7 +54,6 @@ public enum PlayerState
 
     public enum MachineSpeed
     {
-        Reverse = -1,
         VeryLow =0,
         Low =1,
         Medium = 2,

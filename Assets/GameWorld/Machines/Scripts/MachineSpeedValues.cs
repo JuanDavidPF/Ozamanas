@@ -24,9 +24,7 @@ namespace Ozamanas.Machines
         {
             switch(value) 
             {
-                case MachineSpeed.Reverse:
-                return reverse;
-
+                
                 case MachineSpeed.VeryLow:
                 return veryLow;
 

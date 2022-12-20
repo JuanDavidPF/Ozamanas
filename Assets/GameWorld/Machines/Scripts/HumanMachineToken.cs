@@ -11,55 +11,103 @@ namespace Ozamanas.Machines
 [CreateAssetMenu(menuName = "ScriptableObjects/Human Machines/Token", fileName = "new HumanMachine Token")]
 public class HumanMachineToken : ScriptableObject
 {
-    [Title("Machine Information")]
+    [VerticalGroup("Machine Information")]
+    [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+    [HideLabel]
     public Sprite machineIcon;
+
+    [VerticalGroup("Machine Information")]
     public LocalizedString machineName = new LocalizedString();
+
+    [VerticalGroup("Machine Information")]
     public LocalizedString machineDescription = new LocalizedString();
+    [VerticalGroup("Machine Information")]
+    public bool showArmorInfo = false;
+       [VerticalGroup("Machine Information")]
+    public bool showMovInfo = false;
+   [VerticalGroup("Machine Information")]
+    public bool showSpeedInfo = false;
+
+     [VerticalGroup("Machine Setup")]
     [EnumToggleButtons]
     public MachineHierarchy machineHierarchy = MachineHierarchy.Regular;
-
-    [Title("Armor Setup")]
+    
+    [VerticalGroup("Machine Setup")]
     [ProgressBar(0,"maxArmorPoints",0,1,1,Segmented = true)]
-   // [PropertyRange(1,"maxArmorPoints")]
     public int armorPoints =1 ;
+
+    [VerticalGroup("Machine Setup")]
+    public MachineSpeed currentSpeed;
+
+    
+    [ShowIfGroup("Machine Setup/showArmorInfo")]
+    [VerticalGroup("Machine Setup")]
+    [Title("Machine Armor")]
+
     public int maxArmorPoints =5 ;
+    [ShowIfGroup("Machine Setup/showArmorInfo")]
+   [VerticalGroup("Machine Setup")]
     [Required]
     public GameObject destroyedMachine;
+    [ShowIfGroup("Machine Setup/showArmorInfo")]
+   [VerticalGroup("Machine Setup")]
     [Range(1f, 5f)]
     public float lifeSpan = 2f;
+    [ShowIfGroup("Machine Setup/showArmorInfo")]
+   [VerticalGroup("Machine Setup")]
     [Range(100, 1000)]
     public float explosionPower = 2f;
 
-     
-    [Title("Movement Setup")]
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
+     [Title("Machine Movement")]
     [Required]
     public CellData humanBase;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [Required]
     public CellData mainObjective;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [Range(1, 5)]
     public int OnDistanceToHeartNotification ;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [Space(5)]
     public CellData secondObjective;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [ShowIf("secondObjective")]
     [Range(1, 20)]
     public int secondObjectiveRange;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [Space(5)]
     [ShowIf("secondObjective")]
     public CellData thirdObjective;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     [ShowIf("thirdObjective")]
     [Range(1, 20)]
     public int thirdObjectiveRange;
+    [ShowIfGroup("Machine Setup/showMovInfo")]
+   [VerticalGroup("Machine Setup")]
     public List<CellData> cellBlacklist;
 
-    [Title("Speed Setup")]
-
+    [ShowIfGroup("Machine Setup/showSpeedInfo")]
+   [VerticalGroup("Machine Setup")]
+      [Title("Machine Speed")]
     [Required]
     public MachineSpeedValues speedValues;
-    public MachineSpeed currentSpeed;
-     [EnumToggleButtons]
+    [ShowIfGroup("Machine Setup/showSpeedInfo")]
+   [VerticalGroup("Machine Setup")]
     public MachineAltitude currentAltitude;
+    [ShowIfGroup("Machine Setup/showSpeedInfo")]
+   [VerticalGroup("Machine Setup")]
     [Range(0.1f, 5f)]
     public float height = 5f;
+    [ShowIfGroup("Machine Setup/showSpeedInfo")]
+   [VerticalGroup("Machine Setup")]
     [Range(1f, 5f)]
     public float timeMaxToReachDestination = 5f;
 
