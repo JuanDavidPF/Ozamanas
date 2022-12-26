@@ -21,6 +21,23 @@ namespace Ozamanas.Board
         [SerializeField] List<Transform> industryBlinds;
         private Animator animator;
 
+        private bool m_OpenGate = false;
+        public bool OpenGate{
+
+            get { return m_OpenGate; }
+            set
+            {
+                if(m_OpenGate == value) return;
+
+                m_OpenGate = value;
+
+                if(m_OpenGate) OpenIndustryGates();
+                else CloseIndustryGates();
+            }
+        }
+
+         
+
         List<Tween> tweeners = new List<Tween>();
 
         [Space(15)]
@@ -35,21 +52,35 @@ namespace Ozamanas.Board
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
-            StopTweeners();
+
+            OpenGate = true;
+           
+        }
+
+        private void OpenIndustryGates()
+        {
+             StopTweeners();
             foreach (var blind in industryBlinds)
             {
                 tweeners.Add(blind.DOScaleY(0, .5f));
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        private void CloseIndustryGates()
         {
-            if (other.tag != "Machine") return;
             StopTweeners();
             foreach (var blind in industryBlinds)
             {
-                tweeners.Add(blind.DOScaleY(1, .5f).SetDelay(1f));
+                tweeners.Add(blind.DOScaleY(1, 1f).SetDelay(2f));
             }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag != "Machine") return;
+
+             OpenGate = false;
+            
 
         }
         private void OnTriggerStay(Collider other)
@@ -66,7 +97,9 @@ namespace Ozamanas.Board
 
             var lookPos = machineTransform.position - meshToRotate.position;
             lookPos.y = 0;
-            var rotation = Quaternion.LookRotation(lookPos);
+            Quaternion rotation = lookPos == Vector3.zero
+                                  ? Quaternion.identity
+                                  : Quaternion.LookRotation(lookPos);
             meshToRotate.rotation = Quaternion.Slerp(meshToRotate.rotation, rotation, Time.deltaTime * 2f);
         }//Closes RotateAtMachine method
 
@@ -91,11 +124,8 @@ namespace Ozamanas.Board
         private void TurnOffIndustry()
         {
             OnIndustryTurnOff?.Invoke();
-             StopTweeners();
-            foreach (var blind in industryBlinds)
-            {
-                tweeners.Add(blind.DOScaleY(1, .5f).SetDelay(1f));
-            }
+            
+             OpenGate = false;
 
         }
 

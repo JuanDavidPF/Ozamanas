@@ -21,11 +21,15 @@ public class HumanMachineToken : ScriptableObject
 
     [VerticalGroup("Machine Information")]
     public LocalizedString machineDescription = new LocalizedString();
+     [Title("Show More Settings:")]
     [VerticalGroup("Machine Information")]
+    [LabelText("Armor and destructable")]
     public bool showArmorInfo = false;
        [VerticalGroup("Machine Information")]
+       [LabelText("Objectives & Tiles")]
     public bool showMovInfo = false;
    [VerticalGroup("Machine Information")]
+      [LabelText("Speed & Others")]
     public bool showSpeedInfo = false;
 
      [VerticalGroup("Machine Setup")]

@@ -24,18 +24,16 @@ namespace Ozamanas.Machines
         public NavMeshAgent nma;
         public Rigidbody rb;
         public HumanMachine machine;
-        public Transform physicsVFX;
         public Collider physicsCollider;
          [Space(15)]
         [Header("Physical timeout")]
         [SerializeField] private float timeMaxInPhysical = 3f;
         private float timeInToPhysical = 0f;
 
-         [Space(15)]
+        [Space(15)]
         [Header("Events")]
         public UnityEvent OnActivatePhysical;
         public UnityEvent OnActivateIntelligent;
-
         public UnityEvent OnActivateKinematic;
 
         private bool guard = false;
@@ -101,20 +99,6 @@ namespace Ozamanas.Machines
             if (rb.IsSleeping() || Time.time - timeInToPhysical >= timeMaxInPhysical) SetIntelligent();
         }
 
-  
-        void OnCollisionEnter(Collision collision)
-        {
-            if (!rb || rb.isKinematic) return;
-
-            foreach (ContactPoint contact in collision.contacts)
-            {
-
-                if (!physicsVFX) continue;
-                physicsVFX.position = contact.point; //new Vector3(contact.point.x,collisionVFX.position.y,contact.point.z);
-                physicsVFX.rotation = Quaternion.identity;
-            }
-        }
-
         private void CatReflexLanding()
         {
             if (!rb || rb.isKinematic) return;
@@ -131,7 +115,6 @@ namespace Ozamanas.Machines
 
         private void OnTriggerEnter(Collider other)
         {
-
 
             if (other.tag != "Cell") return;
 

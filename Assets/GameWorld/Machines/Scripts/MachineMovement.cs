@@ -115,10 +115,10 @@ namespace Ozamanas.Machines
             timeMaxToReachDestination =humanMachine.Machine_token.timeMaxToReachDestination;
         }
 
-        private void Update()
+       /* private void Update()
         {
             DebugPathProjection();
-        }//Closes Update method
+        }//Closes Update method*/
 
         private void DebugPathProjection()
         {
