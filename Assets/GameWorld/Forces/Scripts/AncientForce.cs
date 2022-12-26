@@ -43,7 +43,6 @@ namespace Ozamanas.Forces
         public UnityEvent<AncientForce> OnFailedPlacement;
 
         public UnityEvent OnForceDestroy;
-
         protected virtual void Awake()
         {
             g = gameObject;
@@ -55,6 +54,36 @@ namespace Ozamanas.Forces
         }//Closes Awake method
 
         Vector3 draggedPosition;
+
+        int placements = 0;
+        private void Update()
+        {
+            CheckMultiplePlacements();
+        }//Closes Update method
+
+        public virtual void CheckMultiplePlacements()
+        {
+            if (placementMode == PlacementMode.SinglePlacement) return;
+            if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+            if (placements == 0) return;
+
+            // This happens if this force was already finished its first placement, 
+            // and everytime the left mouse button was pressed after that first placement
+
+            placements++;
+            switch (placements)
+            {
+                case 2:
+                    SecondPlacement();
+                    break;
+
+                case 3:
+                    ThirdPlacement();
+                    break;
+            }
+        }//Closes CheckMultiplePlacements method
+
+
         public virtual void Drag()
         {
             if (!Board.CellSelectionHandler.currentCellHovered || !snapToGrid)
@@ -82,6 +111,7 @@ namespace Ozamanas.Forces
 
         public virtual void FirstPlacement()
         {
+            placements = 1;
             if (placementMode != PlacementMode.SinglePlacement) return;
 
             FinalPlacement();
@@ -104,9 +134,10 @@ namespace Ozamanas.Forces
 
         protected virtual void FinalPlacement()
         {
+            placements = 0;
             CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
-            
-            if(cellHovered && cellHovered.cellReference && cellHovered.cellReference.Pointer) cellHovered.cellReference.Pointer.SetActive(false);
+
+            if (cellHovered && cellHovered.cellReference && cellHovered.cellReference.Pointer) cellHovered.cellReference.Pointer.SetActive(false);
 
 
             if (cellHovered &&
