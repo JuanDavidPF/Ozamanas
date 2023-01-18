@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Ozamanas.Entenders;
+using Ozamanas.Extenders;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;

@@ -106,8 +106,6 @@ namespace Ozamanas.Board
                 {
                     int z = -x - y;
 
-
-
                     int3 originPositionToAxis = originCell.gridPosition.GridToAxial();
 
                     int3 underRangePosition = (originPositionToAxis + new int3(x, z, y)).AxialToGrid();

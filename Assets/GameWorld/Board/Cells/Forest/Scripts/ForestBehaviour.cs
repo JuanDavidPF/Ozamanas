@@ -255,5 +255,17 @@ namespace Ozamanas.Forest
                 _mountain.CurrentCell = cellReference;
             }
         }
+
+        public void InstantiateBarrier(GameObject barrier)
+        {
+            if(!barrier) return;
+            
+            GameObject temp = Instantiate(barrier, visuals);
+
+            if(temp.TryGetComponent<Mountain>(out Mountain _mountain))
+            {
+                _mountain.CurrentCell = cellReference;
+            }
+        }
     }
 }

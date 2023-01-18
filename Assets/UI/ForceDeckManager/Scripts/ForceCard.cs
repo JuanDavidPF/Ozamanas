@@ -35,7 +35,7 @@ namespace Ozamanas.UI.ForceDeck
                 m_forceData = value;
                 if (!value) return;
 
-                if (cardArt) cardArt.sprite = value.forceCard;
+                if (cardArt) cardArt.sprite = value.forceIcon;
                 if (priceLabel) priceLabel.text = value.price.value.ToString();
             }
         }

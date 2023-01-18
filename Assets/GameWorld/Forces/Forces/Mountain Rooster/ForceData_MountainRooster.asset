@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8184990684b7b419c2d7191ca8adb4, type: 3}
   m_Name: ForceData_MountainRooster
   m_EditorClassIdentifier: 
+  forceIcon: {fileID: 585950768, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
+  forceCard: {fileID: 585950768, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
   force: {fileID: 5229564924430542389, guid: 11ab638314e25464fb1dec0c607ab6cd, type: 3}
   forceName:
     m_TableReference:
@@ -31,12 +33,10 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  forceIcon: {fileID: 585950768, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
-  forceArt: {fileID: 0}
-  forceCard: {fileID: 585950768, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
   forceConstellation: {fileID: -1208180228, guid: 49847ba0b02b1d644b4b1557e25c22e8,
     type: 3}
   stars: {fileID: 2511318373860823157, guid: 461d4a9d89dea9a4a8b083c515d4a554, type: 3}
+  showPlacement: 0
   whiteList:
   - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
@@ -61,6 +61,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   - {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
   - {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
+  physicsForce: {fileID: 11400000, guid: eec36bfeb4fc9ad489ea685bcd68d655, type: 2}
+  placementMode: 0
+  draggedOffset: {x: 0, y: 2.5, z: 0}
+  snapToGrid: 1
   references:
     version: 2
     RefIds: []

@@ -12,8 +12,8 @@ namespace Ozamanas.Forest
     {
         
         [SerializeField] private float lifetime = 1f;
+        [SerializeField] private float fragmentedModelLifetime = 2f;
         [SerializeField] private GameObject fragmentedModel;
-
         [SerializeField] private CellData forestId;
 
         private Cell currentCell;
@@ -23,6 +23,12 @@ namespace Ozamanas.Forest
         private bool alreadyTriggered = false;
 
         public Cell CurrentCell { get => currentCell; set => currentCell = value; }
+
+
+        private void Start()
+        {
+            if( lifetime > 0) Invoke("DestroyMountain",lifetime);
+        }
 
         // Start is called before the first frame update
 
@@ -47,7 +53,7 @@ namespace Ozamanas.Forest
             currentCell.data = forestId;
             gameObject.SetActive(false);
             GameObject dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
-            if (dummy) Destroy(dummy, lifetime);
+            if (dummy) Destroy(dummy, fragmentedModelLifetime);
             return;
         }
     }

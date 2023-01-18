@@ -6,6 +6,28 @@ using UnityEngine;
 namespace Ozamanas.Tags
 {
 
+     public enum CellPointerType
+        {
+            Pointer,
+            PullPointer,
+            PushPointer,
+
+            MountainPointer
+        }
+
+     public enum PlacementMode
+        {
+            SinglePlacement,
+            DoublePlacement,
+            TriplePlacement
+        }
+
+    public enum AddForceType
+    {
+        VerticalJump,
+        BackFlip,
+        FrontFlip
+    }
     public enum TutorialType
 {
     Explicative,
@@ -79,8 +101,10 @@ public enum PlayerState
         Blocked = 2,
         Idling = 3,
         Acting = 4,
-
-        Destroyed = 5
+        Destroyed = 5,
+        Captured = 6,
+        Attacked = 7,
+        AddForce =8
     }
 
      public enum TreeType

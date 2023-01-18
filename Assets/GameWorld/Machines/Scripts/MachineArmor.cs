@@ -43,7 +43,6 @@ namespace Ozamanas.Machines
         [SerializeField] public UnityEvent OnMachineGainArmor;
         [SerializeField] public UnityEvent<int> OnArmorChanged;
         [SerializeField] public UnityEvent OnMachineDisarm;
-
         [SerializeField] public UnityEvent OnMachineDestroyed;
 
         void Awake()

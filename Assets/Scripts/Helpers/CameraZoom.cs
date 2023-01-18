@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using Ozamanas.Extenders;
-using Ozamanas.Entenders;
 using DG.Tweening;
 
 namespace JuanPayan.Helpers

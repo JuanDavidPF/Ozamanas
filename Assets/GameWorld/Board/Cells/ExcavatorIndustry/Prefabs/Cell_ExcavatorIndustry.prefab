@@ -48,7 +48,6 @@ GameObject:
   - component: {fileID: 1703777374}
   - component: {fileID: 8123443889245243119}
   - component: {fileID: 873335037374338551}
-  - component: {fileID: 6779773549566444651}
   m_Layer: 9
   m_Name: Cell_ExcavatorIndustry
   m_TagString: Cell
@@ -88,6 +87,7 @@ MonoBehaviour:
   cellOverLay: {fileID: 2338474545434101860}
   pointer: {fileID: 2953419587477779797}
   m_data: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
+  m_gameplayState: {fileID: 0}
   activeTraits: []
   tileMeshFilter: {fileID: 0}
   visuals: {fileID: 202609059502580113}
@@ -104,6 +104,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnCellChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCellGameStateChanged:
     m_PersistentCalls:
       m_Calls: []
   OnMachineEntered:
@@ -220,20 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8af01e72356b94398a3d11d5189819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &6779773549566444651
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986721062166553455}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.58
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4294085210596531585
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +350,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.061
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231613812467055119, guid: fb90810ec68610a4a898121c40110a2a,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231613812467055119, guid: fb90810ec68610a4a898121c40110a2a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb90810ec68610a4a898121c40110a2a, type: 3}

@@ -89,7 +89,7 @@ namespace Ozamanas.Board
         {
             if (currentCellHovered == this) currentCellHovered = null;
 
-           cellReference.Pointer.SetActive(false);
+           cellReference.CellOverLay.DeActivatePointer(Tags.CellPointerType.Pointer);
 
         }//Closes OnPointerExit method
     }//Closes CellSelectionHandler class

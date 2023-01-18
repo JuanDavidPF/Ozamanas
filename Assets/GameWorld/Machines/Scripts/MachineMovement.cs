@@ -33,8 +33,8 @@ namespace Ozamanas.Machines
         private CellData mainObjectiveBackUP;
         private CellData secondObjective;
         private int secondObjectiveRange;
-        private CellData thirdObjective;
-        private int thirdObjectiveRange;
+
+        private bool obviateMainObjective;
         private List<CellData> blacklist = new List<CellData>();
         private MachineSpeedValues speedValues;
         private MachineSpeed currentSpeed;
@@ -88,7 +88,7 @@ namespace Ozamanas.Machines
         void Start()
         {
             LoadMachineObjectivesInformation();
-           LoadMachineSpeedInformation();
+            LoadMachineSpeedInformation();
             RestoreOriginalValues();
            
         }
@@ -100,8 +100,7 @@ namespace Ozamanas.Machines
             mainObjectiveBackUP = mainObjective;
             secondObjective=humanMachine.Machine_token.secondObjective;
             secondObjectiveRange=humanMachine.Machine_token.secondObjectiveRange;
-            thirdObjective=humanMachine.Machine_token.thirdObjective;
-            thirdObjectiveRange=humanMachine.Machine_token.thirdObjectiveRange;
+            obviateMainObjective=humanMachine.Machine_token.obviateMainObjective;
             blacklist=humanMachine.Machine_token.cellBlacklist;
             distanceToHeart=humanMachine.Machine_token.OnDistanceToHeartNotification;
         }
@@ -165,7 +164,7 @@ namespace Ozamanas.Machines
 
             if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
 
-            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.01f;
+            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
         }
 
 
@@ -276,53 +275,47 @@ namespace Ozamanas.Machines
         }
         public void SetCurrentDestination()
         {
+            // Guard: Machine does not have Main Objective or is Blocked
+            
+            if( currentDestination == null || result != PathFindingResult.PathComplete) return;
+            
+            // Machine does not have 2nd Objective
+            
+            if (secondObjective == null) return;
+  
+            Cell secondCell = Board.Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
+
+             // Machine 2nd Objective does not exist in Map
+            
+            if (secondCell == null) return;
+
             float3 origin = transform.position;
-            Cell firstCell = null, secondCell = null, thirdCell = null;
+            int distanceToMain = currentDestination.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
+            int distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
 
-            firstCell = currentDestination;
-            PathFindingResult tempResult = result;
-            List<Cell> tempPathToDestination = pathToDestination;
-
-
-            // Main Objective
-            if (secondObjective != null) secondCell = Board.Board.GetNearestCellInRange(transform.position, secondObjectiveRange, secondObjective);
-            if (thirdObjective != null) thirdCell = Board.Board.GetNearestCellInRange(transform.position, thirdObjectiveRange, thirdObjective);
-
-            int distanceToMain = 1000;
-            int distanceToSecondary = 1000;
-            int distanceToTertiary = 1000;
-
-            if (firstCell != null) distanceToMain = firstCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-            if (secondCell != null) distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-            if (thirdCell != null) distanceToTertiary = thirdCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
-
-            if (distanceToMain <= distanceToSecondary) return;
-
-            if (distanceToSecondary <= distanceToTertiary)
+            if(obviateMainObjective || distanceToMain > distanceToSecondary)
             {
-                currentDestination = secondCell;
-                CalculatePathToDestination();
-
-                if (result != PathFindingResult.PathComplete && distanceToMain >= distanceToTertiary)
-                {
-                    currentDestination = thirdCell;
-                    CalculatePathToDestination();
-                    if (result != PathFindingResult.PathComplete)
-                    {
-                        currentDestination = firstCell;
-                        pathToDestination = tempPathToDestination;
-                        result = tempResult;
-                    }
-                }
+                CalculatePathToDestination(secondCell);
             }
-
-
+            
+            if(result != PathFindingResult.PathComplete)
+            {
+                Cell mainObjectiveCell = Board.Board.GetNearestCell(transform.position,mainObjective);
+                CalculatePathToDestination(mainObjectiveCell);
+            }
+            
         }
+
+        private void CalculatePathToDestination(Cell destination)
+        {
+            currentDestination = destination;
+            CalculatePathToDestination();
+        }
+
         public void MoveToNextCell()
         {
             if (pathToDestination.Count == 0) return;
 
-           
             nextCellOnPath = pathToDestination[0];
             navMeshAgent.SetDestination(nextCellOnPath.transform.position);
             pathToDestination.RemoveAt(0);

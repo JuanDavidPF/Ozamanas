@@ -307,11 +307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   data: {fileID: 11400000, guid: 9634484fe30dc9d41b029e28a5e665b0, type: 2}
-  draggedOffset: {x: 0, y: 2.5, z: 0}
-  snapToGrid: 1
-  placementMode: 0
-  traitRange: 1
-  traits: []
   OnSuccesfulPlacement:
     m_PersistentCalls:
       m_Calls: []
@@ -333,7 +328,9 @@ MonoBehaviour:
   OnForceDestroy:
     m_PersistentCalls:
       m_Calls: []
-  attackIndicator: {fileID: 0}
+  onDestroyVFX: {fileID: 745864697251991867, guid: d924a82b46a1c1c47aa7cc2edb3659a3,
+    type: 3}
+  placements: 0
   birdPosition: {fileID: 9193597682192911596}
   thunderPositions:
   - {fileID: 1004863022344913875}

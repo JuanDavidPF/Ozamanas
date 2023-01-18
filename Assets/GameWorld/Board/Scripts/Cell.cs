@@ -13,8 +13,7 @@ namespace Ozamanas.Board
     [SelectionBase]
     public class Cell : MonoBehaviour
     {
-        [SerializeField] private GameObject cellOverLay;
-        [SerializeField] private GameObject pointer;
+        [SerializeField] private Overlay cellOverLay;
         [SerializeField] private CellData m_data;
         public CellData data
         {
@@ -57,9 +56,7 @@ namespace Ozamanas.Board
 
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
-        public GameObject CellOverLay { get => cellOverLay; set => cellOverLay = value; }
-        public GameObject Pointer { get => pointer; set => pointer = value; }
-
+        public Overlay CellOverLay { get => cellOverLay; set => cellOverLay = value; }
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
         [SerializeField] private MeshFilter tileMeshFilter;
 
@@ -84,12 +81,7 @@ namespace Ozamanas.Board
         {
             if(!cellOverLay && gameObject.transform.TryGetComponentInChildren( out Overlay cell ))
             {
-                cellOverLay = cell.gameObject;
-            }
-
-            if(!pointer && gameObject.transform.TryGetComponentInChildren( out Pointer temp ))
-            {
-                pointer = temp.gameObject;
+                cellOverLay = cell;
             }
 
         }

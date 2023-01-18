@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
+using Ozamanas.Forces;
 using Ozamanas.Tags;
 using Ozamanas.Energy;
 using UnityEngine;
@@ -29,12 +30,12 @@ namespace Ozamanas.Machines
             }
         }
 
-
+        private AncientForce hijacker;
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
         private Animator animator;
 
-        private Cell m_currentCell;
+        [SerializeField] private Cell m_currentCell;
         public Cell CurrentCell
         {
             get { return m_currentCell; }
@@ -58,8 +59,19 @@ namespace Ozamanas.Machines
         public UnityEvent OnRunningMachine;
         public UnityEvent<Cell> OnCurrentCellChanged;
         public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
-        public void SetMachineStatus(MachineState status)
-        { Machine_status = status; }
+        
+        public void SetMachineStatus(MachineState status) 
+        { 
+            if(Machine_status == MachineState.Captured && status != MachineState.Captured && hijacker)
+            {
+                hijacker.DetachHumanMachine();
+                hijacker = null;
+            } 
+
+            Machine_status = status;
+         }
+
+         
 
         void Awake()
         {
@@ -104,28 +116,37 @@ namespace Ozamanas.Machines
         // Set Functions
         public void SetBlockedStatus()
         {
-            Machine_status = MachineState.Blocked;
+            SetMachineStatus(MachineState.Blocked);
             animator.SetInteger("MachineState", (int)Machine_status);
             OnBlockedMachine?.Invoke();
         }
 
         public void SetIdlingStatus()
         {
-            Machine_status = MachineState.Idling;
+            SetMachineStatus(MachineState.Idling);
             animator.SetInteger("MachineState", (int)Machine_status);
             OnIddlingMachine?.Invoke();
         }
 
         public void SetRunningStatus()
         {
-            Machine_status = MachineState.Running;
+            SetMachineStatus(MachineState.Running);
             animator.SetInteger("MachineState", (int)Machine_status);
             OnRunningMachine?.Invoke();
         }
 
         public void SetActingStatus()
         {
-            Machine_status = MachineState.Acting;
+            SetMachineStatus(MachineState.Acting);
+            animator.SetInteger("MachineState", (int)Machine_status);
+        }
+
+        public void SetCapturedStatus(AncientForce force)
+        {
+            if(!force) return;
+
+            hijacker = force;
+            SetMachineStatus(MachineState.Captured);
             animator.SetInteger("MachineState", (int)Machine_status);
         }
 

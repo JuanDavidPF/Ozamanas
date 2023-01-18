@@ -20,7 +20,6 @@ namespace Ozamanas.Board
         [Header("Events")]
         public UnityEvent LevelFailed;
         public UnityEvent OnWinState;
-
         public UnityEvent OnLoseState;
 
         public void CheckForMachineEnter(HumanMachine machine)

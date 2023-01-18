@@ -46,9 +46,7 @@ GameObject:
   - component: {fileID: 1703777373}
   - component: {fileID: 4454315225927143526}
   - component: {fileID: 5170691469652966161}
-  - component: {fileID: 1703777372}
   - component: {fileID: 1703777374}
-  - component: {fileID: 5413919729254368201}
   m_Layer: 0
   m_Name: Cell_BulldozerIndustry
   m_TagString: Cell
@@ -86,7 +84,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellOverLay: {fileID: 6229976292371338087}
-  pointer: {fileID: 6843812459624115798}
   m_data: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
   m_gameplayState: {fileID: 11400000, guid: ae0077c3266472049a9d96154a14c9d8, type: 2}
   activeTraits: []
@@ -227,19 +224,6 @@ MonoBehaviour:
   OnIndustryTurnOn:
     m_PersistentCalls:
       m_Calls: []
---- !u!65 &1703777372
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986721062166553455}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.1109437, y: 1.0192305, z: 1.0345851}
-  m_Center: {x: -0.000000059604645, y: 0.51357347, z: -0.008531511}
 --- !u!54 &1703777374
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -256,26 +240,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &5413919729254368201
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986721062166553455}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: dc3bb17363a97c447b03fab484d033ab, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4294085210596531585
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,12 +866,6 @@ MeshFilter:
 --- !u!1 &6229976292371338087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1794468352863575968, guid: f1e0e6262ead8be48a178c6419ff5359,
-    type: 3}
-  m_PrefabInstance: {fileID: 5661703248474213575}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6843812459624115798 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1182320484909490833, guid: f1e0e6262ead8be48a178c6419ff5359,
     type: 3}
   m_PrefabInstance: {fileID: 5661703248474213575}
   m_PrefabAsset: {fileID: 0}

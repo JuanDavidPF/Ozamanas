@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8184990684b7b419c2d7191ca8adb4, type: 3}
   m_Name: ForceData_GoldenFrog
   m_EditorClassIdentifier: 
+  forceIcon: {fileID: 446060602, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
+  forceCard: {fileID: 446060602, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
   force: {fileID: 3278163977973097287, guid: fda0cc7248c6c5943a1e326544a6c5fc, type: 3}
   forceName:
     m_TableReference:
@@ -31,12 +33,10 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  forceIcon: {fileID: 446060602, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
-  forceArt: {fileID: 0}
-  forceCard: {fileID: 446060602, guid: a53c80e27c49cb240980ca302d3494b8, type: 3}
   forceConstellation: {fileID: -341178358, guid: 49847ba0b02b1d644b4b1557e25c22e8,
     type: 3}
   stars: {fileID: 2511318373860823157, guid: 3c3232a956bb5e04aba3713175be3725, type: 3}
+  showPlacement: 0
   whiteList:
   - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
@@ -57,6 +57,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   - {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+  addForce: {fileID: 0}
+  placementMode: 0
+  draggedOffset: {x: 0, y: 1, z: 0}
+  snapToGrid: 1
   references:
     version: 2
     RefIds: []

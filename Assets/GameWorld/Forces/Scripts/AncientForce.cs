@@ -5,19 +5,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Forces
 {
     public abstract class AncientForce : MonoBehaviour
     {
         public bool isPlaced;
-        public enum PlacementMode
-        {
-            SinglePlacement,
-            DoublePlacement,
-            TriplePlacement
-        }
-
+       
+        protected Cell firstPlacementComplete;
+        protected Cell secondPlacementComplete;
 
         private Camera cam;
         private GameObject g;
@@ -25,24 +22,15 @@ namespace Ozamanas.Forces
 
         public ForceData data;
 
-        [SerializeField] private Vector3 draggedOffset;
-        [SerializeField] private bool snapToGrid = true;
-
-
-        [SerializeField] protected PlacementMode placementMode;
-
-        [Space(10)]
-        [Header("Traits")]
-        [SerializeField] protected int traitRange = 1;
-        [SerializeField] protected List<Machines.MachineTrait> traits;
-
-
+       
         [Space(10)]
         [Header("Events")]
         public UnityEvent<AncientForce> OnSuccesfulPlacement;
         public UnityEvent<AncientForce> OnFailedPlacement;
-
         public UnityEvent OnForceDestroy;
+
+        [SerializeField] private GameObject onDestroyVFX;
+       
         protected virtual void Awake()
         {
             g = gameObject;
@@ -55,15 +43,17 @@ namespace Ozamanas.Forces
 
         Vector3 draggedPosition;
 
-        int placements = 0;
-        private void Update()
+        public int placements = 0;
+        protected void Update()
         {
+           if(placements > 0) Drag();
+
             CheckMultiplePlacements();
         }//Closes Update method
 
         public virtual void CheckMultiplePlacements()
         {
-            if (placementMode == PlacementMode.SinglePlacement) return;
+            if (data.placementMode == PlacementMode.SinglePlacement) return;
             if (!Mouse.current.leftButton.wasPressedThisFrame) return;
             if (placements == 0) return;
 
@@ -86,19 +76,20 @@ namespace Ozamanas.Forces
 
         public virtual void Drag()
         {
-            if (!Board.CellSelectionHandler.currentCellHovered || !snapToGrid)
+            if (!Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
             {
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
                 draggedPosition = (ray.origin + ray.direction * Mathf.Abs(cam.transform.position.z));
-                if (!snapToGrid) draggedPosition += DraggedOffset;
+                
+                if (!data.snapToGrid) draggedPosition += data.draggedOffset;
+
             }
             else
             {
-                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + DraggedOffset;
-                Board.CellSelectionHandler.currentCellHovered.cellReference.Pointer.SetActive(true);
+                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + data.draggedOffset;
+                Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.Pointer);
             }
-
 
             t.position = draggedPosition;
 
@@ -106,27 +97,33 @@ namespace Ozamanas.Forces
 
         protected virtual void DestroyForce()
         {
+            if(onDestroyVFX) Instantiate(onDestroyVFX,transform.position,transform.rotation);
+
+            EraseValidCells();
+
+             OnForceDestroy?.Invoke();
+
             Destroy(gameObject);
         }
 
         public virtual void FirstPlacement()
         {
             placements = 1;
-            if (placementMode != PlacementMode.SinglePlacement) return;
+            if (data.placementMode != PlacementMode.SinglePlacement) return;
 
             FinalPlacement();
         }//Closes FirstPlacement method
 
         protected virtual void SecondPlacement()
         {
-            if (placementMode != PlacementMode.DoublePlacement) return;
+            if (data.placementMode != PlacementMode.DoublePlacement) return;
 
             FinalPlacement();
         }//Closes SecondPlacement method
 
         protected virtual void ThirdPlacement()
         {
-            if (placementMode != PlacementMode.TriplePlacement) return;
+            if (data.placementMode != PlacementMode.TriplePlacement) return;
             FinalPlacement();
 
         }//Closes ThirdPlacement method
@@ -137,8 +134,9 @@ namespace Ozamanas.Forces
             placements = 0;
             CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
 
-            if (cellHovered && cellHovered.cellReference && cellHovered.cellReference.Pointer) cellHovered.cellReference.Pointer.SetActive(false);
+            if (cellHovered && cellHovered.cellReference) cellHovered.cellReference.CellOverLay.DeActivateAllPointers();
 
+            DeActivateAllPointers();
 
             if (cellHovered &&
             IsValidPlacement(cellHovered.cellReference) && validCells.Contains(cellHovered.cellReference))
@@ -156,6 +154,12 @@ namespace Ozamanas.Forces
         }
 
 
+        protected virtual void DeActivateAllPointers()
+        {
+            if(firstPlacementComplete) firstPlacementComplete.CellOverLay.DeActivateAllPointers();
+            if(secondPlacementComplete) secondPlacementComplete.CellOverLay.DeActivateAllPointers();
+        }
+
         protected virtual bool IsValidPlacement(Cell cell)
         {
             if (!cell) return false;
@@ -166,15 +170,12 @@ namespace Ozamanas.Forces
 
 
 
-        List<Board.Cell> anchorCells = new List<Cell>();
-        List<Board.Cell> validCells = new List<Cell>();
-
-        public Vector3 DraggedOffset { get => draggedOffset; set => draggedOffset = value; }
+        protected List<Board.Cell> anchorCells = new List<Cell>();
+        protected List<Board.Cell> validCells = new List<Cell>();
 
         protected virtual void CalculateArea()
         {
             if (!data) return;
-
 
             anchorCells = Board.Board.GetCellsByData(data.rangeAnchors.ToArray());
 
@@ -191,7 +192,7 @@ namespace Ozamanas.Forces
                     if (!cellOnRange || !IsValidPlacement(cellOnRange)) continue;
 
 
-                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.CellOverLay);
+                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.CellOverLay.gameObject);
                     validCells.Add(cellOnRange);
                     cellOnRange.OnCellChanged.AddListener(OnAreaChanged);
                 }
@@ -199,7 +200,7 @@ namespace Ozamanas.Forces
 
         }//Closes DrawPlaceableCells method
 
-        private void OnAnchorChanged(Cell anchor)
+        protected void OnAnchorChanged(Cell anchor)
         {
 
             anchor.OnCellChanged.RemoveListener(OnAnchorChanged);
@@ -207,7 +208,7 @@ namespace Ozamanas.Forces
             CalculateArea();
         }
 
-        private void OnNewCellData(Cell possibleAnchor)
+        protected void OnNewCellData(Cell possibleAnchor)
         {
 
             if (!possibleAnchor || !possibleAnchor.data || !data || !data.rangeAnchors.Contains(possibleAnchor.data)) return;
@@ -217,16 +218,16 @@ namespace Ozamanas.Forces
 
         }
 
-        private void OnAreaChanged(Cell cell)
+        protected void OnAreaChanged(Cell cell)
         {
             if (!cell) return;
-            if (!IsValidPlacement(cell)) UnityFx.Outline.OutlineBuilder.Remove(0, cell.CellOverLay);
-            else UnityFx.Outline.OutlineBuilder.AddToLayer(0, cell.CellOverLay);
+            if (!IsValidPlacement(cell)) UnityFx.Outline.OutlineBuilder.Remove(0, cell.CellOverLay.gameObject);
+            else UnityFx.Outline.OutlineBuilder.AddToLayer(0, cell.CellOverLay.gameObject);
         }
 
 
 
-        private void EraseValidCells()
+        protected void EraseValidCells()
         {
             foreach (var anchor in anchorCells)
             {
@@ -239,18 +240,16 @@ namespace Ozamanas.Forces
             {
                 if (!valid) continue;
                 valid.OnCellChanged.RemoveListener(OnAreaChanged);
-                UnityFx.Outline.OutlineBuilder.Remove(0, valid.CellOverLay);
+                UnityFx.Outline.OutlineBuilder.Remove(0, valid.CellOverLay.gameObject);
             }
             validCells.Clear();
 
         }//Closes s method
 
-
-
-        protected virtual void OnDestroy()
+        public virtual void DetachHumanMachine()
         {
-            EraseValidCells();
-        }//Closes OnDestroy method
+            
+        }
 
 
     }//Closes AncientForce class

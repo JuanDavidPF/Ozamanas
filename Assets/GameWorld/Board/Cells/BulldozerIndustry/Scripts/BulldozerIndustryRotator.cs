@@ -8,9 +8,7 @@ using Ozamanas.World;
 
 namespace Ozamanas.Board
 {
-    [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-
     public class BulldozerIndustryRotator : MonoBehaviour
     {
         [SerializeField] private GameplayState winState;

@@ -183,11 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   data: {fileID: 11400000, guid: 8998b3554bf1c7a469be903a35f50ced, type: 2}
-  draggedOffset: {x: 0, y: 0.5, z: 0}
-  snapToGrid: 1
-  placementMode: 0
-  traitRange: 1
-  traits: []
   OnSuccesfulPlacement:
     m_PersistentCalls:
       m_Calls:
@@ -221,17 +216,17 @@ MonoBehaviour:
   OnForceDestroy:
     m_PersistentCalls:
       m_Calls: []
-  lifetime: 1
-  fragmentedModel: {fileID: 5878651588068245928, guid: f5e24ff84a336a14ead10f0af0d4d6ae,
+  placements: 0
+  mountain: {fileID: 1125922317519692524, guid: 6f8e8f360f63667409f2ca6e6a67cd0a,
     type: 3}
   barrierID: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
   forestID: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   OnDestruction:
     m_PersistentCalls:
       m_Calls: []
-  explosionForce: 10
-  explosionRadius: 1
-  upwardsModifier: 10
+  reptileRange: 1
+  reptileSpeed: 1
+  moveDelay: 1
 --- !u!54 &8256875140076655523
 Rigidbody:
   m_ObjectHideFlags: 0

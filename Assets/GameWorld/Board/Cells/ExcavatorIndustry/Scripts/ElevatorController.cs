@@ -6,7 +6,6 @@ using Ozamanas.Machines;
 namespace Ozamanas.Board
 {
 
-    [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Animator))]
     public class ElevatorController : MonoBehaviour
     {
