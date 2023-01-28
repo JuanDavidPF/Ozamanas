@@ -35,6 +35,8 @@ namespace Ozamanas.Machines
         private MachineMovement machineMovement;
         private Animator animator;
 
+        private GameObject traitVFX;
+
         [SerializeField] private Cell m_currentCell;
         public Cell CurrentCell
         {
@@ -156,14 +158,19 @@ namespace Ozamanas.Machines
 
         public void AddTraitToMachine(MachineTrait trait)
         {
+            if(!trait) return;
+
             activeTraits.Add(trait);
+            
             if (!trait.isPermanentOnMachine) StartCoroutine(WaitToRemoveTrait(trait));
+            
             SetMachineAttributes();
         }
 
         public void RemoveTraitToMachine(MachineTrait trait)
         {
             activeTraits.Remove(trait);
+
             SetMachineAttributes();
         }
 
@@ -186,6 +193,7 @@ namespace Ozamanas.Machines
         {
             machineArmor.RestoreOriginalValues();
             machineMovement.RestoreOriginalValues();
+            if(traitVFX) Destroy(traitVFX);
 
             foreach (MachineTrait trait in activeTraits)
             {
@@ -254,20 +262,16 @@ namespace Ozamanas.Machines
                 }
             }
 
-            InstantiateTraitVFX(trait);
+           if(trait.traitVFX) InstantiateTraitVFX(trait.traitVFX);
         }
 
-        private void InstantiateTraitVFX(MachineTrait trait)
+        private void InstantiateTraitVFX(GameObject VFX)
         {
-            if(!trait.traitVFX) return;
+            if(traitVFX) Destroy(traitVFX);
 
-            if(trait.isPermanentOnMachine) return;
-
-            GameObject traitVFX = Instantiate(trait.traitVFX,transform);
+            traitVFX = Instantiate(VFX,transform);
 
             traitVFX.transform.position += new Vector3(0,0.5f,0);
-
-            Destroy(traitVFX,trait.machineTimer);
         }
         #endregion
 

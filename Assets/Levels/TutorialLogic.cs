@@ -24,8 +24,8 @@ public class TutorialLogic : MonoBehaviour
 
     [SerializeField] private TutorialState state;
     [SerializeField] private LevelReference levelSelected;
-    [SerializeField] private string explicativeScene;
-    [SerializeField] private string interactuableScene;
+    [SerializeField] private Scenes explicativeScene;
+    [SerializeField] private Scenes interactuableScene;
     [Range(0.1f,10f)]
     [SerializeField] private float focusSpeed = 0.2f;
 

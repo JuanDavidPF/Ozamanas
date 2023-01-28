@@ -11,7 +11,7 @@ namespace JuanPayan.Helpers
         public static List<string> screenStack = new List<string>();
         private void Start()
         {
-
+           
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene scene = SceneManager.GetSceneAt(i);
@@ -19,6 +19,16 @@ namespace JuanPayan.Helpers
             }
             DontDestroyOnLoad(this.gameObject);
         }//Closes Start method
+
+        public static void LoadScenesInList()
+        {
+            screenStack.Clear();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene scene = SceneManager.GetSceneAt(i);
+                screenStack.Add(scene.name);
+            }
+        }
 
         private void OnDestroy()
         {

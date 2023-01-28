@@ -23,19 +23,7 @@ namespace Ozamanas.Forces
 
         private Transform nearMachine;
 
-        public Transform NearMachine
-        {
-            get { return nearMachine; }
-            set
-            {
-                if (nearMachine == value) return;
-
-                nearMachine = value;
-
-                if(markTrait) nearMachine.GetComponentInParent<HumanMachine>().AddTraitToMachine(markTrait);
-            }
-        }
-
+       
         protected override void Awake()
         {
             base.Awake();
@@ -64,21 +52,21 @@ namespace Ozamanas.Forces
 
             clld.enabled = false;
 
-            if (!NearMachine)
+            if (!nearMachine)
             {
                 base.DestroyForce();
                 return;
             }
 
-            if(markTrait) NearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
+            nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
 
             foreach (var snake in controllers)
             {
                 if (!snake) continue;
 
-                snake.Bite(NearMachine);
+                snake.Bite(nearMachine);
                 
-                if (NearMachine.TryGetComponentInParent(out HumanMachine machine))
+                if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
                 {
                     machine.SetCapturedStatus(this);
                 }
@@ -91,21 +79,28 @@ namespace Ozamanas.Forces
 
         private void OnTriggerEnter(Collider other)
         {
-            if (isPlaced || other.transform.tag != "Machine") return;
+            if (isPlaced || other.transform.tag != "Machine" || other.transform == nearMachine) return;
             
             if(other.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
             {
-                if(physics.state == PhysicMode.Intelligent)    
-                NearMachine = other.transform; 
+                if(physics.state != PhysicMode.Intelligent) return;
+
+                if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
+
+                nearMachine = other.transform; 
+
+                nearMachine.GetComponentInParent<HumanMachine>().AddTraitToMachine(markTrait);
             }
             
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (isPlaced || other.transform.tag != "Machine" || other != NearMachine) return;
+            if (isPlaced || other.transform.tag != "Machine" || other.transform != nearMachine) return;
 
-            NearMachine = null;
+            if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
+
+            nearMachine = null;
         }
 
 
@@ -137,14 +132,14 @@ namespace Ozamanas.Forces
 
         public override void DetachHumanMachine()
         {
-            if(!NearMachine) return;
+            if(!nearMachine) return;
 
-            if (NearMachine.TryGetComponentInParent(out MachinePhysicsManager physics))
+            if (nearMachine.TryGetComponentInParent(out MachinePhysicsManager physics))
             {
                 physics.SetPhysical();
             }
 
-            if (NearMachine.TryGetComponentInParent(out HumanMachine machine))
+            if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
             {
                 machine.transform.SetParent(null,true);
             }

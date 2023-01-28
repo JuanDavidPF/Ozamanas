@@ -14,7 +14,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
 
-    [SerializeField] private string gameplayScene;
+    [SerializeField] private Scenes gameplayScene = Scenes.Gameplay;
 
      [Space(15)]
     [Header("Followings Levels Data")]
@@ -66,7 +66,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         state = levelData.state;
 
-        PrintDottedLines();
+       // PrintDottedLines();
 
         BringPlayerToLevel();
 
@@ -98,7 +98,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    public void PlayLevel()
+    public void SetToPlayLevel()
     {
         if(!levelData ||!levelController) return;
 
@@ -110,7 +110,6 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         sceneSwither.SetSingleMode();
 
-        sceneSwither.Behaviour();
     }
 
     public Vector3 ClosestPointOnBounds(Vector3 position)
@@ -122,13 +121,13 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
        if(levelData.state == LevelState.Blocked) return;
        
-       if(player.transform.position == gameObject.transform.position ) PlayLevel();
+       if(player.transform.position == gameObject.transform.position ) SetToPlayLevel();
 
        if (player.PlayerState == PlayerState.Running) return;
 
        
 
-       if(MovementApproval(player.transform.position)) player.MoveToDestination(gameObject.transform.position);
+       if(MovementApproval(player.transform.position)) player.MoveToDestination(this);
     }
 
     private bool MovementApproval(Vector3 position)
@@ -156,6 +155,17 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         animator.SetTrigger("UnSelected");
         levelInfoPanel.Hide();
+    }
+
+    public Vector3 GetNextLevelsViewPoint()
+    {
+        if(nextLevels.Count == 0) return Vector3.zero;
+
+        else if(nextLevels.Count == 1) return nextLevels[0].transform.position;
+
+        else if(nextLevels.Count == 2) return Vector3.Lerp(nextLevels[0].transform.position,nextLevels[1].transform.position,0.5f);
+
+        else return nextLevels[1].transform.position;
     }
 
    

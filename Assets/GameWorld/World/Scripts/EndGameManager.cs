@@ -6,6 +6,7 @@ using Ozamanas.Levels;
 using Ozamanas.Board;
 using UnityEngine.Events;
 using DG.Tweening;
+using Ozamanas.Tags;
 
 
 namespace Ozamanas.World
@@ -25,9 +26,9 @@ namespace Ozamanas.World
         [SerializeField] private float sceneSwitcherDelay = 3f;
          [SerializeField] SceneSwitcher sceneSwitcher;
          [SerializeField] SceneUnloader sceneUnloader;
-         [SerializeField] private string winSceneToLoad;
-        [SerializeField] private string loseSceneToLoad;
-        [SerializeField] private string gameplayHUD;
+         [SerializeField] private Scenes winSceneToLoad;
+        [SerializeField] private Scenes loseSceneToLoad;
+        [SerializeField] private Scenes gameplayHUD;
 
         [Space(15)]
         [Header("Game States")]
@@ -126,7 +127,7 @@ namespace Ozamanas.World
 
        
 
-        IEnumerator LoadScene(string scene)
+        IEnumerator LoadScene(Scenes scene)
         {
             yield return new WaitForSeconds(sceneSwitcherDelay);
             sceneSwitcher.SceneToLoad = scene;

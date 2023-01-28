@@ -9,9 +9,7 @@ namespace Ozamanas.Levels
     public class LevelHolder : MonoBehaviour
     {
         public LevelReference levelSelected;
-
         public SceneSwitcher sceneSwitcher;
-
         private static GameObject m_currentLevel;
         public static GameObject currentLevel
         {
@@ -46,15 +44,11 @@ namespace Ozamanas.Levels
         
         public void InstantiateLevel()
         {
-
-  
                 if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
 
                 if(String.IsNullOrEmpty(levelSelected.level.levelSceneName)) return;
 
-                sceneSwitcher.SceneToLoad = levelSelected.level.levelSceneName;
-
-                sceneSwitcher.Behaviour();
+                sceneSwitcher.Behaviour(levelSelected.level.levelSceneName);
         }
         
         //Closes SpawnLevel method

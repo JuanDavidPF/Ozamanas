@@ -22,7 +22,6 @@ public class OnLoseSceneSelector : MonoBehaviour
     {
        LevelHolder temp = GameObject.FindGameObjectWithTag("SceneController").GetComponentInChildren<LevelHolder>();
        if(temp) sceneSwitcher.SceneToLoad =  temp.levelSelected.level.ifLoseReturnToScene;
-       if(!string.IsNullOrEmpty(temp.levelSelected.level.ifLoseSetDialogue)) currentSaveState.data.currentDialogueCode = temp.levelSelected.level.ifLoseSetDialogue;
        sceneSwitcher.SetSingleMode();
        sceneSwitcher.Behaviour();
 

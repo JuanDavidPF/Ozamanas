@@ -21,7 +21,6 @@ public class OnWinSceneSelector : MonoBehaviour
     {
        LevelHolder temp = GameObject.FindGameObjectWithTag("SceneController").GetComponentInChildren<LevelHolder>();
        if(temp) sceneSwitcher.SceneToLoad =  temp.levelSelected.level.ifWinReturnToScene;
-       if(!string.IsNullOrEmpty(temp.levelSelected.level.ifWinSetDialogue)) currentSaveState.data.currentDialogueCode = temp.levelSelected.level.ifWinSetDialogue;
        sceneSwitcher.SetSingleMode();
        sceneSwitcher.Behaviour();
 

@@ -31,13 +31,10 @@ namespace Ozamanas.Levels
          [Space(20)]
         [Header("Narrative")]
 
-        public string ifLoseReturnToScene = "Fire";
+        public Scenes ifLoseReturnToScene = Scenes.Fire;
 
-        public string ifLoseSetDialogue;
+        public Scenes ifWinReturnToScene = Scenes.Fire;
 
-        public string ifWinReturnToScene = "Fire";
-
-        public string ifWinSetDialogue;
 
 
         [Space(20)]

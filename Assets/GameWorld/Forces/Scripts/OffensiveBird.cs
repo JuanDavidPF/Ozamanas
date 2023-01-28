@@ -167,7 +167,10 @@ namespace Ozamanas.Forces
 
         }//Closes AttemptMachineDamage method
 
-
+        public override void DestroyForce()
+        {
+            base.DestroyForce();
+        }
 
 
 

@@ -915,7 +915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 0
-  sceneToLoad: 
+  sceneToLoad: 0
   mode: 1
 --- !u!114 &658343621
 MonoBehaviour:
@@ -931,8 +931,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
-  explicativeScene: Explicative_HUD
-  interactuableScene: Interactuable_HUD
+  explicativeScene: 7
+  interactuableScene: 8
   focusSpeed: 0.2
 --- !u!114 &658343622
 MonoBehaviour:
@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 0
-  sceneToLoad: 
+  sceneToLoad: 0
   mode: 1
 --- !u!114 &988746147
 MonoBehaviour:
@@ -1438,6 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ae67131800b654790505d6cff72aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraAnchorMode: 2
   _rotationInput: {fileID: -3828482695541089596, guid: 20bf2b6b2fb73b84c9cd3769a2166baf,
     type: 3}
   _movementInput: {fileID: -2617787174720034483, guid: 20bf2b6b2fb73b84c9cd3769a2166baf,
@@ -6558,7 +6559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 4
-  sceneToLoad: Gameplay HUD
+  sceneToLoad: 11
   mode: 1
 --- !u!1 &1678165910
 GameObject:
@@ -7038,7 +7039,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801715648}
-  m_LocalRotation: {x: 0.38268346, y: 0.000000015896623, z: -0.0000000065845964, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: -0.000000015896623, z: 0.0000000065845964, w: 0.92387956}
   m_LocalPosition: {x: 11.78, y: 4, z: -5.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7288,9 +7289,9 @@ MonoBehaviour:
   sceneSwitcherDelay: 7
   sceneSwitcher: {fileID: 1844583988}
   sceneUnloader: {fileID: 1844583990}
-  winSceneToLoad: Win Menu
-  loseSceneToLoad: Lose Menu
-  gameplayHUD: Gameplay HUD
+  winSceneToLoad: 10
+  loseSceneToLoad: 9
+  gameplayHUD: 11
   winState: {fileID: 11400000, guid: 2db2249f4119f804a999733f23d8cc3c, type: 2}
   loseState: {fileID: 11400000, guid: 80887539b1657f44ba2dba76b3275141, type: 2}
   levelSelected: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
@@ -7398,7 +7399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 0
-  sceneToLoad: 
+  sceneToLoad: 0
   mode: 1
 --- !u!114 &1844583989
 MonoBehaviour:
@@ -7445,7 +7446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 0
-  sceneToUnload: 
+  sceneToUnload: 0
 --- !u!1 &1895972798
 GameObject:
   m_ObjectHideFlags: 0
@@ -7668,7 +7669,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008263066}
-  m_LocalRotation: {x: 0.38268346, y: 0.000000015896623, z: -0.0000000065845964, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: -0.000000015896623, z: 0.0000000065845964, w: 0.92387956}
   m_LocalPosition: {x: 11.78, y: 4, z: -5.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

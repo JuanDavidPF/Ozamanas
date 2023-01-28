@@ -4,7 +4,72 @@ using UnityEngine;
 
 
 namespace Ozamanas.Tags
-{
+{   
+    [System.Flags]
+    public enum ActionButtonTypes
+    {
+        Exit = 1 << 0,
+        ToSky = 1 << 1,
+        ToCamp= 1 << 2,
+        ToFire= 1 << 3,
+        ToCodex= 1 << 4,
+        Continue= 1 << 5,
+        Restart= 1 << 6,
+        Play= 1 << 7
+    }
+
+    public enum ActionButtonType
+    {
+        Exit,
+        ToSky ,
+        ToCamp,
+        ToFire,
+        ToCodex,
+        Continue,
+        Restart,
+        Play
+    }
+
+    public enum Scenes
+    {
+        Gameplay,
+        Fire,
+        Camp,
+        Sky,
+        Settings,
+        Credits,
+        Narrative,
+
+        Explicative_HUD,
+
+        Interactuable_HUD,
+
+        Lose_Menu,
+
+        Win_Menu,
+
+        Gameplay_HUD,
+
+        Pause_Menu,
+
+        Main_Menu,
+
+        Quit_Modal
+    }
+
+    public enum PhraseSequenceState
+    {
+        Default,
+        Active,
+        Finnished
+    }
+
+    public enum PreRequisiteType
+    {
+        UnlockedForce,
+        LevelComplete,
+        OnScene
+    }
 
      public enum CellPointerType
         {

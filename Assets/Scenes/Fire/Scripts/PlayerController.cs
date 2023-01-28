@@ -6,12 +6,13 @@ using Ozamanas.Tags;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    [SerializeField] private Transform cameraAnchor;
+
      private Tween playerTween;
 
     private Animator animator;
 
-    private Vector3 currentDestination = new Vector3(0f,-10f,0f);
+    private LevelHandler currentDestination;
 
     private List<Vector3> playerPath = new List<Vector3>();
 
@@ -21,40 +22,42 @@ public class PlayerController : MonoBehaviour
 
      [SerializeField]  private PlayerState playerState = PlayerState.Idling;
 
-    private bool onLevelTriggerEnter = false;
     public PlayerState PlayerState { get => playerState; set => playerState = value; }
 
     public void Awake()
     {
         animator = GetComponent<Animator>();
     }
+
     
-    public void MoveToDestination(Vector3 destination)
+    public void MoveToDestination(LevelHandler destination)
     {
-        if(destination == transform.position) return;
+        if(destination.transform.position == transform.position) return;
 
         if(currentDestination != destination) currentDestination = destination;
 
-        float distance =Vector3.Distance(gameObject.transform.position,destination);
+        float distance =Vector3.Distance(gameObject.transform.position,destination.transform.position );
+
         float jumps = distance / jumpDistance;
 
         for(int i = 1; i <= jumps + 1 ; i++)
         {
             float value = Mathf.Clamp(((i*jumpDistance)/distance),0f,1f);
-            Vector3 temp = Vector3.Lerp(transform.position,currentDestination,value);
+            Vector3 temp = Vector3.Lerp(transform.position,currentDestination.transform.position ,value);
             playerPath.Add(temp);
         }
 
-        gameObject.transform.LookAt(destination);
+        gameObject.transform.DOLookAt(destination.transform.position ,0.5f);
+        
         animator.SetTrigger("Jump");
-        PlayerState = PlayerState.Running;
 
+        PlayerState = PlayerState.Running;
 
     }
 
     public void Jump()
     {
-        if (playerPath.Count == 0) return;
+       if (playerPath.Count == 0) return;
 
         if (playerTween != null) playerTween.Kill();
 
@@ -63,25 +66,20 @@ public class PlayerController : MonoBehaviour
         playerTween.OnComplete(() =>
         {
             playerPath.RemoveAt(0);
+           
         });
 
     }
 
-     private void OnTriggerStay(Collider other)
+    public void CheckNextJump()
     {
-         if (other.tag != "Level") return;
-
-         if(transform.position != currentDestination ) return;
-
-         if(onLevelTriggerEnter) return;
-         
-         if(other.TryGetComponent<LevelHandler>(out LevelHandler level))
-         {
-            onLevelTriggerEnter = true;     
-            PlayerState = PlayerState.Idling;
-            animator.SetTrigger("Idle");
-            level.PlayLevel();
-         }
+        if (playerPath.Count > 0) return;
+        gameObject.transform.DOLookAt(currentDestination.GetNextLevelsViewPoint(),0.5f);
+        animator.SetTrigger("Idle");
+        PlayerState = PlayerState.Idling;
+        currentDestination.SetToPlayLevel();
     }
+
+
 
 }

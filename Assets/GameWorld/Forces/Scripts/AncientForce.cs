@@ -95,13 +95,13 @@ namespace Ozamanas.Forces
 
         }//Closes OnDrag method
 
-        protected virtual void DestroyForce()
+        public virtual void DestroyForce()
         {
             if(onDestroyVFX) Instantiate(onDestroyVFX,transform.position,transform.rotation);
 
             EraseValidCells();
 
-             OnForceDestroy?.Invoke();
+            OnForceDestroy?.Invoke();
 
             Destroy(gameObject);
         }
