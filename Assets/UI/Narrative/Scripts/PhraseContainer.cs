@@ -80,9 +80,6 @@ namespace Ozamanas.UI
 
             PrintNextPhraseOnPanel();
 
-            
-
-           
         }
 
         private void PrintNextPhraseOnPanel()
