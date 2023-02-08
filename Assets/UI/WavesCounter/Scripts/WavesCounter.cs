@@ -13,7 +13,6 @@ namespace Ozamanas.UI.WavesCounter
 {
 
     [SelectionBase]
-    [RequireComponent(typeof(Image))]
     public class WavesCounter : MonoBehaviour
     {
         Tween progressTween;
@@ -22,7 +21,6 @@ namespace Ozamanas.UI.WavesCounter
 
         [SerializeField] private TextMeshProUGUI waveTMP;
         [SerializeField] private Image progressBar;
-        [SerializeField] private Gradient waveProgressColor;
 
         private void Start()
         {
@@ -40,7 +38,6 @@ namespace Ozamanas.UI.WavesCounter
 
             if (!progressBar) return;
             progressBar.fillAmount = WavesManager.waveProgress;
-            progressBar.color = waveProgressColor.Evaluate(WavesManager.waveProgress);
         }//Closes HandleProgressBarColor method
 
         public void UpdateWaveCounter()

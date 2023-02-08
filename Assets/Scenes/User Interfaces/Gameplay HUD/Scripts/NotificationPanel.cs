@@ -17,12 +17,11 @@ public class NotificationPanel : MonoBehaviour
 
     void Awake()
     {
-        titleString = GetComponent<TMP_Text>();
-        canvasGroup = GetComponent<CanvasGroup>();
+        if(!titleString) titleString = GetComponentInChildren<TMP_Text>();
+        if(!canvasGroup) canvasGroup = GetComponent<CanvasGroup>();
     }
     public void UpdatePanel(Notification notification)
     {
-
        if (!notification) return;
        
        if (!titleString) return;

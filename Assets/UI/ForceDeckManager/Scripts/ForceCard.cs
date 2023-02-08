@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 
 namespace Ozamanas.UI.ForceDeck
 {
@@ -37,6 +38,7 @@ namespace Ozamanas.UI.ForceDeck
 
                 if (cardArt) cardArt.sprite = value.forceIcon;
                 if (priceLabel) priceLabel.text = value.price.value.ToString();
+                if(forceNameText) forceNameText.text = value.forceName.GetLocalizedString();
             }
         }
 
@@ -49,7 +51,10 @@ namespace Ozamanas.UI.ForceDeck
         [SerializeField] private TextMeshProUGUI priceLabel;
         [SerializeField] private Image cooldownProgress;
 
+        private RectTransform rectTransform;
 
+        [SerializeField] private RectTransform forceName;
+         private TextMeshProUGUI forceNameText;
 
 
 
@@ -78,7 +83,11 @@ namespace Ozamanas.UI.ForceDeck
         private bool isOnCooldown;
         private bool isAffordable = true;
 
-
+        void Awake()
+        {
+            rectTransform = GetComponent<RectTransform>();
+            forceNameText = forceName.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        }
 
         public void OnPlayerEnergyChanged(int energyAmount)
         {
@@ -166,6 +175,23 @@ namespace Ozamanas.UI.ForceDeck
         {
             forceData = m_forceData;
         }//Closes ReloadData method
+
+        public void OnPointerEnter()
+        {
+            if(!forceName || !rectTransform) return; 
+
+            rectTransform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.3f);
+            forceName.gameObject.SetActive(true);
+        }
+
+        public void OnPointerExit()
+        {
+            if(!forceName || !rectTransform) return; 
+            
+            rectTransform.DOScale(new Vector3(1f,1f,1f),0.3f);
+            forceName.gameObject.SetActive(false);
+
+        }
 
         #endregion
     }//Closes ForceCard class
