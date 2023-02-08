@@ -306,7 +306,7 @@ namespace Ozamanas.InputSystem
             ""actions"": [
                 {
                     ""name"": ""Pause"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""e91876fb-6b68-4b06-b998-a4d4ea2e9067"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

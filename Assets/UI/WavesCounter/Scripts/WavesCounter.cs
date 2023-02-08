@@ -22,6 +22,7 @@ namespace Ozamanas.UI.WavesCounter
 
         [SerializeField] private TextMeshProUGUI waveTMP;
         [SerializeField] private Image progressBar;
+        [SerializeField] private Gradient waveProgressColor;
 
         private void Start()
         {
@@ -31,15 +32,15 @@ namespace Ozamanas.UI.WavesCounter
 
         private void Update()
         {
-           UpdateProgressBar();
+            UpdateProgressBar();
         }//Closes Update method
 
         private void UpdateProgressBar()
         {
 
             if (!progressBar) return;
-
-            progressBar.rectTransform.DOScaleX(WavesManager.waveProgress, 0.05f);
+            progressBar.fillAmount = WavesManager.waveProgress;
+            progressBar.color = waveProgressColor.Evaluate(WavesManager.waveProgress);
         }//Closes HandleProgressBarColor method
 
         public void UpdateWaveCounter()

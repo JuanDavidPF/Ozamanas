@@ -17,8 +17,8 @@ public class NotificationPanel : MonoBehaviour
 
     void Awake()
     {
-        if(!titleString) titleString = GetComponentInChildren<TMP_Text>();
-        if(!canvasGroup) canvasGroup = GetComponent<CanvasGroup>();
+        titleString = GetComponent<TMP_Text>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
     public void UpdatePanel(Notification notification)
     {
