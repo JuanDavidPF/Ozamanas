@@ -7,6 +7,7 @@ using JuanPayan.References;
 using Ozamanas.Tags;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class TutorialPanel : MonoBehaviour
 {
@@ -45,7 +46,9 @@ public class TutorialPanel : MonoBehaviour
  void Awake()
     {
        if (!levelController || !levelController.level || !levelController.level.currentAction) return;
-
+       
+       if(waitInputIndicator) waitInputIndicator.GetComponent<Button>().interactable = false;
+       
        UpdatePanel();
     }
 
@@ -53,13 +56,13 @@ public class TutorialPanel : MonoBehaviour
     
     public void UpdatePanel()
     {
+      if (titleString) titleString.text = levelController.level.currentAction.title.GetLocalizedString();
+      
       IEnumerator coroutine;
 
       coroutine = PrintTextOnPanel(descriptionString,levelController.level.currentAction.description.GetLocalizedString());
       StartCoroutine(coroutine);
-       //if (titleString) titleString.text = levelController.level.currentAction.title.GetLocalizedString();
-       //if (descriptionString) descriptionString.text = levelController.level.currentAction.description.GetLocalizedString();
-
+      
     }
 
     public void ExitTutorialAction()
@@ -85,7 +88,6 @@ public class TutorialPanel : MonoBehaviour
    
         IEnumerator PrintTextOnPanel(TextMeshProUGUI textMeshPro,string phrase)
         {
-            Debug.Log("PrintTextOnPanel:"+phrase);
 
             textMeshPro.text = "";
 
@@ -95,10 +97,8 @@ public class TutorialPanel : MonoBehaviour
 
             for (int i = 0; i < text.Length; i++)
                 {
-                    Debug.Log("Inside FOR:"+i);
                     if (skipOnInput && anyKeyDown)
                     {
-                      Debug.Log("skipOnInput:"+i);
                         OnSkipOnInput?.Invoke();
                         textMeshPro.text = text;
                         anyKeyDown = false;
@@ -108,8 +108,7 @@ public class TutorialPanel : MonoBehaviour
 
                     char c = text[i];
                     tempText += c;
-                   // yield return StartCoroutine(DelayPrint(subtitleDelays.characterDelay));
-                     yield return new WaitForSeconds(subtitleDelays.characterDelay);
+                    yield return StartCoroutine(DelayPrint(subtitleDelays.characterDelay));
                     OnTypeCharacter?.Invoke();
                     if (c == '.' || c == '!' || c == '?')
                     {
@@ -118,7 +117,7 @@ public class TutorialPanel : MonoBehaviour
                     }
                     if (c == ',')
                     {
-                        yield return StartCoroutine(DelayPrint(subtitleDelays.commaDelay));
+                      yield return StartCoroutine(DelayPrint(subtitleDelays.commaDelay));
                          OnTypeCharacter?.Invoke();
                     }
 
@@ -127,18 +126,17 @@ public class TutorialPanel : MonoBehaviour
 
             if (!waitForInput)
             {
-                yield return StartCoroutine(DelayPrint(subtitleDelays.finalDelay));
+               yield return StartCoroutine(DelayPrint(subtitleDelays.finalDelay));
                 waitForInput = true;
             }
 
             if (waitForInput)
             {
-                waitInputIndicator.gameObject.SetActive(true);
+                if(waitInputIndicator) waitInputIndicator.GetComponent<Button>().interactable = true;
                 while (!anyKeyDown)
                 {
                     yield return null;
                 }
-                waitInputIndicator.gameObject.SetActive(false);
             }
 
             yield return null;

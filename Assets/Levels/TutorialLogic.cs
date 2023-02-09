@@ -18,7 +18,6 @@ public class TutorialLogic : MonoBehaviour
             Inactive,
             Active,
             Waiting, 
-            
             Complete
         }
 
@@ -108,8 +107,7 @@ public class TutorialLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(levelSelected.level.currentAction.initDelay);
 
-        if(! string.IsNullOrEmpty(levelSelected.level.currentAction.focus)) SetCameraFocus();
-        else 
+        if(!SetCameraFocus())
         {
             sceneSwitcher.Behaviour();
             currentActionIndex++;
@@ -117,14 +115,16 @@ public class TutorialLogic : MonoBehaviour
         
     }
 
-    private void SetCameraFocus()
+    private bool SetCameraFocus()
     {
-         if(string.IsNullOrEmpty(levelSelected.level.currentAction.focus)) return;
-    
-        GameObject temp = GameObject.Find(levelSelected.level.currentAction.focus);
-        if(!temp) return;
-        anchorTween = cameraAnchor.transform.DOMove(temp.transform.position,focusSpeed,false);
+        if(string.IsNullOrEmpty(levelSelected.level.currentAction.focus)) return false;
 
+        GameObject temp = GameObject.Find(levelSelected.level.currentAction.focus);
+
+        if(!temp) return false;
+
+        anchorTween = cameraAnchor.transform.DOMove(temp.transform.position,focusSpeed,false);
+       
         if(temp.transform.TryGetComponentInChildren<CellSelectionHandler>(out CellSelectionHandler selection))
         {
             CellSelectionHandler.currentCellSelected = selection;
@@ -135,13 +135,14 @@ public class TutorialLogic : MonoBehaviour
             StartCoroutine(LoadScene());
         });
 
+        return true;
     }
 
-     IEnumerator LoadScene()
+    IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(1f);
-       sceneSwitcher.Behaviour();
-            currentActionIndex++;
+        sceneSwitcher.Behaviour();
+        currentActionIndex++;
     }
 
 

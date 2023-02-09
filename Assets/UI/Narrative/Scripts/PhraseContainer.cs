@@ -29,7 +29,6 @@ namespace Ozamanas.UI
 
         [Header("Subtitles")]
         public TextMeshProUGUI actorSpeech;
-        public TextMeshProUGUI actorTitle;
 
         [Header("Events")]
         [SerializeField] public UnityEvent OnTypeCharacter;
@@ -182,6 +181,8 @@ namespace Ozamanas.UI
 
         private void OnDialogueFinished()
         {
+            Debug.Log("OnDialogueFinished");
+
             ShowActionButtons();
 
             if (sequence.state !=PhraseSequenceState.Default)  sequence.state = PhraseSequenceState.Finnished;

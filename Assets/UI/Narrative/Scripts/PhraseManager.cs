@@ -14,7 +14,7 @@ namespace Ozamanas.UI
         [Title("Narrative Components")]
         [SerializeField] private PhraseHolder phraseSequences;
 
-       private PhraseSequence currentPhraseSequence;
+        private PhraseSequence currentPhraseSequence;
 
         [SerializeField] private PhraseHolder defaultPhraseSequences;
 
@@ -67,6 +67,7 @@ namespace Ozamanas.UI
 
         private void SetDialogueDefaultSequence()
         {
+            List<PhraseSequence> defaultPhrases = new List<PhraseSequence>();
             foreach (PhraseSequence phrase in defaultPhraseSequences.data)
             {
               if(phrase.state != PhraseSequenceState.Default) continue;
@@ -74,9 +75,15 @@ namespace Ozamanas.UI
                foreach (PreRequisite req in phrase.preRequisites)
                {
                     if(req.type == PreRequisiteType.OnScene && SceneManager.GetSceneByName(req.sceneName.ToString()).IsValid())
-                     dialoguePanel.StartDialogue(phrase);
+                    defaultPhrases.Add(phrase);
                }
             }
+            
+            if(defaultPhrases.Count==0) return;
+
+            PhraseSequence temp = defaultPhrases[Random.Range(0,defaultPhrases.Count-1)];
+            
+            dialoguePanel.StartDialogue(temp);
         }
 
         private bool CheckPhraseSequencePreRequisites(PhraseSequence phraseSequence)

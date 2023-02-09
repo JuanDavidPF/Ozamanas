@@ -19,9 +19,11 @@ namespace Ozamanas.UI
                    switch(actionButton)
                    {
                     case ActionButtonType.Continue:
+                    
                     if(type.HasFlag(ActionButtonTypes.Continue)) gameObject.SetActive(true);
                     break;
                     case ActionButtonType.Exit:
+                    Debug.Log("Continue");
                     if(type.HasFlag(ActionButtonTypes.Exit)) gameObject.SetActive(true);
                     break;
                     case ActionButtonType.Play:

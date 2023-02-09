@@ -20,7 +20,6 @@ public class TimeScaleModifier : MonoBehaviour
 
     public void SetConstantTimeScale()
     {
-
         Time.timeScale = constantScale;
     }
 }
