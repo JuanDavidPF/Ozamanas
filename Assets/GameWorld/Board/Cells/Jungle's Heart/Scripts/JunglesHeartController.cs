@@ -22,8 +22,12 @@ namespace Ozamanas.Board
         public UnityEvent OnWinState;
         public UnityEvent OnLoseState;
 
+        bool levelComplete = false;
+
         public void CheckForMachineEnter(HumanMachine machine)
         {
+            if(levelComplete) return;
+
             if(!machine) return;
 
             if(machine.TryGetComponent<MachinePhysicsManager>(out MachinePhysicsManager physicsManager))
@@ -37,7 +41,11 @@ namespace Ozamanas.Board
         public void OnCellGameStateChange(GameplayState state)
         {
             if (!state) return;
-            if (state == winState) ChangeToWinState();
+            if (state == winState) 
+            {
+                ChangeToWinState();
+                levelComplete = true;
+            }
             if (state == loseState) ChangeToLoseState();
         }
 

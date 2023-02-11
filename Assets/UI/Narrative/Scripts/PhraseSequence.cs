@@ -11,7 +11,7 @@ namespace Ozamanas.UI
         public PhraseSequenceState state = PhraseSequenceState.Active;
         public List<PreRequisite> preRequisites;
         public List<Phrase> phrases;
-        public ActionButtonTypes showActionButtons;
+        public List<ActionButton> actionButtons;
 
     }
 }

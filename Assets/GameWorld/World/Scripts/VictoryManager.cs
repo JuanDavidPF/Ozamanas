@@ -9,8 +9,12 @@ namespace Ozamanas.World
     public class VictoryManager : MonoBehaviour
     {
         [SerializeField] GameEvent VictoryEvent;
+
+        private bool levelFailed = false;
         public void VerifyConditions()
         {
+
+            if(levelFailed) return;
 
             if (WavesManager.currentWave < WavesManager.wavesAmount) return;
 
@@ -32,6 +36,11 @@ namespace Ozamanas.World
 
         }
         
+        public void OnLevelFailed()
+        {
+            levelFailed = true;
+        }
+
         IEnumerator VerifyVictoryConditions()
         {
              yield return null;

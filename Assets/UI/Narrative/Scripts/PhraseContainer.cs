@@ -27,6 +27,7 @@ namespace Ozamanas.UI
         public RectTransform subtitlesGroup;
 
 
+
         [Header("Subtitles")]
         public TextMeshProUGUI actorSpeech;
 
@@ -46,9 +47,11 @@ namespace Ozamanas.UI
 
         private PhraseSequence sequence;
 
+        private bool isLastSentence = false;
+
          [Header("Action Buttons")]
 
-         [SerializeField] private List<ActionButton> buttons;
+         [SerializeField] private List<ButtonContainer> buttons;
 
         private int index = 0;
 
@@ -78,10 +81,6 @@ namespace Ozamanas.UI
             sequence = phraseSequences;
 
             PrintNextPhraseOnPanel();
-
-            
-
-           
         }
 
         private void PrintNextPhraseOnPanel()
@@ -93,13 +92,14 @@ namespace Ozamanas.UI
                 return;
             }
 
+            if(index == sequence.phrases.Count-1) isLastSentence = true;
+            
             StartCoroutine(PrintPhraseOnPanel());
 
             skipOnInput = false;
 
             index++;
 
-            
         }
 
         IEnumerator PrintPhraseOnPanel()
@@ -159,7 +159,7 @@ namespace Ozamanas.UI
             }
 
             yield return null;
-            subtitlesGroup.gameObject.SetActive(false);
+            if(!isLastSentence)  subtitlesGroup.gameObject.SetActive(false);
             skipOnInput = false;
             PrintNextPhraseOnPanel();
         }
@@ -194,9 +194,11 @@ namespace Ozamanas.UI
 
         private void ShowActionButtons()
         {
-            foreach(ActionButton button in buttons)
+            foreach(ButtonContainer button in buttons)
             {
-                button.CheckActionButtonType(sequence.showActionButtons);
+                if(sequence.actionButtons.Contains(button.buttonType))
+                button.gameObject.SetActive(true);
+
             }
         }
         private void FindNarrator()

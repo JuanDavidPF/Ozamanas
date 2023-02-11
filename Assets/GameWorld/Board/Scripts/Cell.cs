@@ -43,12 +43,12 @@ namespace Ozamanas.Board
             {
                 if (m_gameplayState == value) return;
 
-
                 GameplayState originalValue = m_gameplayState;
 
                 m_gameplayState = value;
 
                 OnCellGameStateChanged?.Invoke(m_gameplayState);
+                
                 OnCellChanged?.Invoke(this);
 
             }
