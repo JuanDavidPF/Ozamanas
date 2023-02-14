@@ -75,12 +75,23 @@ namespace Ozamanas.UI
         
         public void StartDialogue(PhraseSequence phraseSequences)
         {
+           
+            ResetContainer();
 
             if(narratorIsPresent) narrator.SetTrigger("Talk");
            
             sequence = phraseSequences;
 
             PrintNextPhraseOnPanel();
+        }
+
+        private void ResetContainer()
+        {
+            StopAllCoroutines();
+
+            index = 0;
+
+            actorSpeech.text = "";
         }
 
         private void PrintNextPhraseOnPanel()
@@ -108,7 +119,7 @@ namespace Ozamanas.UI
             subtitlesGroup.gameObject.SetActive(true);
             actorSpeech.text = "";
 
-            string text = sequence.phrases[index].phrase.GetLocalizedString();
+            string text = sequence.phrases[index].GetLocalizedString();
 
             string tempText = "";
 

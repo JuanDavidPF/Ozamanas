@@ -7,6 +7,7 @@ using UnityEngine.Localization;
 using Ozamanas.Tags;
 using Sirenix.OdinInspector;
 
+
 namespace Ozamanas.Forces
 {
     [CreateAssetMenu(fileName = "new Force data", menuName = "Forces/Reference")]

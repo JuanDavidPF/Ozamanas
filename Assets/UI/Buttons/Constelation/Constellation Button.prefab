@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1474700162868241080}
   - component: {fileID: 4113175721024476133}
   - component: {fileID: 4271952436207214312}
-  - component: {fileID: 9189706769189532273}
+  - component: {fileID: 8403317853855350652}
   m_Layer: 0
   m_Name: Constellation Button
   m_TagString: Untagged
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2039
 --- !u!114 &1474700162868241080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4113175721024476133}
-        m_TargetAssemblyTypeName: ConstellationButton, Assembly-CSharp
-        m_MethodName: AddData
+        m_TargetAssemblyTypeName: Ozamanas.UI.ConstellationButton, Ozamanas.UI
+        m_MethodName: OnPointerClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -158,8 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  forcesManager: {fileID: 0}
-  panel: {fileID: 8335099312798401692, guid: 08d40f316d7750049b123d1e43e953ef, type: 3}
+  imageOutline: {fileID: 0}
 --- !u!114 &4271952436207214312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1799701781, guid: 49847ba0b02b1d644b4b1557e25c22e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -190,19 +189,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!58 &9189706769189532273
-CircleCollider2D:
+--- !u!114 &8403317853855350652
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7173665265237162426}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 1, b: 0.12549019, a: 1}
+  m_EffectDistance: {x: 1, y: 1}
+  m_UseGraphicAlpha: 1

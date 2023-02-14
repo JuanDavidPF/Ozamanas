@@ -4375,28 +4375,28 @@ PrefabInstance:
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.data[0]
       value: 
-      objectReference: {fileID: 2046864911}
+      objectReference: {fileID: 1549297776}
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.data[1]
       value: 
-      objectReference: {fileID: 1549297772}
+      objectReference: {fileID: 0}
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.data[2]
       value: 
-      objectReference: {fileID: 1183525817}
+      objectReference: {fileID: 0}
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.data[3]
       value: 
-      objectReference: {fileID: 1790670338}
+      objectReference: {fileID: 0}
     - target: {fileID: -1626401721760752557, guid: e2a269ecb91465347ba6ace6dced6b70,
         type: 3}
       propertyPath: buttons.Array.data[4]
@@ -5082,9 +5082,21 @@ MonoBehaviour:
     processes:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 753040239}
+          m_TargetAssemblyTypeName: JuanPayan.Helpers.SceneUnloader, JuanPayan.Helpers
+          m_MethodName: Behaviour
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 753040238}
           m_TargetAssemblyTypeName: JuanPayan.Helpers.SceneSwitcher, JuanPayan.Helpers
-          m_MethodName: SetAdditiveMode
+          m_MethodName: SetSingleMode
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5221,7 +5233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: 0
-  sceneToUnload: 3
+  sceneToUnload: 6
 --- !u!1 &793252201
 GameObject:
   m_ObjectHideFlags: 0
@@ -7029,14 +7041,14 @@ GameObject:
   - component: {fileID: 1183525820}
   - component: {fileID: 1183525819}
   - component: {fileID: 1183525818}
-  - component: {fileID: 1183525817}
+  - component: {fileID: 1183525821}
   m_Layer: 5
   m_Name: CampButtom (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1183525816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7058,19 +7070,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -639.32837}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1183525817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183525815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103c3a3e909230c46adccd46f80d9bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionButton: 2
 --- !u!114 &1183525818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7165,6 +7164,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183525815}
   m_CullTransparentMesh: 1
+--- !u!114 &1183525821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183525815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477682e9d5c64e4439c3a0d2eb046d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: {fileID: 11400000, guid: 9ce754447a6f52c489cc28b7b8e2dddf, type: 2}
 --- !u!4 &1193922872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6146481207586987398, guid: 24534ae4688ba064baa0d65331bbae32,
@@ -8210,14 +8222,14 @@ GameObject:
   - component: {fileID: 1549297775}
   - component: {fileID: 1549297774}
   - component: {fileID: 1549297773}
-  - component: {fileID: 1549297772}
+  - component: {fileID: 1549297776}
   m_Layer: 5
   m_Name: SkyButton (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1549297771
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8239,19 +8251,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -614.32837}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1549297772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549297770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103c3a3e909230c46adccd46f80d9bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionButton: 1
 --- !u!114 &1549297773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8346,6 +8345,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549297770}
   m_CullTransparentMesh: 1
+--- !u!114 &1549297776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549297770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477682e9d5c64e4439c3a0d2eb046d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: {fileID: 11400000, guid: 38d75dcec8ee85547b296e6407e92dc4, type: 2}
 --- !u!1001 &1553665642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9618,14 +9630,14 @@ GameObject:
   - component: {fileID: 1790670341}
   - component: {fileID: 1790670340}
   - component: {fileID: 1790670339}
-  - component: {fileID: 1790670338}
+  - component: {fileID: 1790670342}
   m_Layer: 5
   m_Name: Machines (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1790670337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9647,19 +9659,6 @@ RectTransform:
   m_AnchoredPosition: {x: 35, y: -639.32837}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1790670338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790670336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103c3a3e909230c46adccd46f80d9bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionButton: 4
 --- !u!114 &1790670339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9754,6 +9753,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790670336}
   m_CullTransparentMesh: 1
+--- !u!114 &1790670342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790670336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477682e9d5c64e4439c3a0d2eb046d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: {fileID: 11400000, guid: f8dc6155fa9e58948bc3c9a384ce6d54, type: 2}
 --- !u!1001 &1817751630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10961,14 +10973,14 @@ GameObject:
   - component: {fileID: 2046864914}
   - component: {fileID: 2046864913}
   - component: {fileID: 2046864912}
-  - component: {fileID: 2046864911}
+  - component: {fileID: 2046864915}
   m_Layer: 5
   m_Name: FireButtom (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2046864910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10990,19 +11002,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: -664.32837}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &2046864911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046864909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103c3a3e909230c46adccd46f80d9bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionButton: 3
 --- !u!114 &2046864912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11097,6 +11096,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046864909}
   m_CullTransparentMesh: 1
+--- !u!114 &2046864915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046864909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477682e9d5c64e4439c3a0d2eb046d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: {fileID: 11400000, guid: 7323b8a3c675ba548ab61d290e030f78, type: 2}
 --- !u!1001 &2051123512
 PrefabInstance:
   m_ObjectHideFlags: 0
