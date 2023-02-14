@@ -12,8 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aab9e1314aa2c2479ebdd03b81f4c61, type: 3}
   m_Name: LevelData_Tutorial_2
   m_EditorClassIdentifier: 
-  board: {fileID: 9096933833224980577, guid: 8da14ab7b2e7c0f4599e2bc3742afead, type: 3}
-  saveAt: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
+  state: 1
+  index: 2
+  levelName:
+    m_TableReference:
+      m_TableCollectionName: GUID:c74c2a6758953a74a9af1b1a26a44077
+    m_TableEntryReference:
+      m_KeyId: 33448269201887232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  levelMainObjective:
+    m_TableReference:
+      m_TableCollectionName: GUID:c74c2a6758953a74a9af1b1a26a44077
+    m_TableEntryReference:
+      m_KeyId: 33516596481839104
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  levelSceneName: Tutorial_2
   creationDelay:
     useConstant: 1
     constantValue: 0
@@ -30,14 +49,16 @@ MonoBehaviour:
     useConstant: 1
     constantValue: 20
     variable: {fileID: 0}
-  state: 1
-  index: 2
-  levelName: Tutorial 2
-  levelSceneName: Tutorial_2
+  showIfTutorial: 0
+  machines: []
   ifLoseReturnToScene: 2
   ifWinReturnToScene: 1
+  saveAt: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
   tutorialActions:
   - {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
   - {fileID: 11400000, guid: cc438e34094aac142a319fe92897dff6, type: 2}
   - {fileID: 11400000, guid: ca10372b6d6032740885ebe97d45bdec, type: 2}
   currentAction: {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
+  references:
+    version: 2
+    RefIds: []

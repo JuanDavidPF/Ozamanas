@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 using JuanPayan.Helpers;
 using Ozamanas.Tags;
 using System;
+using Ozamanas.UI;
+using TMPro;
+
 
 public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
@@ -14,21 +17,25 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
 
-    [SerializeField] private Scenes gameplayScene = Scenes.Gameplay;
-
-     [Space(15)]
+    [Space(15)]
     [Header("Followings Levels Data")]
     [SerializeField] private List<LevelHandler> nextLevels;
-
     private List<LevelHandler> predecesorsLevels = new List<LevelHandler>();
-
 
     [Space(15)]
     [Header("Level Settings")]
     [SerializeField] private GameObject dottedLine;
     [SerializeField] private LevelReference levelController;
-    [SerializeField] private SceneSwitcher sceneSwither;
-    [SerializeField] private LevelPanelSelector levelInfoPanel;
+    [SerializeField] private ButtonContainer playButton;
+    [SerializeField] private MachineDeckManager machineDeck;
+    [SerializeField] private PhraseContainer phraseContainer;
+
+     [SerializeField] private TextMeshProUGUI index;
+
+      [SerializeField] private TextMeshProUGUI levelName;
+
+     [SerializeField] private PhraseSequence phraseSequence;
+
 
     private Animator animator;
    private Vector3 screenPos;
@@ -52,7 +59,6 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Awake()
     {
-        sceneSwither = gameObject.GetComponentInParent<SceneSwitcher>();
         levelCollider = gameObject.GetComponent<Collider>();
         animator = gameObject.GetComponent<Animator>();
         player= GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -70,10 +76,31 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         BringPlayerToLevel();
 
+        GetNextLevelsViewPoint();
+
         SetUpPredecesors();
+
+       playButton.gameObject.SetActive(true);
+
+        machineDeck.gameObject.SetActive(true);
+
+        machineDeck.LevelData = levelData;
+
+        machineDeck.LoadMachineDeck();
+
+         index.text = levelData.index.ToString();
+
+        levelName.text = levelData.levelName.GetLocalizedString(); 
+
+        phraseSequence.ResetSequence();
+
+        phraseSequence.phrases.Add(levelData.levelMainObjective);
+
+        phraseContainer.StartDialogue(phraseSequence);
 
     }
 
+    
     private void SetUpPredecesors()
     {
         foreach ( LevelHandler next in NextLevels)
@@ -81,6 +108,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             next.PredecesorsLevels.Add(this);
         }
     }
+
 
     private void BringPlayerToLevel()
     {
@@ -106,10 +134,24 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         levelController.level = levelData;
 
-        sceneSwither.SceneToLoad = gameplayScene;
+         playButton.gameObject.SetActive(true);
 
-        sceneSwither.SetSingleMode();
+        machineDeck.gameObject.SetActive(true);
 
+        machineDeck.LevelData = levelData;
+
+        machineDeck.LoadMachineDeck();
+
+        phraseSequence.ResetSequence();
+
+        index.text = levelData.index.ToString();
+
+        levelName.text = levelData.levelName.GetLocalizedString(); 
+
+        phraseSequence.phrases.Add(levelData.levelMainObjective);
+
+        phraseContainer.StartDialogue(phraseSequence);
+        
     }
 
     public Vector3 ClosestPointOnBounds(Vector3 position)
@@ -125,9 +167,15 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
        if (player.PlayerState == PlayerState.Running) return;
 
+       if(!MovementApproval(player.transform.position)) return; 
        
+       player.MoveToDestination(this);
 
-       if(MovementApproval(player.transform.position)) player.MoveToDestination(this);
+       playButton.gameObject.SetActive(false);
+
+       machineDeck.ClearMachineDeck();
+
+       machineDeck.gameObject.SetActive(false);
     }
 
     private bool MovementApproval(Vector3 position)
@@ -147,14 +195,13 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
        animator.SetTrigger("Selected");
-       levelInfoPanel.SetInfoPanelData(levelData);
-       levelInfoPanel.Show(screenPos);
+
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
         animator.SetTrigger("UnSelected");
-        levelInfoPanel.Hide();
+
     }
 
     public Vector3 GetNextLevelsViewPoint()

@@ -28,7 +28,7 @@ public class HumanMachineToken : ScriptableObject
       public bool showArmorInfo = false;
       [VerticalGroup("Machine Information")]
       [LabelText("Objectives & Tiles")]
-       [ToggleLeft]
+      [ToggleLeft]
       public bool showMovInfo = false;
       [VerticalGroup("Machine Information")]
       [LabelText("Speed & Others")]

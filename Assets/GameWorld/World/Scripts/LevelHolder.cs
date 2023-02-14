@@ -34,17 +34,12 @@ namespace Ozamanas.Levels
             sceneSwitcher = GetComponent<SceneSwitcher>();
         }
 
-        public void SpawnLevel()
-        {
-            if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
-
-            currentLevel = Instantiate(levelSelected.level.board);
-
-        }
+      
         
         public void InstantiateLevel()
         {
-                if (!levelSelected || !levelSelected.level || !levelSelected.level.board) return;
+                
+                if (!levelSelected || !levelSelected.level) return;
 
                 if(String.IsNullOrEmpty(levelSelected.level.levelSceneName)) return;
 

@@ -35,7 +35,7 @@ public class LevelPanelSelector : MonoBehaviour
     public void SetInfoPanelData(LevelData level)
     {
         panelLevelIndex.text = "Level " +level.index;
-        panelLevelName.text = level.levelName;
+        panelLevelName.text = level.levelName.GetLocalizedString();
         
         switch(level.state)
         {

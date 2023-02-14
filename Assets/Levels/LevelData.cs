@@ -4,44 +4,68 @@ using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
 using Ozamanas.Tags;
-using Ozamanas; 
+using Ozamanas.Machines; 
+using Sirenix.OdinInspector;
+using UnityEngine.Localization;
+
 
 namespace Ozamanas.Levels
 {
     [CreateAssetMenu(menuName = "References/Level/LevelData", fileName = "new LevelData")]
     public class LevelData : ScriptableObject
     {
-
-        [Space(20)]
-        [Header("Level Data")]
-        public GameObject board;
-        [SerializeField] private LevelReference saveAt;
-        public FloatReference creationDelay;
-        public IntegerReference creationRate;
-        public IntegerReference wavesAmount;
-        public IntegerReference wavesCooldown;
+        
+         [Title("Level Status:")]
+          [VerticalGroup("Level Information")]
         public LevelState state = LevelState.Blocked;
-
+        [Title("Level Name:")]
+        [VerticalGroup("Level Information")]
         public float index =0f;
+        [VerticalGroup("Level Information")]
 
-        public string levelName;
+        public LocalizedString levelName;
+        [VerticalGroup("Level Information")]
 
+        public LocalizedString levelMainObjective;
+        [VerticalGroup("Level Information")]
         public string levelSceneName;
+        [Title("Level Settings:")]
+        [VerticalGroup("Level Information")]
+        public FloatReference creationDelay;
+        [VerticalGroup("Level Information")]
+        public IntegerReference creationRate;
 
-         [Space(20)]
-        [Header("Narrative")]
+        [VerticalGroup("Level Information")]
+        public IntegerReference wavesAmount;
 
+        [VerticalGroup("Level Information")]
+        public IntegerReference wavesCooldown;
+        [Title("Show More Settings:")]
+        [VerticalGroup("Level Information")]
+        [LabelText("Is a Tutorial Level?")]
+        [ToggleLeft]
+        public bool showIfTutorial = false;
+         [Title("List of Machines:")]
+         [VerticalGroup("Others")]
+        public List<HumanMachine> machines;
+       
+
+        [VerticalGroup("Others")]
+           [Title("End Level Settings:")]
         public Scenes ifLoseReturnToScene = Scenes.Fire;
+         [VerticalGroup("Others")]
 
         public Scenes ifWinReturnToScene = Scenes.Fire;
-
-
-
-        [Space(20)]
-        [Header("Tutorial")]
+         [VerticalGroup("Others")]
+        [SerializeField] private LevelReference saveAt;
+           [Title("Tutorial Settings:")]
+         [ShowIfGroup("Others/showIfTutorial")]
+        [VerticalGroup("Others")]
 
         
         public List<TutorialAction> tutorialActions;
+         [ShowIfGroup("Others/showIfTutorial")]
+         [VerticalGroup("Others")]
 
         public TutorialAction currentAction;
 
@@ -49,14 +73,10 @@ namespace Ozamanas.Levels
         {
             if (saveAt) saveAt.level = this;
 
-        }//Closes SelectLevel method
+        }
 
-        public void BakeCells()
-        {
-            if (board) return;
+       
 
-        }//Closes SelectLevel method
+    }
 
-    }//Closes LevelData class
-
-}//Closes Namespace declaration
+}

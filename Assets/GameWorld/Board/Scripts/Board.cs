@@ -11,18 +11,13 @@ using UnityEngine.Events;
 namespace Ozamanas.Board
 {
 
-
-
-
     [RequireComponent(typeof(Grid))]
     public class Board : MonoBehaviour
     {
         public UnityEvent<Cell> OnNewCell;
         public UnityEvent<Cell> OnNewCellData;
         public static Board reference;
-
-        public LevelData levelData;
-
+        private LevelData levelData;
         public UnityEvent OnBoardCreated;
 
         [HideInInspector] public Grid grid;
@@ -30,7 +25,20 @@ namespace Ozamanas.Board
         private Dictionary<int3, Cell> cellsByGridPosition = new Dictionary<int3, Cell>();
         private Dictionary<CellData, List<Cell>> cellsByData = new Dictionary<CellData, List<Cell>>();
 
+         private void Awake()
+        {
+            if (reference) Destroy(reference.gameObject);
+            reference = this;
+            grid = GetComponent<Grid>();
 
+            LevelHolder temp = FindObjectOfType<LevelHolder>();
+
+            if(temp) levelData = temp.levelSelected.level;
+
+            BakeCollections();
+
+            StartCoroutine(HandleBoardCreation());
+        }//Closes Awake method
 
 
         private void BakeCollections()
@@ -277,17 +285,7 @@ namespace Ozamanas.Board
 
 
 
-        private void Awake()
-        {
-            if (reference) Destroy(reference.gameObject);
-            reference = this;
-            grid = GetComponent<Grid>();
-
-
-            BakeCollections();
-
-            StartCoroutine(HandleBoardCreation());
-        }//Closes Awake method
+       
 
         public void CombineTileMeshes()
         {
