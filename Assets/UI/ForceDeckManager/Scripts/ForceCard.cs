@@ -25,8 +25,11 @@ namespace Ozamanas.UI
          [Space(15)]
         [Header("Card Setup")]
         [SerializeField] private ForceData m_forceData;
-
         [SerializeField] private IntegerVariable energyCounter;
+
+         private CodexHandler codexHandler;
+
+
         public ForceData forceData
         {
             get { return m_forceData; }
@@ -49,7 +52,7 @@ namespace Ozamanas.UI
 
         [SerializeField] private Image cardArt;
 
-        [SerializeField] private Image selectImage;
+        [SerializeField] private Image selectedImage;
         [SerializeField] private TextMeshProUGUI priceLabel;
         [SerializeField] private Image cooldownProgress;
 
@@ -89,12 +92,30 @@ namespace Ozamanas.UI
         {
             rectTransform = GetComponent<RectTransform>();
             forceNameText = forceName.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+             codexHandler = FindObjectOfType<CodexHandler>();
         }
+
 
         public void SelectForceCard(bool active)
         {
-            if(!selectImage) return;
-            selectImage.gameObject.SetActive(active);
+            if(!selectedImage) return;
+            selectedImage.gameObject.SetActive(active);
+        }
+
+         public void OnPointerClick()
+        {
+             if(!selectedImage) return;
+
+             if(!forceData) return;
+
+             if(!codexHandler) return;
+
+              codexHandler.UnSelectCards();
+
+             selectedImage.gameObject.SetActive(true);
+
+             codexHandler.OnObjectClicked(forceData);
+             
         }
 
         public void OnPlayerEnergyChanged(int energyAmount)

@@ -56,7 +56,9 @@ namespace Ozamanas.Tags
 
         Quit_Modal,
 
-        Codex
+        Codex,
+
+        ExitGame_Menu
     }
 
     public enum PhraseSequenceState

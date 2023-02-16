@@ -5,18 +5,35 @@ using Ozamanas.Machines;
 using Ozamanas.Forces;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
+using Sirenix.OdinInspector;
 
 namespace Ozamanas.UI
 {
 
 public class CodexHandler : MonoBehaviour
 {
+    [Title("Forces UI Components:")]
+     [SerializeField] private Image forceIconGroup;
+
+     [SerializeField] private Image forceCard;
+    [SerializeField] private TextMeshProUGUI forceNameText;
+
+    [SerializeField] private PhraseContainer forcePhraseContainer;
+
+    [SerializeField] private RectTransform forcesContainer;
+
+
+  [Title("Machines UI Components:")]
+      [SerializeField] private Image machineIconGroup;
     [SerializeField] private Image machineCard;
     [SerializeField] private TextMeshProUGUI machineNameText;
-    [SerializeField] private Image forceCard;
-    [SerializeField] private TextMeshProUGUI forceNameText;
-    [SerializeField] private PhraseContainer phraseContainer;
+
+      [SerializeField] private PhraseContainer machinesPhraseContainer;
+
+          [SerializeField] private RectTransform machinesContainer;
+
+
+      [Title("Narrative Components:")]
 
     [SerializeField] private PhraseSequence phraseSequence;
 
@@ -35,23 +52,38 @@ public class CodexHandler : MonoBehaviour
         forces.AddRange(temp2);
     }
 
+    void Start()
+    {
+        foreach(ForceCard force in forces)
+        {
+            force.forceData = force.forceData;
+        }
+
+        foreach(MachineCard machine in machines)
+        {
+           machine.MachineData = machine.MachineData;
+        }
+
+        if(forces.Count >0 )
+        forces[0].OnPointerClick();
+    }
+
     public void OnObjectClicked(HumanMachineToken machine)
     {
         if(!machine) return;
 
         if(!CheckInputFields()) return;
-
-        UnSelectCards();
         
-        forceCard.gameObject.SetActive(false);
-        forceNameText.gameObject.SetActive(false);
-        machineCard.gameObject.SetActive(true);
-        machineNameText.gameObject.SetActive(true);
+        machinesContainer.gameObject.SetActive(true);
+        forcesContainer.gameObject.SetActive(false);
+
         machineCard.sprite = machine.machineCard;
         machineNameText.text = machine.machineName.GetLocalizedString();
+        machineIconGroup.sprite = machine.machineGroup;
+        
         phraseSequence.ResetSequence();
         phraseSequence.phrases.Add(machine.machineDescription);
-        phraseContainer.StartDialogue(phraseSequence);
+        machinesPhraseContainer.StartDialogue(phraseSequence);
 
     }
     public void OnObjectClicked(ForceData force)
@@ -60,20 +92,17 @@ public class CodexHandler : MonoBehaviour
 
         if(!CheckInputFields()) return;
 
-         UnSelectCards();
+         machinesContainer.gameObject.SetActive(false);
 
-        machineCard.gameObject.SetActive(false);
-        machineNameText.gameObject.SetActive(false);
-
-        forceCard.gameObject.SetActive(true);
-        forceNameText.gameObject.SetActive(true);
+        forcesContainer.gameObject.SetActive(true);
 
         forceCard.sprite = force.forceCard;
         forceNameText.text = force.forceName.GetLocalizedString(); 
+        forceIconGroup.sprite = force.forceGroup;
 
         phraseSequence.ResetSequence();
         phraseSequence.phrases.Add(force.forceDescription);
-        phraseContainer.StartDialogue(phraseSequence);
+        forcePhraseContainer.StartDialogue(phraseSequence);
 
     }
 
@@ -87,14 +116,24 @@ public class CodexHandler : MonoBehaviour
 
         if(!forceNameText) return false;
 
-        if(!phraseContainer) return false;
+        if(!machinesPhraseContainer) return false;
+
+        if(!forcePhraseContainer) return false;
 
         if(!phraseSequence) return false;
+
+        if(!machineIconGroup) return false;
+
+        if(!forceIconGroup) return false;
+
+        if(!machinesContainer) return false;
+
+        if(!forcesContainer) return false;
 
         return true;
     }
 
-    private void UnSelectCards()
+    public void UnSelectCards()
     {
         foreach(ForceCard force in forces)
         {

@@ -21,6 +21,9 @@ namespace Ozamanas.Forces
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
         public Sprite forceCard;
         [VerticalGroup("Ancient Force Information")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        public Sprite forceGroup;
+        [VerticalGroup("Ancient Force Information")]
         [LabelText("Force Prefab")]
         public AncientForce force;
         [VerticalGroup("Ancient Force Information")]

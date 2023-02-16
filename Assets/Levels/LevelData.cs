@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
+using UnityEngine.UI;
 using Ozamanas.Tags;
 using Ozamanas.Machines; 
 using Sirenix.OdinInspector;
@@ -21,6 +22,10 @@ namespace Ozamanas.Levels
         [Title("Level Name:")]
         [VerticalGroup("Level Information")]
         public float index =0f;
+        [VerticalGroup("Level Information")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        public Sprite levelIcon;
+
         [VerticalGroup("Level Information")]
 
         public LocalizedString levelName;

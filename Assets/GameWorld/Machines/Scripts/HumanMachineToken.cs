@@ -13,13 +13,15 @@ public class HumanMachineToken : ScriptableObject
 {
       [VerticalGroup("Machine Information")]
       [PreviewField(Alignment =ObjectFieldAlignment.Center)]
-      [HideLabel]
       public Sprite machineIcon;
 
       [VerticalGroup("Machine Information")]
       [PreviewField(Alignment =ObjectFieldAlignment.Center)]
-      [HideLabel]
       public Sprite machineCard;
+
+      [VerticalGroup("Machine Information")]
+      [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+      public Sprite machineGroup;
 
       [VerticalGroup("Machine Information")]
       public LocalizedString machineName = new LocalizedString();

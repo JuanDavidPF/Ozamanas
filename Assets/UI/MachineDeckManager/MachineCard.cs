@@ -10,16 +10,17 @@ namespace Ozamanas.UI
 {
     public class MachineCard : MonoBehaviour
     {
-         [Header("Card components")]
-
+        [Header("Card components")]
         [SerializeField] private Image cardArt;
-       [SerializeField] private TextMeshProUGUI machineNameText;
-         [SerializeField] private Image selectImage;
+        [SerializeField] private TextMeshProUGUI machineNameText;
+        [SerializeField] private Image selectedImage;
         [SerializeField] private RectTransform machineName;
 
 
          [Header("Card Setup")]
         [SerializeField] private HumanMachineToken m_machineData;
+
+        private CodexHandler codexHandler;
 
          private RectTransform rectTransform;
 
@@ -32,6 +33,7 @@ namespace Ozamanas.UI
                 if (!value) return;
                 if (cardArt) cardArt.sprite = value.machineIcon;
                 if(machineNameText) machineNameText.text = value.machineName.GetLocalizedString();
+               
             }
         }
 
@@ -39,6 +41,7 @@ namespace Ozamanas.UI
         {
             rectTransform = GetComponent<RectTransform>();
             machineNameText = machineName.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            codexHandler = FindObjectOfType<CodexHandler>();
         }
 
          public void OnPointerEnter()
@@ -60,16 +63,27 @@ namespace Ozamanas.UI
 
         public void SelectMachineCard(bool active)
         {
-            if(!selectImage) return;
-            selectImage.gameObject.SetActive(active);
+            if(!selectedImage) return;
+
+            selectedImage.gameObject.SetActive(active);
+
         }
 
         public void OnPointerClick()
         {
-             if(!selectImage) return;
 
-             selectImage.gameObject.SetActive(true);
+             if(!selectedImage) return;
 
+             if(!m_machineData) return;
+
+            if(!codexHandler) return;
+
+            codexHandler.UnSelectCards();
+
+            selectedImage.gameObject.SetActive(true);
+
+            codexHandler.OnObjectClicked(m_machineData);
+             
         }
 
     }

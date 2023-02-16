@@ -34,6 +34,8 @@ namespace JuanPayan.Helpers
             SceneStackManager.screenStack.Add(SceneToLoad.ToString());
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(SceneToLoad.ToString(), Mode);
+
+            if(mode == LoadSceneMode.Single) LoadingManager.AddAsyncOperation(loadOperation);
         }//Closes Behaviour method
 
         public void Behaviour(string sceneName)
@@ -47,6 +49,8 @@ namespace JuanPayan.Helpers
             SceneStackManager.screenStack.Add(sceneName);
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, Mode);
+
+            if(mode == LoadSceneMode.Single) LoadingManager.AddAsyncOperation(loadOperation);
         }
 
         private bool IsAddeableToStack(string sceneName)

@@ -20,6 +20,16 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
 
+    [SerializeField] private SpriteRenderer levelIcon;
+
+       [SerializeField] private SpriteRenderer levelBorder;
+
+    [SerializeField] private Color levelBlocked;
+
+    [SerializeField] private Color levelFinished;
+
+     [SerializeField] private Color levelPlayable;
+
     [Space(15)]
     [Header("Followings Levels Data")]
     [SerializeField] private List<LevelHandler> nextLevels;
@@ -32,11 +42,8 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private ButtonContainer playButton;
     [SerializeField] private MachineDeckManager machineDeck;
     [SerializeField] private PhraseContainer phraseContainer;
-
      [SerializeField] private TextMeshProUGUI index;
-
       [SerializeField] private TextMeshProUGUI levelName;
-
      [SerializeField] private PhraseSequence phraseSequence;
 
 
@@ -78,12 +85,35 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
        // PrintDottedLines();
 
+        levelIcon.sprite = levelData.levelIcon;
+
+        SetUpLevelColor();
+
         BringPlayerToLevel();
 
         SetUpPredecesors();
 
         
 
+    }
+
+    private void SetUpLevelColor()
+    {
+        switch(levelData.state)
+        {
+            case LevelState.Blocked:
+            levelIcon.color = levelBlocked;
+            levelBorder.color = levelBlocked;
+            break;
+             case LevelState.Finished:
+            levelIcon.color = levelFinished;
+            levelBorder.color = levelFinished;
+            break;
+             case LevelState.Playable:
+            levelIcon.color = levelPlayable;
+            levelBorder.color = levelPlayable;
+            break;
+        }
     }
 
     void Update()
