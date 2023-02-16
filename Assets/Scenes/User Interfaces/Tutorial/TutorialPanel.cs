@@ -9,6 +9,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
+namespace Ozamanas.GameScenes
+{
+
 public class TutorialPanel : MonoBehaviour
 {
        
@@ -167,4 +171,4 @@ public class TutorialPanel : MonoBehaviour
 
 
 
-}
+}}

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Ozamanas.GameScenes
+{
 public class DottedLine : MonoBehaviour
 {
    [SerializeField] LineRenderer lr;
@@ -19,4 +21,5 @@ public class DottedLine : MonoBehaviour
         lr.startWidth = dotSize;
         lr.material.mainTextureScale = new Vector2(1f / dotSize, 1f);
     }
+}
 }

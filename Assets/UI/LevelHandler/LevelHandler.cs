@@ -7,10 +7,13 @@ using UnityEngine.EventSystems;
 using JuanPayan.Helpers;
 using Ozamanas.Tags;
 using System;
-using Ozamanas.UI;
 using TMPro;
+using Ozamanas.GameScenes;
+using DG.Tweening;
 
 
+namespace Ozamanas.UI
+{
 public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [Space(15)]
@@ -57,7 +60,8 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public List<LevelHandler> NextLevels { get => nextLevels; set => nextLevels = value; }
     public List<LevelHandler> PredecesorsLevels { get => predecesorsLevels; set => predecesorsLevels = value; }
 
-    public void Awake()
+    private bool isPlayerDestination = false;
+     void Awake()
     {
         levelCollider = gameObject.GetComponent<Collider>();
         animator = gameObject.GetComponent<Animator>();
@@ -66,7 +70,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         screenPos = cam.WorldToScreenPoint(gameObject.transform.position);
     }
 
-    public void Start()
+     void Start()
     {
         if(!levelData) return;
 
@@ -76,11 +80,30 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         BringPlayerToLevel();
 
-        GetNextLevelsViewPoint();
-
         SetUpPredecesors();
 
-       playButton.gameObject.SetActive(true);
+        
+
+    }
+
+    void Update()
+    {
+        if(player.PlayerState != PlayerState.Waiting ) return;
+
+        if(!isPlayerDestination) return;
+
+        player.PlayerState = PlayerState.Idling;
+
+        player.transform.DOLookAt(GetNextLevelsViewPoint(),0.5f);
+
+        SetToPlayLevel();
+
+        
+
+    }
+    private void SetUpUI()
+    {
+        playButton.gameObject.SetActive(true);
 
         machineDeck.gameObject.SetActive(true);
 
@@ -88,18 +111,20 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         machineDeck.LoadMachineDeck();
 
-         index.text = levelData.index.ToString();
+        index.text = levelData.index.ToString();
+
+        index.transform.parent.gameObject.SetActive(true);
 
         levelName.text = levelData.levelName.GetLocalizedString(); 
+
+        levelName.gameObject.SetActive(true);
 
         phraseSequence.ResetSequence();
 
         phraseSequence.phrases.Add(levelData.levelMainObjective);
 
         phraseContainer.StartDialogue(phraseSequence);
-
     }
-
     
     private void SetUpPredecesors()
     {
@@ -115,6 +140,10 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
        if(levelController.level != levelData ) return;
 
        player.transform.position = transform.position;
+
+       GetNextLevelsViewPoint();
+
+      
     }
 
     private void PrintDottedLines()
@@ -134,23 +163,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         levelController.level = levelData;
 
-         playButton.gameObject.SetActive(true);
-
-        machineDeck.gameObject.SetActive(true);
-
-        machineDeck.LevelData = levelData;
-
-        machineDeck.LoadMachineDeck();
-
-        phraseSequence.ResetSequence();
-
-        index.text = levelData.index.ToString();
-
-        levelName.text = levelData.levelName.GetLocalizedString(); 
-
-        phraseSequence.phrases.Add(levelData.levelMainObjective);
-
-        phraseContainer.StartDialogue(phraseSequence);
+        SetUpUI();
         
     }
 
@@ -162,20 +175,39 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
      void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
        if(levelData.state == LevelState.Blocked) return;
+
+        if (player.PlayerState == PlayerState.Running) return;
        
-       if(player.transform.position == gameObject.transform.position ) SetToPlayLevel();
-
-       if (player.PlayerState == PlayerState.Running) return;
-
+       if(player.transform.position == gameObject.transform.position ) 
+       {
+            SetToPlayLevel();
+            return;
+       }
        if(!MovementApproval(player.transform.position)) return; 
        
-       player.MoveToDestination(this);
+       player.MoveToDestination(transform);
+
+       isPlayerDestination = true;
 
        playButton.gameObject.SetActive(false);
 
        machineDeck.ClearMachineDeck();
 
        machineDeck.gameObject.SetActive(false);
+
+        LevelHandler tempLevel = GetPlayerLevelFromPosition();
+
+         if(tempLevel) tempLevel.isPlayerDestination = false;
+    }
+
+    private LevelHandler GetPlayerLevelFromPosition()
+    {
+        foreach (LevelHandler level in predecesorsLevels )
+        {
+            if(level.transform.position == player.transform.position) return level;
+        }
+
+        return null;
     }
 
     private bool MovementApproval(Vector3 position)
@@ -216,4 +248,5 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
    
+}
 }

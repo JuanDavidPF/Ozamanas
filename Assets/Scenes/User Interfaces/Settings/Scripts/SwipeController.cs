@@ -5,6 +5,9 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Rendering;
 
+namespace Ozamanas.GameScenes
+{
+
 public class SwipeController : MonoBehaviour
 {
     [SerializeField] private string tableName = "Settings";
@@ -47,4 +50,5 @@ public class SwipeController : MonoBehaviour
     {
         return graphicsSettings;
     }
+}
 }

@@ -5,7 +5,7 @@ using TMPro;
 using DG.Tweening;
 using Stem;
 
-namespace Ozamanas
+namespace Ozamanas.GameScenes
 {
 public class NotificationPanel : MonoBehaviour
 {
@@ -38,6 +38,7 @@ public class NotificationPanel : MonoBehaviour
         {
             StartCoroutine(CompleteTransition(notification));
         });
+        
 
     }
 

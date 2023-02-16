@@ -4,7 +4,7 @@ using UnityEngine;
 using Ozamanas.SaveSystem;
 using Ozamanas.Extenders;
 
-namespace Ozamanas.UI.ForceDeck
+namespace Ozamanas.UI
 {
     public class ForceDeckManager : MonoBehaviour
     {

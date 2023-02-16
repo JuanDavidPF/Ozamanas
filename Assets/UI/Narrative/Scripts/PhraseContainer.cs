@@ -30,6 +30,7 @@ namespace Ozamanas.UI
 
         [Header("Subtitles")]
         public TextMeshProUGUI actorSpeech;
+        public bool hideOnLastSentence = false;
 
         [Header("Events")]
         [SerializeField] public UnityEvent OnTypeCharacter;
@@ -108,6 +109,7 @@ namespace Ozamanas.UI
             StartCoroutine(PrintPhraseOnPanel());
 
             skipOnInput = false;
+            anyKeyDown = false;
 
             index++;
 
@@ -117,6 +119,7 @@ namespace Ozamanas.UI
         {
 
             subtitlesGroup.gameObject.SetActive(true);
+
             actorSpeech.text = "";
 
             string text = sequence.phrases[index].GetLocalizedString();
@@ -170,7 +173,7 @@ namespace Ozamanas.UI
             }
 
             yield return null;
-            if(!isLastSentence)  subtitlesGroup.gameObject.SetActive(false);
+            if(isLastSentence && hideOnLastSentence)  subtitlesGroup.gameObject.SetActive(false);
             skipOnInput = false;
             PrintNextPhraseOnPanel();
         }

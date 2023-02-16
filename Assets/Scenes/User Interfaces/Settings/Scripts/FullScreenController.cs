@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+namespace Ozamanas.GameScenes
+{
+
 public class FullScreenController : MonoBehaviour
 {
     [SerializeField] private Toggle toggle;
@@ -26,4 +30,5 @@ public class FullScreenController : MonoBehaviour
         fullScreen = value;
     }
 
+}
 }

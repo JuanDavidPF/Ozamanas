@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ozamanas
+namespace Ozamanas.GameScenes
 {
     public class NotificationsManager : MonoBehaviour
     {

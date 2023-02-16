@@ -6,6 +6,7 @@ using Ozamanas.Forces;
 using Ozamanas.Levels;
 using Sirenix.OdinInspector;
 
+
 namespace Ozamanas.UI
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/Narrative/PreRequisite", fileName = "new PreRequisite")]

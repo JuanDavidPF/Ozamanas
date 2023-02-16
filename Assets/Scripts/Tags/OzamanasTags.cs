@@ -54,7 +54,9 @@ namespace Ozamanas.Tags
 
         Main_Menu,
 
-        Quit_Modal
+        Quit_Modal,
+
+        Codex
     }
 
     public enum PhraseSequenceState
@@ -112,7 +114,9 @@ public enum PlayerState
 {
 
     Running = 1,
-        Idling = 2
+        Idling = 2,
+
+        Waiting = 3
        
 
 }

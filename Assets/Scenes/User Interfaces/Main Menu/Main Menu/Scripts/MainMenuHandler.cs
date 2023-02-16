@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace Ozamanas.GameScenes
+{
+
 public class MainMenuHandler : MonoBehaviour
 {
     [SerializeField] private Animator animator;
@@ -31,3 +34,4 @@ public class MainMenuHandler : MonoBehaviour
 
 
 }//Closes MainMenuHandler method
+}

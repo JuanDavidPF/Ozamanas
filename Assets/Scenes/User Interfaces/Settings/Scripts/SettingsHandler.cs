@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 using Stem;
 
+namespace Ozamanas.GameScenes
+{
 
 public class SettingsHandler : MonoBehaviour
 {
@@ -71,4 +73,5 @@ public class SettingsHandler : MonoBehaviour
         if(!soundBank) return;
         soundBank.Buses[0].Volume = volumen;
    }
+}
 }

@@ -13,10 +13,10 @@ namespace Ozamanas.UI
          [Header("Card components")]
 
         [SerializeField] private Image cardArt;
+       [SerializeField] private TextMeshProUGUI machineNameText;
+         [SerializeField] private Image selectImage;
+        [SerializeField] private RectTransform machineName;
 
-          private TextMeshProUGUI machineNameText;
-
-          [SerializeField] private RectTransform machineName;
 
          [Header("Card Setup")]
         [SerializeField] private HumanMachineToken m_machineData;
@@ -58,8 +58,19 @@ namespace Ozamanas.UI
 
         }
 
+        public void SelectMachineCard(bool active)
+        {
+            if(!selectImage) return;
+            selectImage.gameObject.SetActive(active);
+        }
 
+        public void OnPointerClick()
+        {
+             if(!selectImage) return;
 
+             selectImage.gameObject.SetActive(true);
+
+        }
 
     }
 }

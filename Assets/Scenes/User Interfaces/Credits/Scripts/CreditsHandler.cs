@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Extenders;
 using TMPro;
@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
+
+
+namespace Ozamanas.GameScenes
+{
 
 public class CreditsHandler : MonoBehaviour
 {
@@ -137,3 +141,4 @@ public class CreditsHandler : MonoBehaviour
         if (animator) animator.SetTrigger("Close");
     }//Closes FinishCredits method
 }//Closes CreditsHandler
+}

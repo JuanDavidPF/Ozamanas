@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Localization;
 
-namespace Ozamanas.UI.ForceDeck
+namespace Ozamanas.UI
 {
     public class ForceCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
@@ -48,6 +48,8 @@ namespace Ozamanas.UI.ForceDeck
         [Header("Card components")]
 
         [SerializeField] private Image cardArt;
+
+        [SerializeField] private Image selectImage;
         [SerializeField] private TextMeshProUGUI priceLabel;
         [SerializeField] private Image cooldownProgress;
 
@@ -87,6 +89,12 @@ namespace Ozamanas.UI.ForceDeck
         {
             rectTransform = GetComponent<RectTransform>();
             forceNameText = forceName.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        }
+
+        public void SelectForceCard(bool active)
+        {
+            if(!selectImage) return;
+            selectImage.gameObject.SetActive(active);
         }
 
         public void OnPlayerEnergyChanged(int energyAmount)

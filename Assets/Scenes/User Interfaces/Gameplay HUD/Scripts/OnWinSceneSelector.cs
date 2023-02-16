@@ -5,7 +5,7 @@ using JuanPayan.Helpers;
 using Ozamanas.Levels;
 using Ozamanas.SaveSystem;
 
-namespace Ozamanas
+namespace Ozamanas.GameScenes
 {
 public class OnWinSceneSelector : MonoBehaviour
 {

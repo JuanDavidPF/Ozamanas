@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ozamanas.Forces;
 
+
+namespace Ozamanas.GameScenes
+{
+
 public class Constellation : MonoBehaviour
 {
     [SerializeField] private List<GameObject> stars;
@@ -36,3 +40,4 @@ public class Constellation : MonoBehaviour
 
 
 }//Closes Constellation class
+}

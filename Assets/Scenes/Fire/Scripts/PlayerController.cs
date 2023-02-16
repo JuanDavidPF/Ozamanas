@@ -4,6 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 using Ozamanas.Tags;
 
+namespace Ozamanas.GameScenes
+{
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform cameraAnchor;
@@ -12,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
-    private LevelHandler currentDestination;
+    private Transform currentDestination;
 
     private List<Vector3> playerPath = new List<Vector3>();
 
@@ -30,13 +33,11 @@ public class PlayerController : MonoBehaviour
     }
 
     
-    public void MoveToDestination(LevelHandler destination)
+    public void MoveToDestination(Transform destination)
     {
-        if(destination.transform.position == transform.position) return;
-
         if(currentDestination != destination) currentDestination = destination;
 
-        float distance =Vector3.Distance(gameObject.transform.position,destination.transform.position );
+        float distance =Vector3.Distance(gameObject.transform.position,destination.position );
 
         float jumps = distance / jumpDistance;
 
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
             playerPath.Add(temp);
         }
 
-        gameObject.transform.DOLookAt(destination.transform.position ,0.5f);
+        gameObject.transform.DOLookAt(destination.position ,0.5f);
         
         animator.SetTrigger("Jump");
 
@@ -74,12 +75,12 @@ public class PlayerController : MonoBehaviour
     public void CheckNextJump()
     {
         if (playerPath.Count > 0) return;
-        gameObject.transform.DOLookAt(currentDestination.GetNextLevelsViewPoint(),0.5f);
+        
         animator.SetTrigger("Idle");
-        PlayerState = PlayerState.Idling;
-        currentDestination.SetToPlayLevel();
+        PlayerState = PlayerState.Waiting;
     }
 
 
 
+}
 }

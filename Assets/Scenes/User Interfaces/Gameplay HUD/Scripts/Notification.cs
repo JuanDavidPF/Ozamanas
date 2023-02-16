@@ -4,8 +4,9 @@ using UnityEngine;
 using Stem;
 using UnityEngine.Localization;
 
-namespace Ozamanas
+namespace Ozamanas.GameScenes
 {
+
 [CreateAssetMenu(menuName = "ScriptableObjects/Notifications/Notification", fileName = "new Notification")]
 public class Notification : ScriptableObject
 {

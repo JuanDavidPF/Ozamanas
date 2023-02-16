@@ -17,6 +17,11 @@ public class HumanMachineToken : ScriptableObject
       public Sprite machineIcon;
 
       [VerticalGroup("Machine Information")]
+      [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+      [HideLabel]
+      public Sprite machineCard;
+
+      [VerticalGroup("Machine Information")]
       public LocalizedString machineName = new LocalizedString();
 
       [VerticalGroup("Machine Information")]
