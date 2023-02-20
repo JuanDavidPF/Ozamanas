@@ -101,7 +101,7 @@ public class CodexHandler : MonoBehaviour
         forceIconGroup.sprite = force.forceGroup;
 
         phraseSequence.ResetSequence();
-        phraseSequence.phrases.Add(force.forceDescription);
+        phraseSequence.phrases.Add(force.forceCodexDescription);
         forcePhraseContainer.StartDialogue(phraseSequence);
 
     }

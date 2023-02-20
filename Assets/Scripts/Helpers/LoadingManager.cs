@@ -48,7 +48,7 @@ namespace JuanPayan.Helpers
 
     private IEnumerator HandleLoadingProcess()
     {
-        progressBar.fillAmount = 0;
+        //progressBar.fillAmount = 0;
 
 
         if (!loadingScreen.activeSelf) ChooseWallpaper();
@@ -63,12 +63,12 @@ namespace JuanPayan.Helpers
                     loadProgress += operationTwo.progress;
                 }
                 loadProgress = loadProgress / loadingQueue.Count;
-                progressBar.fillAmount = loadProgress;
+               // progressBar.fillAmount = loadProgress;
                 yield return null;
             }
         }
 
-        progressBar.fillAmount = 1;
+        //progressBar.fillAmount = 1;
         loadingQueue.Clear();
         TurnLoadScreen(false);
     }

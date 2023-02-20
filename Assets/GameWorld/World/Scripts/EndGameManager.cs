@@ -4,9 +4,11 @@ using UnityEngine;
 using JuanPayan.Helpers;
 using Ozamanas.Levels;
 using Ozamanas.Board;
+using Ozamanas.Forces;
 using UnityEngine.Events;
 using DG.Tweening;
 using Ozamanas.Tags;
+using Ozamanas.SaveSystem;
 
 
 namespace Ozamanas.World
@@ -38,6 +40,8 @@ namespace Ozamanas.World
 
         [SerializeField] private LevelReference levelSelected;
 
+        [SerializeField] private PlayerDataHolder playerDataHolder;
+
         [Space(15)]
         [Header("Cell tags")]
 
@@ -61,6 +65,8 @@ namespace Ozamanas.World
            
             levelSelected.level.state = Tags.LevelState.Finished;
 
+            UnLockForces();
+
             UnloadGameplayHUD();
 
             OnWinLevel?.Invoke();
@@ -74,6 +80,17 @@ namespace Ozamanas.World
             StartCoroutine(LoadScene(winSceneToLoad));
             
             
+        }
+
+        private void UnLockForces()
+        {
+            foreach (ForceData force in levelSelected.level.unlockForces)
+            {
+                if(playerDataHolder.data.unlockedForces.Contains(force)) continue;
+                
+                playerDataHolder.data.unlockedForces.Add(force);
+
+            }
         }
 
          public void CallDefeat()

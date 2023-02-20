@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ozamanas.Tags;
 using Ozamanas.Machines; 
+using Ozamanas.Forces;
 using Sirenix.OdinInspector;
 using UnityEngine.Localization;
 
@@ -56,7 +57,10 @@ namespace Ozamanas.Levels
        
 
         [VerticalGroup("Others")]
-           [Title("End Level Settings:")]
+        [Title("End Level Settings:")]
+
+        public List<ForceData> unlockForces;
+           [VerticalGroup("Others")]
         public Scenes ifLoseReturnToScene = Scenes.Fire;
          [VerticalGroup("Others")]
 

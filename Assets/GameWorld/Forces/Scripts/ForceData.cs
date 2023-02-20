@@ -31,6 +31,9 @@ namespace Ozamanas.Forces
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceDescription;
 
+        [VerticalGroup("Ancient Force Information")]
+        public LocalizedString forceCodexDescription;
+
         [Title("Sky view Setup")]
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
