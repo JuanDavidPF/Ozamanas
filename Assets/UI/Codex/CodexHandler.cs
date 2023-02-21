@@ -79,7 +79,8 @@ public class CodexHandler : MonoBehaviour
 
         machineCard.sprite = machine.machineCard;
         machineNameText.text = machine.machineName.GetLocalizedString();
-        machineIconGroup.sprite = machine.machineGroup;
+        machineIconGroup.sprite = machine.machineFamily.familyIcon;
+        
         
         phraseSequence.ResetSequence();
         phraseSequence.phrases.Add(machine.machineDescription);
@@ -98,7 +99,7 @@ public class CodexHandler : MonoBehaviour
 
         forceCard.sprite = force.forceCard;
         forceNameText.text = force.forceName.GetLocalizedString(); 
-        forceIconGroup.sprite = force.forceGroup;
+        forceIconGroup.sprite = force.forceFamily.familyIcon;
 
         phraseSequence.ResetSequence();
         phraseSequence.phrases.Add(force.forceCodexDescription);

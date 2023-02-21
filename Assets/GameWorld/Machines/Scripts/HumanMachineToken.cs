@@ -5,6 +5,7 @@ using UnityEngine.Localization;
 using Sirenix.OdinInspector;
 using Ozamanas.Board;
 using Ozamanas.Tags;
+using Ozamanas.World;
 
 namespace Ozamanas.Machines
 {
@@ -20,8 +21,7 @@ public class HumanMachineToken : ScriptableObject
       public Sprite machineCard;
 
       [VerticalGroup("Machine Information")]
-      [PreviewField(Alignment =ObjectFieldAlignment.Center)]
-      public Sprite machineGroup;
+      public FamilyType machineFamily;
 
       [VerticalGroup("Machine Information")]
       public LocalizedString machineName = new LocalizedString();

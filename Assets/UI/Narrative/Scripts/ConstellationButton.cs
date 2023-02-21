@@ -59,8 +59,6 @@ public class ConstellationButton : MonoBehaviour, IPointerEnterHandler, IPointer
     
         if (!data) return;
         
-        Instantiate(data.stars, transform);
-        
         gameObject.GetComponent<Image>().sprite = data.forceConstellation;
 
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using Ozamanas.Tags;
 using Sirenix.OdinInspector;
+using Ozamanas.World;
 
 
 namespace Ozamanas.Forces
@@ -21,8 +22,8 @@ namespace Ozamanas.Forces
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
         public Sprite forceCard;
         [VerticalGroup("Ancient Force Information")]
-        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
-        public Sprite forceGroup;
+        public FamilyType forceFamily;
+
         [VerticalGroup("Ancient Force Information")]
         [LabelText("Force Prefab")]
         public AncientForce force;
@@ -38,9 +39,6 @@ namespace Ozamanas.Forces
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
         public Sprite forceConstellation;
-        [VerticalGroup("Ancient Force Information")]
-        [LabelText("Force Stars Prefab")]
-        public GameObject stars;
         
         [Title("Show More Settings:")]
          [VerticalGroup("Ancient Force Information")]
