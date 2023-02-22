@@ -24,6 +24,8 @@ namespace Ozamanas.Forest
 
         public Cell CurrentCell { get => currentCell; set => currentCell = value; }
 
+        private GameObject dummy;
+
 
         private void Start()
         {
@@ -52,9 +54,22 @@ namespace Ozamanas.Forest
             OnDestruction?.Invoke();
             currentCell.data = forestId;
             gameObject.SetActive(false);
-            GameObject dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
-            if (dummy) Destroy(dummy, fragmentedModelLifetime);
+            dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
+            
+            if (!dummy) return;
+            
+            Invoke("RemoveAllMeshColliders", fragmentedModelLifetime - 0.5f);
+            Destroy(dummy, fragmentedModelLifetime);
             return;
+        }
+
+        private void RemoveAllMeshColliders()
+        {
+            MeshCollider[] allMeshColliders = dummy.GetComponentsInChildren<MeshCollider>();
+            foreach (MeshCollider meshCollider in allMeshColliders) 
+            {
+                meshCollider.enabled = false;
+            }
         }
     }
 }
