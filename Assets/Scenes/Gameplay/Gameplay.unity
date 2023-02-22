@@ -7020,6 +7020,7 @@ GameObject:
   - component: {fileID: 1801715654}
   - component: {fileID: 1801715655}
   - component: {fileID: 1801715656}
+  - component: {fileID: 1801715657}
   m_Layer: 0
   m_Name: Gameplay Camera
   m_TagString: MainCamera
@@ -7114,7 +7115,7 @@ MonoBehaviour:
   m_Cameras:
   - {fileID: 1895972802}
   - {fileID: 824408770}
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -7207,6 +7208,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outlineLayers: {fileID: 11400000, guid: 059d229f23209a74687769672d1084b8, type: 2}
   _content: []
+--- !u!114 &1801715657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801715648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70c9ba36a8bebe4697e8f8a9da58409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pipelineAsset: {fileID: 0}
 --- !u!1 &1823398839
 GameObject:
   m_ObjectHideFlags: 0

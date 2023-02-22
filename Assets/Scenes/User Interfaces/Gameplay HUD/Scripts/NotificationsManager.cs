@@ -10,6 +10,7 @@ namespace Ozamanas.GameScenes
 
         public void ShowNotification(Notification notification)
         {
+            
             if(!notificationPanel) return;
 
             NotificationPanel panel = Instantiate(notificationPanel,transform).GetComponent<NotificationPanel>();
