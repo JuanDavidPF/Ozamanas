@@ -4,98 +4,103 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Ozamanas.Forces;
 using DG.Tweening;
+using TMPro;
+using Sirenix.OdinInspector;
+
+
 
 namespace Ozamanas.UI
 {
 public class ConstellationButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    [Title("AncientForce Data")]
     [SerializeField] private ForceData data;
-    private Button button;
+    [SerializeField] private TextMeshProUGUI forceName;
+
+    [Title("Ancient Force Sprites")]
+    [SerializeField] private Image selectedImage;
+    [SerializeField] private Image highlightedImage;
+    [SerializeField] private Image unlockedImage;
+    [SerializeField] private Image constellation;
+    
+
     private ConstellationManager constellationManager;
-    private RectTransform rectTransform;
     private StatsContainer statsContainer;
     private bool isCurrentlySelected = false;
-
-     [SerializeField] private Outline imageOutline;
 
     public bool IsCurrentlySelected { 
         get { return isCurrentlySelected;} 
         set {
 
-            if(isCurrentlySelected == value) return;
+                if(isCurrentlySelected == value) return;
 
-            isCurrentlySelected = value;
+                isCurrentlySelected = value;
 
-            if(value) imageOutline.enabled = true;
-            else imageOutline.enabled = false;
+                if(isCurrentlySelected) 
+                {
+                    selectedImage.gameObject.SetActive(true);
+                    unlockedImage.gameObject.SetActive(false);
+                }
+                else
+                {
+                    selectedImage.gameObject.SetActive(false);
+                    unlockedImage.gameObject.SetActive(true);
+                } 
             
             }  
     }
 
-    
-    public void SetData(ForceData data,ConstellationManager manager)
-    {
-        this.data = data;
-        constellationManager = manager;
-        CreateConstellation();
-    }
-
-    void Awake()
-    {
-        imageOutline = GetComponent<Outline>();
-        button = GetComponent<Button>();
-        rectTransform = GetComponent<RectTransform>();
-    }
-
+    public ForceData Data { get => data; set => data = value; } 
     void Start()
     {
         statsContainer = FindObjectOfType<StatsContainer>();
+        constellationManager = FindObjectOfType<ConstellationManager>(); 
+        CreateConstellation();
     }
-
 
     private void CreateConstellation()
     {
-    
-        if (!data) return;
+        if (!Data) return;
         
-        gameObject.GetComponent<Image>().sprite = data.forceConstellation;
-
+        selectedImage.sprite = Data.selectedImage;
+        highlightedImage.sprite = Data.highlightedImage;
+        unlockedImage.sprite = Data.unlockedImage;
+        constellation.sprite = Data.constellation;
+        forceName.text = Data.forceName.GetLocalizedString();
+        selectedImage.gameObject.SetActive(false);
+        highlightedImage.gameObject.SetActive(false);
+        unlockedImage.gameObject.SetActive(true);
     }
 
    
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!button.interactable) return;
+        if(Data) statsContainer.UpdatePanel(Data);
 
-        if(data) statsContainer.UpdatePanel(data);
-
-        rectTransform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.3f);
+        highlightedImage.gameObject.SetActive(true);
+        forceName.gameObject.SetActive(true);
 
     }//Closes OnPointerEnter method
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!button.interactable) return;
-
         statsContainer.UpdatePanel(null);
 
-        rectTransform.DOScale(new Vector3(1f,1f,1f),0.3f);
-
-
+        highlightedImage.gameObject.SetActive(false);
+        forceName.gameObject.SetActive(false);
     }
 
     public void OnPointerClick()
     {
         if(IsCurrentlySelected)
         {
-            bool result = constellationManager.RemoveSelectedForce(data);
+            bool result = constellationManager.RemoveSelectedForce(Data);
 
             if(result) IsCurrentlySelected = false;
         }
         else
         {
-            bool result = constellationManager.AddSelectedForce(data);
+            bool result = constellationManager.AddSelectedForce(Data);
 
             if(result) IsCurrentlySelected = true;
         }

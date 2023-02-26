@@ -17,7 +17,7 @@ namespace Ozamanas.Forces
         private List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
         [SerializeField] private float mammalSpeed = 2f;
 
-        [SerializeField] private GameObject OnMammalDestructionVFX;
+      //  [SerializeField] private GameObject OnMammalDestructionVFX;
 
         private Tween mammalTween;
         private Animator animator;
@@ -58,7 +58,7 @@ namespace Ozamanas.Forces
                     AddForceToMachine(machine);                    
                 }
 
-                Instantiate(OnMammalDestructionVFX,transform.position,transform.rotation);
+             //   Instantiate(OnMammalDestructionVFX,transform.position,transform.rotation);
                 
                 base.DestroyForce();
             });

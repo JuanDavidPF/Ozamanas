@@ -10,39 +10,29 @@ namespace Ozamanas.UI
 public class ConstellationManager : MonoBehaviour
 {
      [SerializeField] private int forceSelectedLimit = 4;
-    [SerializeField] private GameObject constellationBtnPrefab;
-    [SerializeField] private Transform constellationContainer;
     [SerializeField] private PlayerDataHolder playerDataHolder;
-    private List<ForceData> forcesRoster;
-    [HideInInspector] public Dictionary<ForceData, ConstellationButton> constellationButtons = new Dictionary<ForceData, ConstellationButton>();
+    private List<ConstellationButton> constellations = new List<ConstellationButton>();
 
-  
     private void Start()
     {
-        if (!constellationBtnPrefab || !constellationContainer || !playerDataHolder) return;
+        if (!playerDataHolder) return;
 
-        forcesRoster = playerDataHolder.data.unlockedForces;
+        List<ForceData> forcesRoster  = playerDataHolder.data.unlockedForces;
 
-        foreach (ForceData data in forcesRoster)
+        List<ForceData> selectedRoster  = playerDataHolder.data.selectedForces;
+
+        constellations.AddRange(FindObjectsOfType<ConstellationButton>());
+
+        foreach(ConstellationButton constellation in constellations)
         {
 
-            if (!data) continue;
-            ConstellationButton cb = Instantiate(constellationBtnPrefab, constellationContainer).GetComponent<ConstellationButton>();
+            if (forcesRoster.Contains(constellation.Data)) constellation.gameObject.SetActive(true);
+            else constellation.gameObject.SetActive(false);
 
-            if (!cb) continue;
-
-            constellationButtons.Add(data, cb);
-            cb.GetComponent<ConstellationButton>().SetData(data,this);
+            if (selectedRoster.Contains(constellation.Data)) constellation.IsCurrentlySelected = true;
+            else constellation.IsCurrentlySelected = false;
 
         }
-
-       forcesRoster = playerDataHolder.data.selectedForces;
-
-        foreach (ForceData data in forcesRoster)
-        {
-           constellationButtons[data].IsCurrentlySelected = true;
-        }
-
 
     }
 

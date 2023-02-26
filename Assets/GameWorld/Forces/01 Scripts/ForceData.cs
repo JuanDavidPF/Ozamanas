@@ -35,16 +35,19 @@ namespace Ozamanas.Forces
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceCodexDescription;
 
-        [Title("Sky view Setup")]
-        [VerticalGroup("Ancient Force Information")]
-        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
-        public Sprite forceConstellation;
+       
+       
         
         [Title("Show More Settings:")]
          [VerticalGroup("Ancient Force Information")]
         [LabelText("Placement Setup")]
         [ToggleLeft]
         public bool showPlacement;
+
+         [VerticalGroup("Ancient Force Information")]
+        [LabelText("Constellation Setup")]
+        [ToggleLeft]
+        public bool showConstellation;
 
         [VerticalGroup("Ancient Force Setup")]
           [Space]
@@ -77,6 +80,25 @@ namespace Ozamanas.Forces
          [ShowIf("showPlacement")]
         [VerticalGroup("Ancient Force Setup")]
          public bool snapToGrid = true;
+
+           [ShowIf("showConstellation")]
+        [Title("Constellation Setup")]
+        [VerticalGroup("Ancient Force Setup")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+
+        public Sprite selectedImage;
+         [ShowIf("showConstellation")]
+        [VerticalGroup("Ancient Force Setup")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        public Sprite highlightedImage;
+         [ShowIf("showConstellation")]
+        [VerticalGroup("Ancient Force Setup")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        public Sprite unlockedImage;
+         [ShowIf("showConstellation")]
+        [VerticalGroup("Ancient Force Setup")]
+        [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        public Sprite constellation;
 
         
      
