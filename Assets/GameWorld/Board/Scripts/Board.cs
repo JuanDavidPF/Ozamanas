@@ -241,6 +241,7 @@ namespace Ozamanas.Board
 
         }//Closes LineBetweenCell method
 
+    
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {
 

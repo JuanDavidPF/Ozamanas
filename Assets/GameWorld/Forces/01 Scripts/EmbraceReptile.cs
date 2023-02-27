@@ -23,6 +23,8 @@ namespace Ozamanas.Forces
 
         private Transform nearMachine;
 
+        private Animator animator;
+
        
         protected override void Awake()
         {
@@ -31,6 +33,8 @@ namespace Ozamanas.Forces
             clld = GetComponentInChildren<Collider>();
 
             controllers = GetComponentsInChildren<SnakeController>();
+
+             animator = GetComponent<Animator>();
         }
         
         protected override void FinalPlacement()
@@ -39,6 +43,8 @@ namespace Ozamanas.Forces
             base.FinalPlacement();
 
              if (!isPlaced) return;
+
+              animator.SetTrigger("OnRelease");
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 

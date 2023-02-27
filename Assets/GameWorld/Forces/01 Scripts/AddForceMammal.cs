@@ -11,26 +11,25 @@ namespace Ozamanas.Forces
     public class AddForceMammal : AncientForce
     {
        
-
         private Transform AOETransform;
         [SerializeField] private MeshRenderer AOERenderer;
         private List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
         [SerializeField] private float mammalSpeed = 2f;
-
-      //  [SerializeField] private GameObject OnMammalDestructionVFX;
 
         private Tween mammalTween;
         private Animator animator;
 
         private Cell currentCell;
 
-       
+         [SerializeField] private bool addForceOnTweenComplete;
+
         protected override void Awake()
         {
             base.Awake();
+
             if (AOERenderer) AOETransform = AOERenderer.transform;
 
-             AOETransform.position = AOETransform.position- data.draggedOffset;
+            AOETransform.position = AOETransform.position - data.draggedOffset;
 
             animator = GetComponent<Animator>();
         }//Closes Awake method
@@ -50,23 +49,30 @@ namespace Ozamanas.Forces
 
             mammalTween.OnComplete(() =>
             {
-                ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-                
-                foreach (var machine in machinesAffected.ToArray())
-                {
-                    if (!machine) continue;
-                    AddForceToMachine(machine);                    
-                }
+               if(!addForceOnTweenComplete) return;
+               
+               AddForceToMachinesInRange();
 
-             //   Instantiate(OnMammalDestructionVFX,transform.position,transform.rotation);
-                
                 base.DestroyForce();
+
             });
 
            
 
         }//Closes FirstPlacement method
 
+        public void AddForceToMachinesInRange()
+        {
+             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
+                
+                foreach (var machine in machinesAffected.ToArray())
+                {
+                    if (!machine) continue;
+                    AddForceToMachine(machine);                    
+                }
+                
+           
+        }
         public override void Drag()
         {
             base.Drag();

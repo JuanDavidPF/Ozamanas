@@ -17,11 +17,7 @@ namespace Ozamanas
         private Transform machineTransform;
         private MachinePhysicsManager parentPhysics;
         private TrailRenderer trail;
-
-
         private List<Cell> validatedCells = new List<Cell>();
-
-
         [SerializeField] private bool conditionalPathing;
         [SerializeField] private List<CellData> allowedCells = new List<CellData>();
         float yOffset = 0;
@@ -55,7 +51,6 @@ namespace Ozamanas
 
         public void OnNewCell(Cell cell)
         {
-
             if (conditionalPathing)
             {
                 if (trail) trail.emitting = Validate(cell);

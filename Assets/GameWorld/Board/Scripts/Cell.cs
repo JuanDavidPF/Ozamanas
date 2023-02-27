@@ -144,6 +144,11 @@ namespace Ozamanas.Board
         }
 
 
+        public int3 ReturnCellPosition()
+        {
+            return new int3((int)transform.position.x,(int)transform.position.y,(int)transform.position.z);
+        }
+
 
     }//Closes Cell class
 }//Closes Namespace declaration

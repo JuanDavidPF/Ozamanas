@@ -143,7 +143,7 @@ namespace Ozamanas.Forces
             reptileTween.OnComplete(() =>
             {
                 InstantiateBarrier();
-                base.DestroyForce();
+                
             });
 
         }
@@ -182,6 +182,7 @@ namespace Ozamanas.Forces
                 forest_.InstantiateBarrier(mountain);
             }
             
+            base.DestroyForce();
         }
 
         private void OnCollisionEnter(Collision other)

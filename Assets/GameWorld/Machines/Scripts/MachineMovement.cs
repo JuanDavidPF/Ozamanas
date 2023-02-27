@@ -56,6 +56,12 @@ namespace Ozamanas.Machines
         [Header("Events")]
         [SerializeField] private UnityEvent OnCloseToJungleHeart;
 
+        [SerializeField] private UnityEvent OnGoingAerial;
+
+         [SerializeField] private UnityEvent OnGoingSubterrestrial;
+
+          [SerializeField] private UnityEvent OnGoingTerrestrial;
+
         private int distanceToHeart = 0;
 
         [Space(15)]
@@ -347,7 +353,10 @@ namespace Ozamanas.Machines
         public void GoAerial()
         {
             if (CurrentAltitude == MachineAltitude.Aerial) return;
+
             CurrentAltitude = MachineAltitude.Aerial;
+
+            OnGoingAerial?.Invoke();
         }
 
         public void GoTerrestrial()
@@ -356,6 +365,8 @@ namespace Ozamanas.Machines
 
 
             CurrentAltitude = MachineAltitude.Terrestrial;
+
+            OnGoingTerrestrial?.Invoke();
         }
 
         public void GoSubterrestrial()
@@ -363,6 +374,8 @@ namespace Ozamanas.Machines
            if (CurrentAltitude == MachineAltitude.Subterrestrial) return;
 
             CurrentAltitude = MachineAltitude.Subterrestrial;
+
+            OnGoingSubterrestrial?.Invoke();
         }
 
         

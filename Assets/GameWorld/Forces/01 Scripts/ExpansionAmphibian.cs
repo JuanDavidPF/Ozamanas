@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ozamanas.Board;
+using Ozamanas.Tags;
 using Unity.Mathematics;
 using UnityEngine;
 using DG.Tweening;
@@ -40,12 +41,15 @@ namespace Ozamanas.Forces
         [Header("Expansion Parameters")]
         [SerializeField] private ExpansionMode mode;
         [SerializeField] private bool fillPath;
+         [SerializeField] private bool showPath;
         [SerializeField] private List<ExpansionRules> ruleList = new List<ExpansionRules>();
         [SerializeField] private FloatReference speed;
         [SerializeField] private float jumpHeight;
         int3 reptileOrigin;
         int3 reptileDestiny;
         private List<int3> reptilePath = new List<int3>();
+
+        private Cell currentCellHovered;
 
 
         private Animator animator;
@@ -56,9 +60,69 @@ namespace Ozamanas.Forces
             animator = GetComponent<Animator>();
         }
 
-        private void Expand()
+        protected override void Update()
         {
+            base.Update();
+
+            if(isPlaced) return;
+
+            ShowExpansionPointers();
+ 
+        }
+
+
+        private void ShowExpansionPointers()
+        {
+            
+            if(!showPath) return;
+
             if (!CellSelectionHandler.currentCellHovered) return;
+
+            if(CellSelectionHandler.currentCellHovered.cellReference == currentCellHovered ) return;
+
+            currentCellHovered = CellSelectionHandler.currentCellHovered.cellReference;
+
+            ClearExpansionPointers();
+
+            CalculateReptilePath();
+
+            ActivateExpansionPointers();
+        }
+
+        private void ClearExpansionPointers()
+        {
+            Cell temp = null;
+
+            foreach(int3 cell in reptilePath)
+            {
+                temp = Board.Board.GetCellByPosition(cell);
+
+                if(!temp) continue;
+
+                temp.CellOverLay.DeActivatePointer(CellPointerType.ExpansionPointer);
+            }
+
+        }
+
+         private void ActivateExpansionPointers()
+        {
+            Cell temp = null;
+
+            foreach(int3 cell in reptilePath)
+            {
+                temp = Board.Board.GetCellByPosition(cell);
+
+                if(!temp) continue;
+
+                temp.CellOverLay.ActivatePointer(CellPointerType.ExpansionPointer);
+            }
+
+        }
+
+        private void CalculateReptilePath()
+        {
+
+           if (!CellSelectionHandler.currentCellHovered) return;
 
             Cell destinyCell = CellSelectionHandler.currentCellHovered.cellReference;
             reptileDestiny = destinyCell.gridPosition;
@@ -101,6 +165,14 @@ namespace Ozamanas.Forces
 
             }
 
+        
+
+        }
+
+        private void Expand()
+        {
+            ClearExpansionPointers();
+            CalculateReptilePath();
             Jump();
 
         }//Closes Expand method
@@ -108,7 +180,7 @@ namespace Ozamanas.Forces
         Tween reptileTween;
         private void Jump()
         {
-            if (reptilePath.Count == 0) return;
+            if (reptilePath.Count == 0) base.DestroyForce();
 
             if (reptileTween != null) reptileTween.Kill();
 
@@ -185,6 +257,8 @@ namespace Ozamanas.Forces
         private void OnTriggerEnter(Collider other)
         {
             if (!isPlaced) return;
+
+            if (other.tag != "Cell") return;
 
             Cell cellArrived = other.transform.GetComponentInParent<Cell>();
 

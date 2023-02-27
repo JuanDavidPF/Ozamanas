@@ -891,6 +891,7 @@ GameObject:
   - component: {fileID: 4518153739477977803}
   - component: {fileID: 2311025067404402615}
   - component: {fileID: 4378659586561964651}
+  - component: {fileID: 5700838813118719535}
   m_Layer: 0
   m_Name: AncientForce_Salamander
   m_TagString: Untagged
@@ -970,6 +971,7 @@ MonoBehaviour:
       m_Calls: []
   mode: 1
   fillPath: 0
+  showPath: 1
   ruleList:
   - mode: 1
     condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
@@ -1052,6 +1054,20 @@ MonoBehaviour:
     itemId: 0
   spawnTarget: {fileID: 0}
   playOnStart: 0
+--- !u!136 &5700838813118719535
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658834029813518704}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8599989620138148603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1493,17 +1509,32 @@ PrefabInstance:
     - target: {fileID: 2531280756890085590, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
       propertyPath: m_Range
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2531280756890085590, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
       propertyPath: m_Intensity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
@@ -1518,7 +1549,7 @@ PrefabInstance:
     - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.43
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
@@ -1558,7 +1589,7 @@ PrefabInstance:
     - target: {fileID: 2531280757137298258, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2531280757137298270, guid: ce23d04597f62f74180615e8d1867456,
         type: 3}

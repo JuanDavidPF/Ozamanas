@@ -44,7 +44,7 @@ namespace Ozamanas.Forces
         Vector3 draggedPosition;
 
         public int placements = 0;
-        protected void Update()
+        protected virtual void Update()
         {
            if(placements > 0) Drag();
 

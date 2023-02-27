@@ -81,7 +81,9 @@ namespace Ozamanas.Tags
             PullPointer,
             PushPointer,
 
-            MountainPointer
+            MountainPointer,
+
+            ExpansionPointer
         }
 
      public enum PlacementMode

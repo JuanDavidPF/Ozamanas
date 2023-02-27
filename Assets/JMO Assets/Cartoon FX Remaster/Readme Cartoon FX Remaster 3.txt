@@ -1,6 +1,6 @@
 ﻿Cartoon FX Remaster 3, version R 1.1
-2022/09/05
-© 2013-2022 - Jean Moreno
+2023/01/25
+© 2012-2023 - Jean Moreno
 ====================================
 
 ! NOTE ABOUT URP !
@@ -94,6 +94,18 @@ I'd be happy to see any effects used in your project, so feel free to drop me a 
 
 RELEASE NOTES
 -------------
+
+R 1.1.3
+- Improved CFXR_ParticleText usability when toggling the "is Dynamic" flag on an existing text effect
+- Disabled mesh GPU instancing in the shaders because it was causing too many issues (even when using Unity's default particle shader)
+
+R 1.1.2
+- Removed GPU instancing support on the "CFXR Procedural Ring" shader, because it visually breaks it
+- Fixed compilation error related to 'projPos' in the "CFXR Particle Glow" shader
+
+R 1.1.1
+- Added support for GPU instancing in the shaders
+- Fixed possible build error when adding a text effect in a prefab due to HideFlags
 
 R 1.1.0
 - Merged CFXR_ParticleText and CFXR_ParticleText_Runtime: now you just have to enable "isDynamic" to include the script at runtime and be able to update the text
