@@ -13,12 +13,7 @@ namespace Ozamanas.Forces
 {
     public class ExpansionAmphibian : AncientForce
     {
-        public enum MutationMode
-        {
-            SwapCell,
-            SwapToken
-        }
-
+       
         public enum ExpansionMode
         {
             Jump,
@@ -28,7 +23,6 @@ namespace Ozamanas.Forces
         [Serializable]
         public struct ExpansionRules
         {
-            public MutationMode mode;
             public CellData condition;
             public Cell cellToSwap;
             public CellData tokenToSwap;
@@ -217,13 +211,14 @@ namespace Ozamanas.Forces
       
         protected override bool IsValidPlacement(Cell cell)
         {
+            if(!cell) return false;
+            
             if (!base.IsValidPlacement(cell)) return false;
-            //Insert aditional conditions for this Ancient Force inheritor class
 
+            if( cell.CurrentHumanMachines.Count > 0) return false;
 
             return true;
-        }//Closes IsValidPlacement method
-
+        }
         private bool TryMutateCell(Cell cell)
         {
 
@@ -231,25 +226,20 @@ namespace Ozamanas.Forces
 
             if (mode == ExpansionMode.Throw && !fillPath && !cell.gridPosition.Equals(reptileDestiny)) return true;
 
-            ExpansionRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+           /* ExpansionRules expRule = ruleList.Find(rule => rule.condition == cell.data);
 
-            if (expRule.mode == MutationMode.SwapCell)
-            {
-                if (!expRule.cellToSwap) return false;
-                Cell newCell = Instantiate(expRule.cellToSwap, Board.Board.reference.transform);
-                if (!newCell) return false;
+            if (!expRule.tokenToSwap) return false;
+            
+            cell.data = expRule.tokenToSwap;
+            
+            cell.CurrentTopElement=data.cellTopElement;*/
 
-                newCell.transform.position = cell.worldPosition;
 
-                Board.Board.reference.AddCellToBoard(newCell);
-                if (newCell.TryGetComponent(out Animator cellAnimator)) cellAnimator.Play("Idle");
+            cell.CurrentTopElement=data.GetTopElementToSwap(cell);
 
-            }
-            else if (expRule.mode == MutationMode.SwapToken)
-            {
-                if (!expRule.tokenToSwap) return false;
-                cell.data = expRule.tokenToSwap;
-            }
+            cell.data = data.GetTokenToSwap(cell);
+
+            
 
             return true;
         }//Closes MutateCell method

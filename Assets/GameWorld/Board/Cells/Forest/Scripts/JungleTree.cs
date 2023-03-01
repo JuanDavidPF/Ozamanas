@@ -47,7 +47,6 @@ namespace Ozamanas.Forest
         {
             if (alreadyTriggered) return null;
             alreadyTriggered = true;
-            if (forestBehaviour) forestBehaviour.SetTrunk(forestIndex);
             OnDestruction?.Invoke();
             gameObject.SetActive(false);
             GameObject dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;

@@ -43,12 +43,8 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  selectedImage: {fileID: -1094581434, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
-  highlightedImage: {fileID: -1428511594, guid: b3860b8b37b95ef478ec77878137644f,
-    type: 3}
-  unlockedImage: {fileID: -408461903, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
-  constellation: {fileID: 1796857045, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
   showPlacement: 0
+  showConstellation: 0
   whiteList:
   - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
@@ -72,12 +68,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   - {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
   - {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
+  ruleList:
+  - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 51660e14b7b746e42a0ed3e074dcb006, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 51660e14b7b746e42a0ed3e074dcb006, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   traits: []
   traitRange: 1
   physicsForce: {fileID: 11400000, guid: dc8f571d728afe54e9435e88fafb1b8e, type: 2}
   placementMode: 0
   draggedOffset: {x: 0, y: 2.5, z: 0}
   snapToGrid: 1
+  selectedImage: {fileID: -1094581434, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
+  highlightedImage: {fileID: -1428511594, guid: b3860b8b37b95ef478ec77878137644f,
+    type: 3}
+  unlockedImage: {fileID: -408461903, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
+  constellation: {fileID: 1796857045, guid: b3860b8b37b95ef478ec77878137644f, type: 3}
   references:
     version: 2
     RefIds: []

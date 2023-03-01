@@ -4,24 +4,28 @@ using UnityEngine;
 using Unity.Mathematics;
 using Ozamanas.Machines;
 using UnityEngine.Events;
-using DG.Tweening;
 using Ozamanas.Extenders;
 using Ozamanas.World;
+using Sirenix.OdinInspector;
 
 namespace Ozamanas.Board
 {
     [SelectionBase]
     public class Cell : MonoBehaviour
-    {
-        [SerializeField] private Overlay cellOverLay;
+    {   
+         [Title("Cell Setup:")]
+
         [SerializeField] private CellData m_data;
+
+        [SerializeField] private Overlay cellOverLay;
+        public Transform visuals;
+
         public CellData data
         {
             get { return m_data; }
             set
             {
                 if (m_data == value) return;
-
 
                 CellData originalValue = m_data;
 
@@ -34,8 +38,34 @@ namespace Ozamanas.Board
             }
         }
 
-        [SerializeField] private GameplayState m_gameplayState;
+        [Title("Cell Top Element:")] 
 
+        [SerializeField] private Transform topElementTransform;
+
+        private CellTopElement currentTopElement;
+
+        public CellTopElement CurrentTopElement
+        {
+            get { return currentTopElement; }
+            set
+            {
+                if (!value) return;
+
+                if (currentTopElement == value) return;
+
+                currentTopElement = value;
+
+                OnTopElementChanged?.Invoke(currentTopElement);
+
+                UpdateTopElement(currentTopElement);
+                
+            }
+        }
+        [Space]
+        public UnityEvent<CellTopElement> OnTopElementChanged;
+       
+        [Title("Cell GameplayStates:")]
+        [SerializeField] private GameplayState m_gameplayState;
         public GameplayState gameplayState
         {
             get { return m_gameplayState; }
@@ -54,22 +84,21 @@ namespace Ozamanas.Board
             }
         }
 
+         [SerializeField] protected GameplayState winState;
+         [SerializeField] protected GameplayState loseState;
+
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
         public Overlay CellOverLay { get => cellOverLay; set => cellOverLay = value; }
+        public List<HumanMachine> CurrentHumanMachines { get => currentHumanMachines; set => currentHumanMachines = value; }
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
         [SerializeField] private MeshFilter tileMeshFilter;
-
-        public Transform visuals;
-
-        private List<HumanMachine> currentHumanMachines;
-
+        private List<HumanMachine> currentHumanMachines = new List<HumanMachine>();
         [HideInInspector] public float3 worldPosition;
         [HideInInspector] public int3 gridPosition;
         [HideInInspector] public bool isOccupied;
 
-        [Space(15)]
-        [Header("Events")]
+        [Title("Events:")]
         public UnityEvent<CellData> OnCellDataChanged;
         public UnityEvent<Cell> OnCellChanged;
         public UnityEvent<GameplayState> OnCellGameStateChanged;
@@ -77,21 +106,21 @@ namespace Ozamanas.Board
         public UnityEvent<HumanMachine> OnMachineExited;
 
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if(!cellOverLay && gameObject.transform.TryGetComponentInChildren( out Overlay cell ))
             {
                 cellOverLay = cell;
             }
-
+            
+            
         }
-        private void Start()
+        protected virtual void Start()
         {
-            currentHumanMachines = new List<HumanMachine>();
-            OnCellDataChanged?.Invoke(m_data);
-            if (visuals) visuals.gameObject.SetActive(false);
+            UpdateTopElement(data.defaultTopElement);
         }//Closes Awake method
 
+       
         private void OnDisable()
         {
             Board.RemoveCellFromBoard(this);
@@ -125,28 +154,45 @@ namespace Ozamanas.Board
             RemoveTraitToMachine(trait);
         }
 
-        public void SetOnMachineEnter(HumanMachine machine)
+        public virtual void SetOnMachineEnter(HumanMachine machine)
         {
-            if(currentHumanMachines.Contains(machine)) return;
+            if(CurrentHumanMachines.Contains(machine)) return;
 
-            currentHumanMachines.Add(machine);
+            CurrentHumanMachines.Add(machine);
 
             OnMachineEntered?.Invoke(machine);
         }
 
-        public void SetOnMachineExit(HumanMachine machine)
+        public virtual void SetOnMachineExit(HumanMachine machine)
         {
-            if(!currentHumanMachines.Contains(machine)) return;
+            if(!CurrentHumanMachines.Contains(machine)) return;
 
-             currentHumanMachines.Remove(machine);
+             CurrentHumanMachines.Remove(machine);
 
             OnMachineExited?.Invoke(machine);
         }
 
-
-        public int3 ReturnCellPosition()
+        private void UpdateTopElement(CellTopElement topElement)
         {
-            return new int3((int)transform.position.x,(int)transform.position.y,(int)transform.position.z);
+            if(!topElement) return;
+
+            GameObject temp = topElement.GetTopElement();
+
+            if(!temp) return;
+            
+            DestroyCurrentTopElement();
+
+            Instantiate(temp,topElementTransform);
+        }
+
+
+        private void DestroyCurrentTopElement()
+        {
+            if(!topElementTransform) return;
+            
+            if (topElementTransform.childCount== 0) return;
+
+            Destroy(topElementTransform.GetChild(0).gameObject);
         }
 
 

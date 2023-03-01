@@ -7,13 +7,21 @@ using UnityEngine.Localization;
 using Ozamanas.Tags;
 using Sirenix.OdinInspector;
 using Ozamanas.World;
-
+using System;
 
 namespace Ozamanas.Forces
 {
     [CreateAssetMenu(fileName = "new Force data", menuName = "Forces/Reference")]
     public class ForceData : ScriptableObject
     {
+        [Serializable]
+        public struct SwapRules
+        {
+            public CellData condition;
+            public CellTopElement topElementToSwap;
+            public CellData tokenToSwap;
+
+        }
         [Space]
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
@@ -34,9 +42,6 @@ namespace Ozamanas.Forces
 
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceCodexDescription;
-
-       
-       
         
         [Title("Show More Settings:")]
          [VerticalGroup("Ancient Force Information")]
@@ -60,6 +65,10 @@ namespace Ozamanas.Forces
         public IntegerReference range;
         [VerticalGroup("Ancient Force Setup")]
         public List<CellData> rangeAnchors = new List<CellData>();
+         [Title("Swap Tile Rule List:")]
+         [VerticalGroup("Ancient Force Setup")]
+        [SerializeField] private List<SwapRules> ruleList = new List<SwapRules>();
+        [Title("Traits Setup:")]
         [VerticalGroup("Ancient Force Setup")]
         [LabelText("List of traits")]
         public List<Machines.MachineTrait> traits;
@@ -101,7 +110,25 @@ namespace Ozamanas.Forces
         public Sprite constellation;
 
         
-     
+        public CellTopElement GetTopElementToSwap(Cell cell)
+        {
+            SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if (!expRule.topElementToSwap) return null;
+
+            return expRule.topElementToSwap;
+        }
+
+        public CellData GetTokenToSwap(Cell cell)
+        {
+            SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if (!expRule.tokenToSwap) return null;
+
+            return expRule.tokenToSwap;
+        }
+
+      
 
 
 

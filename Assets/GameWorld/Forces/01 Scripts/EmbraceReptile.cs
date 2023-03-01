@@ -66,6 +66,11 @@ namespace Ozamanas.Forces
 
             nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
 
+            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+
+            currentCell.data = data.GetTokenToSwap(currentCell);
+
+
             foreach (var snake in controllers)
             {
                 if (!snake) continue;

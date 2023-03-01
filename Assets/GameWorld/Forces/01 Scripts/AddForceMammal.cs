@@ -49,11 +49,16 @@ namespace Ozamanas.Forces
 
             mammalTween.OnComplete(() =>
             {
+
+               currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+
+               currentCell.data = data.GetTokenToSwap(currentCell);
+
                if(!addForceOnTweenComplete) return;
                
                AddForceToMachinesInRange();
 
-                base.DestroyForce();
+               base.DestroyForce();
 
             });
 

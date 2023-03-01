@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using Sirenix.OdinInspector;
 using Ozamanas.Board;
+using Ozamanas.Forest;
 using Ozamanas.Tags;
 using Ozamanas.World;
 
@@ -52,6 +53,9 @@ public class HumanMachineToken : ScriptableObject
 
       [VerticalGroup("Machine Setup")]
       public MachineSpeed currentSpeed;
+
+       [VerticalGroup("Machine Setup")]
+      public CellTopElement deforestedTopElement;
 
 
       [ShowIfGroup("Machine Setup/showArmorInfo")]

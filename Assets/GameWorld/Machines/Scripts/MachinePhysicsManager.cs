@@ -164,10 +164,12 @@ namespace Ozamanas.Machines
                 machine.CurrentCell = cell;
                 machine.SetMachineTraitsfromCell(cell);
                 cell.SetOnMachineEnter(machine);
+                
+
             }
         }//Closes OnTriggerEnter method
 
-
+        
         private void OnTriggerExit(Collider other)
         {
             if (other.tag != "Cell") return;

@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using Ozamanas.World;
+using Sirenix.OdinInspector;
 
 
 namespace Ozamanas.Board
@@ -11,13 +12,10 @@ namespace Ozamanas.Board
     [RequireComponent(typeof(Rigidbody))]
     public class BulldozerIndustryRotator : MonoBehaviour
     {
-        [SerializeField] private GameplayState winState;
-
-         [SerializeField] private GameplayState loseState;
+       [Title("Rotator Setup:")]
         [SerializeField] Transform meshToRotate;
 
         [SerializeField] List<Transform> industryBlinds;
-        private Animator animator;
 
         private bool m_OpenGate = false;
         public bool OpenGate{
@@ -34,19 +32,17 @@ namespace Ozamanas.Board
             }
         }
 
-         
-
         List<Tween> tweeners = new List<Tween>();
+
+         [SerializeField] protected GameplayState winState;
+         [SerializeField] protected GameplayState loseState;
 
         [Space(15)]
         [Header("Events")]
         public UnityEvent OnIndustryTurnOff;
         public UnityEvent OnIndustryTurnOn;
 
-        void Awake()
-        {
-            animator = GetComponent<Animator>();
-        }
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
@@ -123,7 +119,7 @@ namespace Ozamanas.Board
         {
             OnIndustryTurnOff?.Invoke();
             
-             OpenGate = false;
+            OpenGate = false;
 
         }
 

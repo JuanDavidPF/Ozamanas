@@ -17,7 +17,8 @@ namespace Ozamanas.Forces
         [SerializeField] private GameObject mountain;
         private bool isReady = false;
         [SerializeField] private CellData barrierID;
-        [SerializeField] private CellData forestID;
+
+         [SerializeField] private CellTopElement emptyTopElementID;
          [SerializeField] public UnityEvent OnDestruction;
 
         [Space(15)]
@@ -155,13 +156,16 @@ namespace Ozamanas.Forces
 
             if(firstPlacementComplete)  
             {
-                firstPlacementComplete.data = barrierID;
+                firstPlacementComplete.CurrentTopElement = data.GetTopElementToSwap(firstPlacementComplete);
+                firstPlacementComplete.data = data.GetTokenToSwap(firstPlacementComplete);
+                
                 ActivateTraits(Board.Board.GetCellByPosition(firstPlacementComplete.transform.position.ToFloat3().UnityToGrid()));
             }
          
             if(secondPlacementComplete)
             {
-                secondPlacementComplete.data = barrierID;
+                secondPlacementComplete.CurrentTopElement = data.GetTopElementToSwap(secondPlacementComplete);
+                secondPlacementComplete.data = data.GetTokenToSwap(secondPlacementComplete);
                 ActivateTraits(Board.Board.GetCellByPosition(secondPlacementComplete.transform.position.ToFloat3().UnityToGrid()));
             }                 
         }
@@ -174,12 +178,12 @@ namespace Ozamanas.Forces
 
             if(secondPlacementComplete && secondPlacementComplete.TryGetComponent<ForestBehaviour>(out ForestBehaviour forest))
             {
-                forest.InstantiateBarrier(mountain);
+                forest.CurrentTopElement=data.GetTopElementToSwap(forest);
             }
 
             if(firstPlacementComplete && firstPlacementComplete.TryGetComponent<ForestBehaviour>(out ForestBehaviour forest_))
             {
-                forest_.InstantiateBarrier(mountain);
+                forest_.CurrentTopElement=data.GetTopElementToSwap(forest_);
             }
             
             base.DestroyForce();

@@ -10,6 +10,10 @@ namespace Ozamanas.Board
     [CreateAssetMenu(menuName = "Cells/Cells Data", fileName = "new Cell Data")]
     public class CellData : ScriptableObject
     {
+        [Header("Top Element Default")]
+
+        public CellTopElement defaultTopElement;
+
         [Header("UI Config")]
         public Sprite cellIcon;
         public Sprite cellArt;
