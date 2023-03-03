@@ -14,14 +14,7 @@ namespace Ozamanas.Forces
     [CreateAssetMenu(fileName = "new Force data", menuName = "Forces/Reference")]
     public class ForceData : ScriptableObject
     {
-        [Serializable]
-        public struct SwapRules
-        {
-            public CellData condition;
-            public CellTopElement topElementToSwap;
-            public CellData tokenToSwap;
-
-        }
+       
         [Space]
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]

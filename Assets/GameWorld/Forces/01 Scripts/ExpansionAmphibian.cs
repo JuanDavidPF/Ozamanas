@@ -226,14 +226,6 @@ namespace Ozamanas.Forces
 
             if (mode == ExpansionMode.Throw && !fillPath && !cell.gridPosition.Equals(reptileDestiny)) return true;
 
-           /* ExpansionRules expRule = ruleList.Find(rule => rule.condition == cell.data);
-
-            if (!expRule.tokenToSwap) return false;
-            
-            cell.data = expRule.tokenToSwap;
-            
-            cell.CurrentTopElement=data.cellTopElement;*/
-
 
             cell.CurrentTopElement=data.GetTopElementToSwap(cell);
 

@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb783d8c42f8a3f4ab275e0ab125f21b, type: 3}
+  m_Name: ExcavatorMN
+  m_EditorClassIdentifier: 
+  machineIcon: {fileID: 564824561, guid: 22c34552d39ba40418ee059e97580195, type: 3}
+  machineCard: {fileID: -293551684, guid: 9c01da7818363a64b8eaa26342e834bc, type: 3}
+  machineFamily: {fileID: 11400000, guid: 0d3585b558fbe794184ae69013385f10, type: 2}
+  machineName:
+    m_TableReference:
+      m_TableCollectionName: GUID:86d79255c17db14498f6a5f77d7d712f
+    m_TableEntryReference:
+      m_KeyId: 520485949440
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  machineDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:86d79255c17db14498f6a5f77d7d712f
+    m_TableEntryReference:
+      m_KeyId: 137722155008
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  showArmorInfo: 0
+  showMovInfo: 1
+  showSpeedInfo: 0
+  machinePrefab: {fileID: 1012468311011433840, guid: 812e8d89282157b42a40da24c03f2e88,
+    type: 3}
+  machineHierarchy: 1
+  armorPoints: 1
+  currentSpeed: 2
+  ruleList:
+  - condition: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: a89f9ba1bd8f9814cb08a361ea73c291, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
+  - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 88350c4cf3757344ca54fa482b6ada68, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
+  maxArmorPoints: 5
+  destroyedMachine: {fileID: 6742170808932452050, guid: 16944b9ca636ca844a9116de5b7527fc,
+    type: 3}
+  lifeSpan: 2
+  explosionPower: 300
+  humanBase: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
+  mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
+  OnDistanceToHeartNotification: 2
+  secondObjective: {fileID: 0}
+  secondObjectiveRange: 0
+  obviateMainObjective: 0
+  cellBlacklist:
+  - {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
+  speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
+  currentAltitude: 0
+  height: 1
+  timeMaxToReachDestination: 5
+  references:
+    version: 2
+    RefIds: []

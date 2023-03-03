@@ -53,7 +53,7 @@ namespace Ozamanas.Levels
         public bool showIfTutorial = false;
          [Title("List of Machines:")]
          [VerticalGroup("Others")]
-        public List<HumanMachine> machines;
+        public List<HumanMachineToken> machines;
        
 
         [VerticalGroup("Others")]

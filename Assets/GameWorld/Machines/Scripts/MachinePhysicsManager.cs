@@ -163,9 +163,10 @@ namespace Ozamanas.Machines
                 if(machine.CurrentCell == cell) return;   
                 machine.CurrentCell = cell;
                 machine.SetMachineTraitsfromCell(cell);
+                cell.CurrentTopElement = machine.Machine_token.GetTopElementToSwap(cell);
+                cell.data = machine.Machine_token.GetTokenToSwap(cell);
                 cell.SetOnMachineEnter(machine);
                 
-
             }
         }//Closes OnTriggerEnter method
 

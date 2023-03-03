@@ -13,6 +13,7 @@ namespace Ozamanas.Machines
 [CreateAssetMenu(menuName = "ScriptableObjects/Human Machines/Token", fileName = "new HumanMachine Token")]
 public class HumanMachineToken : ScriptableObject
 {
+     
       [VerticalGroup("Machine Information")]
       [PreviewField(Alignment =ObjectFieldAlignment.Center)]
       public Sprite machineIcon;
@@ -43,6 +44,8 @@ public class HumanMachineToken : ScriptableObject
        [ToggleLeft]
       public bool showSpeedInfo = false;
 
+       [VerticalGroup("Machine Setup")]
+      public GameObject machinePrefab;
       [VerticalGroup("Machine Setup")]
       [EnumToggleButtons]
       public MachineHierarchy machineHierarchy = MachineHierarchy.Regular;
@@ -55,7 +58,9 @@ public class HumanMachineToken : ScriptableObject
       public MachineSpeed currentSpeed;
 
        [VerticalGroup("Machine Setup")]
-      public CellTopElement deforestedTopElement;
+      [Title("Swap Tile Rule List:")]
+
+        [SerializeField] private List<SwapRules> ruleList = new List<SwapRules>();
 
 
       [ShowIfGroup("Machine Setup/showArmorInfo")]
@@ -122,6 +127,24 @@ public class HumanMachineToken : ScriptableObject
       [VerticalGroup("Machine Setup")]
       [Range(1f, 5f)]
       public float timeMaxToReachDestination = 5f;
+
+      public CellTopElement GetTopElementToSwap(Cell cell)
+        {
+            SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if (expRule== null) return null;
+
+            return expRule.topElementToSwap;
+        }
+
+        public CellData GetTokenToSwap(Cell cell)
+        {
+            SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if (expRule == null) return null;
+
+            return expRule.tokenToSwap;
+        }
 
 
     //public NotificationStruct Notification_MachineSpawned;

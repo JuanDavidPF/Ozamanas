@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using Ozamanas.Extenders;
 using Ozamanas.World;
 using Sirenix.OdinInspector;
+using System;
 
 namespace Ozamanas.Board
 {
@@ -25,6 +26,8 @@ namespace Ozamanas.Board
             get { return m_data; }
             set
             {
+                if(value == null) return;
+
                 if (m_data == value) return;
 
                 CellData originalValue = m_data;
@@ -34,9 +37,13 @@ namespace Ozamanas.Board
                 OnCellDataChanged?.Invoke(m_data);
                 OnCellChanged?.Invoke(this);
 
+                OnUpdateCellData();
+
                 if (Board.reference) Board.SwappedCellData(this, originalValue, m_data);
             }
         }
+
+      
 
         [Title("Cell Top Element:")] 
 
@@ -84,9 +91,7 @@ namespace Ozamanas.Board
             }
         }
 
-         [SerializeField] protected GameplayState winState;
-         [SerializeField] protected GameplayState loseState;
-
+    
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
         public Overlay CellOverLay { get => cellOverLay; set => cellOverLay = value; }
@@ -170,6 +175,11 @@ namespace Ozamanas.Board
              CurrentHumanMachines.Remove(machine);
 
             OnMachineExited?.Invoke(machine);
+        }
+
+        protected virtual void OnUpdateCellData()
+        {
+            
         }
 
         private void UpdateTopElement(CellTopElement topElement)

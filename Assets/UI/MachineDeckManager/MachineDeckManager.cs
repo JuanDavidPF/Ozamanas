@@ -24,7 +24,7 @@ namespace Ozamanas.UI
 
             foreach (var machine in LevelData.machines)
             {
-                Instantiate(cardPrefab, transform).MachineData = machine.Machine_token;
+                Instantiate(cardPrefab, transform).MachineData = machine;
             }
         }
 

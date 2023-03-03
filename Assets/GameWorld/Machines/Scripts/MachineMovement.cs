@@ -170,7 +170,9 @@ namespace Ozamanas.Machines
 
             if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
 
-            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
+           // return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
+
+           return Vector3.Distance(nextCellOnPath.transform.position,transform.position) <= 0.001f;
         }
 
 
@@ -396,6 +398,11 @@ namespace Ozamanas.Machines
         public bool CheckIfCurrentDestinationOnRange(int range)
         {
             return range <= Board.BoardExtender.DistanceTo(currentDestination, Board.Board.GetCellByPosition(transform.position));
+        }
+
+        public bool CheckIfCurrentDestination(CellData cell)
+        {
+            return currentDestination.data == cell;
         }
 
         public void GoToBase()

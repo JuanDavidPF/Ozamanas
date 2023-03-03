@@ -27,15 +27,7 @@ namespace Ozamanas.Forest
 
          [SerializeField] private CellTopElement barrierTopElement;
 
-         public override void SetOnMachineEnter(HumanMachine machine)
-         {
-            base.SetOnMachineEnter(machine);
-
-            data = gaiaCellData;
-
-            CurrentTopElement= machine.Machine_token.deforestedTopElement;
-         }
-
+        
 
 
        

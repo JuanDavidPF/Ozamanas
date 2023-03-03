@@ -13,7 +13,9 @@ namespace Ozamanas.Machines
         [HideInInspector] public GameObject _go;
         [HideInInspector] public Transform _t;
          [SerializeField] private bool autoPopulateSpawnerList = true;
-        [SerializeField] private List<HumanMachine> spawnQueue = new List<HumanMachine>();
+
+          [SerializeField] private float spawnDelay = 0f;
+        [SerializeField] private List<HumanMachineToken> spawnQueue = new List<HumanMachineToken>();
        
 
         private CellData cellData;
@@ -38,11 +40,11 @@ namespace Ozamanas.Machines
 
             LevelData levelData = temp.levelSelected.level;
 
-            spawnQueue = new List<HumanMachine>();
+            spawnQueue = new List<HumanMachineToken>();
 
-            foreach (HumanMachine machine in levelData.machines)
+            foreach (HumanMachineToken machine in levelData.machines)
             {
-                if(machine.Machine_token.humanBase == cellData)
+                if(machine.humanBase == cellData)
                 spawnQueue.Add(machine);
             }
         }
@@ -52,10 +54,15 @@ namespace Ozamanas.Machines
         {
             if (spawnQueue.Count == 0 || !spawnQueue[0]) return;
 
-            Instantiate(spawnQueue[0], _t.position, _t.rotation);
+            Invoke("SpawnMachineOnQueue",spawnDelay);
+        }
+
+        private void SpawnMachineOnQueue()
+        {
+            Instantiate(spawnQueue[0].machinePrefab, _t.position, _t.rotation);
 
             spawnQueue.RemoveAt(0);
-        }//Closes SpawnNextMachineOnQueue method
+        }
 
 
     }//Closes MachineSpawner class
