@@ -40,7 +40,7 @@ namespace Ozamanas.Machines
         private MachineSpeed currentSpeed;
         private MachineAltitude currentAltitude;
         private float height = 5f;
-        private float timeMaxToReachDestination = 5f;
+        private float timeMaxToReachDestination = 20f;
         private float timeToReachDestination = 0f;
 
         [Space(15)]
@@ -117,7 +117,6 @@ namespace Ozamanas.Machines
             currentSpeed=humanMachine.Machine_token.currentSpeed;
             CurrentAltitude=humanMachine.Machine_token.currentAltitude;
             height =humanMachine.Machine_token.height;
-            timeMaxToReachDestination =humanMachine.Machine_token.timeMaxToReachDestination;
         }
 
        /* private void Update()
@@ -170,9 +169,9 @@ namespace Ozamanas.Machines
 
             if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
 
-           // return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
+           return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
 
-           return Vector3.Distance(nextCellOnPath.transform.position,transform.position) <= 0.001f;
+
         }
 
 

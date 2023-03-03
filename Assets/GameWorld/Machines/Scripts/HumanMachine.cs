@@ -309,6 +309,13 @@ namespace Ozamanas.Machines
             return false;
         }
 
+        public void UpdateCurrentCellTopElement(CellTopElement topElement)
+        {
+            if(!topElement) return;
+            
+            CurrentCell.CurrentTopElement = topElement;
+        }
+
 
     }//Closes HumanMachine class
 }

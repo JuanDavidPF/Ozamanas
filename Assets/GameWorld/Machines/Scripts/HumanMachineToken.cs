@@ -123,10 +123,7 @@ public class HumanMachineToken : ScriptableObject
       [VerticalGroup("Machine Setup")]
       [Range(0.1f, 5f)]
       public float height = 5f;
-      [ShowIfGroup("Machine Setup/showSpeedInfo")]
-      [VerticalGroup("Machine Setup")]
-      [Range(1f, 5f)]
-      public float timeMaxToReachDestination = 5f;
+     
 
       public CellTopElement GetTopElementToSwap(Cell cell)
         {

@@ -63,8 +63,8 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 4031241076187507478}
   - {fileID: 7570927100988224350}
+  - {fileID: 4031241076187507478}
   m_Father: {fileID: 380222374011553738}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -192,6 +192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 380222374011553738}
+  - component: {fileID: 2067071488791091245}
   - component: {fileID: 6474880028955423243}
   - component: {fileID: 201654012075509107}
   - component: {fileID: 5196132032095778411}
@@ -228,6 +229,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2067071488791091245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012468311011433840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f7ef41e96302e49afde5434c5819c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  processes:
+  - key: GoUp
+    processes:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6474880028955423243}
+          m_TargetAssemblyTypeName: Ozamanas.Machines.HumanMachine, Ozamanas.World
+          m_MethodName: UpdateCurrentCellTopElement
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 4486810b67b1a3b4190b521a1ecb5ab3,
+              type: 2}
+            m_ObjectArgumentAssemblyTypeName: Ozamanas.Board.CellTopElement, Ozamanas.World
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: GoUnder
+    processes:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6474880028955423243}
+          m_TargetAssemblyTypeName: Ozamanas.Machines.HumanMachine, Ozamanas.World
+          m_MethodName: UpdateCurrentCellTopElement
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 4486810b67b1a3b4190b521a1ecb5ab3,
+              type: 2}
+            m_ObjectArgumentAssemblyTypeName: Ozamanas.Board.CellTopElement, Ozamanas.World
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6474880028955423243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,12 +778,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7451982274991320496}
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.81}
+  m_LocalPosition: {x: 0, y: -4.44, z: -2}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1547267732912648534}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &5444710703950838693
 SpriteRenderer:
@@ -995,7 +1043,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1010,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1387,7 +1435,7 @@ PrefabInstance:
     - target: {fileID: 3210933900396146365, guid: 3246eef86ce126b428294e18ad007ff4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.51
+      value: 0.397
       objectReference: {fileID: 0}
     - target: {fileID: 3210933900396146365, guid: 3246eef86ce126b428294e18ad007ff4,
         type: 3}
@@ -1622,7 +1670,7 @@ PrefabInstance:
     - target: {fileID: 6522100230361208158, guid: ea23c026225e1ab459341f8e8b25307f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6522100230361208158, guid: ea23c026225e1ab459341f8e8b25307f,
         type: 3}
@@ -2048,7 +2096,7 @@ PrefabInstance:
     - target: {fileID: 3210933900396146365, guid: 3246eef86ce126b428294e18ad007ff4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.51
+      value: 0.103
       objectReference: {fileID: 0}
     - target: {fileID: 3210933900396146365, guid: 3246eef86ce126b428294e18ad007ff4,
         type: 3}
