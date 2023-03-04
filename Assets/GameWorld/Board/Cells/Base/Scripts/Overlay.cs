@@ -9,9 +9,8 @@ namespace Ozamanas.Board
     {
         [SerializeField] private List<Pointer> pointers = new List<Pointer>();
 
-        private void Awake()
+        private void Start()
         {
-            pointers = new List<Pointer>(GetComponentsInChildren<Pointer>());
             DeActivateAllPointers();
         }
 

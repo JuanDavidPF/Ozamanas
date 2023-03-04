@@ -34,7 +34,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   showArmorInfo: 0
-  showMovInfo: 1
+  showMovInfo: 0
   showSpeedInfo: 0
   machinePrefab: {fileID: 1012468311011433840, guid: fec51002803ef9043a5e34cb63007860,
     type: 3}
@@ -65,11 +65,11 @@ MonoBehaviour:
   secondObjective: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
   secondObjectiveRange: 4
   obviateMainObjective: 0
-  cellBlacklist: []
+  cellBlacklist:
+  - {fileID: 11400000, guid: b81875d4a4e5a004e85d1cdd912730ab, type: 2}
   speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
   currentAltitude: 0
   height: 1
-  timeMaxToReachDestination: 5
   references:
     version: 2
     RefIds: []

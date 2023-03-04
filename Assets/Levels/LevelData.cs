@@ -38,6 +38,8 @@ namespace Ozamanas.Levels
         [Title("Level Settings:")]
         [VerticalGroup("Level Information")]
         public FloatReference creationDelay;
+
+        
         [VerticalGroup("Level Information")]
         public IntegerReference creationRate;
 
@@ -46,6 +48,9 @@ namespace Ozamanas.Levels
 
         [VerticalGroup("Level Information")]
         public IntegerReference wavesCooldown;
+        [Title("Level Climate:")]
+        [VerticalGroup("Level Information")]
+        public Material skyBox;
         [Title("Show More Settings:")]
         [VerticalGroup("Level Information")]
         [LabelText("Is a Tutorial Level?")]

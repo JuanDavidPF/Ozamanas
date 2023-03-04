@@ -34,9 +34,6 @@ namespace Ozamanas.World
 
         [Space(15)]
         [Header("Game States")]
-         [SerializeField] private GameplayState winState;
-
-         [SerializeField] private GameplayState loseState;
 
         [SerializeField] private LevelReference levelSelected;
 
@@ -75,7 +72,7 @@ namespace Ozamanas.World
 
             SetCameraFocus();
            
-            StartCoroutine(UpdateCellGameState(winState));
+            StartCoroutine(UpdateCellGameState(true));
 
             StartCoroutine(LoadScene(winSceneToLoad));
             
@@ -103,18 +100,19 @@ namespace Ozamanas.World
 
             SetCameraFocus();
            
-            StartCoroutine(UpdateCellGameState(loseState));
+            StartCoroutine(UpdateCellGameState(false));
 
             StartCoroutine(LoadScene(loseSceneToLoad));
         }
 
 
-        IEnumerator UpdateCellGameState(GameplayState state)
+        IEnumerator UpdateCellGameState(bool levelComplete)
         {
             List<Cell> cells = Board.Board.GetCellsByData(cellsData.ToArray());
             foreach(Cell cell in cells)
             {
-                cell.gameplayState = state;
+               if(levelComplete) cell.onLevelCompleteEvent();
+               else cell.onLevelFailedEvent();
                 yield return new WaitForSeconds(0.1f);
             }
             

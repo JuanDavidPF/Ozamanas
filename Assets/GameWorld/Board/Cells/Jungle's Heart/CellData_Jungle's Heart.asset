@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc80d9103828a66448ace5d6570a11b6, type: 3}
   m_Name: CellData_Jungle's Heart
   m_EditorClassIdentifier: 
-  machineName:
+  defaultTopElement: {fileID: 11400000, guid: 9e25c35a25d61094a8ad7d5a9a389b69, type: 2}
+  cellIcon: {fileID: 0}
+  cellArt: {fileID: 0}
+  cellCard: {fileID: 0}
+  cellName:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -21,7 +25,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  machineDescription:
+  cellDescription:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -33,6 +37,10 @@ MonoBehaviour:
   movemenCost:
     useConstant: 1
     constantValue: 1
+    variable: {fileID: 0}
+  expansionCost:
+    useConstant: 1
+    constantValue: 0
     variable: {fileID: 0}
   references:
     version: 2

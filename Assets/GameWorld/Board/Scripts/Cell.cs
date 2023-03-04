@@ -68,29 +68,12 @@ namespace Ozamanas.Board
                 
             }
         }
-        [Space]
-        public UnityEvent<CellTopElement> OnTopElementChanged;
        
+        public UnityEvent<CellTopElement> OnTopElementChanged;
+         [Space(10)]
         [Title("Cell GameplayStates:")]
-        [SerializeField] private GameplayState m_gameplayState;
-        public GameplayState gameplayState
-        {
-            get { return m_gameplayState; }
-            set
-            {
-                if (m_gameplayState == value) return;
-
-                GameplayState originalValue = m_gameplayState;
-
-                m_gameplayState = value;
-
-                OnCellGameStateChanged?.Invoke(m_gameplayState);
-                
-                OnCellChanged?.Invoke(this);
-
-            }
-        }
-
+        [SerializeField] private SwapRules onLevelComplete;
+        [SerializeField] private SwapRules onLevelFailed;
     
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
@@ -106,7 +89,6 @@ namespace Ozamanas.Board
         [Title("Events:")]
         public UnityEvent<CellData> OnCellDataChanged;
         public UnityEvent<Cell> OnCellChanged;
-        public UnityEvent<GameplayState> OnCellGameStateChanged;
         public UnityEvent<HumanMachine> OnMachineEntered;
         public UnityEvent<HumanMachine> OnMachineExited;
 
@@ -204,6 +186,24 @@ namespace Ozamanas.Board
 
             Destroy(topElementTransform.GetChild(0).gameObject);
         }
+
+        public void onLevelCompleteEvent()
+        {
+            if(onLevelComplete == null) return;
+
+            CurrentTopElement = onLevelComplete.topElementToSwap;
+            data = onLevelComplete.tokenToSwap;
+        }
+
+        public void onLevelFailedEvent()
+        {
+            if(onLevelFailed == null) return;
+
+            CurrentTopElement = onLevelFailed.topElementToSwap;
+            data = onLevelFailed.tokenToSwap;
+        }
+
+
 
 
     }//Closes Cell class

@@ -33,10 +33,6 @@ namespace Ozamanas.Board
         }
 
         List<Tween> tweeners = new List<Tween>();
-
-         [SerializeField] protected GameplayState winState;
-         [SerializeField] protected GameplayState loseState;
-
         [Space(15)]
         [Header("Events")]
         public UnityEvent OnIndustryTurnOff;
@@ -86,7 +82,6 @@ namespace Ozamanas.Board
 
         private void RotateAtMachine(Transform machineTransform)
         {
-
             if (!meshToRotate) return;
 
             var lookPos = machineTransform.position - meshToRotate.position;
@@ -107,26 +102,7 @@ namespace Ozamanas.Board
             tweeners.Clear();
         }
 
-
-         public void OnCellGameStateChange(GameplayState state)
-        {
-            if (!state) return;
-            if (state == winState) TurnOffIndustry();
-            if (state == loseState) TurnOnIndustry();
-        }
-
-        private void TurnOffIndustry()
-        {
-            OnIndustryTurnOff?.Invoke();
-            
-            OpenGate = false;
-
-        }
-
-        private void TurnOnIndustry()
-        {
-            OnIndustryTurnOn?.Invoke();
-        }
+      
 
     }//Closes BulldozerIndustryRotator
 }//Closes namespace declaration
