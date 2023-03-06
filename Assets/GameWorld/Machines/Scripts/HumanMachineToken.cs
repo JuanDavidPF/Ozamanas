@@ -16,20 +16,28 @@ public class HumanMachineToken : ScriptableObject
      
       [VerticalGroup("Machine Information")]
       [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+      [HideLabel]
       public Sprite machineIcon;
+      [ShowIf("showData")]
 
       [VerticalGroup("Machine Information")]
       [PreviewField(Alignment =ObjectFieldAlignment.Center)]
       public Sprite machineCard;
 
       [VerticalGroup("Machine Information")]
+       [ShowIf("showData")]
       public FamilyType machineFamily;
 
       [VerticalGroup("Machine Information")]
+       [ShowIf("showData")]
       public LocalizedString machineName = new LocalizedString();
 
       [VerticalGroup("Machine Information")]
+       [ShowIf("showData")]
       public LocalizedString machineDescription = new LocalizedString();
+        [VerticalGroup("Machine Information")]
+         [ShowIf("showData")]
+      public GameObject machinePrefab;
       [Title("Show More Settings:")]
       [VerticalGroup("Machine Information")]
       [LabelText("Armor and destructable")]
@@ -44,8 +52,12 @@ public class HumanMachineToken : ScriptableObject
        [ToggleLeft]
       public bool showSpeedInfo = false;
 
-       [VerticalGroup("Machine Setup")]
-      public GameObject machinePrefab;
+       [VerticalGroup("Machine Information")]
+      [LabelText("Show Machine Data")]
+       [ToggleLeft]
+      public bool showData = false;
+
+     
       [VerticalGroup("Machine Setup")]
       [EnumToggleButtons]
       public MachineHierarchy machineHierarchy = MachineHierarchy.Regular;

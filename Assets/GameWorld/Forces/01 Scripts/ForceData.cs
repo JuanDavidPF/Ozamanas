@@ -18,23 +18,38 @@ namespace Ozamanas.Forces
         [Space]
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
+        [HideLabel]
         public Sprite forceIcon;
+         [ShowIf("showData")]
+
         [VerticalGroup("Ancient Force Information")]
         [PreviewField(Alignment =ObjectFieldAlignment.Center)]
         public Sprite forceCard;
+         [ShowIf("showData")]
+
         [VerticalGroup("Ancient Force Information")]
         public FamilyType forceFamily;
+         [ShowIf("showData")]
+
 
         [VerticalGroup("Ancient Force Information")]
         [LabelText("Force Prefab")]
         public AncientForce force;
+         [ShowIf("showData")]
+
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceName;
+         [ShowIf("showData")]
+
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceDescription;
+         [ShowIf("showData")]
+
 
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceCodexDescription;
+
+
         
         [Title("Show More Settings:")]
          [VerticalGroup("Ancient Force Information")]
@@ -47,30 +62,45 @@ namespace Ozamanas.Forces
         [ToggleLeft]
         public bool showConstellation;
 
-        [VerticalGroup("Ancient Force Setup")]
-          [Space]
-        public List<CellData> whiteList = new List<CellData>();
-        [VerticalGroup("Ancient Force Setup")]
+         [VerticalGroup("Ancient Force Information")]
+        [LabelText("Traits Setup")]
+        [ToggleLeft]
+        public bool showTraits;
+
+          [VerticalGroup("Ancient Force Information")]
+        [LabelText("Data Setup")]
+        [ToggleLeft]
+        public bool showData;
+         [Space]
+          [VerticalGroup("Ancient Force Setup")]
         public IntegerReference price;
         [VerticalGroup("Ancient Force Setup")]
         public IntegerReference cooldown;
         [VerticalGroup("Ancient Force Setup")]
         public IntegerReference range;
+         [Title("Tiles Setup:")]
+        [VerticalGroup("Ancient Force Setup")]  
+        public List<CellData> whiteList = new List<CellData>();
+       
         [VerticalGroup("Ancient Force Setup")]
         public List<CellData> rangeAnchors = new List<CellData>();
          [Title("Swap Tile Rule List:")]
          [VerticalGroup("Ancient Force Setup")]
         [SerializeField] private List<SwapRules> ruleList = new List<SwapRules>();
-        [Title("Traits Setup:")]
-        [VerticalGroup("Ancient Force Setup")]
-        [LabelText("List of traits")]
-        public List<Machines.MachineTrait> traits;
-        [VerticalGroup("Ancient Force Setup")]
-        public int traitRange = 1;
-        [VerticalGroup("Ancient Force Setup")]
+[Title("Force Setup:")]
+                [VerticalGroup("Ancient Force Setup")]
         [LabelText("Add Force to Machine")]
         
         public PhysicsForce physicsForce;
+        [Title("Traits Setup:")]
+        [VerticalGroup("Ancient Force Setup")]
+        [LabelText("List of traits")]
+          [ShowIf("showTraits")]
+        public List<Machines.MachineTrait> traits;
+        [VerticalGroup("Ancient Force Setup")]
+          [ShowIf("showTraits")]
+        public int traitRange = 1;
+
          [ShowIf("showPlacement")]
         [Title("Placement Setup")]
         [VerticalGroup("Ancient Force Setup")]
