@@ -709,6 +709,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1675886831}
   - component: {fileID: 1675886832}
+  - component: {fileID: 1675886833}
+  - component: {fileID: 1675886834}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -753,6 +755,51 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2972cab41992d234a866336e04f58b92, type: 3}
   - {fileID: 21300000, guid: 735150adfa98fd143a1689c9bd25c91f, type: 3}
   - {fileID: 21300000, guid: 6d27892e2f89cdc4580d11aeb447f3fd, type: 3}
+--- !u!114 &1675886833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675886830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047252e98eaa06b47b62328437574fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: c1b0273cce1529c40a9083756653751b, type: 2}
+  qualityLevels:
+  - {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574, type: 2}
+  - {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1, type: 2}
+  - {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd, type: 2}
+--- !u!114 &1675886834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675886830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1453d9bc854b5e46ad132b1ec7fc7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 4
+  processes:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1675886833}
+        m_TargetAssemblyTypeName: Ozamanas.GameScenes.StartGameSettings, Ozamanas.GameScenes
+        m_MethodName: LoadGameSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1757550416
 GameObject:
   m_ObjectHideFlags: 0

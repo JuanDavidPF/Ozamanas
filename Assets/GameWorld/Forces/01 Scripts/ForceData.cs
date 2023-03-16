@@ -45,12 +45,10 @@ namespace Ozamanas.Forces
         public LocalizedString forceDescription;
          [ShowIf("showData")]
 
-
         [VerticalGroup("Ancient Force Information")]
         public LocalizedString forceCodexDescription;
 
-
-        
+    
         [Title("Show More Settings:")]
          [VerticalGroup("Ancient Force Information")]
         [LabelText("Placement Setup")]

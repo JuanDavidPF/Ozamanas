@@ -12,7 +12,10 @@ namespace Ozamanas.Forces
     public abstract class AncientForce : MonoBehaviour
     {
         public bool isPlaced;
-       
+
+        
+        protected List<Board.Cell> anchorCells = new List<Cell>();
+        protected List<Board.Cell> validCells = new List<Cell>();
         protected Cell firstPlacementComplete;
         protected Cell secondPlacementComplete;
 
@@ -170,8 +173,6 @@ namespace Ozamanas.Forces
 
 
 
-        protected List<Board.Cell> anchorCells = new List<Cell>();
-        protected List<Board.Cell> validCells = new List<Cell>();
 
         protected virtual void CalculateArea()
         {

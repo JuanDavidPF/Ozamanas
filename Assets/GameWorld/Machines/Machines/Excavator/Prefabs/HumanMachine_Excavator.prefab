@@ -225,7 +225,7 @@ Transform:
   - {fileID: 8796018093513126626}
   - {fileID: 1547267732912648534}
   - {fileID: 2801605588466566508}
-  - {fileID: 7462582833350706599}
+  - {fileID: 4504462739997308849}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -416,7 +416,7 @@ MonoBehaviour:
   OnGoingSubterrestrial:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215544160732019707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ozamanas.Machines.PathManager, Ozamanas.World
         m_MethodName: DetachTrail
         m_Mode: 1
@@ -431,7 +431,7 @@ MonoBehaviour:
   OnGoingTerrestrial:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215544160732019707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ozamanas.Machines.PathManager, Ozamanas.World
         m_MethodName: DetachTrail
         m_Mode: 1
@@ -464,7 +464,7 @@ MonoBehaviour:
   OnActivatePhysical:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215544160732019707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ozamanas.Machines.PathManager, Ozamanas.World
         m_MethodName: DetachTrail
         m_Mode: 1
@@ -479,7 +479,7 @@ MonoBehaviour:
   OnActivateIntelligent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215544160732019707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ozamanas.Machines.PathManager, Ozamanas.World
         m_MethodName: AttachNewTrail
         m_Mode: 1
@@ -494,7 +494,7 @@ MonoBehaviour:
   OnActivateKinematic:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215544160732019707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ozamanas.Machines.PathManager, Ozamanas.World
         m_MethodName: DetachTrail
         m_Mode: 1
@@ -675,52 +675,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &6081069158187586315
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7462582833350706599}
-  - component: {fileID: 2215544160732019707}
-  m_Layer: 0
-  m_Name: TrailManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7462582833350706599
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081069158187586315}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 380222374011553738}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2215544160732019707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081069158187586315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 969dc9aa81ff9fb4c9e1163b98d82480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathRenderer: {fileID: 2268144034503750866, guid: 33e3f47f06bc5a74a800ffda4bdf9d3d,
-    type: 3}
 --- !u!1 &6572271360692443909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1478,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3210933900396146365, guid: 3246eef86ce126b428294e18ad007ff4,
     type: 3}
   m_PrefabInstance: {fileID: 5206596387978348266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5776609079310762002
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 380222374011553738}
+    m_Modifications:
+    - target: {fileID: 1027651975124924087, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_Name
+      value: TrackMarksSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 776db7b34b444c249b9da87dab612733, type: 3}
+--- !u!4 &4504462739997308849 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
+    type: 3}
+  m_PrefabInstance: {fileID: 5776609079310762002}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7886647359070993992
 PrefabInstance:
