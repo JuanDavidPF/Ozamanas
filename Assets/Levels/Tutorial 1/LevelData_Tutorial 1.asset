@@ -14,6 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 2
   index: 0
+  creationDelay:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  creationRate:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
+  wavesAmount:
+    useConstant: 1
+    constantValue: 2
+    variable: {fileID: 0}
+  wavesCooldown:
+    useConstant: 1
+    constantValue: 20
+    variable: {fileID: 0}
+  showLevelData: 0
+  showIfTutorial: 1
+  showEndLevel: 0
+  showClimate: 0
+  machines: []
+  unlockForces: []
+  ifLoseReturnToScene: 2
+  ifWinReturnToScene: 1
+  tutorialActions:
+  - {fileID: 11400000, guid: d941b06459d89ec449f87a335cb712f5, type: 2}
+  - {fileID: 11400000, guid: 0e8686719d983fe438b16c1419ecce93, type: 2}
+  - {fileID: 11400000, guid: 6c9fd05f3a6e0174fa3220e3747b9764, type: 2}
+  - {fileID: 11400000, guid: 2c46f0a1d7c31334ea55d052a85175ab, type: 2}
+  - {fileID: 11400000, guid: cdd4022eddc3e984ab8890df7f24470d, type: 2}
+  - {fileID: 11400000, guid: 6e5cf291b9cfda14e9c712a56365e31d, type: 2}
+  - {fileID: 11400000, guid: fc62dbfbceda26e4ab358fc207142656, type: 2}
+  - {fileID: 11400000, guid: 9a9b7bbf91061b949b55daff6a1d25e0, type: 2}
+  - {fileID: 11400000, guid: 29cf647b6df951f47b1c9171486cfd59, type: 2}
+  currentAction: {fileID: 11400000, guid: d941b06459d89ec449f87a335cb712f5, type: 2}
+  skyBox: {fileID: 0}
   levelIcon: {fileID: -1206754874, guid: 22c34552d39ba40418ee059e97580195, type: 3}
   levelName:
     m_TableReference:
@@ -34,38 +70,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   levelSceneName: Tutorial_1
-  creationDelay:
-    useConstant: 1
-    constantValue: 0
-    variable: {fileID: 0}
-  creationRate:
-    useConstant: 0
-    constantValue: 0
-    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
-  wavesAmount:
-    useConstant: 1
-    constantValue: 2
-    variable: {fileID: 0}
-  wavesCooldown:
-    useConstant: 1
-    constantValue: 20
-    variable: {fileID: 0}
-  showIfTutorial: 0
-  machines: []
-  ifLoseReturnToScene: 2
-  ifWinReturnToScene: 1
   saveAt: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
-  tutorialActions:
-  - {fileID: 11400000, guid: d941b06459d89ec449f87a335cb712f5, type: 2}
-  - {fileID: 11400000, guid: 0e8686719d983fe438b16c1419ecce93, type: 2}
-  - {fileID: 11400000, guid: 6c9fd05f3a6e0174fa3220e3747b9764, type: 2}
-  - {fileID: 11400000, guid: 2c46f0a1d7c31334ea55d052a85175ab, type: 2}
-  - {fileID: 11400000, guid: cdd4022eddc3e984ab8890df7f24470d, type: 2}
-  - {fileID: 11400000, guid: 6e5cf291b9cfda14e9c712a56365e31d, type: 2}
-  - {fileID: 11400000, guid: fc62dbfbceda26e4ab358fc207142656, type: 2}
-  - {fileID: 11400000, guid: 9a9b7bbf91061b949b55daff6a1d25e0, type: 2}
-  - {fileID: 11400000, guid: 29cf647b6df951f47b1c9171486cfd59, type: 2}
-  currentAction: {fileID: 11400000, guid: d941b06459d89ec449f87a335cb712f5, type: 2}
   references:
     version: 2
     RefIds: []

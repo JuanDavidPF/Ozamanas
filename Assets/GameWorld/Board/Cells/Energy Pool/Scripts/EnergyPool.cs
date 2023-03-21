@@ -96,6 +96,8 @@ namespace Ozamanas.Energy
         {
             base.SetOnMachineEnter(machine);
 
+            Debug.Log("SetOnMachineEnter");
+
             ShowOrHideFlowers();
 
         }
@@ -104,9 +106,11 @@ namespace Ozamanas.Energy
         {
             bool showFlowers = false;
 
-            if( CurrentHumanMachines.Count == 0) showFlowers = true;
+            if(CurrentHumanMachines.Count == 0) showFlowers = true;
 
             EnergyFlower[] allFlowers = GetComponentsInChildren<EnergyFlower>();
+
+            Debug.Log(allFlowers.Length+"show:"+showFlowers);
 
             foreach(EnergyFlower flower in allFlowers)
             flower.ShowOrHideFlower(showFlowers);
@@ -116,6 +120,8 @@ namespace Ozamanas.Energy
         public override void SetOnMachineExit(HumanMachine machine)
         {
             base.SetOnMachineExit(machine);
+
+             Debug.Log("SetOnMachineExit");
 
             ShowOrHideFlowers();
         }

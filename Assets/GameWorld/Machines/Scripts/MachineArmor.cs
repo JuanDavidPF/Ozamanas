@@ -127,11 +127,11 @@ namespace Ozamanas.Machines
                     rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
                 }
             }
+            machine.RemoveMachineFromCurrentCell();
             machine.Machine_status = Tags.MachineState.Destroyed;
             OnMachineDestroyed?.Invoke();
             gameObject.SetActive(false);
             Destroy(gameObject);
-
         }
 
 

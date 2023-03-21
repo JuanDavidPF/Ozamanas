@@ -316,6 +316,13 @@ namespace Ozamanas.Machines
             CurrentCell.CurrentTopElement = topElement;
         }
 
+        public void RemoveMachineFromCurrentCell()
+        {
+            if(!CurrentCell) return;
+
+            CurrentCell.SetOnMachineExit(this);
+        }
+
 
     }//Closes HumanMachine class
 }

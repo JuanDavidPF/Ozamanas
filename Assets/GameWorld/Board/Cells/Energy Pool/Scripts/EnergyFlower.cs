@@ -8,11 +8,18 @@ namespace Ozamanas.Energy
 {
     public class EnergyFlower : MonoBehaviour
     {
+
+        private Animator animator;
+
+
+        void Awake()
+        {
+            animator=GetComponent<Animator>();
+        }
         public void ShowOrHideFlower(bool show)
         {
-            float temp = 0f;
-            if(show) temp=1f;
-            transform.DOScaleY(temp,0.1f);
+          if(show) animator.SetTrigger("Show");
+          else animator.SetTrigger("Hide");
         }
     }
 
