@@ -27,7 +27,8 @@ namespace Ozamanas.Energy
         {
             if(!onDestroyVFX) return;
 
-            Instantiate(onDestroyVFX,transform.position,transform.rotation);
+            GameObject vfx = Instantiate(onDestroyVFX,transform.position,transform.rotation);
+            vfx.transform.position += new Vector3(0,0.5f,0) ;
         }
     }
 

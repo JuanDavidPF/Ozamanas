@@ -91,6 +91,8 @@ MonoBehaviour:
     type: 2}
   emptyEnergyTopElement: {fileID: 11400000, guid: bee25de599a90ba4ebf62eb7ed688e3f,
     type: 2}
+  onDestroyVFX: {fileID: 2353600328335836179, guid: 725f4c8d3fafa2041acca5d3f1fcb287,
+    type: 3}
   OnEmptyEnergyPool:
     m_PersistentCalls:
       m_Calls:
@@ -223,7 +225,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4082273287507502671}
+  - {fileID: 8522284409291531579}
   m_Father: {fileID: 8105093437931301133}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -260,6 +262,81 @@ Transform:
   m_Father: {fileID: 986721062166553454}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4011600335096457764
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5002777072922587971}
+    m_Modifications:
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588521339323960565, guid: 335f06ce00d3fca499756a3581b6d26c,
+        type: 3}
+      propertyPath: m_Name
+      value: Top_InactiveEnergyPool
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 335f06ce00d3fca499756a3581b6d26c, type: 3}
+--- !u!4 &8522284409291531579 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4011600335096457764}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4492448508817343129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -346,79 +423,4 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5804002980509332092, guid: f1e0e6262ead8be48a178c6419ff5359,
     type: 3}
   m_PrefabInstance: {fileID: 4492448508817343129}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8740932900722813264
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5002777072922587971}
-    m_Modifications:
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5588521339323960565, guid: 335f06ce00d3fca499756a3581b6d26c,
-        type: 3}
-      propertyPath: m_Name
-      value: InactiveEnergyPool
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 335f06ce00d3fca499756a3581b6d26c, type: 3}
---- !u!4 &4082273287507502671 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4749377603770044191, guid: 335f06ce00d3fca499756a3581b6d26c,
-    type: 3}
-  m_PrefabInstance: {fileID: 8740932900722813264}
   m_PrefabAsset: {fileID: 0}

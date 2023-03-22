@@ -364,7 +364,6 @@ namespace Ozamanas.Machines
         {
             if (CurrentAltitude == MachineAltitude.Terrestrial) return;
 
-
             CurrentAltitude = MachineAltitude.Terrestrial;
 
             OnGoingTerrestrial?.Invoke();

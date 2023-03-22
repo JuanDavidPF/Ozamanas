@@ -28,6 +28,8 @@ namespace Ozamanas.Energy
         [SerializeField] private CellData inactiveEnergyCellData;
         [SerializeField] private CellTopElement emptyEnergyTopElement;
 
+         [SerializeField] private GameObject onDestroyVFX;
+
         public UnityEvent OnEmptyEnergyPool;
         protected override void Awake()
         {
@@ -50,7 +52,13 @@ namespace Ozamanas.Energy
                if(level >= allFlowers.Length) return;
 
               for (int i =0 ; i< allFlowers.Length - level; i++)
-              Destroy(allFlowers[i].gameObject);
+              {
+                Destroy(allFlowers[i].gameObject);
+                if(!onDestroyVFX) continue;
+                GameObject vfx = Instantiate(onDestroyVFX,transform.position,transform.rotation);
+                vfx.transform.position += new Vector3(0,0.5f,0) ;
+              }
+              
 
               
               
@@ -96,7 +104,6 @@ namespace Ozamanas.Energy
         {
             base.SetOnMachineEnter(machine);
 
-            Debug.Log("SetOnMachineEnter");
 
             ShowOrHideFlowers();
 
@@ -110,7 +117,6 @@ namespace Ozamanas.Energy
 
             EnergyFlower[] allFlowers = GetComponentsInChildren<EnergyFlower>();
 
-            Debug.Log(allFlowers.Length+"show:"+showFlowers);
 
             foreach(EnergyFlower flower in allFlowers)
             flower.ShowOrHideFlower(showFlowers);
@@ -121,7 +127,6 @@ namespace Ozamanas.Energy
         {
             base.SetOnMachineExit(machine);
 
-             Debug.Log("SetOnMachineExit");
 
             ShowOrHideFlowers();
         }

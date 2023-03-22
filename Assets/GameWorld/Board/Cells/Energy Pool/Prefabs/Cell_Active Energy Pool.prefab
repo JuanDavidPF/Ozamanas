@@ -91,6 +91,8 @@ MonoBehaviour:
     type: 2}
   emptyEnergyTopElement: {fileID: 11400000, guid: bee25de599a90ba4ebf62eb7ed688e3f,
     type: 2}
+  onDestroyVFX: {fileID: 2353600328335836179, guid: 725f4c8d3fafa2041acca5d3f1fcb287,
+    type: 3}
   OnEmptyEnergyPool:
     m_PersistentCalls:
       m_Calls:
@@ -223,7 +225,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4968860967634292966}
+  - {fileID: 5851772097537763530}
   m_Father: {fileID: 8105093437931301133}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -267,6 +269,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8105093437931301133}
     m_Modifications:
+    - target: {fileID: 1794468352863575968, guid: f1e0e6262ead8be48a178c6419ff5359,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5804002980509332092, guid: f1e0e6262ead8be48a178c6419ff5359,
         type: 3}
       propertyPath: m_RootOrder
@@ -352,7 +359,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4492448508817343129}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7692923743694317317
+--- !u!1001 &9152328658498871081
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -421,9 +428,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0b454fa39f2073459ff1ff0731344cb, type: 3}
---- !u!4 &4968860967634292966 stripped
+--- !u!4 &5851772097537763530 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3329903793322342371, guid: c0b454fa39f2073459ff1ff0731344cb,
     type: 3}
-  m_PrefabInstance: {fileID: 7692923743694317317}
+  m_PrefabInstance: {fileID: 9152328658498871081}
   m_PrefabAsset: {fileID: 0}

@@ -23,6 +23,7 @@ namespace Ozamanas.Machines
          private bool cellCheck = true;
 
          private MachinePhysicsManager parentPhysics;
+         private MachineMovement machineMovement;
 
           private float yOffset = 0;
             private Vector3 newPosition;
@@ -31,6 +32,7 @@ namespace Ozamanas.Machines
         {
             objectPool = GetComponent<ObjectPool>();
             parentPhysics = GetComponentInParent<MachinePhysicsManager>();
+            machineMovement = GetComponentInParent<MachineMovement>();
              yOffset = Random.Range(0f, .01f);
         }
 
@@ -83,9 +85,14 @@ namespace Ozamanas.Machines
 
         public bool Validate(Cell cell)
         {
-            return cell && cell.data
-            && allowedCells.Contains(cell.data)
-            && (!parentPhysics || parentPhysics.state == PhysicMode.Intelligent);
+            if(parentPhysics.state != PhysicMode.Intelligent) return false;
+
+            if(machineMovement.CurrentAltitude != MachineAltitude.Terrestrial)return false;
+
+            if(!cell || !cell.data)return false;
+
+            return allowedCells.Contains(cell.data);
+           
         }
     }
 }
