@@ -66,8 +66,7 @@ namespace Ozamanas.Forces
                 {
                     if (!cellOnRange || !IsValidPlacement(cellOnRange)) continue;
 
-
-                    UnityFx.Outline.OutlineBuilder.AddToLayer(0, cellOnRange.CellOverLay.gameObject);
+                    cellOnRange.CellOverLay.ActivatePointer(CellPointerType.ReleaseRangePointer);
                     validCells.Add(cellOnRange);
                     cellOnRange.OnCellChanged.AddListener(OnAreaChanged);
                 }

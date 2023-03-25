@@ -4,7 +4,6 @@ using Ozamanas.Extenders;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityFx.Outline;
 
 namespace Ozamanas.Board
 {
@@ -21,15 +20,15 @@ namespace Ozamanas.Board
             get { return m_currentCellSelected; }
             set
             {
-                if (m_currentCellSelected)
+               /* if (m_currentCellSelected)
                 {
                     if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.EraseOutline(2);
                     else m_currentCellHovered.DrawHoveredOutline();
-                }
+                }*/
 
                 m_currentCellSelected = value;
 
-                if (m_currentCellSelected) m_currentCellSelected.DrawSelectedOutline();
+               // if (m_currentCellSelected) m_currentCellSelected.DrawSelectedOutline();
 
             }
         }
@@ -63,11 +62,7 @@ namespace Ozamanas.Board
 
         }//Closes Awake method
 
-        public void DrawHoveredOutline() => OutlineBuilder.AddToLayer(hoverLayer, gameObject);
-        public void DrawSelectedOutline() => OutlineBuilder.AddToLayer(selectedLayer, gameObject);
-        public void EraseOutline(int layerIndex) => OutlineBuilder.Remove(layerIndex, gameObject);
-
-       
+        
 
         public void OnPointerEnter(PointerEventData eventData)
         {
