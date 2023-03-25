@@ -40,14 +40,13 @@ namespace Ozamanas.Board
             set
             {
 
-                if (m_currentCellHovered) m_currentCellHovered.EraseOutline(1);
+                if (m_currentCellHovered) m_currentCellHovered.cellReference.CellOverLay.DeActivatePointer(Tags.CellPointerType.MouseOverPointer);
 
                 m_currentCellHovered = value;
 
                 if (m_currentCellHovered && m_currentCellHovered != m_currentCellSelected)
                 {
-                    m_currentCellHovered.DrawHoveredOutline();
-
+                    m_currentCellHovered.cellReference.CellOverLay.ActivatePointer(Tags.CellPointerType.MouseOverPointer);
                 }
 
             }

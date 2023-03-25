@@ -84,7 +84,13 @@ namespace Ozamanas.Tags
 
             MountainPointer,
 
-            ExpansionPointer
+            ExpansionPointer,
+
+            MouseOverPointer,
+
+            ReleaseRangePointer,
+
+            AttackRangePointer
         }
 
      public enum PlacementMode

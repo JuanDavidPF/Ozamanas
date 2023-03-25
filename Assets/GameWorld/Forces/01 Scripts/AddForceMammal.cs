@@ -5,6 +5,7 @@ using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
 using Ozamanas.Tags;
+using Ozamanas.Machines;
 
 namespace Ozamanas.Forces
 {
@@ -13,7 +14,8 @@ namespace Ozamanas.Forces
        
         private Transform AOETransform;
         [SerializeField] private MeshRenderer AOERenderer;
-        private List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
+        private List<MachineArmor> machinesAffected = new List<MachineArmor>();
+        private List<Cell> cellsAffected = new List<Cell>();
         [SerializeField] private float mammalSpeed = 2f;
 
         private Tween mammalTween;
@@ -154,11 +156,11 @@ namespace Ozamanas.Forces
             if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
             {
                 if (!machinesAffected.Contains(armor)) machinesAffected.Add(armor);
-
+                UpdateCellsAffected();
             }
-            else return;
 
-            UpdateAOEColor();
+
+
         }//Closes OnTriggerEnter method
 
 
@@ -169,23 +171,44 @@ namespace Ozamanas.Forces
             if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
             {
                 machinesAffected.Remove(armor);
-
+                UpdateCellsAffected();
             }
-            else return;
 
-            UpdateAOEColor();
+
         }
-        private void UpdateAOEColor()
-        {
-            if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.2f);
-            else AOERenderer.material.color  = new Vector4(0,1,0,0.2f);
-        }//Closes UpdateAOEColor method
+        
 
-         void OnDestroy()
+        void OnDestroy()
         {
             if (mammalTween != null) mammalTween.Kill();
-        }//Closes OnDestroy method
+
+            foreach ( Cell cell in cellsAffected)
+            cell.CellOverLay.DeActivatePointer(CellPointerType.AttackRangePointer);
+        }
+
+        private void UpdateCellsAffected()
+        {
+            HumanMachine machine;
+
+            foreach ( Cell cell in cellsAffected)
+            cell.CellOverLay.DeActivatePointer(CellPointerType.AttackRangePointer);
+
+            cellsAffected = new List<Cell>();
+
+            foreach ( MachineArmor armor in machinesAffected)
+            {
+                machine = armor.GetComponent<HumanMachine>();
+
+                if(cellsAffected.Contains(machine.CurrentCell)) continue;
+
+                cellsAffected.Add(machine.CurrentCell);
+            }
+
+            foreach ( Cell cell in cellsAffected)
+            cell.CellOverLay.ActivatePointer(CellPointerType.AttackRangePointer);
+        }
+
+       
 
 
     }
