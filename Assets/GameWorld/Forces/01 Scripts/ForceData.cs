@@ -76,6 +76,8 @@ namespace Ozamanas.Forces
         public IntegerReference cooldown;
         [VerticalGroup("Ancient Force Setup")]
         public IntegerReference range;
+        [VerticalGroup("Ancient Force Setup")]
+        public IntegerReference attackRange;
          [Title("Tiles Setup:")]
         [VerticalGroup("Ancient Force Setup")]  
         public List<CellData> whiteList = new List<CellData>();

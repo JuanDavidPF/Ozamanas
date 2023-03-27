@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Ozamanas.Tags;
+using Ozamanas.Machines;
 
 namespace Ozamanas.Forces
 {
@@ -13,7 +14,9 @@ namespace Ozamanas.Forces
     {
         public bool isPlaced;
 
-        
+        protected List<Cell> cellsOnAttackRange = new List<Cell>();
+        protected Cell cellOnAttack;
+        protected List<HumanMachine> machinesAffected = new List<HumanMachine>();
         protected List<Board.Cell> anchorCells = new List<Cell>();
         protected List<Board.Cell> validCells = new List<Cell>();
         protected Cell firstPlacementComplete;
@@ -79,6 +82,14 @@ namespace Ozamanas.Forces
 
         public virtual void Drag()
         {
+            SetForcePositionOnDrag();
+            SetForceAttackRangeOnDrag();
+            
+
+        }//Closes OnDrag method
+
+        protected virtual void SetForcePositionOnDrag()
+        {
             if (!Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
             {
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -95,14 +106,66 @@ namespace Ozamanas.Forces
             }
 
             t.position = draggedPosition;
+        }
 
-        }//Closes OnDrag method
+        protected virtual void SetForceAttackRangeOnDrag()
+        {
+            if(data.attackRange.value <= 0) return;
+
+            if (!Board.CellSelectionHandler.currentCellHovered) return;
+
+            if( cellOnAttack == Board.CellSelectionHandler.currentCellHovered) return;
+
+            cellOnAttack = Board.CellSelectionHandler.currentCellHovered.cellReference;
+
+            EraseAttackRangeCells();
+
+            if(!validCells.Contains(cellOnAttack)) return;
+
+            cellsOnAttackRange =  Board.BoardExtender.GetCellsOnRange(cellOnAttack,data.attackRange.value-1,true);
+
+            foreach (var cell in cellsOnAttackRange)
+            {
+                if (!cell) continue;
+                cell.CellOverLay.ActivatePointer(CellPointerType.AttackRangePointer);
+            }
+        }
+
+        protected virtual void EraseAttackRangeCells()
+        {
+            foreach (var cell in cellsOnAttackRange)
+            {
+                if (!cell) continue;
+                cell.CellOverLay.DeActivatePointer(CellPointerType.AttackRangePointer);
+            }
+            cellsOnAttackRange.Clear();
+        }
+
+        protected virtual void GetMachinesOnAttackRange()
+        {
+             if(data.attackRange.value <= 0) return;
+            
+            machinesAffected.Clear();
+            
+            foreach (var cell in cellsOnAttackRange)
+            {
+                if (!cell) continue;
+                foreach( HumanMachine machine in cell.CurrentHumanMachines )
+                {
+                    if(!machinesAffected.Contains(machine)) machinesAffected.Add(machine);
+                }
+            }
+
+            
+        }
 
         public virtual void DestroyForce()
         {
             if(onDestroyVFX) Instantiate(onDestroyVFX,transform.position,transform.rotation);
 
             EraseValidCells();
+
+            EraseAttackRangeCells();
 
             OnForceDestroy?.Invoke();
 
@@ -146,6 +209,7 @@ namespace Ozamanas.Forces
             {
                 OnSuccesfulPlacement?.Invoke(this);
                 isPlaced = true;
+                GetMachinesOnAttackRange();
             }
 
             else OnFailedPlacement?.Invoke(this);
@@ -153,6 +217,7 @@ namespace Ozamanas.Forces
             if (Board.Board.reference) Board.Board.reference.OnNewCellData.RemoveListener(OnNewCellData);
 
             EraseValidCells();
+            EraseAttackRangeCells();
 
         }
 

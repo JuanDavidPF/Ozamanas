@@ -59,9 +59,6 @@ namespace Ozamanas.Energy
                 vfx.transform.position += new Vector3(0,0.5f,0) ;
               }
               
-
-              
-              
         }
         public void UpdateEnergyLevel(int level)
         {

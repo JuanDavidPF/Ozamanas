@@ -10,7 +10,7 @@ namespace Ozamanas.Energy
     {
 
         private Animator animator;
-        [SerializeField] private GameObject onDestroyVFX;
+       
 
 
         void Awake()
@@ -23,13 +23,7 @@ namespace Ozamanas.Energy
           else animator.SetTrigger("Hide");
         }
 
-        void OnDestroy()
-        {
-            if(!onDestroyVFX) return;
-
-            GameObject vfx = Instantiate(onDestroyVFX,transform.position,transform.rotation);
-            vfx.transform.position += new Vector3(0,0.5f,0) ;
-        }
+        
     }
 
 }

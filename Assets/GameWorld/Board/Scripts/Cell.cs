@@ -154,7 +154,7 @@ namespace Ozamanas.Board
         {
             if(!CurrentHumanMachines.Contains(machine)) return;
 
-             CurrentHumanMachines.Remove(machine);
+            CurrentHumanMachines.Remove(machine);
 
             OnMachineExited?.Invoke(machine);
         }
