@@ -163,6 +163,8 @@ namespace Ozamanas.Machines
         {
             if(!trait) return;
 
+            if(activeTraits.Contains(trait)) return;
+
             activeTraits.Add(trait);
             
             if (!trait.isPermanentOnMachine) StartCoroutine(WaitToRemoveTrait(trait));
@@ -172,16 +174,13 @@ namespace Ozamanas.Machines
 
         public void RemoveTraitToMachine(MachineTrait trait)
         {
-            activeTraits.Remove(trait);
-
-            SetMachineAttributes();
+            if(activeTraits.Remove(trait)) SetMachineAttributes();
         }
 
         IEnumerator WaitToRemoveTrait(MachineTrait trait)
         {
             yield return new WaitForSeconds(trait.machineTimer);
             RemoveTraitToMachine(trait);
-            SetMachineAttributes();
         }
 
 

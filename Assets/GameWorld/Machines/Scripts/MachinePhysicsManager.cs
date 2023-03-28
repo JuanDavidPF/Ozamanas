@@ -193,6 +193,12 @@ namespace Ozamanas.Machines
 
         }//Closes OnTriggerExit method
 
+        private void OnDestroy()
+        {
+            if(!machine.CurrentCell) return;
+            machine.CurrentCell.SetOnMachineExit(machine);
+            machine.CurrentCell = null;
+        }
 
         #endregion
 

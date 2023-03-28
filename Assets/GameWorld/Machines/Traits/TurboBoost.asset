@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc80d9103828a66448ace5d6570a11b6, type: 3}
-  m_Name: CellData_Forest
+  m_Script: {fileID: 11500000, guid: ec5e0cf35c7f69446a9f0a2e315f4aaa, type: 3}
+  m_Name: TurboBoost
   m_EditorClassIdentifier: 
-  defaultTopElement: {fileID: 11400000, guid: f8bffa6f5316bae4f9224a1a7c9ecc53, type: 2}
-  speedUPTrait: {fileID: 11400000, guid: 3977c0285cac5454a99e674284f844b1, type: 2}
-  cellIcon: {fileID: 0}
-  cellArt: {fileID: 0}
-  cellCard: {fileID: 0}
-  cellName:
+  traitIcon: {fileID: 0}
+  traitName:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -26,7 +22,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  cellDescription:
+  traitDescription:
     m_TableReference:
       m_TableCollectionName: 
     m_TableEntryReference:
@@ -35,14 +31,13 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  movemenCost:
-    useConstant: 1
-    constantValue: 1
-    variable: {fileID: 0}
-  expansionCost:
-    useConstant: 1
-    constantValue: 0
-    variable: {fileID: 0}
+  types: 00000000
+  auxiliar: {fileID: 0}
+  isPermanentOnMachine: 1
+  machineTimer: 0
+  isPermanetOnHolder: 0
+  holderTimer: 0
+  traitVFX: {fileID: 0}
   references:
     version: 2
     RefIds: []

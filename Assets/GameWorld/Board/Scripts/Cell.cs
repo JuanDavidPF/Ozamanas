@@ -23,6 +23,7 @@ namespace Ozamanas.Board
         [SerializeField] private Overlay cellOverLay;
         public Transform visuals;
 
+
         public int MovementCost
         {
             get { return m_movementCost; }
@@ -166,6 +167,8 @@ namespace Ozamanas.Board
             OnMachineEntered?.Invoke(machine);
 
             MovementCost = CurrentHumanMachines.Count;
+
+            SpeedUpFirstMachine();
         }
 
         public virtual void SetOnMachineExit(HumanMachine machine)
@@ -177,6 +180,15 @@ namespace Ozamanas.Board
             OnMachineExited?.Invoke(machine);
 
             MovementCost = CurrentHumanMachines.Count;
+
+            machine.RemoveTraitToMachine(data.speedUPTrait);
+        }
+
+        public virtual void SpeedUpFirstMachine()
+        {
+            if(CurrentHumanMachines.Count <= 1) return;
+
+            CurrentHumanMachines[0].AddTraitToMachine(data.speedUPTrait);
         }
 
         protected virtual void OnUpdateCellData()

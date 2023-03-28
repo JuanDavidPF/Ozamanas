@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JuanPayan.References;
 using UnityEngine;
 using UnityEngine.Localization;
+using Ozamanas.Machines;
 
 namespace Ozamanas.Board
 {
@@ -13,6 +14,8 @@ namespace Ozamanas.Board
         [Header("Top Element Default")]
 
         public CellTopElement defaultTopElement;
+
+        public MachineTrait speedUPTrait;
 
         [Header("UI Config")]
         public Sprite cellIcon;

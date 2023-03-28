@@ -35,7 +35,7 @@ namespace Ozamanas.Machines
 
         private MachineSpeed currentSpeed;
         private MachineAltitude currentAltitude;
-        private float timeMaxToReachDestination = 20f;
+        private float timeMaxToReachDestination = 10f;
         private float timeToReachDestination = 0f;
 
         [Space(15)]
@@ -158,6 +158,8 @@ namespace Ozamanas.Machines
             if (navMeshAgent.pathPending) return false;
 
             if ( timeMaxToReachDestination < Time.time - timeToReachDestination ) return true;
+
+       // if ( currentDestination != nextCellOnPath && humanMachine.CurrentCell == nextCellOnPath ) return true;
 
            return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.001f;
 
