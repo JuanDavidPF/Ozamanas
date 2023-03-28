@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 2386593570910358238}
   - component: {fileID: 9129453228484020602}
   - component: {fileID: 3669431602670365051}
+  - component: {fileID: 446148388388257138}
   m_Layer: 0
   m_Name: HumanMachine_BulldozerMD
   m_TagString: Machine
@@ -448,7 +449,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1012468311011433840}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.2
+  m_Radius: 1
   m_Speed: 0.5
   m_Acceleration: 1
   avoidancePriority: 50
@@ -615,6 +616,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &446148388388257138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012468311011433840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33454992fd25ff4092df24f3b13db61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  events:
+  - {fileID: 0}
+  mode: 0
+  maxInvocations: 0
+  callback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3915165186959605317
 GameObject:
   m_ObjectHideFlags: 0

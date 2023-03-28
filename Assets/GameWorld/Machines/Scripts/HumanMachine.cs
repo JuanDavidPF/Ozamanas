@@ -33,6 +33,8 @@ namespace Ozamanas.Machines
         private AncientForce hijacker;
         private MachineArmor machineArmor;
         private MachineMovement machineMovement;
+
+        private MachinePhysicsManager machinePhysics;
         private Animator animator;
 
         private GameObject traitVFX;
@@ -80,6 +82,7 @@ namespace Ozamanas.Machines
             machineArmor = GetComponent<MachineArmor>();
             machineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
+            machinePhysics = GetComponent<MachinePhysicsManager>();
 
         }
 
@@ -322,6 +325,7 @@ namespace Ozamanas.Machines
 
             CurrentCell.SetOnMachineExit(this);
         }
+
 
 
     }//Closes HumanMachine class

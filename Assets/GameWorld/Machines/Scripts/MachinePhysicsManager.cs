@@ -83,6 +83,14 @@ namespace Ozamanas.Machines
             timeInToPhysical = Time.time;
         }//Closes ActivatePhysics method
 
+        public void ResetMachineNavAndAI()
+        {
+            if (fsm) fsm.enabled = false;
+            if (nma) nma.enabled = false;
+            if (nma) nma.enabled = true;
+            if (fsm) fsm.enabled = true;
+        }
+
         private void FixedUpdate()
         {
             if( state != PhysicMode.Physical ) return;

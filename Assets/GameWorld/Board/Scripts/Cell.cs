@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using Ozamanas.Machines;
+using Ozamanas.Tags;
 using UnityEngine.Events;
 using Ozamanas.Extenders;
-using Ozamanas.World;
 using Sirenix.OdinInspector;
 using System;
 
@@ -161,7 +161,33 @@ namespace Ozamanas.Board
 
         protected virtual void OnUpdateCellData()
         {
-            
+            CallNearbyMachines();   
+        }
+
+        private void CallNearbyMachines()
+        {
+            List<Cell> cells = BoardExtender.GetCellsOnRange(this,3,true);
+            List<MachinePhysicsManager> nearbyMachines = new List<MachinePhysicsManager>();
+
+            foreach ( Cell cell in cells)
+            {
+                foreach(HumanMachine machine in cell.currentHumanMachines)
+                {
+                    if(!nearbyMachines.Contains(machine.GetComponent<MachinePhysicsManager>())) nearbyMachines.Add(machine.GetComponent<MachinePhysicsManager>());
+                }
+            }
+
+            foreach(MachinePhysicsManager nearbyMachine in nearbyMachines)
+            {
+                if(nearbyMachine.state !=  PhysicMode.Intelligent) continue;
+
+                if(nearbyMachine.machine.CheckIfActing()) continue;
+
+                nearbyMachine.ResetMachineNavAndAI();
+            }
+
+
+
         }
 
         private void UpdateTopElement(CellTopElement topElement)
@@ -187,7 +213,7 @@ namespace Ozamanas.Board
             Destroy(topElementTransform.GetChild(0).gameObject);
         }
 
-        public void onLevelCompleteEvent()
+        public void OnLevelCompleteEvent()
         {
             if(onLevelComplete == null) return;
 
@@ -195,7 +221,7 @@ namespace Ozamanas.Board
             data = onLevelComplete.tokenToSwap;
         }
 
-        public void onLevelFailedEvent()
+        public void OnLevelFailedEvent()
         {
             if(onLevelFailed == null) return;
 
