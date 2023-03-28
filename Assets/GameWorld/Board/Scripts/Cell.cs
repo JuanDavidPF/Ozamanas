@@ -16,10 +16,24 @@ namespace Ozamanas.Board
     {   
          [Title("Cell Setup:")]
 
+        private int m_movementCost;
+
         [SerializeField] private CellData m_data;
 
         [SerializeField] private Overlay cellOverLay;
         public Transform visuals;
+
+        public int MovementCost
+        {
+            get { return m_movementCost; }
+            set {
+
+                if (value <= 0) m_movementCost = data.movemenCost.value;
+
+                else m_movementCost = data.movemenCost.value + value;
+
+            }
+        }
 
         public CellData data
         {
@@ -105,6 +119,8 @@ namespace Ozamanas.Board
         protected virtual void Start()
         {
             UpdateTopElement(data.defaultTopElement);
+            m_movementCost = data.movemenCost.value;
+
         }//Closes Awake method
 
        
@@ -148,6 +164,8 @@ namespace Ozamanas.Board
             CurrentHumanMachines.Add(machine);
 
             OnMachineEntered?.Invoke(machine);
+
+            MovementCost = CurrentHumanMachines.Count;
         }
 
         public virtual void SetOnMachineExit(HumanMachine machine)
@@ -157,6 +175,8 @@ namespace Ozamanas.Board
             CurrentHumanMachines.Remove(machine);
 
             OnMachineExited?.Invoke(machine);
+
+            MovementCost = CurrentHumanMachines.Count;
         }
 
         protected virtual void OnUpdateCellData()

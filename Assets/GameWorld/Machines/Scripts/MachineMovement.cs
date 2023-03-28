@@ -28,18 +28,13 @@ namespace Ozamanas.Machines
 
         private NavMeshAgent navMeshAgent;
         private HumanMachine humanMachine;
-        private CellData humanBase;
         private CellData mainObjective;
         private CellData mainObjectiveBackUP;
         private CellData secondObjective;
         private int secondObjectiveRange;
 
-        private bool obviateMainObjective;
-        private List<CellData> blacklist = new List<CellData>();
-        private MachineSpeedValues speedValues;
         private MachineSpeed currentSpeed;
         private MachineAltitude currentAltitude;
-        private float height = 5f;
         private float timeMaxToReachDestination = 20f;
         private float timeToReachDestination = 0f;
 
@@ -101,22 +96,17 @@ namespace Ozamanas.Machines
 
         private void LoadMachineObjectivesInformation()
         {
-            humanBase=humanMachine.Machine_token.humanBase;
             mainObjective=humanMachine.Machine_token.mainObjective;
             mainObjectiveBackUP = mainObjective;
             secondObjective=humanMachine.Machine_token.secondObjective;
             secondObjectiveRange=humanMachine.Machine_token.secondObjectiveRange;
-            obviateMainObjective=humanMachine.Machine_token.obviateMainObjective;
-            blacklist=humanMachine.Machine_token.cellBlacklist;
             distanceToHeart=humanMachine.Machine_token.OnDistanceToHeartNotification;
         }
 
         private void LoadMachineSpeedInformation()
         {
-            speedValues=humanMachine.Machine_token.speedValues;
             currentSpeed=humanMachine.Machine_token.currentSpeed;
             CurrentAltitude=humanMachine.Machine_token.currentAltitude;
-            height =humanMachine.Machine_token.height;
         }
 
        /* private void Update()
@@ -219,19 +209,19 @@ namespace Ozamanas.Machines
                 {
 
                     if (!next) continue;
-                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.data && blacklist.Contains(next.data)) continue;
+                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.data && humanMachine.Machine_token.cellBlacklist.Contains(next.data)) continue;
                     if (CurrentAltitude == MachineAltitude.Terrestrial && next.isOccupied) continue;
                     /*Implement here early exits for board cell that dont met the conditions*/
 
 
                     /*Implement here early exits for board cell that dont met the conditions*/
 
-                    int new_cost = cost_so_far[current] + current.DistanceTo(next) + next.data.movemenCost.value;
+                    int new_cost = cost_so_far[current] + current.DistanceTo(next) + next.MovementCost;
 
                     if (!cost_so_far.ContainsKey(next) || new_cost < cost_so_far[next])
                     {
                         cost_so_far[next] = new_cost;
-                        int priority = new_cost + goal.DistanceTo(next) + next.data.movemenCost.value;
+                        int priority = new_cost + goal.DistanceTo(next) + next.MovementCost;
                         frontier.Insert(next, priority);
                         came_from[next] = current;
                     }
@@ -300,7 +290,7 @@ namespace Ozamanas.Machines
             int distanceToMain = currentDestination.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
             int distanceToSecondary = secondCell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial());
 
-            if(obviateMainObjective || distanceToMain > distanceToSecondary)
+            if(humanMachine.Machine_token.obviateMainObjective || distanceToMain > distanceToSecondary)
             {
                 CalculatePathToDestination(secondCell);
             }
@@ -405,8 +395,8 @@ namespace Ozamanas.Machines
 
         public void GoToBase()
         {
-            if (mainObjective == humanBase) return;
-            mainObjective = humanBase;
+            if (mainObjective == humanMachine.Machine_token.humanBase) return;
+            mainObjective = humanMachine.Machine_token.humanBase;
         }
 
         public void GotoMainObjective()
@@ -422,7 +412,7 @@ namespace Ozamanas.Machines
         {
             GotoMainObjective();
             currentSpeed=humanMachine.Machine_token.currentSpeed;
-            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
             if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
@@ -433,7 +423,7 @@ namespace Ozamanas.Machines
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
             if(! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
         }
 
         public void DecreaseMachineSpeed()
@@ -443,7 +433,7 @@ namespace Ozamanas.Machines
             speed = Mathf.Clamp(speed, 0, 4);
             currentSpeed = (MachineSpeed)speed;
              if(! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = speedValues.GetSpeed(currentSpeed);
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
         }
 
         public void StopMachine()

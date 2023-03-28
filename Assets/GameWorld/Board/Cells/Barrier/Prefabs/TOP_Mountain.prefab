@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1486443040282084153}
   - component: {fileID: 8143538472545976079}
   - component: {fileID: -2697545870563003761}
+  - component: {fileID: 6980336988675830058}
   m_Layer: 0
   m_Name: TOP_Mountain
   m_TagString: Untagged
@@ -116,6 +117,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6980336988675830058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125922317519692524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1677814ac973e4189070c62cd30386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruleList:
+  - condition: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: f8bffa6f5316bae4f9224a1a7c9ecc53, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  lifetime: 0
+  fragmentedModelLifetime: 2
+  fragmentedModel: {fileID: 5878651588068245928, guid: f5e24ff84a336a14ead10f0af0d4d6ae,
+    type: 3}
+  forestId: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3677100731659260199
 PrefabInstance:
   m_ObjectHideFlags: 0

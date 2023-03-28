@@ -23,7 +23,6 @@ namespace Ozamanas.Forest
         [SerializeField] private float lifetime = 1f;
         [SerializeField] private float fragmentedModelLifetime = 2f;
         [SerializeField] private GameObject fragmentedModel;
-        [SerializeField] private CellData forestId;
 
         private Cell currentCell;
 
@@ -31,16 +30,17 @@ namespace Ozamanas.Forest
 
         private bool alreadyTriggered = false;
 
-        public Cell CurrentCell { get => currentCell; set => currentCell = value; }
-
         private GameObject dummy;
 
 
         private void Start()
         {
-            if( lifetime > 0) Invoke("DestroyMountain",lifetime);
 
             currentCell = GetComponentInParent<Cell>();
+
+            if( lifetime > 0) Invoke("DestroyMountain",lifetime);
+
+            
         }
 
         // Start is called before the first frame update
@@ -61,21 +61,20 @@ namespace Ozamanas.Forest
         public void DestroyMountain()
         {
             if (alreadyTriggered) return;
+
             alreadyTriggered = true;
+            
             OnDestruction?.Invoke();
 
-            currentCell.data = GetTokenToSwap(currentCell);
-            currentCell.CurrentTopElement = GetTopElementToSwap(currentCell);
-
-
-            gameObject.SetActive(false);
             dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
-            
-            if (!dummy) return;
             
             Invoke("RemoveAllMeshColliders", fragmentedModelLifetime - 0.5f);
             Destroy(dummy, fragmentedModelLifetime);
-            return;
+           
+            
+
+            currentCell.CurrentTopElement = GetTopElementToSwap(currentCell);
+            currentCell.data = GetTokenToSwap(currentCell);
         }
 
         private void RemoveAllMeshColliders()
