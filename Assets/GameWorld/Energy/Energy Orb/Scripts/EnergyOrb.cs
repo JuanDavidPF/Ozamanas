@@ -10,37 +10,55 @@ namespace Ozamanas.Energy
         [SerializeField] private bool goToCounter;
         [SerializeField] private float movementSpeed;
 
-        private Tweener tweener;
+        [SerializeField] private float initDelay;
 
+        [SerializeField] private Vector3 initPosition;
 
+        public Vector2 leftTopPosition ;
+        private  EnergyAbsorber absorber;
 
+        private Sequence mySequence;
 
-        private void Start()
+        public EnergyAbsorber Absorber { get => absorber; set => absorber = value; }
+
+        private bool isDestroyed = false;
+
+        public void GoToEnergyAbsorber()
+        {
+            if (!goToCounter || !Absorber) return;
+
+             mySequence = DOTween.Sequence();
+
+            Vector3 initPos = transform.position + initPosition;
+
+             mySequence.Append(transform.DOMove(initPos, movementSpeed).SetSpeedBased(true));
+
+            mySequence.Append(transform.DOMove(leftTopPosition, movementSpeed).SetDelay(initDelay).SetSpeedBased(true));
+
+            mySequence.OnComplete(() =>
+            {
+                DestroyOrb();
+            });
+        }//Closes Start Method
+
+        void OnTriggerEnter2D(Collider2D col)
         {
 
-            Transform absorber = EnergyAbsorber.mainAbsorber;
+            DestroyOrb();
+        }
 
-            if (!goToCounter || !absorber) return;
-
-
-            tweener = transform.DOMove(absorber.position, movementSpeed)
-            .SetSpeedBased(true);
-
-
-            tweener.OnUpdate(() =>
-            {
-                float distance = Mathf.Min(Vector3.Distance(transform.position, absorber.position) / 4, 1);
-
-                transform.localScale = new Vector3(distance, distance, distance);
-                tweener.ChangeEndValue(absorber.position, true);
-            }
-            );
-
-        }//Closes Start Method
+        private void DestroyOrb()
+        {
+            if(isDestroyed) return;
+            mySequence.Kill();
+            isDestroyed = true;
+            if(Absorber) Absorber.AddEnergyAmount();
+            Destroy(gameObject); 
+        }
 
         private void OnDisable()
         {
-            tweener.Kill();
+            mySequence.Kill();
         }//Closes OnDisable method
 
     }//Closes EnergyOrb class

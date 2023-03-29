@@ -5,15 +5,14 @@ using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
 using Ozamanas.Tags;
+using Ozamanas.Machines;
 
 namespace Ozamanas.Forces
 {
     public class AddForceMammal : AncientForce
     {
        
-        private Transform AOETransform;
-        [SerializeField] private MeshRenderer AOERenderer;
-        private List<Machines.MachineArmor> machinesAffected = new List<Machines.MachineArmor>();
+
         [SerializeField] private float mammalSpeed = 2f;
 
         private Tween mammalTween;
@@ -27,10 +26,6 @@ namespace Ozamanas.Forces
         {
             base.Awake();
 
-            if (AOERenderer) AOETransform = AOERenderer.transform;
-
-            AOETransform.position = AOETransform.position - data.draggedOffset;
-
             animator = GetComponent<Animator>();
         }//Closes Awake method
 
@@ -42,8 +37,6 @@ namespace Ozamanas.Forces
             if (!isPlaced) return;
 
             animator.SetTrigger("OnRelease");
-
-            AOERenderer.gameObject.SetActive(false);
 
             mammalTween = transform.DOMoveY(0, mammalSpeed, false).SetSpeedBased();
 
@@ -70,11 +63,11 @@ namespace Ozamanas.Forces
         {
              ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                 
-                foreach (var machine in machinesAffected.ToArray())
-                {
-                    if (!machine) continue;
-                    AddForceToMachine(machine);                    
-                }
+            foreach (HumanMachine machine in machinesAffected)
+            {
+                if (!machine) continue;
+                AddForceToMachine(machine);                    
+            }
                 
            
         }
@@ -103,6 +96,9 @@ namespace Ozamanas.Forces
             
         }
 
+
+
+
         private void ActivateTraits(Cell origin)
         {
             if (!origin) return;
@@ -122,12 +118,10 @@ namespace Ozamanas.Forces
         }//Closes ActivateTraits method
 
 
-        private void AddForceToMachine(Machines.MachineArmor machine)
+        private void AddForceToMachine(HumanMachine machine)
         {
            
             if (!machine || machine.tag != "Machine") return;
-
-            machinesAffected.Remove(machine);
 
 
              if (machine.TryGetComponent(out Machines.HumanMachine h_machine))
@@ -146,46 +140,19 @@ namespace Ozamanas.Forces
 
         }//Closes AttemptMachineDamage method
 
-        private void OnTriggerEnter(Collider other)
-        {
+       
 
-            if (isPlaced) return;
-            
-            if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
-            {
-                if (!machinesAffected.Contains(armor)) machinesAffected.Add(armor);
+       
+        
 
-            }
-            else return;
-
-            UpdateAOEColor();
-        }//Closes OnTriggerEnter method
-
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (isPlaced) return;
-
-            if (other.tag == "Machine" && other.TryGetComponentInParent(out Machines.MachineArmor armor))
-            {
-                machinesAffected.Remove(armor);
-
-            }
-            else return;
-
-            UpdateAOEColor();
-        }
-        private void UpdateAOEColor()
-        {
-            if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.2f);
-            else AOERenderer.material.color  = new Vector4(0,1,0,0.2f);
-        }//Closes UpdateAOEColor method
-
-         void OnDestroy()
+        void OnDestroy()
         {
             if (mammalTween != null) mammalTween.Kill();
-        }//Closes OnDestroy method
+        }
+
+       
+
+       
 
 
     }

@@ -16,6 +16,15 @@ namespace Ozamanas.UI
 {
 public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
+
+        [Space(15)]
+    [Header("Camera Settings")]
+
+     [SerializeField] private Transform camAnchor;
+
+     [SerializeField] private string cameraKey;
+
+     private Transform cameraTransform;
     [Space(15)]
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
@@ -23,6 +32,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private SpriteRenderer levelIcon;
 
        [SerializeField] private SpriteRenderer levelBorder;
+
 
     [SerializeField] private Color levelBlocked;
 
@@ -34,6 +44,8 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Followings Levels Data")]
     [SerializeField] private List<LevelHandler> nextLevels;
     private List<LevelHandler> predecesorsLevels = new List<LevelHandler>();
+
+
 
     [Space(15)]
     [Header("Level Settings")]
@@ -48,7 +60,6 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
     private Animator animator;
-   private Vector3 screenPos;
     private PlayerController player;
 
 
@@ -74,7 +85,6 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         animator = gameObject.GetComponent<Animator>();
         player= GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         Camera cam = Camera.main;
-        screenPos = cam.WorldToScreenPoint(gameObject.transform.position);
     }
 
      void Start()
@@ -83,7 +93,7 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         state = levelData.state;
 
-       // PrintDottedLines();
+        PrintDottedLines();
 
         levelIcon.sprite = levelData.levelIcon;
 
@@ -91,10 +101,11 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         BringPlayerToLevel();
 
+        BringCameraToLevel();
+
         SetUpPredecesors();
 
-        
-
+         
     }
 
     private void SetUpLevelColor()
@@ -171,8 +182,22 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
        player.transform.position = transform.position;
 
-       GetNextLevelsViewPoint();
+       player.transform.position += player.playerOffset;
 
+       GetNextLevelsViewPoint();
+      
+    }
+
+     private void BringCameraToLevel()
+    {
+       if(levelController.level != levelData ) return;
+
+        cameraTransform = CameraAtlas.Get(cameraKey).GetComponent<Transform>();
+        
+        if (!cameraTransform) return;
+
+        cameraTransform.position = camAnchor.position;
+        cameraTransform.rotation = camAnchor.rotation;
       
     }
 
@@ -208,14 +233,15 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (player.PlayerState == PlayerState.Running) return;
        
-       if(player.transform.position == gameObject.transform.position ) 
+       if(player.transform.position - player.playerOffset == gameObject.transform.position  ) 
        {
             SetToPlayLevel();
             return;
        }
-       if(!MovementApproval(player.transform.position)) return; 
+
+       if(!MovementApproval(player.transform.position - player.playerOffset)) return; 
        
-       player.MoveToDestination(transform);
+       player.MoveToDestination(transform.position + player.playerOffset);
 
        isPlayerDestination = true;
 
@@ -258,6 +284,8 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
        animator.SetTrigger("Selected");
 
+       player.transform.DOLookAt(transform.position + player.playerOffset,0.5f);
+
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
@@ -270,11 +298,11 @@ public class LevelHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if(nextLevels.Count == 0) return Vector3.zero;
 
-        else if(nextLevels.Count == 1) return nextLevels[0].transform.position;
+        else if(nextLevels.Count == 1) return nextLevels[0].transform.position + player.playerOffset;
 
-        else if(nextLevels.Count == 2) return Vector3.Lerp(nextLevels[0].transform.position,nextLevels[1].transform.position,0.5f);
+        else if(nextLevels.Count == 2) return Vector3.Lerp(nextLevels[0].transform.position,nextLevels[1].transform.position,0.5f)+ player.playerOffset;
 
-        else return nextLevels[1].transform.position;
+        else return nextLevels[1].transform.position+ player.playerOffset;
     }
 
    

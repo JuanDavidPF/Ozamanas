@@ -111,8 +111,8 @@ namespace Ozamanas.World
             List<Cell> cells = Board.Board.GetCellsByData(cellsData.ToArray());
             foreach(Cell cell in cells)
             {
-               if(levelComplete) cell.onLevelCompleteEvent();
-               else cell.onLevelFailedEvent();
+               if(levelComplete) cell.OnLevelCompleteEvent();
+               else cell.OnLevelFailedEvent();
                 yield return new WaitForSeconds(0.1f);
             }
             

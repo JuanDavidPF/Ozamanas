@@ -5,6 +5,7 @@ using Ozamanas.Extenders;
 using DG.Tweening;
 using Ozamanas.Board;
 using Ozamanas.Tags;
+using Ozamanas.Machines;
 
 namespace Ozamanas.Forces
 {
@@ -113,6 +114,11 @@ namespace Ozamanas.Forces
         private void AttackMachine(Machines.MachineArmor machine)
         {
             if (!machine || machine.tag != "Machine") return;
+
+             if (machine.TryGetComponent(out MachineMovement movement))
+             {
+                if(movement.CurrentAltitude != MachineAltitude.Terrestrial) return;
+             }
 
               if (machine.TryGetComponent(out Machines.HumanMachine h_machine))
             {

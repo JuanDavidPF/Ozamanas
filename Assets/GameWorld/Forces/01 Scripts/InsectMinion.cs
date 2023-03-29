@@ -59,8 +59,7 @@ namespace Ozamanas.Forces
                 
                 if(other.transform.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
                 {
-                    physics.SetPhysical();
-                    physics.SetIntelligent();    
+                   physics.ResetMachineNavAndAI();
                 }
 
                 Instantiate(OnMinionDestructionVFX,transform.position,transform.rotation);

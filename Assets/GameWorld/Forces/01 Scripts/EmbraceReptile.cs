@@ -14,8 +14,6 @@ namespace Ozamanas.Forces
         Collider clld;
 
         [SerializeField] private float duration = 2f;
-
-        [SerializeField] private MachineTrait markTrait;
         
         private Cell currentCell;
 
@@ -46,6 +44,8 @@ namespace Ozamanas.Forces
 
               animator.SetTrigger("OnRelease");
 
+              SetUpNearMachine();
+
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
             currentCell.isOccupied = true;
@@ -61,10 +61,9 @@ namespace Ozamanas.Forces
             if (!nearMachine)
             {
                 base.DestroyForce();
+                currentCell.isOccupied = false;
                 return;
             }
-
-            nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
 
             currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
 
@@ -85,33 +84,20 @@ namespace Ozamanas.Forces
 
         }
 
-        
-
-
-        private void OnTriggerEnter(Collider other)
+        private void SetUpNearMachine()
         {
-            if (isPlaced || other.transform.tag != "Machine" || other.transform == nearMachine) return;
-            
-            if(other.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
+            foreach(HumanMachine machine in machinesAffected)
             {
-                if(physics.state != PhysicMode.Intelligent) return;
-
-                if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
-
-                nearMachine = other.transform; 
-
-                nearMachine.GetComponentInParent<HumanMachine>().AddTraitToMachine(markTrait);
+                if (machine.TryGetComponent(out MachineMovement movement))
+                {
+                    if(movement.CurrentAltitude != MachineAltitude.Terrestrial) continue;
+                }
+                if(machine.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
+                {
+                    if(physics.state != PhysicMode.Intelligent) continue;
+                    nearMachine = physics.transform; 
+                }
             }
-            
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (isPlaced || other.transform.tag != "Machine" || other.transform != nearMachine) return;
-
-            if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().RemoveTraitToMachine(markTrait);
-
-            nearMachine = null;
         }
 
 

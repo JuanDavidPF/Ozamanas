@@ -20,20 +20,15 @@ namespace Ozamanas.Forces
             Cell
         }
 
-        private Transform AOETransform;
-        List<Machines.HumanMachine> machinesAffected = new List<Machines.HumanMachine>();
         private Tween insectTween;
 
         [SerializeField] private GameObject minion;
         [SerializeField] private ControlMode mode;
-        [SerializeField] private MeshRenderer AOERenderer;
 
         protected override void Awake()
         {
             base.Awake();
-            if (AOERenderer) AOETransform = AOERenderer.transform;
 
-             AOETransform.position = AOETransform.position - data.draggedOffset;
         }//Closes Awake method
 
 
@@ -44,8 +39,6 @@ namespace Ozamanas.Forces
           
             if (!isPlaced) return;
 
-            AOERenderer.gameObject.SetActive(false);
-
             if (mode == ControlMode.Machine)
             {
                     foreach (var machine in machinesAffected.ToArray())
@@ -54,7 +47,7 @@ namespace Ozamanas.Forces
                         ActivateMinion(machine);
                     }
 
-                    Destroy(gameObject);
+                    base.DestroyForce();
             }
             else if(mode != ControlMode.Machine)
             {
@@ -68,39 +61,9 @@ namespace Ozamanas.Forces
 
 
 
-        private void OnTriggerEnter(Collider other)
-        {
-           
-            if (isPlaced || other.tag != "Machine") return;
-
-            if (other.TryGetComponentInParent(out Machines.HumanMachine machine))
-            {
-                if (!machinesAffected.Contains(machine)) machinesAffected.Add(machine);
-
-            }
-            else return;
-
-            UpdateAOEColor();
-        }//Closes OnTriggerEnter method
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (isPlaced || other.tag != "Machine") return;
-
-            if (other.TryGetComponentInParent(out Machines.HumanMachine machine))
-                machinesAffected.Remove(machine);
-            else return;
-            UpdateAOEColor();
-
-        }//Closes OnTriggerExit method
-
-        private void UpdateAOEColor()
-        {
-            if (!AOERenderer) return;
-            if (machinesAffected.Count == 0) AOERenderer.material.color = new Vector4(1,1,1,0.2f);
-            else AOERenderer.material.color = new Vector4(0,1,0,0.2f);
-        }//Closes UpdateAOEColor method
-
+       
+      
+       
 
          void OnDestroy()
         {

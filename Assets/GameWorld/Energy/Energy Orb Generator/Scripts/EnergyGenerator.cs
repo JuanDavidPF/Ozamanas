@@ -20,6 +20,12 @@ namespace Ozamanas.Energy
         [SerializeField] private EnergyOrb energyOrb;
         [SerializeField] private float3 offsetPosition;
 
+        private Canvas gameplayCanvas;
+
+        private  EnergyAbsorber absorber;
+
+        private Camera cam;
+
 
         [Space(15)]
         [Header("Generation config")]
@@ -68,6 +74,8 @@ namespace Ozamanas.Energy
             offset = new WaitForSeconds(generationOffset.value);
             cooldown = new WaitForSeconds(generationCooldown.value);
             currentLevel = fullLevel.value;
+            gameplayCanvas = FindObjectOfType<Canvas>();
+            cam = GameObject.FindWithTag("UICamera").GetComponent<Camera>();
         }//Closes Awake method
 
 
@@ -114,9 +122,38 @@ namespace Ozamanas.Energy
         public void Generate()
         {
             if (!energyOrb) return;
-            Instantiate(energyOrb, offsetPosition + transform.position.ToFloat3(), Quaternion.identity);
+
+            if(!gameplayCanvas) return;
+
+            if(!absorber) SetUpAbsorver();
+
+            if(!absorber) return;
+
+            EnergyOrb orb = Instantiate(energyOrb,gameplayCanvas.transform).GetComponent<EnergyOrb>();
+
+            RectTransform CanvasRect=gameplayCanvas.GetComponent<RectTransform>();
+
+            Vector2 ViewportPosition=cam.WorldToViewportPoint(transform.position);
+
+             Vector2 WorldObject_ScreenPosition=new Vector2(
+                ((ViewportPosition.x*CanvasRect.sizeDelta.x)-(CanvasRect.sizeDelta.x*0.5f)),
+                ((ViewportPosition.y*CanvasRect.sizeDelta.y)-(CanvasRect.sizeDelta.y*0.5f)));
+
+            orb.GetComponent<RectTransform>().anchoredPosition=WorldObject_ScreenPosition;
+
+            orb.Absorber = absorber;
+
+            orb.leftTopPosition = new Vector2(0, cam.pixelHeight);
+
+            orb.GoToEnergyAbsorber();
+
             OnEnergyOrbGenerated?.Invoke();
         }//Closes Generate method
+
+        private void SetUpAbsorver()
+        {
+            absorber = FindObjectOfType<EnergyAbsorber>();
+        }
 
     }//Closes EnergyGenerator
 }//Closes namespace declaration
