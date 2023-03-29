@@ -88,12 +88,14 @@ namespace Ozamanas.Forces
         {
             foreach(HumanMachine machine in machinesAffected)
             {
+                if (machine.TryGetComponent(out MachineMovement movement))
+                {
+                    if(movement.CurrentAltitude != MachineAltitude.Terrestrial) continue;
+                }
                 if(machine.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
                 {
                     if(physics.state != PhysicMode.Intelligent) continue;
-
                     nearMachine = physics.transform; 
-
                 }
             }
         }

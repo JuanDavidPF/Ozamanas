@@ -84,17 +84,20 @@ namespace Ozamanas.Forces
 
         private void AttackMachine(HumanMachine machine)
         {
+             if(!machine) return;
+
+             if (machine.TryGetComponent(out MachineMovement movement))
+             {
+                if(movement.CurrentAltitude != MachineAltitude.Terrestrial) return;
+             }
+             
+            machine.SetMachineStatus(MachineState.Attacked);
 
             if (machine.TryGetComponent(out Machines.MachineArmor armor))
             {
                 armor.TakeDamage(damageAmount);
             }
-            
-            if (machine.TryGetComponent(out Machines.HumanMachine h_machine))
-            {
-                h_machine.SetMachineStatus(MachineState.Attacked);
-            }
-
+    
             if (machine.TryGetComponent(out Machines.MachinePhysicsManager physics))
             {
                 physics.AddForceToMachine(data.physicsForce,transform.position);
