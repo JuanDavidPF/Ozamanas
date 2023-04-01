@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6613032603146603992}
   - component: {fileID: 7330523083591242651}
-  - component: {fileID: 3845335969127871566}
   - component: {fileID: 5049294363413682706}
   - component: {fileID: 2335748586658576222}
   - component: {fileID: 890225421999572751}
@@ -51,22 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89062caaacb135446b8d7d8d9d27de1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOffset: {x: 0, y: 0.35, z: 0}
   jumpDistance: 2
   speed: 3.1
   playerState: 2
---- !u!65 &3845335969127871566
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270371435562920187}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.1574202, y: 1.6394958, z: 3.023899}
-  m_Center: {x: -0.03865075, y: 0.78355813, z: 0}
 --- !u!95 &5049294363413682706
 Animator:
   serializedVersion: 4
@@ -671,6 +658,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_FlyingEmber
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428454828204077312, guid: 9db235b4f0ae9d5448fb22b844b8e6fc,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7546017918099587568, guid: 9db235b4f0ae9d5448fb22b844b8e6fc,
         type: 3}

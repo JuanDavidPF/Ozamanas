@@ -9,7 +9,6 @@ namespace Ozamanas.GameScenes
 
 public class PlayerController : MonoBehaviour
 {
-
      private Tween playerTween;
 
     private Animator animator;
@@ -33,20 +32,13 @@ public class PlayerController : MonoBehaviour
     }
 
     
-    public void MoveToDestination(Vector3 destination)
+    public void MoveToDestination(Vector3 destination,  List<Vector3> path)
     {
         if(currentDestination != destination) currentDestination = destination;
 
-        float distance =Vector3.Distance(gameObject.transform.position,destination );
+        if(path == null || path.Count == 0) return;
 
-        float jumps = distance / jumpDistance;
-
-        for(int i = 1; i <= jumps + 1 ; i++)
-        {
-            float value = Mathf.Clamp(((i*jumpDistance)/distance),0f,1f);
-            Vector3 temp = Vector3.Lerp(transform.position,currentDestination ,value);
-            playerPath.Add(temp);
-        }
+        playerPath = path;
 
         gameObject.transform.DOLookAt(destination ,0.5f);
         
@@ -77,6 +69,7 @@ public class PlayerController : MonoBehaviour
         if (playerPath.Count > 0) return;
         
         animator.SetTrigger("Idle");
+
         PlayerState = PlayerState.Waiting;
     }
 

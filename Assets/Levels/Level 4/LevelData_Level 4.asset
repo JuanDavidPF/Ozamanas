@@ -12,8 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aab9e1314aa2c2479ebdd03b81f4c61, type: 3}
   m_Name: LevelData_Level 4
   m_EditorClassIdentifier: 
-  state: 1
+  state: 0
   index: 4
+  creationDelay:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  creationRate:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
+  wavesAmount:
+    useConstant: 1
+    constantValue: 3
+    variable: {fileID: 0}
+  wavesCooldown:
+    useConstant: 1
+    constantValue: 10
+    variable: {fileID: 0}
+  showLevelData: 0
+  showIfTutorial: 0
+  showEndLevel: 0
+  showClimate: 0
+  machines: []
+  unlockForces: []
+  ifLoseReturnToScene: 2
+  ifWinReturnToScene: 1
+  tutorialActions: []
+  currentAction: {fileID: 0}
+  skyBox: {fileID: 0}
   levelIcon: {fileID: -2107980570, guid: 22c34552d39ba40418ee059e97580195, type: 3}
   levelName:
     m_TableReference:
@@ -34,29 +61,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   levelSceneName: Level_4
-  creationDelay:
-    useConstant: 1
-    constantValue: 0
-    variable: {fileID: 0}
-  creationRate:
-    useConstant: 0
-    constantValue: 0
-    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
-  wavesAmount:
-    useConstant: 1
-    constantValue: 3
-    variable: {fileID: 0}
-  wavesCooldown:
-    useConstant: 1
-    constantValue: 10
-    variable: {fileID: 0}
-  showIfTutorial: 0
-  machines: []
-  ifLoseReturnToScene: 2
-  ifWinReturnToScene: 1
   saveAt: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
-  tutorialActions: []
-  currentAction: {fileID: 0}
   references:
     version: 2
     RefIds: []
