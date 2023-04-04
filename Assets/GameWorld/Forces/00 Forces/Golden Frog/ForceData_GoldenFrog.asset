@@ -45,10 +45,8 @@ MonoBehaviour:
     m_LocalVariables: []
   showPlacement: 0
   showConstellation: 0
-  whiteList:
-  - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
-  - {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
-  - {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
+  showTraits: 0
+  showData: 0
   price:
     useConstant: 1
     constantValue: 1
@@ -61,6 +59,14 @@ MonoBehaviour:
     useConstant: 1
     constantValue: 1
     variable: {fileID: 0}
+  attackRange:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  whiteList:
+  - {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
+  - {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
   rangeAnchors:
   - {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
@@ -72,9 +78,12 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
     topElementToSwap: {fileID: 11400000, guid: 256f7a4eeb7886440a7d41b5b72d50b8, type: 2}
     tokenToSwap: {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
+  - condition: {fileID: 11400000, guid: 567dbd8a004cdaf4c95e053b9bfa3a83, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: b09a812e6cea06641a7989008dc8f61a, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+  physicsForce: {fileID: 0}
   traits: []
   traitRange: 1
-  physicsForce: {fileID: 0}
   placementMode: 0
   draggedOffset: {x: 0, y: 1, z: 0}
   snapToGrid: 1
