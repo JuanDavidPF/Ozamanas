@@ -20,15 +20,19 @@ namespace Ozamanas.Board
             get { return m_currentCellSelected; }
             set
             {
-               /* if (m_currentCellSelected)
+                if(m_currentCellSelected == value) return;
+
+                if (m_currentCellSelected)
                 {
-                    if (m_currentCellHovered != m_currentCellSelected) m_currentCellSelected.EraseOutline(2);
-                    else m_currentCellHovered.DrawHoveredOutline();
-                }*/
+                    m_currentCellSelected.cellReference.CellOverLay.DeActivatePointer(Tags.CellPointerType.SelectionPointer);
+                } 
 
                 m_currentCellSelected = value;
 
-               // if (m_currentCellSelected) m_currentCellSelected.DrawSelectedOutline();
+                if (m_currentCellSelected)
+                {
+                    m_currentCellSelected.cellReference.CellOverLay.ActivatePointer(Tags.CellPointerType.SelectionPointer);
+                }
 
             }
         }
@@ -38,6 +42,7 @@ namespace Ozamanas.Board
             get { return m_currentCellHovered; }
             set
             {
+                if(m_currentCellHovered == value) return;
 
                 if (m_currentCellHovered) m_currentCellHovered.cellReference.CellOverLay.DeActivatePointer(Tags.CellPointerType.MouseOverPointer);
 

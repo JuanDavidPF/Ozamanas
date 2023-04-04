@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 192048126}
   - component: {fileID: 192048125}
   - component: {fileID: 192048128}
-  - component: {fileID: 192048129}
+  - component: {fileID: 192048130}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -216,39 +216,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
-    m_Right: 50
-    m_Top: 80
-    m_Bottom: 0
+    m_Left: 12
+    m_Right: 54
+    m_Top: 85
+    m_Bottom: 100
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &192048129
-MonoBehaviour:
+--- !u!225 &192048130
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192048123}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: 400
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 100
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &237313592
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +277,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 32.69}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &237313594
 MonoBehaviour:
@@ -788,6 +780,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  sceneUnloader: {fileID: 0}
   titleString: {fileID: 237313594}
   descriptionString: {fileID: 1610918661}
   levelController: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
@@ -1045,8 +1038,6 @@ GameObject:
   - component: {fileID: 1610918658}
   - component: {fileID: 1610918662}
   - component: {fileID: 1610918661}
-  - component: {fileID: 1610918660}
-  - component: {fileID: 1610918663}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -1071,29 +1062,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 213, y: 0}
-  m_SizeDelta: {x: 410, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1610918660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610918657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: 500
-  m_PreferredHeight: 100
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1610918661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,8 +1086,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Como los dem\xE1s miembros de tu especie, representas al bosque, peque\xF1o
-    fantasma. Eres las hojas de los \xE1rboles, las piedras del r\xEDo y el aire
-    de la selva. "
+    fantasma. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9c30a5860c8564f409893621d06ef16b, type: 2}
   m_sharedMaterial: {fileID: 5514596874238615363, guid: 9c30a5860c8564f409893621d06ef16b,
@@ -1152,7 +1122,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 5.65
   m_wordSpacing: 0
@@ -1180,7 +1150,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -0.58883, z: 0, w: -0.58883667}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1194,20 +1164,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610918657}
   m_CullTransparentMesh: 1
---- !u!114 &1610918663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610918657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
 --- !u!1 &1724776225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,14 +1349,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 881976724}
+      objectReference: {fileID: 136230582927033767}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 881976722}
     - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 881976722}
+      objectReference: {fileID: 881976724}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ExitTutorialAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Behaviour
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: JuanPayan.Helpers.SoundPlayer, JuanPayan.Helpers
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TutorialPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 136230583245914310, guid: e6162ab81be5694419928034c889f3b8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: JuanPayan.Helpers.SceneUnloader, JuanPayan.Helpers
+      objectReference: {fileID: 0}
     - target: {fileID: 136230583245914361, guid: e6162ab81be5694419928034c889f3b8,
         type: 3}
       propertyPath: m_Padding.m_Left
@@ -1523,3 +1519,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6162ab81be5694419928034c889f3b8, type: 3}
+--- !u!114 &136230582927033767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 136230583245914308, guid: e6162ab81be5694419928034c889f3b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 136230582927033766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42c6c24bf80bc48a0077413ffef9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

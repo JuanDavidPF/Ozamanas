@@ -90,7 +90,9 @@ namespace Ozamanas.Tags
 
             ReleaseRangePointer,
 
-            AttackRangePointer
+            AttackRangePointer,
+
+            SelectionPointer
         }
 
      public enum PlacementMode

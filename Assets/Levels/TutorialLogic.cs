@@ -90,6 +90,8 @@ public class TutorialLogic : MonoBehaviour
 
     private void ExecuteCurrentAction()
     {
+        CellSelectionHandler.currentCellSelected = null;
+        
          switch(levelSelected.level.currentAction.tutorialType)
         {
             case TutorialType.Explicative:
@@ -130,6 +132,8 @@ public class TutorialLogic : MonoBehaviour
             CellSelectionHandler.currentCellSelected = selection;
         }
 
+       
+
         anchorTween.OnComplete(() =>
         {
             StartCoroutine(LoadScene());
@@ -143,6 +147,7 @@ public class TutorialLogic : MonoBehaviour
         yield return new WaitForSeconds(1f);
         sceneSwitcher.Behaviour();
         currentActionIndex++;
+        
     }
 
 

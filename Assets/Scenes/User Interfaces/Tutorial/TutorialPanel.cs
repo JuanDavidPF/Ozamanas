@@ -8,6 +8,7 @@ using Ozamanas.Tags;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using JuanPayan.Helpers;
 
 
 namespace Ozamanas.GameScenes
@@ -41,44 +42,75 @@ public class TutorialPanel : MonoBehaviour
         private bool waitForInput;
         private bool anyKeyDown;
 
+        private int index = 0;
+
+        private bool isLastSentence = false;
+
+         [SerializeField] private SceneUnloader sceneUnloader;
+
          [SerializeField] TextMeshProUGUI titleString;
         [SerializeField] TextMeshProUGUI descriptionString;
         [SerializeField] private LevelReference levelController;
-
-         [SerializeField] private GameEvent OnExitTutorialAction;
+        [SerializeField] private GameEvent OnExitTutorialAction;
 
  void Awake()
     {
        if (!levelController || !levelController.level || !levelController.level.currentAction) return;
+
+       sceneUnloader = GetComponent<SceneUnloader>();
        
        if(waitInputIndicator) waitInputIndicator.GetComponent<Button>().interactable = false;
        
-       UpdatePanel();
+       StartDialogue();
     }
 
   
     
-    public void UpdatePanel()
+    public void StartDialogue()
     {
       if (titleString) titleString.text = levelController.level.currentAction.title.GetLocalizedString();
       
-      IEnumerator coroutine;
+      index = 0;
 
-      coroutine = PrintTextOnPanel(descriptionString,levelController.level.currentAction.description.GetLocalizedString());
-      StartCoroutine(coroutine);
+      PrintNextPhraseOnPanel();
       
+    }
+    private void PrintNextPhraseOnPanel()
+    {
+        if(index == levelController.level.currentAction.descriptions.Count-1) isLastSentence = true;
+
+        if(index >= levelController.level.currentAction.descriptions.Count) 
+        {
+            waitInputIndicator.GetComponent<Button>().interactable = true;
+            return;
+        }
+
+        
+
+        skipOnInput = false;
+        anyKeyDown = false;
+
+        IEnumerator coroutine;
+        coroutine = PrintTextOnPanel(descriptionString,levelController.level.currentAction.descriptions[index].GetLocalizedString());
+        StartCoroutine(coroutine);
+
+        index++;
+
     }
 
     public void ExitTutorialAction()
     {
-        if (OnExitTutorialAction) OnExitTutorialAction.Invoke();
+        if (!OnExitTutorialAction) return;
+        if(!isLastSentence) return;
+        OnExitTutorialAction.Invoke();
+        sceneUnloader.Behaviour();
     }
 
      
-
-        // Start is called before the first frame update
+      
+                // Start is called before the first frame update
        
-      void Update()
+      void LateUpdate()
       {
          if (Mouse.current.leftButton.wasPressedThisFrame || UnityEngine.InputSystem.Keyboard.current.anyKey.wasPressedThisFrame )
          {
@@ -92,6 +124,7 @@ public class TutorialPanel : MonoBehaviour
    
         IEnumerator PrintTextOnPanel(TextMeshProUGUI textMeshPro,string phrase)
         {
+            waitInputIndicator.GetComponent<Button>().interactable = false;
 
             textMeshPro.text = "";
 
@@ -131,7 +164,7 @@ public class TutorialPanel : MonoBehaviour
             if (!waitForInput)
             {
                yield return StartCoroutine(DelayPrint(subtitleDelays.finalDelay));
-                waitForInput = true;
+               waitForInput = true;
             }
 
             if (waitForInput)
@@ -145,6 +178,8 @@ public class TutorialPanel : MonoBehaviour
 
             yield return null;
             skipOnInput = false;
+
+            PrintNextPhraseOnPanel();
         }
 
         public void SkipOnInput()
