@@ -64,8 +64,8 @@ public class CodexHandler : MonoBehaviour
            machine.MachineData = machine.MachineData;
         }
 
-        if(forces.Count >0 )
-        forces[0].OnPointerClick();
+        if(machines.Count >0 )
+        machines[0].OnPointerClick();
     }
 
     public void OnObjectClicked(HumanMachineToken machine)

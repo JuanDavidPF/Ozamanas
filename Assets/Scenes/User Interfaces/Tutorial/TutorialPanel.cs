@@ -85,8 +85,6 @@ public class TutorialPanel : MonoBehaviour
             return;
         }
 
-        
-
         skipOnInput = false;
         anyKeyDown = false;
 

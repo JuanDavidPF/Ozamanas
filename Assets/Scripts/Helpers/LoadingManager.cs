@@ -10,8 +10,12 @@ namespace JuanPayan.Helpers
 {
     public class LoadingManager : MyGenericSingleton<LoadingManager>
 {
-
-   
+    [Serializable]
+   public struct Wallpaper
+   {
+        public Sprite wallpaper;
+        public RectTransform progressPosition;
+   }
 
   [SerializeField]
     private GameObject loadingScreen;
@@ -21,7 +25,9 @@ namespace JuanPayan.Helpers
     [SerializeField] private Image progressBar;
 
     [SerializeField]
-    private List<Sprite> wallpapers = new List<Sprite>();
+    private List<Wallpaper> wallpapers = new List<Wallpaper>();
+
+     [SerializeField] private RectTransform progressPosition;
 
     private float loadProgress = 0;
     private static List<AsyncOperation> loadingQueue = new List<AsyncOperation>();
@@ -92,9 +98,16 @@ namespace JuanPayan.Helpers
     private void ChooseWallpaper()
     {
         if (!backgroundImage || wallpapers.Count == 0) return;
-        Sprite wallpaper = wallpapers[UnityEngine.Random.Range(0, wallpapers.Count)];
+
+        int random = UnityEngine.Random.Range(0, wallpapers.Count);
+        Sprite wallpaper = wallpapers[random].wallpaper;
         backgroundImage.sprite = wallpaper;
-        backgroundImage.color = wallpaper ? Color.white : Color.magenta;
+
+        progressPosition.anchorMin = wallpapers[random].progressPosition.anchorMin;
+        progressPosition.anchorMax = wallpapers[random].progressPosition.anchorMax;
+        progressPosition.anchoredPosition = wallpapers[random].progressPosition.anchoredPosition;
+        progressPosition.sizeDelta = wallpapers[random].progressPosition.sizeDelta;
+       
     }//Closes ChooseWallpaper method
    
 }

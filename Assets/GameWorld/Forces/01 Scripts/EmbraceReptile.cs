@@ -40,15 +40,22 @@ namespace Ozamanas.Forces
 
             base.FinalPlacement();
 
-             if (!isPlaced) return;
-
-              animator.SetTrigger("OnRelease");
-
-              SetUpNearMachine();
+            if (!isPlaced) return;
 
             currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
 
             currentCell.isOccupied = true;
+
+            SetUpNearMachine();
+
+            if (!nearMachine)
+            {
+                base.DestroyForce();
+                currentCell.isOccupied = false;
+                return;
+            }
+
+            animator.SetTrigger("OnRelease");
 
             transform.position = currentCell.worldPosition;
 
@@ -58,17 +65,9 @@ namespace Ozamanas.Forces
 
             clld.enabled = false;
 
-            if (!nearMachine)
-            {
-                base.DestroyForce();
-                currentCell.isOccupied = false;
-                return;
-            }
-
             currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
 
             currentCell.data = data.GetTokenToSwap(currentCell);
-
 
             foreach (var snake in controllers)
             {
@@ -88,6 +87,8 @@ namespace Ozamanas.Forces
         {
             foreach(HumanMachine machine in machinesAffected)
             {
+                if(!machine) continue;
+                
                 if (machine.TryGetComponent(out MachineMovement movement))
                 {
                     if(movement.CurrentAltitude != MachineAltitude.Terrestrial) continue;

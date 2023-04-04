@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Levels;
 using Ozamanas.UI;
-using UnityEngine.UI;
-using System;
 using JuanPayan.Helpers;
 using TMPro;
 using Ozamanas.Tags;
@@ -102,7 +99,7 @@ namespace Ozamanas.GameScenes
 
         public void ClearUI()
         {
-             playButton.gameObject.SetActive(false);
+            playButton.gameObject.SetActive(false);
 
             machineDeck.ClearMachineDeck();
 
