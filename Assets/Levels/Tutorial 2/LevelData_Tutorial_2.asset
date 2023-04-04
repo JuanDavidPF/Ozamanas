@@ -12,8 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aab9e1314aa2c2479ebdd03b81f4c61, type: 3}
   m_Name: LevelData_Tutorial_2
   m_EditorClassIdentifier: 
-  state: 1
+  state: 2
   index: 0
+  creationDelay:
+    useConstant: 1
+    constantValue: 0
+    variable: {fileID: 0}
+  creationRate:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
+  wavesAmount:
+    useConstant: 1
+    constantValue: 2
+    variable: {fileID: 0}
+  wavesCooldown:
+    useConstant: 1
+    constantValue: 20
+    variable: {fileID: 0}
+  showLevelData: 0
+  showIfTutorial: 0
+  showEndLevel: 0
+  showClimate: 0
+  machines: []
+  unlockForces: []
+  ifLoseReturnToScene: 2
+  ifWinReturnToScene: 1
+  tutorialActions:
+  - {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
+  - {fileID: 11400000, guid: cc438e34094aac142a319fe92897dff6, type: 2}
+  - {fileID: 11400000, guid: ca10372b6d6032740885ebe97d45bdec, type: 2}
+  currentAction: {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
+  skyBox: {fileID: 0}
   levelIcon: {fileID: -1206754874, guid: 22c34552d39ba40418ee059e97580195, type: 3}
   levelName:
     m_TableReference:
@@ -34,32 +64,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   levelSceneName: Tutorial_2
-  creationDelay:
-    useConstant: 1
-    constantValue: 0
-    variable: {fileID: 0}
-  creationRate:
-    useConstant: 0
-    constantValue: 0
-    variable: {fileID: 11400000, guid: 6a9a87d96993d694b822f3b32f12b760, type: 2}
-  wavesAmount:
-    useConstant: 1
-    constantValue: 2
-    variable: {fileID: 0}
-  wavesCooldown:
-    useConstant: 1
-    constantValue: 20
-    variable: {fileID: 0}
-  showIfTutorial: 0
-  machines: []
-  ifLoseReturnToScene: 2
-  ifWinReturnToScene: 1
   saveAt: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
-  tutorialActions:
-  - {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
-  - {fileID: 11400000, guid: cc438e34094aac142a319fe92897dff6, type: 2}
-  - {fileID: 11400000, guid: ca10372b6d6032740885ebe97d45bdec, type: 2}
-  currentAction: {fileID: 11400000, guid: cbe409c6544740f4bbbf440c5fbfe1fe, type: 2}
   references:
     version: 2
     RefIds: []

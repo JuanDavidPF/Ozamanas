@@ -177,9 +177,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6850935617431291560}
-  - component: {fileID: 8329919147302028200}
   - component: {fileID: 4385106525227720261}
   - component: {fileID: 5716682444373666076}
+  - component: {fileID: 2812664426725229506}
   m_Layer: 0
   m_Name: Level
   m_TagString: Level
@@ -201,40 +201,10 @@ Transform:
   m_Children:
   - {fileID: 2034492842848155037}
   - {fileID: 7097629162012468218}
+  - {fileID: 175263436119439756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8329919147302028200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3869504188700434640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7cac803f44aaa40a12c4feea2b056b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camAnchor: {fileID: 7097629162012468218}
-  cameraKey: MainCamera
-  levelData: {fileID: 0}
-  levelIcon: {fileID: 2700104679923519590}
-  levelBorder: {fileID: 1772252302316726975}
-  tooltip: {fileID: 0}
-  levelBlocked: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-  levelFinished: {r: 0.43529412, g: 0.5372549, b: 0.23137255, a: 1}
-  levelPlayable: {r: 1, g: 1, b: 1, a: 1}
-  nextLevels: []
-  dottedLine: {fileID: 9044030402834189682, guid: 19bfcbd1156cca94e94ddb8518354b8c,
-    type: 3}
-  levelController: {fileID: 11400000, guid: ec292017bd169e245a1181ef6be28008, type: 2}
-  playButton: {fileID: 0}
-  machineDeck: {fileID: 0}
-  phraseContainer: {fileID: 0}
-  index: {fileID: 0}
-  levelName: {fileID: 0}
-  phraseSequence: {fileID: 0}
 --- !u!95 &4385106525227720261
 Animator:
   serializedVersion: 4
@@ -268,6 +238,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.13816196, y: 0.020206153, z: 0.12103942}
   m_Center: {x: -0.0028537512, y: 0.0009512603, z: -0.000000044703484}
+--- !u!114 &2812664426725229506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869504188700434640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d157b21eb7fa74e9519b57f26a0595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelData: {fileID: 0}
+  nextLevels: []
+  Offset:
+  - {x: -2, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  camAnchor: {fileID: 7097629162012468218}
+  levelIcon: {fileID: 2700104679923519590}
+  levelBorder: {fileID: 1772252302316726975}
+  levelBlocked: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+  levelFinished: {r: 0.43529415, g: 0.5372549, b: 0.23137257, a: 1}
+  levelPlayable: {r: 1, g: 1, b: 1, a: 1}
+  prefab: {fileID: 4893272982060432244, guid: d1d71175cc1fa0046951e5bd3a32e9d0, type: 3}
+  holder: {fileID: 6304936744751298899}
+  spacing: 3
 --- !u!1 &4198214473150719042
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +393,37 @@ Transform:
   m_Father: {fileID: 6850935617431291560}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+--- !u!1 &6304936744751298899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175263436119439756}
+  m_Layer: 0
+  m_Name: PathHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &175263436119439756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304936744751298899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6850935617431291560}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6535920850009108871
 GameObject:
   m_ObjectHideFlags: 0
