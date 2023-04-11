@@ -17,7 +17,7 @@ namespace Ozamanas.Machines
     {
         public static List<HumanMachine> machines = new List<HumanMachine>();
         [SerializeField] private MachineState machine_status;
-        [SerializeField] private HumanMachineToken machine_token;
+        [SerializeField] protected HumanMachineToken machine_token;
         [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
 
         public List<MachineTrait> activeTraits
@@ -31,8 +31,8 @@ namespace Ozamanas.Machines
         }
 
         private AncientForce hijacker;
-        private MachineArmor machineArmor;
-        private MachineMovement machineMovement;
+        protected  MachineArmor machineArmor;
+        protected  MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
         private Animator animator;
@@ -75,7 +75,10 @@ namespace Ozamanas.Machines
             Machine_status = status;
          }
 
-         
+         protected virtual void Start()
+         {
+            
+         }
 
         void Awake()
         {
@@ -299,21 +302,12 @@ namespace Ozamanas.Machines
             return true;
         }
 
-        public bool ReduceEnergyLevelOnCurrentCell()
-        {
-            if (CurrentCell == null) return false;
-
-            if(CurrentCell.TryGetComponent<EnergyGenerator>(out EnergyGenerator energyGenerator))
-            {
-                energyGenerator.currentLevel--;
-            }
-
-            return false;
-        }
-
+         
         public void UpdateCurrentCellTopElement(CellTopElement topElement)
         {
             if(!topElement) return;
+
+            if(!CurrentCell || !CurrentCell.CurrentTopElement) return;
             
             CurrentCell.CurrentTopElement = topElement;
         }

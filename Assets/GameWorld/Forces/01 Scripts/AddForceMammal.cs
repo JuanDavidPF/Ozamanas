@@ -7,11 +7,14 @@ using Ozamanas.Board;
 using Ozamanas.Tags;
 using Ozamanas.Machines;
 
+
 namespace Ozamanas.Forces
 {
     public class AddForceMammal : AncientForce
     {
-       
+          
+
+         [SerializeField] private CellTopElement forestTopElement;
 
         [SerializeField] private float mammalSpeed = 2f;
 
@@ -40,18 +43,20 @@ namespace Ozamanas.Forces
 
             mammalTween = transform.DOMoveY(0, mammalSpeed, false).SetSpeedBased();
 
+            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+
+            currentCell.data = data.GetTokenToSwap(currentCell);
+
             mammalTween.OnComplete(() =>
             {
 
-               currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
-
-               currentCell.data = data.GetTokenToSwap(currentCell);
+               
 
                if(!addForceOnTweenComplete) return;
                
                AddForceToMachinesInRange();
 
-               base.DestroyForce();
+               DestroyForce();
 
             });
 
@@ -141,14 +146,18 @@ namespace Ozamanas.Forces
         }//Closes AttemptMachineDamage method
 
        
+        public override void DestroyForce()
+        {
+            if (mammalTween != null) mammalTween.Kill();
 
+            currentCell.CurrentTopElement = forestTopElement;
+
+            base.DestroyForce();
+
+        }
        
         
 
-        void OnDestroy()
-        {
-            if (mammalTween != null) mammalTween.Kill();
-        }
 
        
 
