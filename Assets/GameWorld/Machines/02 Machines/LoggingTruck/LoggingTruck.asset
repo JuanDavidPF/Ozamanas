@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb783d8c42f8a3f4ab275e0ab125f21b, type: 3}
-  m_Name: ExcavatorMN
+  m_Name: LoggingTruck
   m_EditorClassIdentifier: 
-  machineIcon: {fileID: 564824561, guid: 22c34552d39ba40418ee059e97580195, type: 3}
-  machineCard: {fileID: -293551684, guid: 9c01da7818363a64b8eaa26342e834bc, type: 3}
-  machineFamily: {fileID: 11400000, guid: 0d3585b558fbe794184ae69013385f10, type: 2}
+  machineIcon: {fileID: 1677307041, guid: 22c34552d39ba40418ee059e97580195, type: 3}
+  machineCard: {fileID: -962857378, guid: 9c01da7818363a64b8eaa26342e834bc, type: 3}
+  machineFamily: {fileID: 11400000, guid: fd8f9e0814db44740b8ee4be0dfef7af, type: 2}
   machineName:
     m_TableReference:
       m_TableCollectionName: GUID:86d79255c17db14498f6a5f77d7d712f
     m_TableEntryReference:
-      m_KeyId: 520485949440
+      m_KeyId: 519768723456
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -28,24 +28,21 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:86d79255c17db14498f6a5f77d7d712f
     m_TableEntryReference:
-      m_KeyId: 137722155008
+      m_KeyId: 134194745344
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  machinePrefab: {fileID: 1012468311011433840, guid: 812e8d89282157b42a40da24c03f2e88,
+  machinePrefab: {fileID: 1012468311011433840, guid: fbbda220b50611f49908d3553d017d19,
     type: 3}
   showArmorInfo: 0
-  showMovInfo: 0
+  showMovInfo: 1
   showSpeedInfo: 0
-  showData: 1
+  showData: 0
   machineHierarchy: 1
   armorPoints: 1
-  currentSpeed: 2
+  currentSpeed: 3
   ruleList:
-  - condition: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
-    topElementToSwap: {fileID: 11400000, guid: a89f9ba1bd8f9814cb08a361ea73c291, type: 2}
-    tokenToSwap: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
   - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
     topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
     tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
@@ -56,16 +53,16 @@ MonoBehaviour:
     topElementToSwap: {fileID: 11400000, guid: 88350c4cf3757344ca54fa482b6ada68, type: 2}
     tokenToSwap: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
   maxArmorPoints: 5
-  destroyedMachine: {fileID: 6742170808932452050, guid: 16944b9ca636ca844a9116de5b7527fc,
+  destroyedMachine: {fileID: 1798292844236744149, guid: 2c8b5ed8a57277640977948bca9ed3c5,
     type: 3}
   lifeSpan: 2
   explosionPower: 300
-  humanBase: {fileID: 11400000, guid: 55b8c1f44b4db974c8227019203594f9, type: 2}
+  humanBase: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
   mainObjective: {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   OnDistanceToHeartNotification: 2
-  secondObjective: {fileID: 0}
-  secondObjectiveRange: 0
-  obviateMainObjective: 0
+  secondObjective: {fileID: 11400000, guid: ed8ae62b0cc603f4fbed9f4ed0e7ec85, type: 2}
+  secondObjectiveRange: 3
+  obviateMainObjective: 1
   cellBlacklist:
   - {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
   - {fileID: 11400000, guid: b81875d4a4e5a004e85d1cdd912730ab, type: 2}
