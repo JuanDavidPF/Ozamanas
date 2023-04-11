@@ -244,7 +244,9 @@ namespace Ozamanas.Board
             if (topElementTransform.childCount== 0) return;
 
             Destroy(topElementTransform.GetChild(0).gameObject);
+
         }
+
 
         public void OnLevelCompleteEvent()
         {

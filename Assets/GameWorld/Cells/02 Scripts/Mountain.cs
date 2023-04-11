@@ -61,18 +61,11 @@ namespace Ozamanas.Forest
         public void DestroyMountain()
         {
             if (alreadyTriggered) return;
-
             alreadyTriggered = true;
-            
             OnDestruction?.Invoke();
-
             dummy = fragmentedModel ? Instantiate(fragmentedModel, transform.position, transform.rotation) : null;
-            
             Invoke("RemoveAllMeshColliders", fragmentedModelLifetime - 0.5f);
             Destroy(dummy, fragmentedModelLifetime);
-           
-            
-
             currentCell.CurrentTopElement = GetTopElementToSwap(currentCell);
             currentCell.data = GetTokenToSwap(currentCell);
         }

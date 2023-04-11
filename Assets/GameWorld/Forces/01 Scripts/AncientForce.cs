@@ -84,8 +84,6 @@ namespace Ozamanas.Forces
         {
             SetForcePositionOnDrag();
             SetForceAttackRangeOnDrag();
-            
-
         }//Closes OnDrag method
 
         protected virtual void SetForcePositionOnDrag()
