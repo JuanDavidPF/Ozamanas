@@ -51,12 +51,7 @@ namespace Ozamanas.Machines
         [Header("Events")]
         [SerializeField] private UnityEvent OnCloseToJungleHeart;
 
-        [SerializeField] private UnityEvent OnGoingAerial;
-
-         [SerializeField] private UnityEvent OnGoingSubterrestrial;
-
-          [SerializeField] private UnityEvent OnGoingTerrestrial;
-
+       
         private int distanceToHeart = 0;
 
         [Space(15)]
@@ -339,38 +334,7 @@ namespace Ozamanas.Machines
             return pathToDestination[0].data == cell;
         }
 
-        #region Height Management
-
-        public void GoAerial()
-        {
-            if (CurrentAltitude == MachineAltitude.Aerial) return;
-
-            CurrentAltitude = MachineAltitude.Aerial;
-
-            OnGoingAerial?.Invoke();
-        }
-
-        public void GoTerrestrial()
-        {
-            if (CurrentAltitude == MachineAltitude.Terrestrial) return;
-
-            CurrentAltitude = MachineAltitude.Terrestrial;
-
-            OnGoingTerrestrial?.Invoke();
-        }
-
-        public void GoSubterrestrial()
-        {
-           if (CurrentAltitude == MachineAltitude.Subterrestrial) return;
-
-            CurrentAltitude = MachineAltitude.Subterrestrial;
-
-            OnGoingSubterrestrial?.Invoke();
-        }
-
-        
-        #endregion
-
+      
         #region Objectives Management
 
         public void ReplaceSecondaryObjective(CellData cell, int range)
