@@ -49,7 +49,7 @@ namespace Ozamanas.Board
 
         private void OpenIndustryGates()
         {
-             StopTweeners();
+            StopTweeners();
             foreach (var blind in industryBlinds)
             {
                 tweeners.Add(blind.DOScaleY(0, .5f));
