@@ -17,6 +17,10 @@ namespace Ozamanas.Board
 
         [SerializeField] List<Transform> industryBlinds;
 
+        [SerializeField] private bool alwaysRotate = false;
+
+         [SerializeField] private float rotationSpeed = 20f;
+
         private bool m_OpenGate = false;
         public bool OpenGate{
 
@@ -33,15 +37,29 @@ namespace Ozamanas.Board
         }
 
         List<Tween> tweeners = new List<Tween>();
+
+        Tween rotateTween;
+
         [Space(15)]
         [Header("Events")]
         public UnityEvent OnIndustryTurnOff;
         public UnityEvent OnIndustryTurnOn;
 
+        private void Start()
+        {
+            if(!alwaysRotate) return;
+
+            rotateTween = meshToRotate.DORotate(new Vector3(0,360,0),rotationSpeed,RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetRelative()
+            .SetEase(Ease.Linear);
+        }
         
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
+
+            rotateTween.Kill();
 
             OpenGate = true;
            
@@ -70,6 +88,11 @@ namespace Ozamanas.Board
             if (other.tag != "Machine") return;
 
              OpenGate = false;
+
+               rotateTween = meshToRotate.DORotate(new Vector3(0,360,0),rotationSpeed,RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetRelative()
+            .SetEase(Ease.Linear);
             
 
         }
