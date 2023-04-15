@@ -290,13 +290,16 @@ namespace Ozamanas.Board
 
         public void CombineTileMeshes()
         {
-            /*   
-               List<MeshFilter> temp = new List<MeshFilter>();
+              gameObject.AddComponent<MeshFilter>();
+              gameObject.AddComponent<MeshRenderer>();
+
+              List<MeshFilter> temp = new List<MeshFilter>();
               foreach( Cell cell in cells)
               {
-                  temp.Add(cell.TileMeshFilter);
+                  temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
               }
 
+                Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
                MeshFilter[] meshFilters = temp.ToArray();
                CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
@@ -311,7 +314,8 @@ namespace Ozamanas.Board
               }
               transform.GetComponent<MeshFilter>().mesh = new Mesh();
               transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-              transform.gameObject.SetActive(true);*/
+              transform.GetComponent<MeshRenderer>().material = mat;
+              transform.gameObject.SetActive(true);
         }
 
 
@@ -321,16 +325,22 @@ namespace Ozamanas.Board
             YieldInstruction cooldown = levelData && levelData.creationRate.value > 0 ? new WaitForSeconds(1f / levelData.creationRate.value) : new WaitForSeconds(.1f);
 
             yield return initialDelay;
-
+            
+            float tileCreationInterval = 0.3f;
 
             foreach (var cell in new List<Cell>(cells))
             {
                 if (!cell.visuals) continue;
 
-                cell.visuals.transform.DOMoveY(0, .3f).From(5);
+                cell.visuals.transform.DOMoveY(0, tileCreationInterval).From(5);
                 cell.visuals.gameObject.SetActive(true);
                 yield return cooldown;
             }
+
+             yield return new WaitForSeconds(tileCreationInterval);
+
+            CombineTileMeshes();
+
             OnBoardCreated?.Invoke();
         }//Closes HandleBoardCreation method
 
