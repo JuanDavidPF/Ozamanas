@@ -80,7 +80,7 @@ namespace Ozamanas.Machines
             
          }
 
-        void Awake()
+        protected virtual void Awake()
         {
             machineArmor = GetComponent<MachineArmor>();
             machineMovement = GetComponent<MachineMovement>();

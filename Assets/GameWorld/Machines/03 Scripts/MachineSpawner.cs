@@ -17,14 +17,12 @@ namespace Ozamanas.Machines
         [SerializeField] private List<HumanMachineToken> spawnQueue = new List<HumanMachineToken>();
        
 
-        private CellData cellData;
 
         private void Awake()
         {
             _go = gameObject;
             _t = _go.transform;
 
-            cellData = GetComponent<Cell>().data;
 
         }//Closes Awake method
         

@@ -6,7 +6,7 @@ using Ozamanas.Levels;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.Rendering;
 
 namespace Ozamanas.Board
 {
@@ -313,6 +313,7 @@ namespace Ozamanas.Board
                   i++;
               }
               transform.GetComponent<MeshFilter>().mesh = new Mesh();
+              transform.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
               transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
               transform.GetComponent<MeshRenderer>().material = mat;
               transform.gameObject.SetActive(true);
