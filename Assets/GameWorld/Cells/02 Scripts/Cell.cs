@@ -91,11 +91,12 @@ namespace Ozamanas.Board
         [SerializeField] private SwapRules onLevelFailed;
     
         public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
-        public MeshFilter TileMeshFilter { get => tileMeshFilter; set => tileMeshFilter = value; }
         public Overlay CellOverLay { get => cellOverLay; set => cellOverLay = value; }
         public List<HumanMachine> CurrentHumanMachines { get => currentHumanMachines; set => currentHumanMachines = value; }
+        public GameObject HollowTile { get => hollowTile; set => hollowTile = value; }
+
         [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
-        [SerializeField] private MeshFilter tileMeshFilter;
+        [SerializeField] private GameObject hollowTile;
         private List<HumanMachine> currentHumanMachines = new List<HumanMachine>();
         [HideInInspector] public float3 worldPosition;
         [HideInInspector] public int3 gridPosition;
@@ -114,6 +115,13 @@ namespace Ozamanas.Board
             {
                 cellOverLay = cell;
             }
+
+            if(!HollowTile && gameObject.transform.TryGetComponentInChildren( out HollowTile hollow ))
+            {
+                HollowTile = hollow.gameObject;
+            }
+
+            visuals.gameObject.SetActive(false);
             
             
         }

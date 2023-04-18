@@ -72,8 +72,7 @@ public class HumanMachineToken : ScriptableObject
        [VerticalGroup("Machine Setup")]
       [Title("Swap Tile Rule List:")]
 
-        [SerializeField] private List<SwapRules> ruleList = new List<SwapRules>();
-
+      public List<SwapRules> ruleList = new List<SwapRules>();
 
       [ShowIfGroup("Machine Setup/showArmorInfo")]
       [VerticalGroup("Machine Setup")]

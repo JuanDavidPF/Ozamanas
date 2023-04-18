@@ -11,14 +11,14 @@ namespace Ozamanas.Energy
 
         private Animator animator;
        
-
-
         void Awake()
         {
             animator=GetComponent<Animator>();
         }
         public void ShowOrHideFlower(bool show)
         {
+         if(!animator) return;
+
           if(show) animator.SetTrigger("Show");
           else animator.SetTrigger("Hide");
         }
