@@ -224,6 +224,8 @@ namespace Ozamanas.Board
 
                 if(nearbyMachine.machine.CheckIfActing()) continue;
 
+                if(nearbyMachine.machine.MachineMovement.CurrentAltitude != MachineAltitude.Terrestrial ) continue;
+
                 nearbyMachine.ResetMachineNavAndAI();
             }
 

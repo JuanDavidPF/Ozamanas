@@ -32,7 +32,7 @@ namespace Ozamanas.Machines
 
         private AncientForce hijacker;
         protected  MachineArmor machineArmor;
-        protected  MachineMovement machineMovement;
+        private MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
         private Animator animator;
@@ -54,6 +54,7 @@ namespace Ozamanas.Machines
 
         public MachineState Machine_status { get => machine_status; set => machine_status = value; }
         public HumanMachineToken Machine_token { get => machine_token; set => machine_token = value; }
+        public MachineMovement MachineMovement { get => machineMovement; set => machineMovement = value; }
 
         [Space(20)]
         [Header("Events")]
@@ -77,13 +78,12 @@ namespace Ozamanas.Machines
 
          protected virtual void Start()
          {
-            
          }
 
         protected virtual void Awake()
         {
             machineArmor = GetComponent<MachineArmor>();
-            machineMovement = GetComponent<MachineMovement>();
+            MachineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
             machinePhysics = GetComponent<MachinePhysicsManager>();
 
@@ -190,14 +190,14 @@ namespace Ozamanas.Machines
         public void RestoreMachineAttributesAndTraits()
         {
             machineArmor.RestoreOriginalValues();
-            machineMovement.RestoreOriginalValues();
+            MachineMovement.RestoreOriginalValues();
             activeTraits = new List<MachineTrait>();
         }
 
         public void SetMachineAttributes()
         {
             machineArmor.RestoreOriginalValues();
-            machineMovement.RestoreOriginalValues();
+            MachineMovement.RestoreOriginalValues();
             if(traitVFX) Destroy(traitVFX);
 
             foreach (MachineTrait trait in activeTraits)
@@ -241,7 +241,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.IncreaseSpeed:
-                        machineMovement.IncreaseMachineSpeed();
+                        MachineMovement.IncreaseMachineSpeed();
                         break;
 
                     case MachineTraits.Invulnerable:
@@ -249,7 +249,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.ReduceSpeed:
-                        machineMovement.DecreaseMachineSpeed();
+                        MachineMovement.DecreaseMachineSpeed();
                         break;
 
                     case MachineTraits.RepairMachine:
@@ -257,11 +257,11 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.StopMachine:
-                        machineMovement.StopMachine();
+                        MachineMovement.StopMachine();
                         break;
 
                     case MachineTraits.GotoBase:
-                        machineMovement.GoToBase();
+                        MachineMovement.GoToBase();
                         break;
 
                 }
@@ -319,6 +319,7 @@ namespace Ozamanas.Machines
             CurrentCell.SetOnMachineExit(this);
         }
 
+       
 
 
     }//Closes HumanMachine class

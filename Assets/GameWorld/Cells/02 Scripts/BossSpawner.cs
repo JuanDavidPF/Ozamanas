@@ -34,9 +34,9 @@ namespace Ozamanas.Board
 
        public void OnNewWave()
        {
-            if(!inLastWave) return;
+          
+            if(inLastWave) return;
             waves++;
-
             if(inWaveNumber == waves) SpawnBoss();
        }
 
