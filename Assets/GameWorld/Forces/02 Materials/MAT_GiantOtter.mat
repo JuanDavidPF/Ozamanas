@@ -13,8 +13,8 @@ Material:
   - DR_RIM_ON
   - _CELPRIMARYMODE_SINGLE
   - _TEXTUREBLENDINGMODE_MULTIPLY
-  m_InvalidKeywords:
-  - _UNITYSHADOWMODE_NONE
+  - _UNITYSHADOWMODE_COLOR
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -107,9 +107,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FlatRimEdgeSmoothness: 0.5
-    - _FlatRimLightAlign: 0
-    - _FlatRimSize: 0.5
+    - _FlatRimEdgeSmoothness: 0
+    - _FlatRimLightAlign: 0.6
+    - _FlatRimSize: 0
     - _FlatSpecularEdgeSmoothness: 0
     - _FlatSpecularSize: 0.1
     - _Flatness: 1
@@ -138,9 +138,9 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimEnabled: 1
-    - _SelfShadingSize: 0.5
+    - _SelfShadingSize: 0.6
     - _SelfShadingSizeExtra: 0.6
-    - _ShadowEdgeSize: 0.05
+    - _ShadowEdgeSize: 0.02
     - _ShadowEdgeSizeExtra: 0.05
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -151,28 +151,28 @@ Material:
     - _TextureBlendingMode: 0
     - _TextureImpact: 1
     - _UVSec: 0
-    - _UnityShadowMode: 0
+    - _UnityShadowMode: 2
     - _UnityShadowOcclusion: 0
     - _UnityShadowPower: 0.2
-    - _UnityShadowSharpness: 1
+    - _UnityShadowSharpness: 1.25
     - _VertexColorsEnabled: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
-    - _ColorDim: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    - _ColorDim: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlatRimColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+    - _FlatRimColor: {r: 1.3041189, g: 1.3041189, b: 1.3041189, a: 1}
     - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _UnityShadowColor: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
+    - _UnityShadowColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7518501851710412892
 MonoBehaviour:
