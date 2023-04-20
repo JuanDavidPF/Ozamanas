@@ -290,33 +290,33 @@ namespace Ozamanas.Board
 
         public void CombineTileMeshes()
         {
-              gameObject.AddComponent<MeshFilter>();
-              gameObject.AddComponent<MeshRenderer>();
+            gameObject.AddComponent<MeshFilter>();
+            gameObject.AddComponent<MeshRenderer>();
 
-              List<MeshFilter> temp = new List<MeshFilter>();
-              foreach( Cell cell in cells)
-              {
-                  temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
-              }
+            List<MeshFilter> temp = new List<MeshFilter>();
+            foreach( Cell cell in cells)
+            {
+                temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
+            }
 
-                Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
-               MeshFilter[] meshFilters = temp.ToArray();
-               CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+            Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
+            MeshFilter[] meshFilters = temp.ToArray();
+            CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-              int i = 0;
-              while (i < meshFilters.Length)
-              {
-                  combine[i].mesh = meshFilters[i].sharedMesh;
-                  combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-                  meshFilters[i].gameObject.SetActive(false);
+            int i = 0;
+            while (i < meshFilters.Length)
+            {
+                combine[i].mesh = meshFilters[i].sharedMesh;
+                combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+                meshFilters[i].gameObject.SetActive(false);
 
-                  i++;
-              }
-              transform.GetComponent<MeshFilter>().mesh = new Mesh();
-              transform.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-              transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-              transform.GetComponent<MeshRenderer>().material = mat;
-              transform.gameObject.SetActive(true);
+                i++;
+            }
+            transform.GetComponent<MeshFilter>().mesh = new Mesh();
+            transform.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+            transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+            transform.GetComponent<MeshRenderer>().material = mat;
+            transform.gameObject.SetActive(true);
         }
 
 
