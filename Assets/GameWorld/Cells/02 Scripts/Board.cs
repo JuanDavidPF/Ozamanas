@@ -198,6 +198,12 @@ namespace Ozamanas.Board
                  return OriginToA - OriginToB;
              });
 
+             foreach( Cell cell in cellsByData )
+             {
+                if(cell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial())>range)
+                cellsByData.Remove(cell);
+             }
+            
 
             return cellsByData;
         }//Closes GetNearestsCellInRange method

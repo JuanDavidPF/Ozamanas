@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Board;
+using DG.Tweening;
 
 namespace Ozamanas.Machines
 {
     public class BulldozerBoss  : HumanMachine
     {
         private MachineSpawner machineSpawner;
+         [SerializeField] private GameObject VFXAttack;
+        [SerializeField] private GameObject machineBox;
+
+        [SerializeField] private float power;
+         [SerializeField] private float upwardsModifier;
         protected override void Awake()
         {
             base.Awake();
@@ -18,18 +24,11 @@ namespace Ozamanas.Machines
        {
             if(!CurrentCell) return;
 
-            List<CellData> cellsData = new List<CellData>();
-
-            foreach (SwapRules rule in machine_token.ruleList)
-            {
-                cellsData.Add(rule.condition);
-            }
-
-            CellData[] cellsArray = cellsData.ToArray();
+            Instantiate(VFXAttack,transform);
 
             List<Cell> cells = new List<Cell>();
 
-            cells = Board.Board.GetNearestsCellInRange(CurrentCell.transform.position,1,cellsArray);
+            cells = Board.BoardExtender.GetCellsOnRange(CurrentCell,1,false);
 
             foreach( Cell cell in cells)
             {
@@ -40,9 +39,12 @@ namespace Ozamanas.Machines
 
        public void SpawnMachine()
        {
-            if(!machineSpawner) return;
+            GameObject temp = Instantiate(machineBox,transform);
+            temp.transform.parent = null;
+            Rigidbody rb = temp.GetComponent<Rigidbody>();
+            rb.AddExplosionForce(power, transform.position, 10,upwardsModifier,ForceMode.Impulse);
 
-            machineSpawner.SpawnNextMachineOnQueue();
+          
        }
     }
 }

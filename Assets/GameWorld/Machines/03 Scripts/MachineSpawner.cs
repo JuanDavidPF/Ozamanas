@@ -13,7 +13,7 @@ namespace Ozamanas.Machines
         [HideInInspector] public GameObject _go;
         [HideInInspector] public Transform _t;
 
-          [SerializeField] private float spawnDelay = 0f;
+        [SerializeField] private float spawnDelay = 0f;
         [SerializeField] private List<HumanMachineToken> spawnQueue = new List<HumanMachineToken>();
        
 

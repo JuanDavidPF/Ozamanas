@@ -16,10 +16,11 @@ namespace Ozamanas.Machines
     [SerializeField] private List<Transform> IK_targets;
     private List<Vector3> current_Positions = new List<Vector3>();
 
-    private bool goLeftLegs = true;
+    private bool goingLeft = false;
 
     private Vector3 currentPosition = new Vector3();
 
+    private Tween legTween,legTween2;
 
 
 
@@ -48,9 +49,12 @@ namespace Ozamanas.Machines
 
         if(!CheckDistanceWalked()) return;
 
-        DOTween.KillAll();
+       legTween2.Kill();
+              legTween.Kill();
 
-       // GoLeft();
+
+        if(!goingLeft) GoLeft();
+        else GoRight();
 
         currentPosition = body.position;
       
@@ -60,7 +64,21 @@ namespace Ozamanas.Machines
     private void GoLeft()
     {
         current_Positions[0] = targets[0].position;
-        IK_targets[0].transform.DOJump(targets[0].position,stepHeight,1,stepTime,false);
+        legTween = IK_targets[0].transform.DOJump(targets[0].position,stepHeight,1,stepTime,false);
+
+         current_Positions[3] = targets[3].position;
+       legTween2 = IK_targets[3].transform.DOJump(targets[3].position,stepHeight,1,stepTime,false);
+        goingLeft = true;
+    }
+
+     private void GoRight()
+    {
+        current_Positions[1] = targets[1].position;
+        legTween =IK_targets[1].transform.DOJump(targets[1].position,stepHeight,1,stepTime,false);
+
+        current_Positions[2] = targets[2].position;
+       legTween2 = IK_targets[2].transform.DOJump(targets[2].position,stepHeight,1,stepTime,false);
+        goingLeft = false;
     }
 
      private bool CheckDistanceWalked()

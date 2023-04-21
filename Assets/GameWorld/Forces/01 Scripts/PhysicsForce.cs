@@ -21,6 +21,12 @@ namespace Ozamanas.Forces
         [LabelText("Distance in Tiles")]
         [Range(1,5)]
         public float tiles = 1;
+        [Title("Boss Force Setup")]
+         [Range(.5f,5f)]
+        public float pushDuration;
+         [Range(1,5)]
+         [LabelText("Push Power in Tiles")]
+        public float pushPower;
 
     }
 }

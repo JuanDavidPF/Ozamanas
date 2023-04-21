@@ -168,6 +168,8 @@ namespace Ozamanas.Board
 
         public virtual void SetOnMachineEnter(HumanMachine machine)
         {
+            if(!machine) return;
+           
             if(CurrentHumanMachines.Contains(machine)) return;
 
             CurrentHumanMachines.Add(machine);
@@ -181,6 +183,8 @@ namespace Ozamanas.Board
 
         public virtual void SetOnMachineExit(HumanMachine machine)
         {
+            if(!machine) return;
+            
             if(!CurrentHumanMachines.Contains(machine)) return;
 
             CurrentHumanMachines.Remove(machine);

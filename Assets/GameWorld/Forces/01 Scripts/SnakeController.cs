@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Ozamanas.Machines;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Forces
 {
@@ -29,11 +30,20 @@ namespace Ozamanas.Forces
             mawTrigger.enabled = true;
             bittedMachine = machine;
 
-            tweener = _T.DOMove(machine.position, .3f).From(_T.position)
+            Vector3 bitePosition = machine.position;
+
+             if(machine.GetComponent<HumanMachine>().Machine_token.machineHierarchy == MachineHierarchy.Boss) bitePosition.y += 1 ;
+
+
+
+            tweener = _T.DOMove(bitePosition, .3f).From(_T.position)
             .SetUpdate(UpdateType.Late)
             .OnUpdate(() =>
             {
-                tweener.ChangeEndValue(machine.position, true);
+                bitePosition = machine.position;
+                if(machine.GetComponent<HumanMachine>().Machine_token.machineHierarchy == MachineHierarchy.Boss) bitePosition.y += 1 ;
+
+                tweener.ChangeEndValue(bitePosition, true);
             });
 
         }//Closes Bite method
@@ -48,6 +58,8 @@ namespace Ozamanas.Forces
             MachinePhysicsManager physics = other.GetComponentInParent<MachinePhysicsManager>();
             physics.SetKinematic();
 
+            if(physics.machine.Machine_token.machineHierarchy == MachineHierarchy.Boss) return;
+
             bittedMachine = physics.transform;
 
 
@@ -56,6 +68,8 @@ namespace Ozamanas.Forces
             bittedMachine.localPosition = Vector3.zero;
 
             Vector3 machineOriginalScale = bittedMachine.localScale;
+
+            
 
             if (snakeAnimator) snakeAnimator.SetTrigger("Thread");
 

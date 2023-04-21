@@ -106,7 +106,20 @@ namespace Ozamanas.Machines
         {
             SetKinematic();
 
-            switch(force.type)
+            if(machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
+            {
+                AddForceToBoss( force, forceOrigin);
+            }
+
+            else AddForceToRegular( force, forceOrigin);
+
+
+
+        }
+
+         private void AddForceToRegular(PhysicsForce force, Vector3 forceOrigin)
+        {
+             switch(force.type)
             {
                 case AddForceType.VerticalJump:
                 PerformVerticalJump(force);
@@ -118,9 +131,67 @@ namespace Ozamanas.Machines
                 PerformFrontFlip(force,forceOrigin);
                 break;
             }
-
         }
 
+        private void AddForceToBoss(PhysicsForce force, Vector3 forceOrigin)
+        {
+             switch(force.type)
+            {
+                case AddForceType.VerticalJump:
+                PerformVerticalPush(force);
+                break;
+                case AddForceType.BackFlip:
+                PerformBackPush(force,forceOrigin);
+                break;
+                case AddForceType.FrontFlip:
+                PerformFrontPush(force,forceOrigin);
+                break;
+            }
+        }
+
+        private void PerformVerticalPush(PhysicsForce force)
+        {
+            machineTween = transform.DOMoveY(-0.5f,force.pushDuration,false).SetLoops(1,LoopType.Yoyo);
+
+            machineTween.OnComplete(() =>
+            {
+                SetPhysical();
+            });
+        }
+
+         private void PerformBackPush(PhysicsForce force, Vector3 forceOrigin)
+        {
+        
+            Vector3 finalPosition = MathUtils.LerpByDistance(forceOrigin,transform.position,force.pushPower);
+
+            finalPosition.y = transform.position.y;
+
+            machineTween = transform.DOMove(finalPosition,force.pushDuration,false);
+
+            machineTween.OnComplete(() =>
+            {
+                SetPhysical();
+            });
+            
+            
+        }
+
+           private void PerformFrontPush(PhysicsForce force, Vector3 forceOrigin)
+        {
+        
+            Vector3 finalPosition = MathUtils.LerpByDistance(forceOrigin,transform.position,-force.pushPower);
+
+            finalPosition.y = transform.position.y;
+
+            machineTween = transform.DOMove(finalPosition,force.pushDuration,false);
+
+            machineTween.OnComplete(() =>
+            {
+                SetPhysical();
+            });
+            
+            
+        }
         
         private void PerformVerticalJump(PhysicsForce force)
         {
@@ -128,6 +199,8 @@ namespace Ozamanas.Machines
                     
             MachineJump(transform.position,force.jumpPower,force.duration,rot);
         }
+
+        
 
         private void PerformBackFlip(PhysicsForce force, Vector3 forceOrigin)
         {
@@ -138,6 +211,8 @@ namespace Ozamanas.Machines
             MachineJump(finalPosition,force.jumpPower,force.duration,rot);
         }
 
+
+      
          private void PerformFrontFlip(PhysicsForce force, Vector3 forceOrigin)
         {
             Vector3 rot = new Vector3(-force.flips*360,0,0);

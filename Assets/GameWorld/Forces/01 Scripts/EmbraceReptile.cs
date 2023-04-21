@@ -142,7 +142,14 @@ namespace Ozamanas.Forces
                 machine.transform.SetParent(null,true);
             }
 
-            if (currentCell) currentCell.isOccupied = false;
+            if (currentCell) 
+            {
+                currentCell.isOccupied = false;
+
+                currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+
+                currentCell.data = data.GetTokenToSwap(currentCell);
+            }
 
             base.DestroyForce();
         }

@@ -89,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 359560344564348059}
   - component: {fileID: 2440231399898188179}
-  - component: {fileID: 743058290102647739}
   m_Layer: 0
   m_Name: Top_BulldozerIndustry
   m_TagString: Untagged
@@ -130,20 +129,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &743058290102647739
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132297513758584353}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.75
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1386279458883348386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,6 +1215,8 @@ MonoBehaviour:
   - {fileID: 2812530525047826062}
   - {fileID: 6683742354899803480}
   - {fileID: 3599901517783093641}
+  alwaysRotate: 0
+  rotationSpeed: 20
   OnIndustryTurnOff:
     m_PersistentCalls:
       m_Calls:
@@ -1258,10 +1245,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
-  m_Height: 1
+  m_Radius: 0.66639847
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.000000059604645, y: 0, z: 0}
 --- !u!1001 &1802147499419149010
 PrefabInstance:
   m_ObjectHideFlags: 0
