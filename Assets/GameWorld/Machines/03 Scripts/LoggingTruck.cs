@@ -13,6 +13,8 @@ namespace Ozamanas.Machines
         [SerializeField] private CellData sawMill;
         [SerializeField] private CellData emptyEnergyPool;
 
+         [SerializeField] private MachineTrait repairTrait;
+
 
         protected override void Start()
         {
@@ -23,7 +25,7 @@ namespace Ozamanas.Machines
         public void SetMachineLoaded()
         {
             MachineMovement.ReplaceSecondaryObjective(machine_token.humanBase,100);
-            machineArmor.RepairMachine();
+            AddTraitToMachine(repairTrait);
             ReduceEnergyLevelOnCurrentCell();
             woddenLogs.SetActive(true);
 
