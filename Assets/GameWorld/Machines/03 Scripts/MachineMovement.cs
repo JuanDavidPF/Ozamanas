@@ -12,7 +12,6 @@ using Sirenix.OdinInspector;
 
 namespace Ozamanas.Machines
 {
-    [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(HumanMachine))]
     public class MachineMovement : MonoBehaviour
     {

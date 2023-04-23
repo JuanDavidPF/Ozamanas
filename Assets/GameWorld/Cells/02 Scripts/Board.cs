@@ -288,11 +288,17 @@ namespace Ozamanas.Board
 
         }//Closes GetNearestCell method
 
+        public static List<Cell> GetAllCells()
+        {
+            List<Cell> allCells = new List<Cell>();
 
+            Board board = Board.reference;
 
+            allCells.AddRange(board.cells);
+            
+            return allCells;
+        }
 
-
-       
 
         public void CombineTileMeshes()
         {

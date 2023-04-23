@@ -13,9 +13,7 @@ using DG.Tweening;
 
 namespace Ozamanas.Machines
 {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(FSMOwner))]
-    [RequireComponent(typeof(NavMeshAgent))]
+
     [RequireComponent(typeof(HumanMachine))]
 
     public class MachinePhysicsManager : MonoBehaviour
@@ -245,7 +243,6 @@ namespace Ozamanas.Machines
             {
                 if(machine.CurrentCell == cell) return;   
                 machine.CurrentCell = cell;
-                machine.SetMachineTraitsfromCell(cell);
                 cell.CurrentTopElement = machine.Machine_token.GetTopElementToSwap(cell);
                 cell.data = machine.Machine_token.GetTokenToSwap(cell);
                 cell.SetOnMachineEnter(machine);
@@ -261,7 +258,6 @@ namespace Ozamanas.Machines
             if (other.TryGetComponentInParent(out Cell cell))
             {
                 if (machine.CurrentCell == cell) machine.CurrentCell = null;
-                    machine.RemoveMachineTraitsFromCell(cell);
                     cell.SetOnMachineExit(machine);
                 
             }

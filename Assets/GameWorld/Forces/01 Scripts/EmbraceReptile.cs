@@ -14,6 +14,11 @@ namespace Ozamanas.Forces
         Collider clld;
 
         [SerializeField] private float duration = 2f;
+
+        [SerializeField] private GameObject VFXBite;
+
+        [SerializeField]  private MachineTrait markTrait;
+        [SerializeField]  private MachineTrait poisonedTrait;
         
         private Cell currentCell;
 
@@ -32,9 +37,20 @@ namespace Ozamanas.Forces
 
             controllers = GetComponentsInChildren<SnakeController>();
 
-             animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
         }
-        
+        protected override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+             if (isPlaced) return;
+
+            base.GetMachinesOnAttackRange();
+
+            SetUpNearMachine();
+
+            if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().AddTraitToMachine(markTrait);
+        }
         protected override void FinalPlacement()
         {
 
@@ -59,8 +75,6 @@ namespace Ozamanas.Forces
 
             transform.position = currentCell.worldPosition;
 
-            ActivateTraits(currentCell);
-
             StartCoroutine(WaitToRemoveSnake());
 
             clld.enabled = false;
@@ -68,6 +82,8 @@ namespace Ozamanas.Forces
             currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
 
             currentCell.data = data.GetTokenToSwap(currentCell);
+
+            transform.LookAt(nearMachine);
 
             foreach (var snake in controllers)
             {
@@ -97,8 +113,11 @@ namespace Ozamanas.Forces
                 {
                     if(physics.state != PhysicMode.Intelligent) continue;
                     nearMachine = physics.transform; 
+                    return;
                 }
             }
+
+            nearMachine = null;
         }
 
 
@@ -110,26 +129,28 @@ namespace Ozamanas.Forces
 
         }
 
-        private void ActivateTraits(Cell origin)
+
+
+        public void ActivateOnDragAnimation()
         {
-            if (!origin) return;
+             animator.SetTrigger("OnDrag");
+        }
 
-            foreach (var cell in origin.GetCellsOnRange(data.traitRange))
-            {
-                if (!cell) continue;
-
-                foreach (var trait in data.traits)
-                {
-                    if (!trait) continue;
-                    cell.AddTraitToMachine(trait);
-                }
-            }
-
-
-        }//Closes ActivateTraits method
+        public void OnBiteMachine(Transform machine)
+        {
+            if(VFXBite) Instantiate(VFXBite,machine.position,Quaternion.identity);
+            if(poisonedTrait) machine.GetComponentInParent<HumanMachine>().AddTraitToMachine(poisonedTrait);
+        }
 
         public override void DetachHumanMachine()
         {
+            if (currentCell) 
+            {
+                currentCell.isOccupied = false;
+
+                if(currentCell.CurrentHumanMachines.Count == 0) currentCell.ResetCellData();
+            }
+
             if(!nearMachine) return;
 
             if (nearMachine.TryGetComponentInParent(out MachinePhysicsManager physics))
@@ -140,15 +161,7 @@ namespace Ozamanas.Forces
             if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
             {
                 machine.transform.SetParent(null,true);
-            }
-
-            if (currentCell) 
-            {
-                currentCell.isOccupied = false;
-
-                currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
-
-                currentCell.data = data.GetTokenToSwap(currentCell);
+                if(poisonedTrait) machine.RemoveTraitToMachine(poisonedTrait);
             }
 
             base.DestroyForce();

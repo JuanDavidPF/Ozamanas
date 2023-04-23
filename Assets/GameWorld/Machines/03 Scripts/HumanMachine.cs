@@ -37,7 +37,8 @@ namespace Ozamanas.Machines
         private MachinePhysicsManager machinePhysics;
         private Animator animator;
 
-        private GameObject traitVFX;
+        private TraitVFXController traitVFXController;
+
 
         [SerializeField] private Cell m_currentCell;
         public Cell CurrentCell
@@ -86,6 +87,7 @@ namespace Ozamanas.Machines
             MachineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
             machinePhysics = GetComponent<MachinePhysicsManager>();
+            traitVFXController = GetComponentInChildren<TraitVFXController>();
 
         }
 
@@ -177,6 +179,8 @@ namespace Ozamanas.Machines
 
         public void RemoveTraitToMachine(MachineTrait trait)
         {
+             if(!activeTraits.Contains(trait)) return;
+            
             if(activeTraits.Remove(trait)) SetMachineAttributes();
         }
 
@@ -192,13 +196,14 @@ namespace Ozamanas.Machines
             machineArmor.RestoreOriginalValues();
             MachineMovement.RestoreOriginalValues();
             activeTraits = new List<MachineTrait>();
+            traitVFXController.DeActivateAllTraitVFX();
         }
 
         public void SetMachineAttributes()
         {
             machineArmor.RestoreOriginalValues();
             MachineMovement.RestoreOriginalValues();
-            if(traitVFX) Destroy(traitVFX);
+            traitVFXController.DeActivateAllTraitVFX();
 
             foreach (MachineTrait trait in activeTraits)
             {
@@ -206,24 +211,8 @@ namespace Ozamanas.Machines
             }
         }
 
-        public void SetMachineTraitsfromCell(Cell cell)
-        {
-            activeTraits.AddRange(cell.GetCellTraits());
-            foreach (MachineTrait trait in cell.GetCellTraits())
-            {
-                if (!trait.isPermanentOnMachine) WaitToRemoveTrait(trait);
-            }
-            SetMachineAttributes();
-        }
+       
 
-        public void RemoveMachineTraitsFromCell(Cell cell)
-        {
-            foreach (MachineTrait trait in cell.GetCellTraits())
-            {
-                activeTraits.Remove(trait);
-            }
-            SetMachineAttributes();
-        }
 
         private void SetMachineTrait(MachineTrait trait)
         {
@@ -266,24 +255,16 @@ namespace Ozamanas.Machines
 
                 }
             }
-
-           if(trait.traitVFX) InstantiateTraitVFX(trait.traitVFX);
+           traitVFXController.ActivateTraitVFX(trait);
         }
 
-        private void InstantiateTraitVFX(GameObject VFX)
-        {
-            if(traitVFX) Destroy(traitVFX);
-
-            traitVFX = Instantiate(VFX,transform);
-
-            traitVFX.transform.position += new Vector3(0,0.5f,0);
-        }
+     
         #endregion
 
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            if (CurrentCell) CurrentCell.isOccupied = false;
+            if (CurrentCell) CurrentCell.SetOnMachineExit(this);
             machines.Remove(this);
         }//Closes OnDisable method
 
@@ -317,6 +298,10 @@ namespace Ozamanas.Machines
             if(!CurrentCell) return;
 
             CurrentCell.SetOnMachineExit(this);
+
+            CurrentCell.CleanMachineList();
+
+            
         }
 
        

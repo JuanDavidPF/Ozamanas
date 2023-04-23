@@ -158,14 +158,12 @@ namespace Ozamanas.Forces
                 firstPlacementComplete.CurrentTopElement = data.GetTopElementToSwap(firstPlacementComplete);
                 firstPlacementComplete.data = data.GetTokenToSwap(firstPlacementComplete);
                 
-                ActivateTraits(Board.Board.GetCellByPosition(firstPlacementComplete.transform.position.ToFloat3().UnityToGrid()));
             }
          
             if(secondPlacementComplete)
             {
                 secondPlacementComplete.CurrentTopElement = data.GetTopElementToSwap(secondPlacementComplete);
                 secondPlacementComplete.data = data.GetTokenToSwap(secondPlacementComplete);
-                ActivateTraits(Board.Board.GetCellByPosition(secondPlacementComplete.transform.position.ToFloat3().UnityToGrid()));
             }                 
         }
 
@@ -210,23 +208,7 @@ namespace Ozamanas.Forces
             
         }
 
-        private void ActivateTraits(Cell origin)
-        {
-            if (!origin) return;
-
-            foreach (var cell in origin.GetCellsOnRange(data.traitRange))
-            {
-                if (!cell) continue;
-
-                foreach (var trait in data.traits)
-                {
-                    if (!trait) continue;
-                    cell.AddTraitToMachine(trait);
-                }
-            }
-
-
-        }//Closes ActivateTraits method
+       
 
   
 

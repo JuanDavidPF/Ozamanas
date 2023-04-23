@@ -14,16 +14,12 @@ namespace Ozamanas.Forces
     public class MindControlInsect : AncientForce
     {
 
-        private enum ControlMode
-        {
-            Machine,
-            Cell
-        }
-
+      
         private Tween insectTween;
 
         [SerializeField] private GameObject minion;
-        [SerializeField] private ControlMode mode;
+
+        [SerializeField]  private List<MachineTrait> traits;
 
         protected override void Awake()
         {
@@ -39,24 +35,13 @@ namespace Ozamanas.Forces
           
             if (!isPlaced) return;
 
-            if (mode == ControlMode.Machine)
+           foreach (var machine in machinesAffected.ToArray())
             {
-                    foreach (var machine in machinesAffected.ToArray())
-                    {
-                        if (!machine) continue;
-                        ActivateMinion(machine);
-                    }
-
-                    base.DestroyForce();
-            }
-            else if(mode != ControlMode.Machine)
-            {
-                Cell currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
-                InsectMinion temp = Instantiate(minion, transform.position, transform.rotation).GetComponent<InsectMinion>();
-                temp.Objective = currentCell.gameObject;
-                temp.Traits = data.traits;
+                if (!machine) continue;
+                ActivateMinion(machine);
             }
 
+            base.DestroyForce();
         }
 
 
@@ -78,7 +63,7 @@ namespace Ozamanas.Forces
             machinesAffected.Remove(machine);
             InsectMinion temp = Instantiate(minion, transform.position, transform.rotation).GetComponent<InsectMinion>();
             temp.Objective = machine.gameObject;
-            temp.Traits = data.traits;
+            temp.Traits = traits;
 
         }//Closes AttemptMachineDamage method
 

@@ -174,7 +174,8 @@ public enum PlayerState
         RepairMachine ,
         DoubleDamage,
         Invulnerable,
-        GotoBase
+        GotoBase,
+        None
     }
 
     public enum MachineState

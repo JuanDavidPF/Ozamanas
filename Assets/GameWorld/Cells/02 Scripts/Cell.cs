@@ -90,12 +90,10 @@ namespace Ozamanas.Board
         [SerializeField] private SwapRules onLevelComplete;
         [SerializeField] private SwapRules onLevelFailed;
     
-        public List<MachineTrait> ActiveTraits { get => activeTraits; set => activeTraits = value; }
         public Overlay CellOverLay { get => cellOverLay; set => cellOverLay = value; }
         public List<HumanMachine> CurrentHumanMachines { get => currentHumanMachines; set => currentHumanMachines = value; }
         public GameObject HollowTile { get => hollowTile; set => hollowTile = value; }
 
-        [SerializeField] private List<MachineTrait> activeTraits = new List<MachineTrait>();
         [SerializeField] private GameObject hollowTile;
         private List<HumanMachine> currentHumanMachines = new List<HumanMachine>();
         [HideInInspector] public float3 worldPosition;
@@ -143,29 +141,6 @@ namespace Ozamanas.Board
             OnCellChanged.Invoke(this);
         }
 
-        public List<MachineTrait> GetCellTraits()
-        {
-            return ActiveTraits;
-        }//Closes GetTraitsOnCell method
-
-
-        public void AddTraitToMachine(MachineTrait trait)
-        {
-            ActiveTraits.Add(trait);
-            if (!trait.isPermanetOnHolder) StartCoroutine(HandleTraitDuration(trait));
-        }
-
-        public void RemoveTraitToMachine(MachineTrait trait)
-        {
-            ActiveTraits.Remove(trait);
-        }
-
-        IEnumerator HandleTraitDuration(MachineTrait trait)
-        {
-            yield return new WaitForSeconds(trait.holderTimer);
-            RemoveTraitToMachine(trait);
-        }
-
         public virtual void SetOnMachineEnter(HumanMachine machine)
         {
             if(!machine) return;
@@ -196,6 +171,24 @@ namespace Ozamanas.Board
             machine.RemoveTraitToMachine(data.speedUPTrait);
         }
 
+        public void CleanMachineList()
+        {
+            StartCoroutine(DeleteDestroyedMachinesFromList());
+        }
+        IEnumerator DeleteDestroyedMachinesFromList()
+        {
+            yield return null;
+
+            yield return null;
+
+            for(var i = CurrentHumanMachines.Count - 1; i > -1; i--)
+            {
+                if (CurrentHumanMachines[i] == null)
+                CurrentHumanMachines.RemoveAt(i);
+            }
+
+      
+        }
         public virtual void SpeedUpFirstMachine()
         {
             if(CurrentHumanMachines.Count <= 1) return;
@@ -248,6 +241,11 @@ namespace Ozamanas.Board
             DestroyCurrentTopElement();
 
             Instantiate(temp,topElementTransform);
+        }
+
+        public void ResetCellData()
+        {
+            UpdateTopElement(data.defaultTopElement);
         }
 
 
