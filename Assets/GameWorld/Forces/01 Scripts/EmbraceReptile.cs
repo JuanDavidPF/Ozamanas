@@ -140,6 +140,7 @@ namespace Ozamanas.Forces
         {
             if(VFXBite) Instantiate(VFXBite,machine.position,Quaternion.identity);
             if(poisonedTrait) machine.GetComponentInParent<HumanMachine>().AddTraitToMachine(poisonedTrait);
+            nearMachine.DOLookAt(transform.position,0.3f);
         }
 
         public override void DetachHumanMachine()
@@ -153,16 +154,13 @@ namespace Ozamanas.Forces
 
             if(!nearMachine) return;
 
-            if (nearMachine.TryGetComponentInParent(out MachinePhysicsManager physics))
-            {
-                physics.SetPhysical();
-            }
+            if (!nearMachine.TryGetComponentInParent(out HumanMachine machine)) return;
 
-            if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
-            {
-                machine.transform.SetParent(null,true);
-                if(poisonedTrait) machine.RemoveTraitToMachine(poisonedTrait);
-            }
+            machine.transform.SetParent(null,true);
+
+            if(poisonedTrait) machine.RemoveTraitToMachine(poisonedTrait);
+
+            nearMachine.GetComponentInParent<MachinePhysicsManager>().SetIntelligent();
 
             base.DestroyForce();
         }

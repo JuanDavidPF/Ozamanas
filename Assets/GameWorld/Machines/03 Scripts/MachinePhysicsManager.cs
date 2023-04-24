@@ -102,6 +102,10 @@ namespace Ozamanas.Machines
 
         public void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
         {
+            if(!force) return;
+
+            if(forceOrigin.Equals(null)) return;
+            
             SetKinematic();
 
             if(machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
@@ -153,7 +157,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
         }
 
@@ -168,7 +172,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
             
             
@@ -185,7 +189,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
             
             

@@ -301,7 +301,6 @@ namespace Ozamanas.Machines
 
             CurrentCell.CleanMachineList();
 
-            
         }
 
        

@@ -18,6 +18,20 @@ namespace Ozamanas.Machines
              machineSpawner = GetComponent<MachineSpawner>();
         }
 
+         private void Update()
+        {
+            //Fall to void
+            if (transform.position.y <= -1) DestroyMachineBox();
+           
+        }
+
+
+        private void DestroyMachineBox()
+        {
+            GameObject temp = Instantiate(VFXBoxDestruction,transform);
+            temp.transform.parent = null;
+            Destroy(gameObject);
+        }
         private void FixedUpdate()
         {
 
@@ -29,9 +43,7 @@ namespace Ozamanas.Machines
         private void SpawnMachine()
         {
             machineSpawner.SpawnNextMachineOnQueue();
-            GameObject temp = Instantiate(VFXBoxDestruction,transform);
-            temp.transform.parent = null;
-            Destroy(gameObject);
+            DestroyMachineBox();
         }
 
          void OnCollisionEnter(Collision collision)

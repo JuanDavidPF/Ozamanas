@@ -12,7 +12,7 @@ namespace Ozamanas.Forces
         [Title("Add Force to Machine Setup")]
         [EnumToggleButtons]
         public AddForceType type;
-        [Range(1,5)]
+        [Range(0.5f,5)]
         public float jumpPower; 
         [Range(.5f,5f)]
         public float duration;

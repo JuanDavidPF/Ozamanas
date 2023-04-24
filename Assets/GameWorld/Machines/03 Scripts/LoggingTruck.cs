@@ -19,7 +19,7 @@ namespace Ozamanas.Machines
         protected override void Start()
         {
             base.Start();
-            SetMachineUnLoaded();
+            woddenLogs.SetActive(false);
 
         }
         public void SetMachineLoaded()

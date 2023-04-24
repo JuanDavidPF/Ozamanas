@@ -12,6 +12,9 @@ namespace Ozamanas.Machines
          [SerializeField] private GameObject VFXAttack;
         [SerializeField] private GameObject machineBox;
 
+        [SerializeField] private int tilesToReleaseAttack;
+        private int counter =0;
+
         [SerializeField] private float power;
          [SerializeField] private float upwardsModifier;
         protected override void Awake()
@@ -19,6 +22,14 @@ namespace Ozamanas.Machines
             base.Awake();
             machineSpawner = GetComponent<MachineSpawner>();
             transform.parent = null;
+
+        }
+
+        public bool IsTimeToAttack()
+        {
+            counter++;
+
+            return counter >= tilesToReleaseAttack;
         }
        public void DestroyForest()
        {
@@ -35,6 +46,8 @@ namespace Ozamanas.Machines
                 cell.data = machine_token.GetTokenToSwap(cell);
                 cell.CurrentTopElement = machine_token.GetTopElementToSwap(cell);
             }
+
+            ResetAttackCounter();
        }
 
        public void SpawnMachine()
@@ -44,7 +57,12 @@ namespace Ozamanas.Machines
             Rigidbody rb = temp.GetComponent<Rigidbody>();
             rb.AddExplosionForce(power, transform.position, 10,upwardsModifier,ForceMode.Impulse);
 
-          
+            ResetAttackCounter();
+       }
+
+       private void ResetAttackCounter()
+       {
+            counter =0;
        }
     }
 }
