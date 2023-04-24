@@ -25,8 +25,8 @@ Transform:
   m_GameObject: {fileID: 173123747070739523}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5170303425205688590}
   - {fileID: 7963190699822790342}
@@ -59,8 +59,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745366391323740144}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.11, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0.1754, z: 0}
+  m_LocalScale: {x: 0.043, y: 0.043, z: 0.043}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4022702064964336845}
@@ -103,8 +103,8 @@ RectTransform:
   m_GameObject: {fileID: 789365589716811922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3142320621907317311}
   m_Father: {fileID: 380222374011553738}
@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6166924975238983063
@@ -201,13 +201,13 @@ GameObject:
   - component: {fileID: 6474880028955423243}
   - component: {fileID: 201654012075509107}
   - component: {fileID: 5196132032095778411}
-  - component: {fileID: 201654012075509106}
   - component: {fileID: 1292539710144540592}
   - component: {fileID: 1429759052432409234}
   - component: {fileID: 2386593570910358238}
   - component: {fileID: 9129453228484020602}
   - component: {fileID: 3669431602670365051}
   - component: {fileID: 446148388388257138}
+  - component: {fileID: 5633667682748772173}
   m_Layer: 0
   m_Name: HumanMachine_BulldozerMD
   m_TagString: Machine
@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 1012468311011433840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7902277320288658782}
@@ -232,6 +232,7 @@ Transform:
   - {fileID: 1547267732912648534}
   - {fileID: 2801605588466566508}
   - {fileID: 9149221594307334588}
+  - {fileID: 4031963617790667494}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -384,7 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 2
   fsm: {fileID: 1292539710144540592}
-  nma: {fileID: 201654012075509106}
+  nma: {fileID: 0}
   rb: {fileID: 9129453228484020602}
   machine: {fileID: 6474880028955423243}
   OnActivatePhysical:
@@ -432,28 +433,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!195 &201654012075509106
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012468311011433840}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 0.5
-  m_Acceleration: 1
-  avoidancePriority: 50
-  m_AngularSpeed: 200
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 0.1
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &1292539710144540592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +607,28 @@ MonoBehaviour:
   callback:
     m_PersistentCalls:
       m_Calls: []
+--- !u!195 &5633667682748772173
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012468311011433840}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.25
+  m_Speed: 0.5
+  m_Acceleration: 1
+  avoidancePriority: 50
+  m_AngularSpeed: 200
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 0.3
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3915165186959605317
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,8 +672,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9185904, y: 1.5910883, z: 3.0588024}
-  m_Center: {x: 0.0032035634, y: 0.7681658, z: 0.5573406}
+  m_Size: {x: 0.33876103, y: 0.25798404, z: 0.47405517}
+  m_Center: {x: 0.004746221, y: 0.120815575, z: 0.100899994}
 --- !u!1 &6572271360692443909
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +825,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bulldozer_Llanta (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
 --- !u!4 &324582913780552127 stripped
@@ -862,7 +868,7 @@ PrefabInstance:
     - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7974102136539117475, guid: 776db7b34b444c249b9da87dab612733,
         type: 3}
@@ -1134,6 +1140,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1810038899341786296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2357265296047213700
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 380222374011553738}
+    m_Modifications:
+    - target: {fileID: 1588420110259903505, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_Name
+      value: TraitManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bfab11586da44d946b5b592767406d4d, type: 3}
+--- !u!4 &4031963617790667494 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1676141431971260002, guid: bfab11586da44d946b5b592767406d4d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2357265296047213700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2392216068623004992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1220,6 +1301,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bulldozer_Llanta
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
@@ -1389,7 +1475,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 30
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1404,7 +1490,7 @@ PrefabInstance:
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4885817069922953995, guid: b0b6652949be0c5489d16f9191ef6739,
         type: 3}
@@ -1612,6 +1698,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bulldozer_Llanta (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
@@ -1938,6 +2029,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bulldozer_Llanta (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
 --- !u!4 &5307114707068811353 stripped
@@ -2033,6 +2129,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bulldozer_Llanta (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
 --- !u!4 &8532222246419946950 stripped
@@ -2061,12 +2162,12 @@ PrefabInstance:
     - target: {fileID: 3851268541926867724, guid: 012a7c6d8c8564c42b4c16d24af4699a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.067
+      value: -0.208
       objectReference: {fileID: 0}
     - target: {fileID: 3851268541926867724, guid: 012a7c6d8c8564c42b4c16d24af4699a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3851268541926867724, guid: 012a7c6d8c8564c42b4c16d24af4699a,
         type: 3}
@@ -2203,6 +2304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bulldozer_Llanta (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d860c170a7e1165449954267144c6a69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Machine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d860c170a7e1165449954267144c6a69, type: 3}
 --- !u!4 &8241966422045103829 stripped
@@ -2241,12 +2347,12 @@ PrefabInstance:
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.148
+      value: -0.094
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.511
+      value: 0.117
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
@@ -2392,7 +2498,7 @@ PrefabInstance:
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.22
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
@@ -2531,7 +2637,7 @@ PrefabInstance:
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.676
+      value: 0.397
       objectReference: {fileID: 0}
     - target: {fileID: 603026040676573935, guid: c52c55fb5ee7815458e031e76a67a74e,
         type: 3}

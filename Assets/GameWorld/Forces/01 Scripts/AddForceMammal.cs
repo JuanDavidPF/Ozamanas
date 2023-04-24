@@ -14,7 +14,6 @@ namespace Ozamanas.Forces
     {
           
 
-         [SerializeField] private CellTopElement forestTopElement;
 
         [SerializeField] private float mammalSpeed = 2f;
 
@@ -66,8 +65,7 @@ namespace Ozamanas.Forces
 
         public void AddForceToMachinesInRange()
         {
-             ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-                
+               
             foreach (HumanMachine machine in machinesAffected)
             {
                 if (!machine) continue;
@@ -104,24 +102,7 @@ namespace Ozamanas.Forces
 
 
 
-        private void ActivateTraits(Cell origin)
-        {
-            if (!origin) return;
-
-            foreach (var cell in origin.GetCellsOnRange(data.traitRange))
-            {
-                if (!cell) continue;
-
-                foreach (var trait in data.traits)
-                {
-                    if (!trait) continue;
-                    cell.AddTraitToMachine(trait);
-                }
-            }
-
-
-        }//Closes ActivateTraits method
-
+        
 
         private void AddForceToMachine(HumanMachine machine)
         {
@@ -150,7 +131,7 @@ namespace Ozamanas.Forces
         {
             if (mammalTween != null) mammalTween.Kill();
 
-            currentCell.CurrentTopElement = forestTopElement;
+            currentCell.ResetCellData();
 
             base.DestroyForce();
 

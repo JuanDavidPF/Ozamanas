@@ -92,15 +92,7 @@ namespace Ozamanas.Forces
         [LabelText("Add Force to Machine")]
         
         public PhysicsForce physicsForce;
-        [Title("Traits Setup:")]
-        [VerticalGroup("Ancient Force Setup")]
-        [LabelText("List of traits")]
-          [ShowIf("showTraits")]
-        public List<Machines.MachineTrait> traits;
-        [VerticalGroup("Ancient Force Setup")]
-          [ShowIf("showTraits")]
-        public int traitRange = 1;
-
+       
          [ShowIf("showPlacement")]
         [Title("Placement Setup")]
         [VerticalGroup("Ancient Force Setup")]

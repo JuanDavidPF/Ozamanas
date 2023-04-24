@@ -13,9 +13,7 @@ using DG.Tweening;
 
 namespace Ozamanas.Machines
 {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(FSMOwner))]
-    [RequireComponent(typeof(NavMeshAgent))]
+
     [RequireComponent(typeof(HumanMachine))]
 
     public class MachinePhysicsManager : MonoBehaviour
@@ -104,6 +102,10 @@ namespace Ozamanas.Machines
 
         public void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
         {
+            if(!force) return;
+
+            if(forceOrigin.Equals(null)) return;
+            
             SetKinematic();
 
             if(machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
@@ -155,7 +157,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
         }
 
@@ -170,7 +172,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
             
             
@@ -187,7 +189,7 @@ namespace Ozamanas.Machines
 
             machineTween.OnComplete(() =>
             {
-                SetPhysical();
+                SetIntelligent();
             });
             
             
@@ -245,7 +247,6 @@ namespace Ozamanas.Machines
             {
                 if(machine.CurrentCell == cell) return;   
                 machine.CurrentCell = cell;
-                machine.SetMachineTraitsfromCell(cell);
                 cell.CurrentTopElement = machine.Machine_token.GetTopElementToSwap(cell);
                 cell.data = machine.Machine_token.GetTokenToSwap(cell);
                 cell.SetOnMachineEnter(machine);
@@ -261,7 +262,6 @@ namespace Ozamanas.Machines
             if (other.TryGetComponentInParent(out Cell cell))
             {
                 if (machine.CurrentCell == cell) machine.CurrentCell = null;
-                    machine.RemoveMachineTraitsFromCell(cell);
                     cell.SetOnMachineExit(machine);
                 
             }

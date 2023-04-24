@@ -46,7 +46,6 @@ namespace Ozamanas.Forces
             {
                 visuals.gameObject.SetActive(true);
                 animator.SetTrigger("OnRelease");
-                ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
                 foreach (var machine in machinesAffected.ToArray())
                 {
                     if (!machine) continue;
@@ -64,23 +63,7 @@ namespace Ozamanas.Forces
 
 
        
-        private void ActivateTraits(Cell origin)
-        {
-            if (!origin) return;
-
-            foreach (var cell in origin.GetCellsOnRange(data.traitRange))
-            {
-                if (!cell) continue;
-
-                foreach (var trait in data.traits)
-                {
-                    if (!trait) continue;
-                    cell.AddTraitToMachine(trait);
-                }
-            }
-
-
-        }//Closes ActivateTraits method
+      
 
         private void AttackMachine(HumanMachine machine)
         {

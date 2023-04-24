@@ -5,7 +5,9 @@ using UnityEngine.Events;
 using Ozamanas.Tags;
 using Ozamanas.Board;
 using Ozamanas.Extenders;
+using Ozamanas.Machines;
 using System;
+using Ozamanas.Forces;
 
 namespace Ozamanas.Forest
 {
@@ -32,6 +34,8 @@ namespace Ozamanas.Forest
 
         private GameObject dummy;
 
+        [SerializeField] private PhysicsForce physicsForce;
+
 
         private void Start()
         {
@@ -50,10 +54,20 @@ namespace Ozamanas.Forest
             if (other.transform.tag != "Machine") return;
 
   
-            if(other.transform.TryGetComponentInParent(out Machines.HumanMachine machine)) 
+            if(other.transform.TryGetComponentInParent(out HumanMachine machine)) 
+            { 
+                if(machine.GetMachineType() == MachineHierarchy.Destructor ) 
+                {
+                    DestroyMountain();
+                    return;
+                }
+            }
+
+            if(machine.TryGetComponent<MachinePhysicsManager>(out MachinePhysicsManager physicsManager))
             {
-                        
-                if(machine.GetMachineType() == MachineHierarchy.Destructor ) DestroyMountain();
+                if(physicsManager.state == PhysicMode.Intelligent)
+                physicsManager.AddForceToMachine(physicsForce,transform.position);
+
             }
             
         }
