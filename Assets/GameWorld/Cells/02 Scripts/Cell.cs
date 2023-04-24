@@ -138,6 +138,7 @@ namespace Ozamanas.Board
 
         private void OnDestroy()
         {
+            OnUpdateCellData();
             OnCellChanged.Invoke(this);
         }
 

@@ -60,11 +60,6 @@ namespace Ozamanas.Forces
         [ToggleLeft]
         public bool showConstellation;
 
-         [VerticalGroup("Ancient Force Information")]
-        [LabelText("Traits Setup")]
-        [ToggleLeft]
-        public bool showTraits;
-
           [VerticalGroup("Ancient Force Information")]
         [LabelText("Data Setup")]
         [ToggleLeft]

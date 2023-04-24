@@ -41,11 +41,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8658834029813518716}
+  - component: {fileID: 3767186661111710461}
   - component: {fileID: 3568118483022712811}
-  - component: {fileID: 7376276968855790654}
   - component: {fileID: 2905851813502443622}
   - component: {fileID: 5973972518229072070}
-  - component: {fileID: 9031832549480664898}
   m_Layer: 0
   m_Name: AncientForce_Armadillo
   m_TagString: Untagged
@@ -69,23 +68,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &3568118483022712811
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8658834029813518704}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!114 &7376276968855790654
+--- !u!114 &3767186661111710461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +77,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8658834029813518704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ebf2f8c3781a92468346b18308751f0, type: 3}
+  m_Script: {fileID: 11500000, guid: ee3df78c62c90764d9a3fdbd95ceb93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPlaced: 0
@@ -135,9 +118,26 @@ MonoBehaviour:
   onDestroyVFX: {fileID: 1470245986751266690, guid: 49b136515423223498b5ea67900624b5,
     type: 3}
   placements: 0
-  forestTopElement: {fileID: 11400000, guid: f8bffa6f5316bae4f9224a1a7c9ecc53, type: 2}
   mammalSpeed: 10
-  addForceOnTweenComplete: 1
+  obstacle: {fileID: 3589520953951130406, guid: 49fcf88588d9e7948b3bf99bab3e58fc,
+    type: 3}
+  waterCell: {fileID: 11400000, guid: b81875d4a4e5a004e85d1cdd912730ab, type: 2}
+--- !u!54 &3568118483022712811
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658834029813518704}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!95 &2905851813502443622
 Animator:
   serializedVersion: 4
@@ -190,35 +190,6 @@ MonoBehaviour:
     itemId: 0
   spawnTarget: {fileID: 0}
   playOnStart: 0
---- !u!114 &9031832549480664898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8658834029813518704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2f7ef41e96302e49afde5434c5819c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  processes:
-  - key: AddForce
-    processes:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7376276968855790654}
-          m_TargetAssemblyTypeName: Ozamanas.Forces.AddForceMammal, Ozamanas.World
-          m_MethodName: AddForceToMachinesInRange
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1001 &5142347022128345634
 PrefabInstance:
   m_ObjectHideFlags: 0

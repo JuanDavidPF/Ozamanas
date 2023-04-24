@@ -122,6 +122,11 @@ public class HumanMachineToken : ScriptableObject
       [VerticalGroup("Machine Setup")]
       public List<CellData> cellBlacklist;
 
+      [ShowIfGroup("Machine Setup/showMovInfo")]
+      [VerticalGroup("Machine Setup")]
+      [LabelText("Subterranean BlackList")]
+      public List<CellData> subCellBlacklist;
+
       [ShowIfGroup("Machine Setup/showSpeedInfo")]
       [VerticalGroup("Machine Setup")]
       [Title("Machine Speed")]
