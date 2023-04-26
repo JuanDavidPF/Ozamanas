@@ -220,9 +220,9 @@ namespace Ozamanas.Board
             {
                 if(nearbyMachine.state !=  PhysicMode.Intelligent) continue;
 
-                if(nearbyMachine.machine.CheckIfActing()) continue;
+                if(nearbyMachine.Machine.CheckIfActing()) continue;
 
-                if(nearbyMachine.machine.MachineMovement.CurrentAltitude != MachineAltitude.Terrestrial ) continue;
+                if(nearbyMachine.Machine.MachineMovement.CurrentAltitude != MachineAltitude.Terrestrial ) continue;
 
                 nearbyMachine.ResetMachineNavAndAI();
             }

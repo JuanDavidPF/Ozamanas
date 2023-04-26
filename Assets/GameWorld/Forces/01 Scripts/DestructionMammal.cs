@@ -11,8 +11,8 @@ namespace Ozamanas.Forces
     public class DestructionMammal : AncientForce
     {
         [SerializeField] private float mammalSpeed = 2f;
-        [SerializeField] private GameObject obstacle;
-        [SerializeField] private CellData waterCell;
+        [SerializeField] private CellDemolisher cellDemolisher;
+
         private Tween mammalTween;
         private Animator animator;
         private Cell currentCell;
@@ -43,7 +43,7 @@ namespace Ozamanas.Forces
             {
 
                AddForceToMachinesInRange();
-               DestroyCell();
+                 SpawnCellDemolisher();
                DestroyForce();
 
             });
@@ -89,40 +89,15 @@ namespace Ozamanas.Forces
         }
 
 
-        private void DestroyCell()
+        private void SpawnCellDemolisher()
         {
-            SpawnObstacle();
-            SpawnReplacement();
-        }
-
-        private void SpawnObstacle()
-        {
-            if(!obstacle) return;
-
-            GameObject temp = Instantiate(obstacle,currentCell.transform.position,Quaternion.identity);
+            if(!cellDemolisher) return;
+            GameObject temp = Instantiate(cellDemolisher.gameObject,currentCell.transform.position,Quaternion.identity);
+            temp.GetComponent<CellDemolisher>().SpawnReplacement(currentCell);
 
         }
 
-        private void SpawnReplacement()
-        {
-            if(!waterCell) return;
-
-            List<Cell> waterCells = Board.BoardExtender.GetCellsOnRange(currentCell,1,false);
-
-            bool hasWater = false;
-
-            foreach(Cell cell in waterCells)
-            {
-                if(cell.data == waterCell) hasWater = true;
-            }
-
-            if( hasWater)  currentCell.data = waterCell;
-            else
-            {
-                Board.Board.RemoveCellFromBoard(currentCell);
-                Board.Board.reference.CombineTileMeshes();
-            }
-        }
+        
 
         private void AddForceToMachine(HumanMachine machine)
         {

@@ -21,10 +21,10 @@ namespace Ozamanas.Machines
 
         private Tween machineTween;
         public PhysicMode state = PhysicMode.Intelligent;
-        public FSMOwner fsm;
-        public NavMeshAgent nma;
-        public Rigidbody rb;
-        public HumanMachine machine;
+        private FSMOwner fsm;
+        private NavMeshAgent nma;
+        private Rigidbody rb;
+        private HumanMachine machine;
          [Space(15)]
         [Header("Physical timeout")]
         private float timeMaxInPhysical = 1f;
@@ -36,12 +36,14 @@ namespace Ozamanas.Machines
         public UnityEvent OnActivateIntelligent;
         public UnityEvent OnActivateKinematic;
 
+        public HumanMachine Machine { get => machine; set => machine = value; }
+
         private void Awake()
         {
             if (!rb) rb = GetComponent<Rigidbody>();
             if (!fsm) fsm = GetComponent<FSMOwner>();
             if (!nma) nma = GetComponent<NavMeshAgent>();
-            if (!machine) machine = GetComponent<HumanMachine>();
+            if (!Machine) Machine = GetComponent<HumanMachine>();
         }//Closes Awake Methods
 
 
@@ -108,7 +110,7 @@ namespace Ozamanas.Machines
             
             SetKinematic();
 
-            if(machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
+            if(Machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
             {
                 AddForceToBoss( force, forceOrigin);
             }
@@ -245,11 +247,11 @@ namespace Ozamanas.Machines
 
             if (other.transform.TryGetComponentInParent(out Cell cell))
             {
-                if(machine.CurrentCell == cell) return;   
-                machine.CurrentCell = cell;
-                cell.CurrentTopElement = machine.Machine_token.GetTopElementToSwap(cell);
-                cell.data = machine.Machine_token.GetTokenToSwap(cell);
-                cell.SetOnMachineEnter(machine);
+                if(Machine.CurrentCell == cell) return;   
+                Machine.CurrentCell = cell;
+                cell.CurrentTopElement = Machine.Machine_token.GetTopElementToSwap(cell);
+                cell.data = Machine.Machine_token.GetTokenToSwap(cell);
+                cell.SetOnMachineEnter(Machine);
                 
             }
         }//Closes OnTriggerEnter method
@@ -261,8 +263,8 @@ namespace Ozamanas.Machines
 
             if (other.TryGetComponentInParent(out Cell cell))
             {
-                if (machine.CurrentCell == cell) machine.CurrentCell = null;
-                    cell.SetOnMachineExit(machine);
+                if (Machine.CurrentCell == cell) Machine.CurrentCell = null;
+                    cell.SetOnMachineExit(Machine);
                 
             }
 
@@ -270,9 +272,9 @@ namespace Ozamanas.Machines
 
         private void OnDestroy()
         {
-            if(!machine.CurrentCell) return;
-            machine.CurrentCell.SetOnMachineExit(machine);
-            machine.CurrentCell = null;
+            if(!Machine.CurrentCell) return;
+            Machine.CurrentCell.SetOnMachineExit(Machine);
+            Machine.CurrentCell = null;
         }
 
         #endregion

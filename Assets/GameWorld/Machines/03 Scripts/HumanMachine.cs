@@ -262,7 +262,7 @@ namespace Ozamanas.Machines
         #endregion
 
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (CurrentCell) CurrentCell.SetOnMachineExit(this);
             machines.Remove(this);

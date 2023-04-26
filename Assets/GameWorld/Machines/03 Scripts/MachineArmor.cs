@@ -149,7 +149,7 @@ namespace Ozamanas.Machines
         private void Update()
         {
             //Fall to void
-            if (_t.position.y <= -1) Destroy();
+            if (_t.position.y <= -2) Destroy();
         }
 
     }

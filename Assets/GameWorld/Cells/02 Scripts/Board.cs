@@ -94,8 +94,6 @@ namespace Ozamanas.Board
             Board board = Board.reference;
             if (!cell || !board) return;
 
-
-
             board.cells.Remove(cell);
 
             if (board.cellsByGridPosition.ContainsKey(cell.gridPosition) && board.cellsByGridPosition[cell.gridPosition] == cell)

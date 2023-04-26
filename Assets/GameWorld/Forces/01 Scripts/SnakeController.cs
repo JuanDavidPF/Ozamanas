@@ -61,7 +61,7 @@ namespace Ozamanas.Forces
             physics.SetKinematic();
             tweener.Kill();
 
-            if(physics.machine.Machine_token.machineHierarchy != MachineHierarchy.Boss)
+            if(physics.Machine.Machine_token.machineHierarchy != MachineHierarchy.Boss)
             {
                 bittedMachine = physics.transform;
                 bittedMachine.SetParent(maw, true);
