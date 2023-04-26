@@ -12,7 +12,8 @@ namespace Ozamanas.Machines
          [SerializeField] private GameObject VFXAttack;
         [SerializeField] private GameObject machineBox;
 
-        [SerializeField] private int tilesToReleaseAttack;
+        [SerializeField] private int tilesToReleaseAttack = 2;
+        [SerializeField] private int attackRange = 1;
         private int counter =0;
 
         [SerializeField] private float power;
@@ -39,7 +40,7 @@ namespace Ozamanas.Machines
 
             List<Cell> cells = new List<Cell>();
 
-            cells = Board.BoardExtender.GetCellsOnRange(CurrentCell,1,false);
+            cells = Board.BoardExtender.GetCellsOnRange(CurrentCell,attackRange,false);
 
             foreach( Cell cell in cells)
             {
