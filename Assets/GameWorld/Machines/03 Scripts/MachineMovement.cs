@@ -12,7 +12,6 @@ using Sirenix.OdinInspector;
 
 namespace Ozamanas.Machines
 {
-    [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(HumanMachine))]
     public class MachineMovement : MonoBehaviour
     {
@@ -204,8 +203,20 @@ namespace Ozamanas.Machines
                 {
 
                     if (!next) continue;
-                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.data && humanMachine.Machine_token.cellBlacklist.Contains(next.data)) continue;
-                    if (CurrentAltitude == MachineAltitude.Terrestrial && next.isOccupied) continue;
+
+                    if(!next.data) continue;
+
+                    if(CurrentAltitude == MachineAltitude.Terrestrial)
+                    {
+                        if(humanMachine.Machine_token.cellBlacklist.Contains(next.data)) continue;
+                        if(next.isOccupied) continue;
+                    }
+
+                    else if(CurrentAltitude == MachineAltitude.Subterrestrial)
+                    {
+                        if(humanMachine.Machine_token.subCellBlacklist.Contains(next.data)) continue;
+                    }
+                   
                     /*Implement here early exits for board cell that dont met the conditions*/
 
 

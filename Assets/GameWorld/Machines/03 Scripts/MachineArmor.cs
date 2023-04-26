@@ -115,18 +115,9 @@ namespace Ozamanas.Machines
         {
             if (broken) return;
 
-            if (replacement)
-            {
-                broken = true;
-                GameObject temp = Instantiate(replacement, transform.position, transform.rotation);
-                temp.SetActive(true);
-                temp.GetComponent<MachineOnDestroy>().DestructableSetup(lifeSpan);
-                Rigidbody[] rbs = temp.GetComponentsInChildren<Rigidbody>();
-                foreach (Rigidbody rb in rbs)
-                {
-                    rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
-                }
-            }
+            broken = true;
+
+            SpawnDesrtoyedMachine();
             machine.RemoveMachineFromCurrentCell();
             machine.Machine_status = Tags.MachineState.Destroyed;
             OnMachineDestroyed?.Invoke();
@@ -134,13 +125,31 @@ namespace Ozamanas.Machines
             Destroy(gameObject);
         }
 
+        private void SpawnDesrtoyedMachine()
+        {
+            if(!replacement) return;
 
+ 
+            GameObject temp = Instantiate(replacement, transform.position, transform.rotation);
+            temp.SetActive(true);
+            temp.GetComponent<MachineOnDestroy>().DestructableSetup(lifeSpan);
+
+            if(machine.Machine_token.machineHierarchy == Tags.MachineHierarchy.Boss) return;
+
+            Rigidbody[] rbs = temp.GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rb in rbs)
+            {
+                rb.AddExplosionForce(explosionPower, temp.transform.position, 10f, 3F);
+            }
+
+
+        }
 
 
         private void Update()
         {
             //Fall to void
-            if (_t.position.y <= -1) Destroy();
+            if (_t.position.y <= -2) Destroy();
         }
 
     }

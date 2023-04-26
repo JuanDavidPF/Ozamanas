@@ -89,7 +89,9 @@ namespace Ozamanas.Board
 
              OpenGate = false;
 
-               rotateTween = meshToRotate.DORotate(new Vector3(0,360,0),rotationSpeed,RotateMode.FastBeyond360)
+             if(!alwaysRotate) return;
+
+            rotateTween = meshToRotate.DORotate(new Vector3(0,360,0),rotationSpeed,RotateMode.FastBeyond360)
             .SetLoops(-1, LoopType.Restart)
             .SetRelative()
             .SetEase(Ease.Linear);

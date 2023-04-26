@@ -57,8 +57,6 @@ namespace Ozamanas.Forces
 
             birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
 
-            ActivateTraits(Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid()));
-
             StartCoroutine(InstantiateThunder());
 
         }//Closes FirstPlacement method
@@ -93,23 +91,7 @@ namespace Ozamanas.Forces
             }
 
         }//Closes OnCollisionEnter method
-        private void ActivateTraits(Cell origin)
-        {
-            if (!origin) return;
-
-            foreach (var cell in origin.GetCellsOnRange(data.traitRange))
-            {
-                if (!cell) continue;
-
-                foreach (var trait in data.traits)
-                {
-                    if (!trait) continue;
-                    cell.AddTraitToMachine(trait);
-                }
-            }
-
-
-        }//Closes ActivateTraits method
+       
 
         private void AttackMachine(Machines.MachineArmor machine)
         {

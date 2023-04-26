@@ -32,12 +32,13 @@ namespace Ozamanas.Machines
 
         private AncientForce hijacker;
         protected  MachineArmor machineArmor;
-        protected  MachineMovement machineMovement;
+        private MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
         private Animator animator;
 
-        private GameObject traitVFX;
+        private TraitVFXController traitVFXController;
+
 
         [SerializeField] private Cell m_currentCell;
         public Cell CurrentCell
@@ -54,6 +55,7 @@ namespace Ozamanas.Machines
 
         public MachineState Machine_status { get => machine_status; set => machine_status = value; }
         public HumanMachineToken Machine_token { get => machine_token; set => machine_token = value; }
+        public MachineMovement MachineMovement { get => machineMovement; set => machineMovement = value; }
 
         [Space(20)]
         [Header("Events")]
@@ -77,15 +79,15 @@ namespace Ozamanas.Machines
 
          protected virtual void Start()
          {
-            
          }
 
-        void Awake()
+        protected virtual void Awake()
         {
             machineArmor = GetComponent<MachineArmor>();
-            machineMovement = GetComponent<MachineMovement>();
+            MachineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
             machinePhysics = GetComponent<MachinePhysicsManager>();
+            traitVFXController = GetComponentInChildren<TraitVFXController>();
 
         }
 
@@ -177,6 +179,8 @@ namespace Ozamanas.Machines
 
         public void RemoveTraitToMachine(MachineTrait trait)
         {
+             if(!activeTraits.Contains(trait)) return;
+            
             if(activeTraits.Remove(trait)) SetMachineAttributes();
         }
 
@@ -190,15 +194,16 @@ namespace Ozamanas.Machines
         public void RestoreMachineAttributesAndTraits()
         {
             machineArmor.RestoreOriginalValues();
-            machineMovement.RestoreOriginalValues();
+            MachineMovement.RestoreOriginalValues();
             activeTraits = new List<MachineTrait>();
+            traitVFXController.DeActivateAllTraitVFX();
         }
 
         public void SetMachineAttributes()
         {
             machineArmor.RestoreOriginalValues();
-            machineMovement.RestoreOriginalValues();
-            if(traitVFX) Destroy(traitVFX);
+            MachineMovement.RestoreOriginalValues();
+            traitVFXController.DeActivateAllTraitVFX();
 
             foreach (MachineTrait trait in activeTraits)
             {
@@ -206,24 +211,8 @@ namespace Ozamanas.Machines
             }
         }
 
-        public void SetMachineTraitsfromCell(Cell cell)
-        {
-            activeTraits.AddRange(cell.GetCellTraits());
-            foreach (MachineTrait trait in cell.GetCellTraits())
-            {
-                if (!trait.isPermanentOnMachine) WaitToRemoveTrait(trait);
-            }
-            SetMachineAttributes();
-        }
+       
 
-        public void RemoveMachineTraitsFromCell(Cell cell)
-        {
-            foreach (MachineTrait trait in cell.GetCellTraits())
-            {
-                activeTraits.Remove(trait);
-            }
-            SetMachineAttributes();
-        }
 
         private void SetMachineTrait(MachineTrait trait)
         {
@@ -241,7 +230,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.IncreaseSpeed:
-                        machineMovement.IncreaseMachineSpeed();
+                        MachineMovement.IncreaseMachineSpeed();
                         break;
 
                     case MachineTraits.Invulnerable:
@@ -249,7 +238,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.ReduceSpeed:
-                        machineMovement.DecreaseMachineSpeed();
+                        MachineMovement.DecreaseMachineSpeed();
                         break;
 
                     case MachineTraits.RepairMachine:
@@ -257,33 +246,25 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.StopMachine:
-                        machineMovement.StopMachine();
+                        MachineMovement.StopMachine();
                         break;
 
                     case MachineTraits.GotoBase:
-                        machineMovement.GoToBase();
+                        MachineMovement.GoToBase();
                         break;
 
                 }
             }
-
-           if(trait.traitVFX) InstantiateTraitVFX(trait.traitVFX);
+           traitVFXController.ActivateTraitVFX(trait);
         }
 
-        private void InstantiateTraitVFX(GameObject VFX)
-        {
-            if(traitVFX) Destroy(traitVFX);
-
-            traitVFX = Instantiate(VFX,transform);
-
-            traitVFX.transform.position += new Vector3(0,0.5f,0);
-        }
+     
         #endregion
 
 
-        private void OnDisable()
+        protected virtual void OnDestroy()
         {
-            if (CurrentCell) CurrentCell.isOccupied = false;
+            if (CurrentCell) CurrentCell.SetOnMachineExit(this);
             machines.Remove(this);
         }//Closes OnDisable method
 
@@ -317,8 +298,12 @@ namespace Ozamanas.Machines
             if(!CurrentCell) return;
 
             CurrentCell.SetOnMachineExit(this);
+
+            CurrentCell.CleanMachineList();
+
         }
 
+       
 
 
     }//Closes HumanMachine class

@@ -33,14 +33,24 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  machinePrefab: {fileID: 0}
   showArmorInfo: 0
   showMovInfo: 0
   showSpeedInfo: 0
+  showData: 0
   machineHierarchy: 0
   armorPoints: 1
-  currentSpeed: 0
-  deforestedTopElement: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30,
-    type: 2}
+  currentSpeed: 3
+  ruleList:
+  - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   maxArmorPoints: 5
   destroyedMachine: {fileID: 6742170808932452050, guid: 16944b9ca636ca844a9116de5b7527fc,
     type: 3}
@@ -53,10 +63,10 @@ MonoBehaviour:
   secondObjectiveRange: 0
   obviateMainObjective: 0
   cellBlacklist: []
+  subCellBlacklist: []
   speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
   currentAltitude: 0
   height: 1
-  timeMaxToReachDestination: 5
   references:
     version: 2
     RefIds: []

@@ -13,9 +13,7 @@ using DG.Tweening;
 
 namespace Ozamanas.Machines
 {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(FSMOwner))]
-    [RequireComponent(typeof(NavMeshAgent))]
+
     [RequireComponent(typeof(HumanMachine))]
 
     public class MachinePhysicsManager : MonoBehaviour
@@ -23,10 +21,10 @@ namespace Ozamanas.Machines
 
         private Tween machineTween;
         public PhysicMode state = PhysicMode.Intelligent;
-        public FSMOwner fsm;
-        public NavMeshAgent nma;
-        public Rigidbody rb;
-        public HumanMachine machine;
+        private FSMOwner fsm;
+        private NavMeshAgent nma;
+        private Rigidbody rb;
+        private HumanMachine machine;
          [Space(15)]
         [Header("Physical timeout")]
         private float timeMaxInPhysical = 1f;
@@ -38,12 +36,14 @@ namespace Ozamanas.Machines
         public UnityEvent OnActivateIntelligent;
         public UnityEvent OnActivateKinematic;
 
+        public HumanMachine Machine { get => machine; set => machine = value; }
+
         private void Awake()
         {
             if (!rb) rb = GetComponent<Rigidbody>();
             if (!fsm) fsm = GetComponent<FSMOwner>();
             if (!nma) nma = GetComponent<NavMeshAgent>();
-            if (!machine) machine = GetComponent<HumanMachine>();
+            if (!Machine) Machine = GetComponent<HumanMachine>();
         }//Closes Awake Methods
 
 
@@ -104,9 +104,26 @@ namespace Ozamanas.Machines
 
         public void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
         {
+            if(!force) return;
+
+            if(forceOrigin.Equals(null)) return;
+            
             SetKinematic();
 
-            switch(force.type)
+            if(Machine.Machine_token.machineHierarchy == MachineHierarchy.Boss)
+            {
+                AddForceToBoss( force, forceOrigin);
+            }
+
+            else AddForceToRegular( force, forceOrigin);
+
+
+
+        }
+
+         private void AddForceToRegular(PhysicsForce force, Vector3 forceOrigin)
+        {
+             switch(force.type)
             {
                 case AddForceType.VerticalJump:
                 PerformVerticalJump(force);
@@ -118,9 +135,67 @@ namespace Ozamanas.Machines
                 PerformFrontFlip(force,forceOrigin);
                 break;
             }
-
         }
 
+        private void AddForceToBoss(PhysicsForce force, Vector3 forceOrigin)
+        {
+             switch(force.type)
+            {
+                case AddForceType.VerticalJump:
+                PerformVerticalPush(force);
+                break;
+                case AddForceType.BackFlip:
+                PerformBackPush(force,forceOrigin);
+                break;
+                case AddForceType.FrontFlip:
+                PerformFrontPush(force,forceOrigin);
+                break;
+            }
+        }
+
+        private void PerformVerticalPush(PhysicsForce force)
+        {
+            machineTween = transform.DOMoveY(-0.5f,force.pushDuration,false).SetLoops(1,LoopType.Yoyo);
+
+            machineTween.OnComplete(() =>
+            {
+                SetIntelligent();
+            });
+        }
+
+         private void PerformBackPush(PhysicsForce force, Vector3 forceOrigin)
+        {
+        
+            Vector3 finalPosition = MathUtils.LerpByDistance(forceOrigin,transform.position,force.pushPower);
+
+            finalPosition.y = transform.position.y;
+
+            machineTween = transform.DOMove(finalPosition,force.pushDuration,false);
+
+            machineTween.OnComplete(() =>
+            {
+                SetIntelligent();
+            });
+            
+            
+        }
+
+           private void PerformFrontPush(PhysicsForce force, Vector3 forceOrigin)
+        {
+        
+            Vector3 finalPosition = MathUtils.LerpByDistance(forceOrigin,transform.position,-force.pushPower);
+
+            finalPosition.y = transform.position.y;
+
+            machineTween = transform.DOMove(finalPosition,force.pushDuration,false);
+
+            machineTween.OnComplete(() =>
+            {
+                SetIntelligent();
+            });
+            
+            
+        }
         
         private void PerformVerticalJump(PhysicsForce force)
         {
@@ -128,6 +203,8 @@ namespace Ozamanas.Machines
                     
             MachineJump(transform.position,force.jumpPower,force.duration,rot);
         }
+
+        
 
         private void PerformBackFlip(PhysicsForce force, Vector3 forceOrigin)
         {
@@ -138,6 +215,8 @@ namespace Ozamanas.Machines
             MachineJump(finalPosition,force.jumpPower,force.duration,rot);
         }
 
+
+      
          private void PerformFrontFlip(PhysicsForce force, Vector3 forceOrigin)
         {
             Vector3 rot = new Vector3(-force.flips*360,0,0);
@@ -168,12 +247,11 @@ namespace Ozamanas.Machines
 
             if (other.transform.TryGetComponentInParent(out Cell cell))
             {
-                if(machine.CurrentCell == cell) return;   
-                machine.CurrentCell = cell;
-                machine.SetMachineTraitsfromCell(cell);
-                cell.CurrentTopElement = machine.Machine_token.GetTopElementToSwap(cell);
-                cell.data = machine.Machine_token.GetTokenToSwap(cell);
-                cell.SetOnMachineEnter(machine);
+                if(Machine.CurrentCell == cell) return;   
+                Machine.CurrentCell = cell;
+                cell.CurrentTopElement = Machine.Machine_token.GetTopElementToSwap(cell);
+                cell.data = Machine.Machine_token.GetTokenToSwap(cell);
+                cell.SetOnMachineEnter(Machine);
                 
             }
         }//Closes OnTriggerEnter method
@@ -185,9 +263,8 @@ namespace Ozamanas.Machines
 
             if (other.TryGetComponentInParent(out Cell cell))
             {
-                if (machine.CurrentCell == cell) machine.CurrentCell = null;
-                    machine.RemoveMachineTraitsFromCell(cell);
-                    cell.SetOnMachineExit(machine);
+                if (Machine.CurrentCell == cell) Machine.CurrentCell = null;
+                    cell.SetOnMachineExit(Machine);
                 
             }
 
@@ -195,9 +272,9 @@ namespace Ozamanas.Machines
 
         private void OnDestroy()
         {
-            if(!machine.CurrentCell) return;
-            machine.CurrentCell.SetOnMachineExit(machine);
-            machine.CurrentCell = null;
+            if(!Machine.CurrentCell) return;
+            Machine.CurrentCell.SetOnMachineExit(Machine);
+            Machine.CurrentCell = null;
         }
 
         #endregion

@@ -14,12 +14,10 @@ namespace Ozamanas.Machines
         public LocalizedString traitName = new LocalizedString();
         public LocalizedString traitDescription = new LocalizedString();
         public List<MachineTraits> types = new List<MachineTraits>();
-        public GameObject auxiliar;
         public bool isPermanentOnMachine = true;
         public float machineTimer = 0f;
-        public bool isPermanetOnHolder = false;
-        public float holderTimer = 0f;
-        public GameObject traitVFX;
+       
+
 
     }
 }

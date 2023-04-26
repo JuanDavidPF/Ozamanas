@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Ozamanas.Machines;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Forces
 {
@@ -19,46 +20,70 @@ namespace Ozamanas.Forces
 
         private Transform bittedMachine;
 
+        private Vector3 initPosition;
+
+        private EmbraceReptile embraceReptile;
+
+
         private void Awake()
         {
             _T = transform;
+
+            embraceReptile = GetComponentInParent<EmbraceReptile>();
+
         }
 
         public void Bite(Transform machine)
         {
             mawTrigger.enabled = true;
             bittedMachine = machine;
+            initPosition = _T.position;
 
-            tweener = _T.DOMove(machine.position, .3f).From(_T.position)
+            tweener = _T.DOMove(machine.position, 0.3f).From(_T.position)
             .SetUpdate(UpdateType.Late)
             .OnUpdate(() =>
             {
                 tweener.ChangeEndValue(machine.position, true);
             });
 
-        }//Closes Bite method
+           
+           
 
+        }//Closes Bite method
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Machine") return;
-            
+
+            embraceReptile.OnBiteMachine(other.transform);
             mawTrigger.enabled = false;
-            tweener.Kill();
             MachinePhysicsManager physics = other.GetComponentInParent<MachinePhysicsManager>();
             physics.SetKinematic();
+            tweener.Kill();
 
-            bittedMachine = physics.transform;
+            if(physics.Machine.Machine_token.machineHierarchy != MachineHierarchy.Boss)
+            {
+                bittedMachine = physics.transform;
+                bittedMachine.SetParent(maw, true);
+                bittedMachine.localRotation = Quaternion.Euler(0, 0, 0);
+                bittedMachine.localPosition = Vector3.zero;
+                Vector3 machineOriginalScale = bittedMachine.localScale;
+                if (snakeAnimator) snakeAnimator.SetTrigger("Thread");
+            }
+            else
+            {   
+                
+                tweener = _T.DOMove(initPosition, 0.7f).From(_T.position);
+                tweener.OnComplete(() =>
+                {
+                    embraceReptile.transform.DOLookAt(other.transform.position,0.1f);
+                    embraceReptile.ActivateOnDragAnimation();
+                });
+                
+                
+            }
 
-
-            bittedMachine.SetParent(maw, true);
-            bittedMachine.localRotation = Quaternion.Euler(0, 0, 0);
-            bittedMachine.localPosition = Vector3.zero;
-
-            Vector3 machineOriginalScale = bittedMachine.localScale;
-
-            if (snakeAnimator) snakeAnimator.SetTrigger("Thread");
-
+            
 
         }
         private void OnDisable()

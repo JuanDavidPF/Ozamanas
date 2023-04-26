@@ -50,12 +50,17 @@ namespace Ozamanas.Forces
         Vector3 draggedPosition;
 
         public int placements = 0;
+
+        protected virtual void FixedUpdate()
+        {
+           
+        }
         protected virtual void Update()
         {
            if(placements > 0) Drag();
 
             CheckMultiplePlacements();
-        }//Closes Update method
+        }
 
         public virtual void CheckMultiplePlacements()
         {

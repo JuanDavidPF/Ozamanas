@@ -13,18 +13,16 @@ namespace Ozamanas.Machines
         [HideInInspector] public GameObject _go;
         [HideInInspector] public Transform _t;
 
-          [SerializeField] private float spawnDelay = 0f;
+        [SerializeField] private float spawnDelay = 0f;
         [SerializeField] private List<HumanMachineToken> spawnQueue = new List<HumanMachineToken>();
        
 
-        private CellData cellData;
 
         private void Awake()
         {
             _go = gameObject;
             _t = _go.transform;
 
-            cellData = GetComponent<Cell>().data;
 
         }//Closes Awake method
         

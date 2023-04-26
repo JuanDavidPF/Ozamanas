@@ -57,6 +57,7 @@ Material:
   m_Name: MAT_Deforested_Rocky
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ValidKeywords:
+  - DR_RIM_ON
   - _CELPRIMARYMODE_SINGLE
   - _TEXTUREBLENDINGMODE_MULTIPLY
   - _UNITYSHADOWMODE_COLOR
@@ -76,7 +77,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 97d8a832c7b4d0445b07d1e303be11c0, type: 3}
+        m_Texture: {fileID: 2800000, guid: b146c3be5378c4915ae6f9256835a8f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -166,9 +167,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FlatRimEdgeSmoothness: 0.5
-    - _FlatRimLightAlign: 0
-    - _FlatRimSize: 0.5
+    - _FlatRimEdgeSmoothness: 0
+    - _FlatRimLightAlign: 0.6
+    - _FlatRimSize: 0
     - _FlatSpecularEdgeSmoothness: 0
     - _FlatSpecularSize: 0.1
     - _Flatness: 1
@@ -198,8 +199,8 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 0
-    - _RimEnabled: 0
-    - _SelfShadingSize: 0.5
+    - _RimEnabled: 1
+    - _SelfShadingSize: 0.6
     - _SelfShadingSizeExtra: 0.6
     - _ShadowEdgeSize: 0.02
     - _ShadowEdgeSizeExtra: 0.05
@@ -222,14 +223,14 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDim: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
+    - _ColorDim: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimExtra: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _DetailMapColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlatRimColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    - _FlatRimColor: {r: 1.3041189, g: 1.3041189, b: 1.3041189, a: 1}
     - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _LightAttenuation: {r: 0, g: 1, b: 0, a: 0}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}

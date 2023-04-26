@@ -6,7 +6,7 @@ using Ozamanas.Levels;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.Rendering;
 
 namespace Ozamanas.Board
 {
@@ -93,8 +93,6 @@ namespace Ozamanas.Board
         {
             Board board = Board.reference;
             if (!cell || !board) return;
-
-
 
             board.cells.Remove(cell);
 
@@ -198,6 +196,12 @@ namespace Ozamanas.Board
                  return OriginToA - OriginToB;
              });
 
+             foreach( Cell cell in cellsByData )
+             {
+                if(cell.gridPosition.GridToAxial().DistanceTo(origin.UnityToGrid().GridToAxial())>range)
+                cellsByData.Remove(cell);
+             }
+            
 
             return cellsByData;
         }//Closes GetNearestsCellInRange method
@@ -282,41 +286,47 @@ namespace Ozamanas.Board
 
         }//Closes GetNearestCell method
 
+        public static List<Cell> GetAllCells()
+        {
+            List<Cell> allCells = new List<Cell>();
 
+            Board board = Board.reference;
 
+            allCells.AddRange(board.cells);
+            
+            return allCells;
+        }
 
-
-       
 
         public void CombineTileMeshes()
         {
-              gameObject.AddComponent<MeshFilter>();
-              gameObject.AddComponent<MeshRenderer>();
+            gameObject.AddComponent<MeshFilter>();
+            gameObject.AddComponent<MeshRenderer>();
 
-              List<MeshFilter> temp = new List<MeshFilter>();
-              foreach( Cell cell in cells)
-              {
-                  temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
-              }
+            List<MeshFilter> temp = new List<MeshFilter>();
+            foreach( Cell cell in cells)
+            {
+                temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
+            }
 
-                Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
-               MeshFilter[] meshFilters = temp.ToArray();
-               CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+            Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
+            MeshFilter[] meshFilters = temp.ToArray();
+            CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-              int i = 0;
-              while (i < meshFilters.Length)
-              {
-                  combine[i].mesh = meshFilters[i].sharedMesh;
-                  combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-                  meshFilters[i].gameObject.SetActive(false);
+            int i = 0;
+            while (i < meshFilters.Length)
+            {
+                combine[i].mesh = meshFilters[i].sharedMesh;
+                combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+                meshFilters[i].gameObject.SetActive(false);
 
-                  i++;
-              }
-              transform.GetComponent<MeshFilter>().mesh = new Mesh();
-transform.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-              transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-              transform.GetComponent<MeshRenderer>().material = mat;
-              transform.gameObject.SetActive(true);
+                i++;
+            }
+            transform.GetComponent<MeshFilter>().mesh = new Mesh();
+            transform.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+            transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+            transform.GetComponent<MeshRenderer>().material = mat;
+            transform.gameObject.SetActive(true);
         }
 
 

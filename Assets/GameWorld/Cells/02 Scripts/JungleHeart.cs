@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Ozamanas.Machines;
 using Ozamanas.Tags;
-using Ozamanas.World;
+using Ozamanas.Forces;
 using Sirenix.OdinInspector;
 
 namespace Ozamanas.Board
@@ -16,6 +16,8 @@ namespace Ozamanas.Board
         [Title("JungleHeart Setup:")]
         public UnityEvent LevelFailed;
         private  bool levelComplete = false;
+
+        [SerializeField] private PhysicsForce physicsForce;
         public override void SetOnMachineEnter(HumanMachine machine)
         {
             base.SetOnMachineEnter(machine);
@@ -28,6 +30,9 @@ namespace Ozamanas.Board
             {
                 if(physicsManager.state == PhysicMode.Intelligent)
                 LevelFailed?.Invoke();
+                else 
+                physicsManager.AddForceToMachine(physicsForce,transform.position);
+
             }
         }
        

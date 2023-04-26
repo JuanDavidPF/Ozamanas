@@ -13,23 +13,25 @@ namespace Ozamanas.Machines
         [SerializeField] private CellData sawMill;
         [SerializeField] private CellData emptyEnergyPool;
 
+         [SerializeField] private MachineTrait repairTrait;
+
 
         protected override void Start()
         {
             base.Start();
-            SetMachineUnLoaded();
+            woddenLogs.SetActive(false);
 
         }
         public void SetMachineLoaded()
         {
-            machineMovement.ReplaceSecondaryObjective(machine_token.humanBase,100);
-            machineArmor.RepairMachine();
+            MachineMovement.ReplaceSecondaryObjective(machine_token.humanBase,100);
+            AddTraitToMachine(repairTrait);
             ReduceEnergyLevelOnCurrentCell();
             woddenLogs.SetActive(true);
 
             if (CheckIfEnergyLevelIsDepleted())
             {
-                machineMovement.ReplaceSecondaryObjective(machine_token.secondObjective,machine_token.secondObjectiveRange);
+                MachineMovement.ReplaceSecondaryObjective(machine_token.secondObjective,machine_token.secondObjectiveRange);
                 CurrentCell.data = emptyEnergyPool;
                 CurrentCell.CurrentTopElement = emptyEnergyPool.defaultTopElement;
                 return;
@@ -38,7 +40,7 @@ namespace Ozamanas.Machines
 
          public void SetMachineUnLoaded()
         {
-            machineMovement.ReplaceSecondaryObjective(sawMill,3);
+            MachineMovement.ReplaceSecondaryObjective(sawMill,3);
             woddenLogs.SetActive(false);
         }
 
@@ -50,7 +52,7 @@ namespace Ozamanas.Machines
             CurrentCell.data = sawMill;
             CurrentCell.CurrentTopElement = sawMill.defaultTopElement;
 
-            machineMovement.ReplaceSecondaryObjective(sawMill,3);
+            MachineMovement.ReplaceSecondaryObjective(sawMill,3);
         
         }
 

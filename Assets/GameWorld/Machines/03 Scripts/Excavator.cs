@@ -14,18 +14,18 @@ namespace Ozamanas.Machines
         [SerializeField] private CellData barrierId;
         public void GoSubterrestrial()
         {
-            if (machineMovement.CurrentAltitude == MachineAltitude.Subterrestrial) return;
+            if (MachineMovement.CurrentAltitude == MachineAltitude.Subterrestrial) return;
 
-            machineMovement.CurrentAltitude = MachineAltitude.Subterrestrial;
+            MachineMovement.CurrentAltitude = MachineAltitude.Subterrestrial;
         }
 
         public void GoTerrestrial()
         {
-             if (machineMovement.CurrentAltitude == MachineAltitude.Terrestrial) return;
+             if (MachineMovement.CurrentAltitude == MachineAltitude.Terrestrial) return;
 
              TryToDestroyMountain();
 
-            machineMovement.CurrentAltitude = MachineAltitude.Terrestrial;
+            MachineMovement.CurrentAltitude = MachineAltitude.Terrestrial;
         }
 
         public void TryToDestroyMountain()
