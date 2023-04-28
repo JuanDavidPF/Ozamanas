@@ -56,7 +56,7 @@ namespace Ozamanas.Forest
   
             if(other.transform.TryGetComponentInParent(out HumanMachine machine)) 
             { 
-                if(machine.GetMachineType() == MachineHierarchy.Destructor ) 
+                if(machine.IsDestructor()) 
                 {
                     DestroyMountain();
                     return;

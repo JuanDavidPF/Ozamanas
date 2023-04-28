@@ -13,6 +13,8 @@ namespace Ozamanas.Board
     {
         [Header("Top Element Default")]
 
+        public GameObject cellPrefab;
+
         public CellTopElement defaultTopElement;
 
         public MachineTrait speedUPTrait;

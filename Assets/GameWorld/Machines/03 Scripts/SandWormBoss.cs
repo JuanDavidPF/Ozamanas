@@ -1,53 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using Ozamanas.Board;
 
 namespace Ozamanas.Machines
 {
     public class SandWormBoss : HumanMachine
     {   
-        [SerializeField] private float ySpeed = 2f;
-        [SerializeField] private float yPosUP = 1.5f;
+        [SerializeField] private CellDemolisher cellDemolisher;
 
-        [SerializeField] private float yPosDown = 1.5f;
+        [SerializeField] private List<CellData> blacklist = new List<CellData>();
 
-        [SerializeField] private float rotStart = 1.5f;
+        [SerializeField] private int destroyCellsLimit = 3; 
+        [SerializeField] private float cellLimit = 2; 
 
-        [SerializeField] private Vector3 rot = new Vector3(180,0,0);
+        private List<Cell> currentCells = new List<Cell>();
+        private bool isCrawling = false;
 
-        [SerializeField] private float rotSpeed = 1.5f;
+        public bool IsCrawling { get => isCrawling; set => isCrawling = value; }
 
-        [SerializeField] private Transform visuals;
-        private  Sequence mySequence;
+        private WormMovement wormMovement;
 
         protected override void Start()
         {
             base.Start();
+            wormMovement = GetComponent<WormMovement>();
             transform.parent = null;
-           // Crawling();
+            
+        }
+
+        void Update()
+        {
+            if(wormMovement.Cart.m_Position >= cellLimit) 
+            {
+                IsCrawling = false;
+                cellLimit += cellLimit;
+            }
+            
+            if(IsCrawling) return;
+
+            Crawling();
+            
         }
         private void Crawling()
         {
-            float temp = ySpeed * rotStart;
-            mySequence = DOTween.Sequence();
-            mySequence.Append(visuals.DOMoveY(yPosUP,ySpeed,false));
-            mySequence.Insert(0.8f,visuals.DORotate(rot,rotSpeed,RotateMode.Fast).From(new Vector3(0,0,0)));
-            mySequence.Append(visuals.DOMoveY(-yPosDown,ySpeed,false));
-            mySequence.Insert(2.8f,visuals.DORotate(new Vector3(0,0,0),rotSpeed,RotateMode.Fast).From(rot));
-            mySequence.SetLoops(-1,LoopType.Restart);
+            IsCrawling = true;
+
+            SetRunningStatus();
+
+            if(MachineMovement.CheckIfMachineIsBlocked())
+            {
+                SetBlockedStatus();
+                return;
+            }
+        
+            MachineMovement.SetCurrentDestination();
+
         } 
 
-        public void WormCanMove(bool canMove)
+        public void AddCurrentCell(Cell cell)
         {
-            if(canMove) Crawling();
-            else mySequence.Kill();
-        }
+            if(blacklist.Contains(cell.data)) return;
+            
+            if(currentCells.Contains(cell)) return;
 
-        protected override void OnDestroy()
+            currentCells.Add(cell);
+
+            if(currentCells.Count > destroyCellsLimit ) 
+            {
+                SpawnCellDemolisher(currentCells[0]);
+                currentCells.RemoveAt(0);
+            }
+        }
+        public void SpawnCellDemolisher(Cell cell)
         {
-            mySequence.Kill();
-            base.OnDestroy();
+            if(!cellDemolisher) return;
+
+            GameObject temp = Instantiate(cellDemolisher.gameObject,cell.transform.position,Quaternion.identity);
+            temp.GetComponent<CellDemolisher>().SpawnReplacement(cell);
+
         }
         
     }

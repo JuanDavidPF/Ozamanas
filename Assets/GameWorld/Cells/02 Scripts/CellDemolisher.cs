@@ -8,10 +8,14 @@ namespace Ozamanas.Board
     public class CellDemolisher : MonoBehaviour
     {
         [SerializeField] private CellData waterCell;
+        [SerializeField] private CellData emptyCell;
 
         public void SpawnReplacement(Cell currentCell)
         {
-            if(!waterCell) return;
+
+            if(!currentCell) return;
+
+            if(!waterCell || !emptyCell) return;
 
             List<Cell> waterCells = BoardExtender.GetCellsOnRange(currentCell,1,false);
 
@@ -22,12 +26,11 @@ namespace Ozamanas.Board
                 if(cell.data == waterCell) hasWater = true;
             }
 
-            if(hasWater)  currentCell.data = waterCell;
-            else
-            {
-                Board.RemoveCellFromBoard(currentCell);
-                Board.reference.CombineTileMeshes();
-            }
+            if(hasWater)  Board.reference.ReplaceCellOnBoard(waterCell, currentCell.transform.position);
+            else Board.reference.ReplaceCellOnBoard(emptyCell, currentCell.transform.position);
+
+          
+           
         }
     }
 }

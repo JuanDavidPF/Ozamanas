@@ -152,8 +152,7 @@ public enum PlayerState
     public enum MachineHierarchy
 {
     Boss = 0,
-    Regular =1,
-    Destructor
+    Regular =1
 }
 
     public enum MachineSpeed

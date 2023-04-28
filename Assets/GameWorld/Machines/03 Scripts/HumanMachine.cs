@@ -303,6 +303,11 @@ namespace Ozamanas.Machines
 
         }
 
+        public bool IsDestructor()
+        {
+            return Machine_token.isDestructor;
+        }
+
        
 
 
