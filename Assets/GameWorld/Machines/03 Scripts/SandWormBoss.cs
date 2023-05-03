@@ -102,8 +102,9 @@ namespace Ozamanas.Machines
 
         protected override void OnDestroy()
         {
-            base.OnDestroy();
             foreach( Cell cell in currentCells) SpawnCellDemolisher(cell);
+            base.OnDestroy();
+            
         }
         
     }

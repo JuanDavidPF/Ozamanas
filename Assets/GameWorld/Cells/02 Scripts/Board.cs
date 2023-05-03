@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Board
 {
@@ -69,9 +70,9 @@ namespace Ozamanas.Board
 
             newCell.transform.position = cellPosition;
 
-            newCell.visuals.gameObject.SetActive(true);
-
             AddCellToBoard(newCell);
+
+            newCell.visuals.gameObject.SetActive(true);
 
             CombineTileMeshes();
         }
@@ -262,6 +263,28 @@ namespace Ozamanas.Board
 
         }//Closes LineBetweenCell method
 
+        public static Cell GetCellByCardinalPoint(float3 unityVector, CardinalPoints point)
+        {
+            Board board = Board.reference;
+            if (!reference) return null;
+
+            Cell cellAtPoint = null;
+
+            Dictionary<CardinalPoints,float3> direction = new Dictionary<CardinalPoints, float3>();
+            direction.Add(CardinalPoints.North,new float3(0,0,1));
+            direction.Add(CardinalPoints.NorthWest,new float3(-0.866f,0,0.5f));
+            direction.Add(CardinalPoints.NorthEast,new float3(0.866f,0,0.5f));
+            direction.Add(CardinalPoints.South,new float3(0,0,-1));
+            direction.Add(CardinalPoints.SouthEast,new float3(0.866f,0,-0.5f));
+            direction.Add(CardinalPoints.SouthWest,new float3(-0.866f,0,-0.5f));
+
+            
+            if(direction.TryGetValue(point, out float3 temp)) temp += unityVector;
+
+            cellAtPoint = GetCellByPosition(temp);
+
+            return cellAtPoint;
+        }
     
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {
