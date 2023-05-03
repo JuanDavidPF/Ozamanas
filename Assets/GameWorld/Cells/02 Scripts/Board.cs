@@ -317,8 +317,8 @@ namespace Ozamanas.Board
 
         public void CombineTileMeshes()
         {
-            gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshRenderer>();
+            if(!gameObject.TryGetComponent<MeshFilter>(out MeshFilter mf)) gameObject.AddComponent<MeshFilter>();
+            if(!gameObject.TryGetComponent<MeshRenderer>(out MeshRenderer mr))gameObject.AddComponent<MeshRenderer>();
 
             List<MeshFilter> temp = new List<MeshFilter>();
             foreach( Cell cell in cells)

@@ -18,30 +18,48 @@ namespace Ozamanas.Machines
         private bool isCrawling = false;
 
         public bool IsCrawling { get => isCrawling; set => isCrawling = value; }
+        public WormMovement WormMovement { get => wormMovement; set => wormMovement = value; }
+        public WormPhysics WormPhysics { get => wormPhysics; set => wormPhysics = value; }
 
         private WormMovement wormMovement;
+        private WormPhysics wormPhysics;
+
 
         protected override void Start()
         {
             base.Start();
-            wormMovement = GetComponent<WormMovement>();
+            WormMovement = GetComponent<WormMovement>();
+            WormPhysics = GetComponent<WormPhysics>();
             transform.parent = null;
+            PlayGoingUPAnim();
             
         }
 
         void Update()
         {
-            if(wormMovement.Cart.m_Position >= cellLimit) 
+            if(WormMovement.Cart.m_Position >= cellLimit) 
             {
-                IsCrawling = false;
+                CheckIfPathChanged();
                 cellLimit += cellLimit;
             }
             
-            if(IsCrawling) return;
+            if(!IsCrawling) Crawling();
+        }
 
-            Crawling();
+        private void CheckIfPathChanged()
+        {
+            if(!WormMovement.CheckIfPathChanged()) return;
+
+            IsCrawling = false;
             
         }
+
+        public void PlayGoingUPAnim()
+        {
+            animator.SetTrigger("GoingUP");
+        }
+      
+       
         private void Crawling()
         {
             IsCrawling = true;
@@ -76,9 +94,16 @@ namespace Ozamanas.Machines
         {
             if(!cellDemolisher) return;
 
+            WormMovement.RemoveCellFromPath(cell);
             GameObject temp = Instantiate(cellDemolisher.gameObject,cell.transform.position,Quaternion.identity);
             temp.GetComponent<CellDemolisher>().SpawnReplacement(cell);
 
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            foreach( Cell cell in currentCells) SpawnCellDemolisher(cell);
         }
         
     }

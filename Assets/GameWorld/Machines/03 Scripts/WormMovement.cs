@@ -13,6 +13,10 @@ namespace Ozamanas.Machines
 
         [SerializeField] private GameObject pathPrefab;
 
+        private float currentPos = 0;
+
+        private SandWormBoss worm;
+
         private CinemachineSmoothPath path;
         private CinemachineDollyCart cart;
 
@@ -22,9 +26,21 @@ namespace Ozamanas.Machines
         {
             humanMachine = GetComponent<HumanMachine>();
             Cart = GetComponent<CinemachineDollyCart>();
+            worm = GetComponent<SandWormBoss>();
         }
 
+       
+        public void StopWorm()
+        {
+            Cart.m_Speed = 0;
+            currentPos = Cart.m_Position;
+        }
 
+         public void StartWorm()
+        {
+            Cart.m_Speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            Cart.m_Position = currentPos;
+        }
         public override void SetCurrentDestination()
         {
 
@@ -36,11 +52,13 @@ namespace Ozamanas.Machines
 
             path.m_Waypoints = CreateNewSmoothPathWayPoints();
 
+            path.m_Waypoints[0].position = transform.position;
+
             Cart.m_Path = path;
 
             Cart.m_Position = 0;
 
-            Cart.m_Speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            StartWorm();
         }
 
         public override void MoveToNextCell()
@@ -71,8 +89,13 @@ namespace Ozamanas.Machines
                  {
                     position = Vector3.Lerp(pathToDestination[j].transform.position,pathToDestination[j-1].transform.position,0.5f);
                     if(j%2==0) position.y -= wormElevation;
-                    else position.y += wormElevation;
+                    else 
+                    {
+                        position.y += wormElevation;
+                        waypoints[i].roll = 90;
+                    }
                     waypoints[i].position = position;
+                    
                  }
             }
 
@@ -91,8 +114,22 @@ namespace Ozamanas.Machines
            path = Instantiate(pathPrefab,new Vector3(0,0,0), Quaternion.identity).GetComponent<CinemachineSmoothPath>();
         }
 
-       
+        public void RemoveCellFromPath(Cell cell)
+        {
+            if(!pathToDestination.Contains(cell)) return;
 
+            pathToDestination.Remove(cell);
+        }
+
+        public bool CheckIfPathChanged()
+        {
+            for (int i = 0;i<pathToDestination.Count;i++)
+            if(pathToDestination[i]==null) return true;
+
+            return false;
+        }
+
+       
 
     }
 }

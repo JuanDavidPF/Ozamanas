@@ -109,6 +109,10 @@ namespace Ozamanas.Forces
                 {
                     if(movement.CurrentAltitude != MachineAltitude.Terrestrial) continue;
                 }
+                 if (machine.TryGetComponent(out SandWormBoss boss))
+                {
+                    continue;
+                }
                 if(machine.TryGetComponentInParent(out Machines.MachinePhysicsManager physics))
                 {
                     if(physics.state != PhysicMode.Intelligent) continue;

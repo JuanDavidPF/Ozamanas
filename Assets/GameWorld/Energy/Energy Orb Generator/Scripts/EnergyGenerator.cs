@@ -155,5 +155,11 @@ namespace Ozamanas.Energy
             absorber = FindObjectOfType<EnergyAbsorber>();
         }
 
+        void OnDestroy()
+        {
+           if(generationCoroutine == null) return;
+            StopCoroutine(generationCoroutine);
+        }
+
     }//Closes EnergyGenerator
 }//Closes namespace declaration

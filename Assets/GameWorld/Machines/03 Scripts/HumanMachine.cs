@@ -35,7 +35,7 @@ namespace Ozamanas.Machines
         private MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
-        private Animator animator;
+        protected Animator animator;
 
         private TraitVFXController traitVFXController;
 

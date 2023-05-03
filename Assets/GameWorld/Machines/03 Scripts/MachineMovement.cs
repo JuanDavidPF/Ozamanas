@@ -86,6 +86,11 @@ namespace Ozamanas.Machines
            
         }
 
+        protected virtual void Update()
+        {
+
+        }
+
         protected void LoadMachineObjectivesInformation()
         {
             mainObjective=humanMachine.Machine_token.mainObjective;

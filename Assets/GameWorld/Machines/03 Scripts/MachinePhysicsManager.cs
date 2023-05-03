@@ -19,11 +19,11 @@ namespace Ozamanas.Machines
     public class MachinePhysicsManager : MonoBehaviour
     {
 
-        private Tween machineTween;
+        protected Tween machineTween;
         public PhysicMode state = PhysicMode.Intelligent;
         private FSMOwner fsm;
         private NavMeshAgent nma;
-        private Rigidbody rb;
+        protected Rigidbody rb;
         protected HumanMachine machine;
          [Space(15)]
         [Header("Physical timeout")]
@@ -47,7 +47,7 @@ namespace Ozamanas.Machines
         }//Closes Awake Methods
 
 
-        public void SetKinematic()
+        public virtual void SetKinematic()
         {
 
             state = PhysicMode.Kinematic;
@@ -60,7 +60,7 @@ namespace Ozamanas.Machines
         }//Closes SetKinematic method
 
 
-        public void SetIntelligent()
+        public virtual void SetIntelligent()
         {
             state = PhysicMode.Intelligent;
 
@@ -102,7 +102,7 @@ namespace Ozamanas.Machines
 
         
 
-        public void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
+        public virtual void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
         {
             if(!force) return;
 
