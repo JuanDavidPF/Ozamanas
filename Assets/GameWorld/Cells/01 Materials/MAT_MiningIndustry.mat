@@ -57,7 +57,7 @@ Material:
   m_Name: MAT_MiningIndustry
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ValidKeywords:
-  - DR_ENABLE_LIGHTMAP_DIR
+  - DR_RIM_ON
   - _CELPRIMARYMODE_SINGLE
   - _TEXTUREBLENDINGMODE_MULTIPLY
   - _UNITYSHADOWMODE_COLOR
@@ -194,11 +194,11 @@ Material:
     - _OutlineWidth: 1
     - _OverrideBakedGi: 0
     - _OverrideLightAttenuation: 0
-    - _OverrideLightmapDir: 1
+    - _OverrideLightmapDir: 0
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 0
-    - _RimEnabled: 0
+    - _RimEnabled: 1
     - _SelfShadingSize: 0.6
     - _SelfShadingSizeExtra: 0.6
     - _ShadowEdgeSize: 0.02
@@ -235,7 +235,7 @@ Material:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _UnityShadowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _UnityShadowColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1483299716465940152
 MonoBehaviour:
