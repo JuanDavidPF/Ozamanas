@@ -94,8 +94,7 @@ MonoBehaviour:
     condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
     topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
     tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
-  activeTraits: []
-  tileMeshFilter: {fileID: 0}
+  hollowTile: {fileID: 0}
   worldPosition:
     x: 0
     y: 0
@@ -139,6 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4001354445615126654}
+  - component: {fileID: 4339883072259153661}
   m_Layer: 0
   m_Name: TopElement
   m_TagString: Untagged
@@ -162,6 +162,18 @@ Transform:
   m_Father: {fileID: 2801024173440971866}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+--- !u!114 &4339883072259153661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691445501666233913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2586e8ca876a2488e0b621c12d48aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3881232552380134467
 PrefabInstance:
   m_ObjectHideFlags: 0

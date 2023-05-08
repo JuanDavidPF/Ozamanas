@@ -17,6 +17,13 @@ namespace Ozamanas.Forest
         {
             rb = GetComponent<Rigidbody>();
         }
+
+        void Start()
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
+
+            rb.isKinematic = false;
+        }
     
 
         void OnCollisionEnter(Collision collision)
@@ -31,6 +38,8 @@ namespace Ozamanas.Forest
             if(vfxOnDestroy) Instantiate(vfxOnDestroy,transform);
 
             Destroy(gameObject,lifeTime);
+
+            rb.isKinematic = false;
 
             rb.constraints = RigidbodyConstraints.None;
       
