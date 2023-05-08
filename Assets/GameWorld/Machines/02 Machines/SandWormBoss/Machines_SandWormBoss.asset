@@ -33,23 +33,25 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  machinePrefab: {fileID: 0}
+  machinePrefab: {fileID: 1012468311011433840, guid: dd660d986b6a9544384042659ff6b983,
+    type: 3}
   showArmorInfo: 0
-  showMovInfo: 0
+  showMovInfo: 1
   showSpeedInfo: 0
-  showData: 0
+  showData: 1
   machineHierarchy: 0
-  armorPoints: 1
-  currentSpeed: 3
+  isDestructor: 1
+  armorPoints: 3
+  currentSpeed: 4
   ruleList:
   - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
-    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: ac21c116fea210942b4d264af13cf538, type: 2}
     tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - condition: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
-    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: ac21c116fea210942b4d264af13cf538, type: 2}
     tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   - condition: {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
-    topElementToSwap: {fileID: 11400000, guid: 0d6c4b7453629314cafd22035143be30, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: ac21c116fea210942b4d264af13cf538, type: 2}
     tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   maxArmorPoints: 5
   destroyedMachine: {fileID: 6742170808932452050, guid: 16944b9ca636ca844a9116de5b7527fc,
@@ -62,7 +64,8 @@ MonoBehaviour:
   secondObjective: {fileID: 0}
   secondObjectiveRange: 0
   obviateMainObjective: 0
-  cellBlacklist: []
+  cellBlacklist:
+  - {fileID: 11400000, guid: 01237b4a78fff844eae7d0a067beeed2, type: 2}
   subCellBlacklist: []
   speedValues: {fileID: 11400000, guid: c73ba07faf0677b48b6f5e13bcb6e560, type: 2}
   currentAltitude: 0

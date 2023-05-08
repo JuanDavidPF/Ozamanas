@@ -19,12 +19,12 @@ namespace Ozamanas.Machines
     public class MachinePhysicsManager : MonoBehaviour
     {
 
-        private Tween machineTween;
+        protected Tween machineTween;
         public PhysicMode state = PhysicMode.Intelligent;
         private FSMOwner fsm;
         private NavMeshAgent nma;
-        private Rigidbody rb;
-        private HumanMachine machine;
+        protected Rigidbody rb;
+        protected HumanMachine machine;
          [Space(15)]
         [Header("Physical timeout")]
         private float timeMaxInPhysical = 1f;
@@ -38,7 +38,7 @@ namespace Ozamanas.Machines
 
         public HumanMachine Machine { get => machine; set => machine = value; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (!rb) rb = GetComponent<Rigidbody>();
             if (!fsm) fsm = GetComponent<FSMOwner>();
@@ -47,7 +47,7 @@ namespace Ozamanas.Machines
         }//Closes Awake Methods
 
 
-        public void SetKinematic()
+        public virtual void SetKinematic()
         {
 
             state = PhysicMode.Kinematic;
@@ -60,7 +60,7 @@ namespace Ozamanas.Machines
         }//Closes SetKinematic method
 
 
-        public void SetIntelligent()
+        public virtual void SetIntelligent()
         {
             state = PhysicMode.Intelligent;
 
@@ -83,7 +83,7 @@ namespace Ozamanas.Machines
             timeInToPhysical = Time.time;
         }//Closes ActivatePhysics method
 
-        public void ResetMachineNavAndAI()
+        public virtual void ResetMachineNavAndAI()
         {
             if (fsm) fsm.enabled = false;
             if (nma) nma.enabled = false;
@@ -102,7 +102,7 @@ namespace Ozamanas.Machines
 
         
 
-        public void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
+        public virtual void AddForceToMachine(PhysicsForce force, Vector3 forceOrigin)
         {
             if(!force) return;
 
@@ -240,7 +240,7 @@ namespace Ozamanas.Machines
 
         #region Trigger Manager
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
 
             if (other.tag != "Cell") return;
@@ -257,7 +257,7 @@ namespace Ozamanas.Machines
         }//Closes OnTriggerEnter method
 
         
-        private void OnTriggerExit(Collider other)
+        protected virtual void OnTriggerExit(Collider other)
         {
             if (other.tag != "Cell") return;
 

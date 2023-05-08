@@ -256,7 +256,12 @@ namespace Ozamanas.Board
             
             if (topElementTransform.childCount== 0) return;
 
-            Destroy(topElementTransform.GetChild(0).gameObject);
+            foreach (Transform child in topElementTransform) 
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+           
 
         }
 

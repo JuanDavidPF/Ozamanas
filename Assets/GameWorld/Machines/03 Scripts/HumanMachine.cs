@@ -35,7 +35,7 @@ namespace Ozamanas.Machines
         private MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
-        private Animator animator;
+        protected Animator animator;
 
         private TraitVFXController traitVFXController;
 
@@ -301,6 +301,11 @@ namespace Ozamanas.Machines
 
             CurrentCell.CleanMachineList();
 
+        }
+
+        public bool IsDestructor()
+        {
+            return Machine_token.isDestructor;
         }
 
        

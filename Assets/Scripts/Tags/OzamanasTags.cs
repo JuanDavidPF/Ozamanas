@@ -19,6 +19,15 @@ namespace Ozamanas.Tags
         Play= 1 << 7
     }
 
+    public enum CardinalPoints
+    {        
+        North,
+        South,
+        NorthEast, 
+        SouthEast,
+        NorthWest,
+        SouthWest
+    }
     public enum ActionButtonType
     {
         Exit,
@@ -152,8 +161,7 @@ public enum PlayerState
     public enum MachineHierarchy
 {
     Boss = 0,
-    Regular =1,
-    Destructor
+    Regular =1
 }
 
     public enum MachineSpeed

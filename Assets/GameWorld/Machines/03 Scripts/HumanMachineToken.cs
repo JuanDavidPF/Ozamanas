@@ -62,6 +62,11 @@ public class HumanMachineToken : ScriptableObject
       [EnumToggleButtons]
       public MachineHierarchy machineHierarchy = MachineHierarchy.Regular;
 
+        [VerticalGroup("Machine Setup")]
+      [EnumToggleButtons]
+
+      public bool isDestructor;
+
       [VerticalGroup("Machine Setup")]
       [ProgressBar(0,"maxArmorPoints",0,1,1,Segmented = true)]
       public int armorPoints =1 ;

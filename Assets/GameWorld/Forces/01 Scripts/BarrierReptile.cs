@@ -40,9 +40,8 @@ namespace Ozamanas.Forces
         }
 
 
-        protected override void SecondPlacement()
+        public override void SecondPlacement()
         {
-
             base.SecondPlacement();
         }
 

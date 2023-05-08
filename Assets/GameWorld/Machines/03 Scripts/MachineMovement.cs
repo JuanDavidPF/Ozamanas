@@ -26,13 +26,13 @@ namespace Ozamanas.Machines
         }//Closes
 
         private NavMeshAgent navMeshAgent;
-        private HumanMachine humanMachine;
+        protected HumanMachine humanMachine;
         private CellData mainObjective;
         private CellData mainObjectiveBackUP;
         private CellData secondObjective;
         private int secondObjectiveRange;
 
-        private MachineSpeed currentSpeed;
+        protected MachineSpeed currentSpeed;
         private MachineAltitude currentAltitude;
         private float timeMaxToReachDestination = 10f;
         private float timeToReachDestination = 0f;
@@ -42,17 +42,15 @@ namespace Ozamanas.Machines
 
         public PathFindingResult result = PathFindingResult.NonCalculated;
         [SerializeField] private Cell currentDestination;
-        [SerializeField] private Cell nextCellOnPath;
-        [SerializeField] private List<Cell> pathToDestination = new List<Cell>();
+        [SerializeField] protected Cell nextCellOnPath;
+        [SerializeField] protected List<Cell> pathToDestination = new List<Cell>();
 
 
         [Space(15)]
         [Header("Events")]
         [SerializeField] private UnityEvent OnCloseToJungleHeart;
 
-       
-        private int distanceToHeart = 0;
-
+    
         [Space(15)]
         [Header("Debug")]
         [SerializeField] private bool debugPathFinding;
@@ -73,14 +71,14 @@ namespace Ozamanas.Machines
 
 
         // Start is called before the first frame update
-        void Awake()
+        protected virtual void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             humanMachine = GetComponent<HumanMachine>();
             
         }//Closes Awake method
 
-        void Start()
+        protected virtual void Start()
         {
             LoadMachineObjectivesInformation();
             LoadMachineSpeedInformation();
@@ -88,16 +86,20 @@ namespace Ozamanas.Machines
            
         }
 
-        private void LoadMachineObjectivesInformation()
+        protected virtual void Update()
+        {
+
+        }
+
+        protected void LoadMachineObjectivesInformation()
         {
             mainObjective=humanMachine.Machine_token.mainObjective;
             mainObjectiveBackUP = mainObjective;
             secondObjective=humanMachine.Machine_token.secondObjective;
             secondObjectiveRange=humanMachine.Machine_token.secondObjectiveRange;
-            distanceToHeart=humanMachine.Machine_token.OnDistanceToHeartNotification;
         }
 
-        private void LoadMachineSpeedInformation()
+        protected void LoadMachineSpeedInformation()
         {
             currentSpeed=humanMachine.Machine_token.currentSpeed;
             CurrentAltitude=humanMachine.Machine_token.currentAltitude;
@@ -146,7 +148,7 @@ namespace Ozamanas.Machines
         }//Closes ResetPath method
 
 
-        public bool CheckIfReachDestination()
+        public virtual bool CheckIfReachDestination()
         {
 
             if (navMeshAgent.pathPending) return false;
@@ -259,10 +261,9 @@ namespace Ozamanas.Machines
         }//Closes Calculate PathtoCell alogorythym
 
         public bool CheckIfMachineIsBlocked()
-        {
+        {   
             //There is no main objective
             if (mainObjective == null) return true;
-
 
             //There is no cell matching the mainobjective tag
             Cell newCell = Board.Board.GetNearestCell(transform.position, mainObjective);
@@ -276,7 +277,7 @@ namespace Ozamanas.Machines
 
             return false;
         }
-        public void SetCurrentDestination()
+        public virtual void SetCurrentDestination()
         {
             // Guard: Machine does not have Main Objective or is Blocked
             
@@ -315,7 +316,7 @@ namespace Ozamanas.Machines
             CalculatePathToDestination();
         }
 
-        public void MoveToNextCell()
+        public virtual void MoveToNextCell()
         {
             if (pathToDestination.Count == 0) return;
 
@@ -323,15 +324,15 @@ namespace Ozamanas.Machines
             navMeshAgent.SetDestination(nextCellOnPath.transform.position);
             pathToDestination.RemoveAt(0);
             timeToReachDestination = Time.time;
-             CheckIfIsCloseToJungleHeart();
+            CheckIfIsCloseToJungleHeart();
             
         }
 
-        private void CheckIfIsCloseToJungleHeart()
+        protected void CheckIfIsCloseToJungleHeart()
         {
-            if(distanceToHeart >= pathToDestination.Count) return;
+            if(humanMachine.Machine_token.OnDistanceToHeartNotification >= pathToDestination.Count) return;
            
-            if(pathToDestination[distanceToHeart].data == mainObjectiveBackUP)
+            if(pathToDestination[humanMachine.Machine_token.OnDistanceToHeartNotification].data == mainObjectiveBackUP)
             {
                 OnCloseToJungleHeart?.Invoke();
             }

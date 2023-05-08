@@ -64,20 +64,54 @@ namespace Ozamanas.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Slot_1"",
+                    ""type"": ""Button"",
+                    ""id"": ""170fd9c0-8426-44e7-9b96-8db1c3b16fb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot_2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5dd5ccd-2999-4a7d-ad18-807011b85ba1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot_3"",
+                    ""type"": ""Button"",
+                    ""id"": ""38f3944c-54d2-44b2-8b3a-61f3b499e5c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot_4"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f6ac9ea-5519-46d3-a0b6-f437650db249"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel_Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e3e657d-47bb-4277-bfb6-91a4ae6a704b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""WASD"",
                     ""id"": ""00ca640b-d935-4593-8157-c05846ea39b3"",
@@ -178,28 +212,6 @@ namespace Ozamanas.InputSystem
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ea4d645-4504-4529-b061-ab81934c3752"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Delta"",
                     ""id"": ""b595f71b-4129-4168-b395-7ed805bbaccd"",
                     ""path"": ""OneModifier"",
@@ -233,15 +245,59 @@ namespace Ozamanas.InputSystem
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""51dffbcb-b421-4b8f-be16-eb630eeab6e5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=10,y=10)"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ecda23db-1bb3-4ac8-9f7b-d4b27a1dd4b2"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b54dbad0-5eb8-4c91-b153-3f120820a284"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ff52c032-3c35-4ee0-baf0-88b30808b8ca"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d30a9bf5-f6af-4b40-857b-c161b0a91f16"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -256,33 +312,11 @@ namespace Ozamanas.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""id"": ""366d0134-ec00-4c42-998c-b9065534c66f"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
+                    ""groups"": """",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -295,6 +329,61 @@ namespace Ozamanas.InputSystem
                     ""processors"": ""Clamp(min=-1,max=1)"",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""981b879b-d8f3-4c16-ab51-70d304e740b0"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Slot_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96dad11c-b4d0-441c-889d-db5f70009016"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Slot_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3bf0325-6a6a-4d8f-a4a9-288da3fa4932"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slot_3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25a35f51-82a9-41b5-80fe-b6c4e9b0c219"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Slot_4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70e89bdd-f10b-4f89-944a-78567265e2b1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Cancel_Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -826,7 +915,7 @@ namespace Ozamanas.InputSystem
                 {
                     ""name"": """",
                     ""id"": ""cf800559-3b37-4210-bee1-052cb8aa7e7f"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -945,6 +1034,11 @@ namespace Ozamanas.InputSystem
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
+            m_Player_Slot_1 = m_Player.FindAction("Slot_1", throwIfNotFound: true);
+            m_Player_Slot_2 = m_Player.FindAction("Slot_2", throwIfNotFound: true);
+            m_Player_Slot_3 = m_Player.FindAction("Slot_3", throwIfNotFound: true);
+            m_Player_Slot_4 = m_Player.FindAction("Slot_4", throwIfNotFound: true);
+            m_Player_Cancel_Fire = m_Player.FindAction("Cancel_Fire", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -1024,6 +1118,11 @@ namespace Ozamanas.InputSystem
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Zoom;
+        private readonly InputAction m_Player_Slot_1;
+        private readonly InputAction m_Player_Slot_2;
+        private readonly InputAction m_Player_Slot_3;
+        private readonly InputAction m_Player_Slot_4;
+        private readonly InputAction m_Player_Cancel_Fire;
         public struct PlayerActions
         {
             private @InputManager m_Wrapper;
@@ -1032,6 +1131,11 @@ namespace Ozamanas.InputSystem
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
+            public InputAction @Slot_1 => m_Wrapper.m_Player_Slot_1;
+            public InputAction @Slot_2 => m_Wrapper.m_Player_Slot_2;
+            public InputAction @Slot_3 => m_Wrapper.m_Player_Slot_3;
+            public InputAction @Slot_4 => m_Wrapper.m_Player_Slot_4;
+            public InputAction @Cancel_Fire => m_Wrapper.m_Player_Cancel_Fire;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1053,6 +1157,21 @@ namespace Ozamanas.InputSystem
                     @Zoom.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
                     @Zoom.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
                     @Zoom.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
+                    @Slot_1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_1;
+                    @Slot_1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_1;
+                    @Slot_1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_1;
+                    @Slot_2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_2;
+                    @Slot_2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_2;
+                    @Slot_2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_2;
+                    @Slot_3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_3;
+                    @Slot_3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_3;
+                    @Slot_3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_3;
+                    @Slot_4.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_4;
+                    @Slot_4.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_4;
+                    @Slot_4.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSlot_4;
+                    @Cancel_Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
+                    @Cancel_Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
+                    @Cancel_Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1069,6 +1188,21 @@ namespace Ozamanas.InputSystem
                     @Zoom.started += instance.OnZoom;
                     @Zoom.performed += instance.OnZoom;
                     @Zoom.canceled += instance.OnZoom;
+                    @Slot_1.started += instance.OnSlot_1;
+                    @Slot_1.performed += instance.OnSlot_1;
+                    @Slot_1.canceled += instance.OnSlot_1;
+                    @Slot_2.started += instance.OnSlot_2;
+                    @Slot_2.performed += instance.OnSlot_2;
+                    @Slot_2.canceled += instance.OnSlot_2;
+                    @Slot_3.started += instance.OnSlot_3;
+                    @Slot_3.performed += instance.OnSlot_3;
+                    @Slot_3.canceled += instance.OnSlot_3;
+                    @Slot_4.started += instance.OnSlot_4;
+                    @Slot_4.performed += instance.OnSlot_4;
+                    @Slot_4.canceled += instance.OnSlot_4;
+                    @Cancel_Fire.started += instance.OnCancel_Fire;
+                    @Cancel_Fire.performed += instance.OnCancel_Fire;
+                    @Cancel_Fire.canceled += instance.OnCancel_Fire;
                 }
             }
         }
@@ -1270,6 +1404,11 @@ namespace Ozamanas.InputSystem
             void OnLook(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
+            void OnSlot_1(InputAction.CallbackContext context);
+            void OnSlot_2(InputAction.CallbackContext context);
+            void OnSlot_3(InputAction.CallbackContext context);
+            void OnSlot_4(InputAction.CallbackContext context);
+            void OnCancel_Fire(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Board
 {
@@ -60,6 +61,23 @@ namespace Ozamanas.Board
             CellSelectionHandler.currentCellSelected = null;
         }//Closes DeselectSelectedCell method
 
+        
+        public void ReplaceCellOnBoard(CellData cell, Vector3 cellPosition)
+        {
+            if(!cell.cellPrefab) return;
+            
+            Cell newCell = Instantiate(cell.cellPrefab,transform).GetComponent<Cell>();
+
+            newCell.transform.position = cellPosition;
+
+            AddCellToBoard(newCell);
+
+            newCell.visuals.gameObject.SetActive(true);
+
+            CombineTileMeshes();
+        }
+        
+        
         public void AddCellToBoard(Cell cell)
         {
             if (!cell) return;
@@ -245,6 +263,7 @@ namespace Ozamanas.Board
 
         }//Closes LineBetweenCell method
 
+        
     
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {
@@ -300,13 +319,16 @@ namespace Ozamanas.Board
 
         public void CombineTileMeshes()
         {
-            gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshRenderer>();
+            if(!gameObject.TryGetComponent<MeshFilter>(out MeshFilter mf)) gameObject.AddComponent<MeshFilter>();
+            if(!gameObject.TryGetComponent<MeshRenderer>(out MeshRenderer mr))gameObject.AddComponent<MeshRenderer>();
 
             List<MeshFilter> temp = new List<MeshFilter>();
             foreach( Cell cell in cells)
             {
-                temp.Add(cell.HollowTile.GetComponent<MeshFilter>());
+                if(!cell.HollowTile) continue;
+
+                if(cell.HollowTile.TryGetComponent<MeshFilter>(out MeshFilter meshFilter))
+                temp.Add(meshFilter);
             }
 
             Material mat = cells[0].HollowTile.GetComponent<MeshRenderer>().material;
