@@ -110,11 +110,11 @@ namespace Ozamanas.UI
 
              if(!codexHandler) return;
 
-              codexHandler.UnSelectCards();
+            codexHandler.UnSelectCards();
 
-             selectedImage.gameObject.SetActive(true);
+            selectedImage.gameObject.SetActive(true);
 
-             codexHandler.OnObjectClicked(forceData);
+            codexHandler.OnObjectClicked(forceData);
              
         }
 
@@ -150,7 +150,6 @@ namespace Ozamanas.UI
         {
             if (!forceBeingPlaced || forceBeingPlaced.data != forceData) return;
             forceBeingPlaced.Drag();
-
         }//Closes OnDrag method
         public void OnEndDrag(PointerEventData eventData)
         {

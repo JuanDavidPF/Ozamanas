@@ -22,6 +22,10 @@ namespace Ozamanas.Forces
         protected Cell firstPlacementComplete;
         protected Cell secondPlacementComplete;
 
+        protected bool stopForceDragging = false;
+
+        protected bool stopAttackRangePrinting = false;
+
         private Camera cam;
         private GameObject g;
         private Transform t;
@@ -93,6 +97,7 @@ namespace Ozamanas.Forces
 
         protected virtual void SetForcePositionOnDrag()
         {
+        
             if (!Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
             {
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -108,11 +113,13 @@ namespace Ozamanas.Forces
                 Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.Pointer);
             }
 
-            t.position = draggedPosition;
+            if(!stopForceDragging) t.position = draggedPosition;
         }
 
         protected virtual void SetForceAttackRangeOnDrag()
         {
+            if(stopAttackRangePrinting) return;
+
             if(data.attackRange.value <= 0) return;
 
             if (!Board.CellSelectionHandler.currentCellHovered) return;
@@ -201,29 +208,35 @@ namespace Ozamanas.Forces
         protected virtual void FinalPlacement()
         {
             placements = 0;
+
             CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
 
             if (cellHovered && cellHovered.cellReference) cellHovered.cellReference.CellOverLay.DeActivateAllPointers();
 
             DeActivateAllPointers();
 
-            if (cellHovered &&
-            IsValidPlacement(cellHovered.cellReference) && validCells.Contains(cellHovered.cellReference))
+            if (cellHovered && IsValidPlacement(cellHovered.cellReference) && validCells.Contains(cellHovered.cellReference))
             {
                 OnSuccesfulPlacement?.Invoke(this);
                 isPlaced = true;
                 GetMachinesOnAttackRange();
             }
-
-            else OnFailedPlacement?.Invoke(this);
-
+            else 
+            {
+                OnFailedPlacement?.Invoke(this);
+                OnForceFailedPlacement();
+            }
+            
             if (Board.Board.reference) Board.Board.reference.OnNewCellData.RemoveListener(OnNewCellData);
 
             EraseValidCells();
             EraseAttackRangeCells();
-
         }
 
+        protected virtual void OnForceFailedPlacement()
+        {
+
+        }
 
         protected virtual void DeActivateAllPointers()
         {
