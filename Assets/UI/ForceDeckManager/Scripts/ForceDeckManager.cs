@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.SaveSystem;
 using Ozamanas.Extenders;
+using Ozamanas.Forces;
 
 namespace Ozamanas.UI
 {
@@ -10,20 +11,27 @@ namespace Ozamanas.UI
     {
 
         [SerializeField] private PlayerDataHolder currentSaveState;
-        [SerializeField] private ForceCard cardPrefab;
+
+        private List<ForceCard> selectedForces = new List<ForceCard>();
+
+
         private void Awake()
         {
-            transform.Clean();
+            selectedForces.AddRange(GetComponentsInChildren<ForceCard>());
         }//Closes Awake method
         public void LoadPlayerDeck()
         {
-            if (!currentSaveState || !currentSaveState.data || !cardPrefab) return;
+            if (!currentSaveState || !currentSaveState.data ) return;
 
-
-            foreach (var force in currentSaveState.data.selectedForces)
+            for (int i = 0;i<selectedForces.Count;i++)
             {
-                Instantiate(cardPrefab, transform).forceData = force;
+                if(i < currentSaveState.data.selectedForces.Count)
+                selectedForces[i].forceData = currentSaveState.data.selectedForces[i];
+                else
+                selectedForces[i].gameObject.SetActive(false);
+        
             }
+           
         }//Closes LoadPlayerDeck method
 
     }//Closes ForceDeckManager class

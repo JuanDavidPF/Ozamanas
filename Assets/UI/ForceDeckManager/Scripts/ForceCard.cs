@@ -10,10 +10,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Localization;
+using UnityEngine.InputSystem;
 
 namespace Ozamanas.UI
 {
-    public class ForceCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class ForceCard : MonoBehaviour
     {
 
         [Space(15)]
@@ -27,7 +28,6 @@ namespace Ozamanas.UI
         [SerializeField] private ForceData m_forceData;
         [SerializeField] private IntegerVariable energyCounter;
 
-         private CodexHandler codexHandler;
 
 
         public ForceData forceData
@@ -73,16 +73,13 @@ namespace Ozamanas.UI
             {
                 if (m_forceBeingPlaced)
                 {
-                    Destroy(m_forceBeingPlaced.gameObject);
+                    m_forceBeingPlaced.DestroyForce();
                 }
                 m_forceBeingPlaced = value;
 
 
             }
         }
-
-
-
 
 
         private bool isOnCooldown;
@@ -92,7 +89,6 @@ namespace Ozamanas.UI
         {
             rectTransform = GetComponent<RectTransform>();
             forceNameText = forceName.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-             codexHandler = FindObjectOfType<CodexHandler>();
         }
 
 
@@ -102,21 +98,7 @@ namespace Ozamanas.UI
             selectedImage.gameObject.SetActive(active);
         }
 
-         public void OnPointerClick()
-        {
-             if(!selectedImage) return;
-
-             if(!forceData) return;
-
-             if(!codexHandler) return;
-
-            codexHandler.UnSelectCards();
-
-            selectedImage.gameObject.SetActive(true);
-
-            codexHandler.OnObjectClicked(forceData);
-             
-        }
+       
 
         public void OnPlayerEnergyChanged(int energyAmount)
         {
@@ -136,26 +118,57 @@ namespace Ozamanas.UI
 
         #region Drag and Drop functionality
 
-        public void OnBeginDrag(PointerEventData eventData)
+        public void LaunchForce(InputAction.CallbackContext context)
         {
+            if(!context.performed) return;
 
-            if (!forceData || !forceData.force || !IsCardAvailable()) return;
+            InstantiateForce();
+        }
 
+        public void OnPointerClick()
+        {
+            
+             InstantiateForce();
+        }
 
+        private void InstantiateForce()
+        {
+             if (!forceData || !forceData.force || !IsCardAvailable()) return;
             forceBeingPlaced = Instantiate(forceData.force, Vector3.zero, Quaternion.identity);
             forceBeingPlaced.OnSuccesfulPlacement.AddListener(OnSuccesfulPlacement);
             forceBeingPlaced.OnFailedPlacement.AddListener(OnFailedPlacement);
-        }//Closes OnBeginDrag method
-        public void OnDrag(PointerEventData eventData)
+        }
+
+        private void Update()
         {
-            if (!forceBeingPlaced || forceBeingPlaced.data != forceData) return;
+             if (!forceBeingPlaced || forceBeingPlaced.data != forceData) return;
             forceBeingPlaced.Drag();
-        }//Closes OnDrag method
-        public void OnEndDrag(PointerEventData eventData)
+        }
+
+         public void FireForce(InputAction.CallbackContext context)
         {
-            if (!forceBeingPlaced || forceBeingPlaced.data != forceData) return;
-            forceBeingPlaced.FirstPlacement();
-        }//Closes OnEndDrag method
+            if(!context.performed) return;
+
+           if (!forceBeingPlaced || forceBeingPlaced.data != forceData) return;
+
+
+            if(forceBeingPlaced.Placements==0) forceBeingPlaced.FirstPlacement();
+            else if(forceBeingPlaced.Placements==1) forceBeingPlaced.SecondPlacement();
+            else if(forceBeingPlaced.Placements==2) forceBeingPlaced.ThirdPlacement();
+        }
+
+         public void CancelLaunch(InputAction.CallbackContext context)
+        {
+            if(!context.performed) return;
+
+            if(!forceBeingPlaced) return;
+
+           
+            forceBeingPlaced.OnFailedPlacement.RemoveListener(OnFailedPlacement);
+            forceBeingPlaced.OnSuccesfulPlacement.RemoveListener(OnSuccesfulPlacement);
+            forceBeingPlaced = null;
+        }
+       
 
         #endregion
 
@@ -220,6 +233,8 @@ namespace Ozamanas.UI
             forceName.gameObject.SetActive(false);
 
         }
+
+
 
         #endregion
     }//Closes ForceCard class

@@ -53,7 +53,9 @@ namespace Ozamanas.Forces
 
         Vector3 draggedPosition;
 
-        public int placements = 0;
+        protected int placements = 0;
+
+        public int Placements { get => placements;}
 
         protected virtual void FixedUpdate()
         {
@@ -61,32 +63,8 @@ namespace Ozamanas.Forces
         }
         protected virtual void Update()
         {
-           if(placements > 0) Drag();
-
-            CheckMultiplePlacements();
+           
         }
-
-        public virtual void CheckMultiplePlacements()
-        {
-            if (data.placementMode == PlacementMode.SinglePlacement) return;
-            if (!Mouse.current.leftButton.wasPressedThisFrame) return;
-            if (placements == 0) return;
-
-            // This happens if this force was already finished its first placement, 
-            // and everytime the left mouse button was pressed after that first placement
-
-            placements++;
-            switch (placements)
-            {
-                case 2:
-                    SecondPlacement();
-                    break;
-
-                case 3:
-                    ThirdPlacement();
-                    break;
-            }
-        }//Closes CheckMultiplePlacements method
 
 
         public virtual void Drag()
@@ -190,15 +168,17 @@ namespace Ozamanas.Forces
             FinalPlacement();
         }//Closes FirstPlacement method
 
-        protected virtual void SecondPlacement()
+        public virtual void SecondPlacement()
         {
+            placements = 2;
             if (data.placementMode != PlacementMode.DoublePlacement) return;
 
             FinalPlacement();
         }//Closes SecondPlacement method
 
-        protected virtual void ThirdPlacement()
+        public virtual void ThirdPlacement()
         {
+            placements = 3;
             if (data.placementMode != PlacementMode.TriplePlacement) return;
             FinalPlacement();
 
@@ -223,7 +203,7 @@ namespace Ozamanas.Forces
             }
             else 
             {
-                OnFailedPlacement?.Invoke(this);
+                
                 OnForceFailedPlacement();
             }
             
@@ -235,7 +215,7 @@ namespace Ozamanas.Forces
 
         protected virtual void OnForceFailedPlacement()
         {
-
+            OnFailedPlacement?.Invoke(this);
         }
 
         protected virtual void DeActivateAllPointers()
