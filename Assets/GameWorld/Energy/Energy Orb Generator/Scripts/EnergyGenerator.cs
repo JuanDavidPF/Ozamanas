@@ -102,7 +102,7 @@ namespace Ozamanas.Energy
         {
             if (!energyOrb) return;
             if (generationCoroutine != null) StopGeneration();
-            generationCoroutine = StartCoroutine(HandleGeneration());
+            if(gameObject.activeInHierarchy) generationCoroutine = StartCoroutine(HandleGeneration());
         }//Closes ResumeGeneration method
 
 
