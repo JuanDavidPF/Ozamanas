@@ -128,7 +128,11 @@ namespace Ozamanas.Forces
             {
                 currentCell.CellOverLay.DeActivatePointer(CellPointerType.PushPointer);
                 currentCell.CellOverLay.DeActivatePointer(CellPointerType.PullPointer);
-                currentCell.ResetCellData();
+
+                if(currentCell.TryGetComponentInChildren<GhostCell>(out GhostCell ghost))
+                {
+                    currentCell.ResetCellData();
+                }
             }
            
             base.DestroyForce();

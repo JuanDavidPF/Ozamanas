@@ -109,6 +109,15 @@ namespace Ozamanas.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiniMap"",
+                    ""type"": ""Button"",
+                    ""id"": ""747b3a3b-64d5-4dfa-8c8a-063aff102096"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,31 +144,9 @@ namespace Ozamanas.InputSystem
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""8180e8bd-4097-4f4e-ab88-4523101a6ce9"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
                     ""id"": ""320bffee-a40b-4347-ac70-c210eb8bc73a"",
                     ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""1c5327b5-f71c-4f60-99c7-4e737386f1d1"",
-                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -179,31 +166,9 @@ namespace Ozamanas.InputSystem
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""2e46982e-44cc-431b-9f0b-c11910bf467a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""right"",
                     ""id"": ""fcfe95b8-67b9-4526-84b5-5d0bc98d6400"",
                     ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""77bff152-3580-4b21-b6de-dcd0c7e41164"",
-                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -254,28 +219,6 @@ namespace Ozamanas.InputSystem
                     ""action"": ""Look"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""ecda23db-1bb3-4ac8-9f7b-d4b27a1dd4b2"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""b54dbad0-5eb8-4c91-b153-3f120820a284"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
@@ -333,6 +276,39 @@ namespace Ozamanas.InputSystem
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""adf7fe8e-6c43-4b47-aaba-7745b5aeaefe"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0d2fa3b5-fb3b-4514-b82c-98e1f0cd6963"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""ff53234a-a5fb-40da-8aac-eb514b87af7c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""981b879b-d8f3-4c16-ab51-70d304e740b0"",
                     ""path"": ""<Keyboard>/1"",
@@ -360,7 +336,7 @@ namespace Ozamanas.InputSystem
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Slot_3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -384,6 +360,17 @@ namespace Ozamanas.InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Cancel_Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb88c40c-57ff-4aba-aab0-8f5e13e854da"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1039,6 +1026,7 @@ namespace Ozamanas.InputSystem
             m_Player_Slot_3 = m_Player.FindAction("Slot_3", throwIfNotFound: true);
             m_Player_Slot_4 = m_Player.FindAction("Slot_4", throwIfNotFound: true);
             m_Player_Cancel_Fire = m_Player.FindAction("Cancel_Fire", throwIfNotFound: true);
+            m_Player_MiniMap = m_Player.FindAction("MiniMap", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -1123,6 +1111,7 @@ namespace Ozamanas.InputSystem
         private readonly InputAction m_Player_Slot_3;
         private readonly InputAction m_Player_Slot_4;
         private readonly InputAction m_Player_Cancel_Fire;
+        private readonly InputAction m_Player_MiniMap;
         public struct PlayerActions
         {
             private @InputManager m_Wrapper;
@@ -1136,6 +1125,7 @@ namespace Ozamanas.InputSystem
             public InputAction @Slot_3 => m_Wrapper.m_Player_Slot_3;
             public InputAction @Slot_4 => m_Wrapper.m_Player_Slot_4;
             public InputAction @Cancel_Fire => m_Wrapper.m_Player_Cancel_Fire;
+            public InputAction @MiniMap => m_Wrapper.m_Player_MiniMap;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1172,6 +1162,9 @@ namespace Ozamanas.InputSystem
                     @Cancel_Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
                     @Cancel_Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
                     @Cancel_Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCancel_Fire;
+                    @MiniMap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiniMap;
+                    @MiniMap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiniMap;
+                    @MiniMap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiniMap;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1203,6 +1196,9 @@ namespace Ozamanas.InputSystem
                     @Cancel_Fire.started += instance.OnCancel_Fire;
                     @Cancel_Fire.performed += instance.OnCancel_Fire;
                     @Cancel_Fire.canceled += instance.OnCancel_Fire;
+                    @MiniMap.started += instance.OnMiniMap;
+                    @MiniMap.performed += instance.OnMiniMap;
+                    @MiniMap.canceled += instance.OnMiniMap;
                 }
             }
         }
@@ -1409,6 +1405,7 @@ namespace Ozamanas.InputSystem
             void OnSlot_3(InputAction.CallbackContext context);
             void OnSlot_4(InputAction.CallbackContext context);
             void OnCancel_Fire(InputAction.CallbackContext context);
+            void OnMiniMap(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using DG.Tweening;
 using JuanPayan.References;
 using Ozamanas.Forces;
@@ -11,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Localization;
 using UnityEngine.InputSystem;
+
 
 namespace Ozamanas.UI
 {
@@ -27,8 +27,8 @@ namespace Ozamanas.UI
         [Header("Card Setup")]
         [SerializeField] private ForceData m_forceData;
         [SerializeField] private IntegerVariable energyCounter;
-
-
+        [SerializeField] private TMP_Text key;
+        [SerializeField] private InputActionReference action;
 
         public ForceData forceData
         {
@@ -42,6 +42,7 @@ namespace Ozamanas.UI
                 if (cardArt) cardArt.sprite = value.forceIcon;
                 if (priceLabel) priceLabel.text = value.price.value.ToString();
                 if(forceNameText) forceNameText.text = value.forceName.GetLocalizedString();
+                if(key) key.text = "["+action.action.GetBindingDisplayString(0,null)+"]";
             }
         }
 

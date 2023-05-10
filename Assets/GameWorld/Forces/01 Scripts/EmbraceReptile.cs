@@ -243,8 +243,10 @@ namespace Ozamanas.Forces
             if (firstPlacementComplete) 
             {
                 firstPlacementComplete.isOccupied = false;
-
-                if(firstPlacementComplete.CurrentHumanMachines.Count == 0) firstPlacementComplete.ResetCellData();
+                if(firstPlacementComplete.TryGetComponentInChildren<GhostCell>(out GhostCell ghost))
+                {
+                    firstPlacementComplete.ResetCellData();
+                }
             }
 
             if(nearMachine) 

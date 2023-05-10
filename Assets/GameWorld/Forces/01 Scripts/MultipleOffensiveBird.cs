@@ -18,7 +18,6 @@ namespace Ozamanas.Forces
         [Space(15)]
         [Header("Visuals Setup")]
 
-        [SerializeField] private Transform birdPosition;
         [SerializeField] private GameObject thunderVFX;
         private Animator animator;
         [SerializeField] private float waitingTime = 0.2f;
@@ -28,7 +27,6 @@ namespace Ozamanas.Forces
         [Range(1, 7)]
         [SerializeField] private int totalThunders;
         [SerializeField] private int damageAmount;
-        [SerializeField] private float posY = 0f;
 
         private List<Cell> shuffleList = new List<Cell>();
 
@@ -40,8 +38,6 @@ namespace Ozamanas.Forces
 
         }//Closes Awake method
 
-
-
         protected override void FinalPlacement()
         {
 
@@ -51,7 +47,11 @@ namespace Ozamanas.Forces
 
             animator.SetTrigger("Release");
 
-            birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
+            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+
+            currentCell.data = data.GetTokenToSwap(currentCell);
+
+            transform.position = currentCell.transform.position;
 
             shuffleList.AddRange(Board.BoardExtender.GetCellsOnRange(cellOnAttack,data.attackRange.value-1,true));
             shuffleList.Shuffle(shuffleList.Count);
@@ -76,6 +76,15 @@ namespace Ozamanas.Forces
 
             }
 
+            DestroyForce();
+        }
+
+        public override void DestroyForce()
+        {
+            if(currentCell.TryGetComponentInChildren<GhostCell>(out GhostCell ghost))
+            {
+                currentCell.ResetCellData();
+            }
             base.DestroyForce();
         }
 
