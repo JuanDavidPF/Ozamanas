@@ -94,6 +94,8 @@ namespace Ozamanas.Machines
         {
             if(!cellDemolisher) return;
 
+            if(!cell) return;
+
             WormMovement.RemoveCellFromPath(cell);
             GameObject temp = Instantiate(cellDemolisher.gameObject,cell.transform.position,Quaternion.identity);
             temp.GetComponent<CellDemolisher>().SpawnReplacement(cell);
