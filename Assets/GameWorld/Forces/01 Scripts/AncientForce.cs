@@ -16,14 +16,13 @@ namespace Ozamanas.Forces
 
         protected List<Cell> cellsOnAttackRange = new List<Cell>();
         protected Cell cellOnAttack;
+        protected Cell currentCell;
         protected List<HumanMachine> machinesAffected = new List<HumanMachine>();
         protected List<Board.Cell> anchorCells = new List<Cell>();
         protected List<Board.Cell> validCells = new List<Cell>();
         protected Cell firstPlacementComplete;
         protected Cell secondPlacementComplete;
-
         protected bool stopForceDragging = false;
-
         protected bool stopAttackRangePrinting = false;
 
         private Camera cam;
@@ -76,19 +75,24 @@ namespace Ozamanas.Forces
         protected virtual void SetForcePositionOnDrag()
         {
         
-            if (!Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
+            if (!Board.CellSelectionHandler.currentCellHovered)
             {
                 Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
                 draggedPosition = (ray.origin + ray.direction * Mathf.Abs(cam.transform.position.z));
                 
-                if (!data.snapToGrid) draggedPosition += data.draggedOffset;
+                draggedPosition += data.draggedOffset;
 
             }
             else
             {
-                draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + data.draggedOffset;
-                Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.Pointer);
+                if(currentCell != Board.CellSelectionHandler.currentCellHovered.cellReference)
+                {
+                    draggedPosition = Board.CellSelectionHandler.currentCellHovered.transform.position + data.draggedOffset;
+                    Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.Pointer);
+                    currentCell = Board.CellSelectionHandler.currentCellHovered.cellReference;
+                }
+                
             }
 
             if(!stopForceDragging) t.position = draggedPosition;

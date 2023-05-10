@@ -127,13 +127,15 @@ namespace Ozamanas.UI
 
         public void OnPointerClick()
         {
-            
              InstantiateForce();
         }
 
         private void InstantiateForce()
         {
              if (!forceData || !forceData.force || !IsCardAvailable()) return;
+
+            CancelForceLaunch();
+
             forceBeingPlaced = Instantiate(forceData.force, Vector3.zero, Quaternion.identity);
             forceBeingPlaced.OnSuccesfulPlacement.AddListener(OnSuccesfulPlacement);
             forceBeingPlaced.OnFailedPlacement.AddListener(OnFailedPlacement);
@@ -161,9 +163,15 @@ namespace Ozamanas.UI
         {
             if(!context.performed) return;
 
-            if(!forceBeingPlaced) return;
+            CancelForceLaunch();
 
            
+        }
+
+        private void CancelForceLaunch()
+        {
+             if(!forceBeingPlaced) return;
+
             forceBeingPlaced.OnFailedPlacement.RemoveListener(OnFailedPlacement);
             forceBeingPlaced.OnSuccesfulPlacement.RemoveListener(OnSuccesfulPlacement);
             forceBeingPlaced = null;

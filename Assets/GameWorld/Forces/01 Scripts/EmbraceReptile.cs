@@ -20,8 +20,6 @@ namespace Ozamanas.Forces
 
          [SerializeField]  private CellData forest;
         
-        private Cell currentCell;
-
         private SnakeController[] controllers;
 
         private Transform nearMachine;

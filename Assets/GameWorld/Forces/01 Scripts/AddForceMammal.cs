@@ -14,13 +14,10 @@ namespace Ozamanas.Forces
     {
           
 
-
         [SerializeField] private float mammalSpeed = 2f;
 
         private Tween mammalTween;
         private Animator animator;
-
-        private Cell currentCell;
 
          [SerializeField] private bool addForceOnTweenComplete;
 
@@ -78,7 +75,7 @@ namespace Ozamanas.Forces
         {
             base.Drag();
             
-            if (Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
+            if (Board.CellSelectionHandler.currentCellHovered)
             {
                 if(data.physicsForce.type == AddForceType.FrontFlip)
                 Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.PullPointer);
@@ -99,10 +96,6 @@ namespace Ozamanas.Forces
             
         }
 
-
-
-
-        
 
         private void AddForceToMachine(HumanMachine machine)
         {
@@ -131,10 +124,14 @@ namespace Ozamanas.Forces
         {
             if (mammalTween != null) mammalTween.Kill();
 
-            currentCell.ResetCellData();
-
+            if(currentCell)
+            {
+                currentCell.CellOverLay.DeActivatePointer(CellPointerType.PushPointer);
+                currentCell.CellOverLay.DeActivatePointer(CellPointerType.PullPointer);
+                currentCell.ResetCellData();
+            }
+           
             base.DestroyForce();
-
         }
        
         

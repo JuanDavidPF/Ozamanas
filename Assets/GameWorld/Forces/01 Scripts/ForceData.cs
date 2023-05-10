@@ -96,9 +96,6 @@ namespace Ozamanas.Forces
 
         [VerticalGroup("Ancient Force Setup")]
          public Vector3 draggedOffset;
-         [ShowIf("showPlacement")]
-        [VerticalGroup("Ancient Force Setup")]
-         public bool snapToGrid = true;
 
            [ShowIf("showConstellation")]
         [Title("Constellation Setup")]

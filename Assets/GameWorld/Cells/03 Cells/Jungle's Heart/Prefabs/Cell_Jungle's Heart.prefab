@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 9113864076202924633}
   - component: {fileID: 4828400566628597791}
   - component: {fileID: 665083173}
+  - component: {fileID: 7251207371391768056}
   m_Layer: 0
   m_Name: Cell_Jungle's Heart
   m_TagString: Cell
@@ -255,6 +256,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7251207371391768056}
+        m_TargetAssemblyTypeName: JuanPayan.Helpers.CinematicIntro, JuanPayan.Helpers
+        m_MethodName: Behaviour
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7251207371391768056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590284334626953499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cf38a41d81dda409bca437459fbbe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  focusSpeed: 0.5
 --- !u!1001 &6686799296268514378
 PrefabInstance:
   m_ObjectHideFlags: 0

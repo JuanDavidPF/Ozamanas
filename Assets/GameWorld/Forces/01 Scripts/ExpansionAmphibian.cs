@@ -113,6 +113,12 @@ namespace Ozamanas.Forces
 
         }
 
+        public override void DestroyForce()
+        {
+            ClearExpansionPointers();
+            base.DestroyForce();
+        }
+
         private void CalculateReptilePath()
         {
 
