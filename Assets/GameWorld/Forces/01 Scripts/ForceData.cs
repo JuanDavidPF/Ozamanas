@@ -96,9 +96,6 @@ namespace Ozamanas.Forces
 
         [VerticalGroup("Ancient Force Setup")]
          public Vector3 draggedOffset;
-         [ShowIf("showPlacement")]
-        [VerticalGroup("Ancient Force Setup")]
-         public bool snapToGrid = true;
 
            [ShowIf("showConstellation")]
         [Title("Constellation Setup")]
@@ -124,6 +121,8 @@ namespace Ozamanas.Forces
         {
             SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
 
+            if(expRule == null) return null;
+
             if (!expRule.topElementToSwap) return null;
 
             return expRule.topElementToSwap;
@@ -132,6 +131,8 @@ namespace Ozamanas.Forces
         public CellData GetTokenToSwap(Cell cell)
         {
             SwapRules expRule = ruleList.Find(rule => rule.condition == cell.data);
+
+            if(expRule == null) return null;
 
             if (!expRule.tokenToSwap) return null;
 

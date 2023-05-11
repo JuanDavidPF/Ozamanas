@@ -18,12 +18,7 @@ namespace Ozamanas.Forces
         [Space(15)]
         [Header("Visuals Setup")]
 
-        [SerializeField] private Transform birdPosition;
-        [SerializeField] private List<Transform> thunderPositions;
-        [SerializeField] private GameObject thunder;
-
-        private Tween birdTween;
-
+        [SerializeField] private GameObject thunderVFX;
         private Animator animator;
         [SerializeField] private float waitingTime = 0.2f;
 
@@ -32,19 +27,16 @@ namespace Ozamanas.Forces
         [Range(1, 7)]
         [SerializeField] private int totalThunders;
         [SerializeField] private int damageAmount;
-        [SerializeField] private Vector3 elevationForce;
-        [SerializeField] private Vector3 torqueForce;
-        [SerializeField] private float posY = 0f;
+
+        private List<Cell> shuffleList = new List<Cell>();
 
         protected override void Awake()
         {
             base.Awake();
             animator = gameObject.GetComponent<Animator>();
-            thunderPositions.Shuffle(7);
+            
 
         }//Closes Awake method
-
-
 
         protected override void FinalPlacement()
         {
@@ -55,8 +47,14 @@ namespace Ozamanas.Forces
 
             animator.SetTrigger("Release");
 
-            birdPosition.position = new Vector3(birdPosition.position.x,posY,birdPosition.position.z);
+            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
 
+            currentCell.data = data.GetTokenToSwap(currentCell);
+
+            transform.position = currentCell.transform.position;
+
+            shuffleList.AddRange(Board.BoardExtender.GetCellsOnRange(cellOnAttack,data.attackRange.value-1,true));
+            shuffleList.Shuffle(shuffleList.Count);
             StartCoroutine(InstantiateThunder());
 
         }//Closes FirstPlacement method
@@ -66,32 +64,30 @@ namespace Ozamanas.Forces
             for (int i = 0; i < totalThunders; i++)
             {
                 yield return new WaitForSeconds(waitingTime);
-                Instantiate(thunder, thunderPositions[i]);
+
+                if(i>= shuffleList.Count) continue;
+
+                Instantiate(thunderVFX, shuffleList[i].transform.position, Quaternion.identity);
+
+                for (int x = shuffleList[i].CurrentHumanMachines.Count - 1; x > -1; x--)
+                {
+                    AttackMachine(shuffleList[i].CurrentHumanMachines[x].GetComponent<MachineArmor>());
+                }
+
             }
 
+            DestroyForce();
+        }
+
+        public override void DestroyForce()
+        {
+            if(currentCell.TryGetComponentInChildren<GhostCell>(out GhostCell ghost))
+            {
+                currentCell.ResetCellData();
+            }
             base.DestroyForce();
         }
 
-       
-
-         void OnDestroy()
-        {
-            if (birdTween != null) birdTween.Kill();
-        }//Closes OnDestroy method
-
-
-        private void OnCollisionEnter(Collision other)
-        {
-
-            if (!isPlaced || other.transform.tag != "Machine") return;
-
-            if (other.transform.TryGetComponent(out Machines.MachineArmor machine))
-            {
-                AttackMachine(machine);
-            }
-
-        }//Closes OnCollisionEnter method
-       
 
         private void AttackMachine(Machines.MachineArmor machine)
         {

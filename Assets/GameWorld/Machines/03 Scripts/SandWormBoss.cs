@@ -94,6 +94,8 @@ namespace Ozamanas.Machines
         {
             if(!cellDemolisher) return;
 
+            if(!cell) return;
+
             WormMovement.RemoveCellFromPath(cell);
             GameObject temp = Instantiate(cellDemolisher.gameObject,cell.transform.position,Quaternion.identity);
             temp.GetComponent<CellDemolisher>().SpawnReplacement(cell);
@@ -102,8 +104,9 @@ namespace Ozamanas.Machines
 
         protected override void OnDestroy()
         {
-            base.OnDestroy();
             foreach( Cell cell in currentCells) SpawnCellDemolisher(cell);
+            base.OnDestroy();
+            
         }
         
     }

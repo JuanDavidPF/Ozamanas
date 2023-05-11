@@ -19,6 +19,15 @@ namespace Ozamanas.Tags
         Play= 1 << 7
     }
 
+    public enum CardinalPoints
+    {        
+        North,
+        South,
+        NorthEast, 
+        SouthEast,
+        NorthWest,
+        SouthWest
+    }
     public enum ActionButtonType
     {
         Exit,

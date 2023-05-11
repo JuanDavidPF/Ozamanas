@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using Ozamanas.Tags;
 
 namespace Ozamanas.Board
 {
@@ -69,9 +70,9 @@ namespace Ozamanas.Board
 
             newCell.transform.position = cellPosition;
 
-            newCell.visuals.gameObject.SetActive(true);
-
             AddCellToBoard(newCell);
+
+            newCell.visuals.gameObject.SetActive(true);
 
             CombineTileMeshes();
         }
@@ -262,6 +263,7 @@ namespace Ozamanas.Board
 
         }//Closes LineBetweenCell method
 
+        
     
         public static List<Cell> GetCellsByPosition(params float3[] worldPositions)
         {

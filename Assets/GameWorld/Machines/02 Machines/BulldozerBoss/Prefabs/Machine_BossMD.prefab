@@ -361,11 +361,11 @@ GameObject:
   - component: {fileID: 201654012075509106}
   - component: {fileID: 1292539710144540592}
   - component: {fileID: 1429759052432409234}
-  - component: {fileID: 2386593570910358238}
   - component: {fileID: 9129453228484020602}
   - component: {fileID: 3669431602670365051}
   - component: {fileID: 1574029784753509141}
   - component: {fileID: 136134462}
+  - component: {fileID: 1262612994494495472}
   m_Layer: 0
   m_Name: Machine_BossMD
   m_TagString: Machine
@@ -535,6 +535,7 @@ MonoBehaviour:
   machineBox: {fileID: 63375247510869426, guid: c9416d9a06683194085fe2cf9cc84ff3,
     type: 3}
   tilesToReleaseAttack: 2
+  attackRange: 2
   power: 1500
   upwardsModifier: 2000
 --- !u!114 &201654012075509107
@@ -582,10 +583,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 2
-  fsm: {fileID: 1292539710144540592}
-  nma: {fileID: 201654012075509106}
-  rb: {fileID: 9129453228484020602}
-  machine: {fileID: 0}
   OnActivatePhysical:
     m_PersistentCalls:
       m_Calls:
@@ -713,57 +710,6 @@ MonoBehaviour:
   _serializedBlackboard: '{"_variables":{}}'
   _objectReferences: []
   _serializedVariables: []
---- !u!114 &2386593570910358238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012468311011433840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f1f69e1b16a7944bf5efb6a9539da1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnMachineDamaged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnMachineGainArmor:
-    m_PersistentCalls:
-      m_Calls: []
-  OnArmorChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7080561472847785326}
-        m_TargetAssemblyTypeName: Ozamanas.UI.MachineStatusBar, Ozamanas.UI.MachineStatusBar
-        m_MethodName: UpdateArmor
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnMachineDisarm:
-    m_PersistentCalls:
-      m_Calls: []
-  OnMachineDestroyed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 861d99b8bde47a54f85cbbb15a95b5cf, type: 2}
-        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!54 &9129453228484020602
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -842,6 +788,57 @@ MonoBehaviour:
   - {fileID: 6169038633654414320}
   - {fileID: 6673445400884721624}
   - {fileID: 3921320794636794245}
+--- !u!114 &1262612994494495472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012468311011433840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f3b110136370145a4dd43d44613a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnMachineDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineGainArmor:
+    m_PersistentCalls:
+      m_Calls: []
+  OnArmorChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7080561472847785326}
+        m_TargetAssemblyTypeName: Ozamanas.UI.MachineStatusBar, Ozamanas.UI.MachineStatusBar
+        m_MethodName: UpdateArmor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMachineDisarm:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMachineDestroyed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 861d99b8bde47a54f85cbbb15a95b5cf, type: 2}
+        m_TargetAssemblyTypeName: JuanPayan.References.GameEvent, JuanPayan.Helpers
+        m_MethodName: Invoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1208654850977331168
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,7 +45,6 @@ MonoBehaviour:
     m_LocalVariables: []
   showPlacement: 0
   showConstellation: 0
-  showTraits: 0
   showData: 0
   price:
     useConstant: 1
@@ -73,13 +72,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9399dc0d72d7c074d876bbd59e4dff1e, type: 2}
   - {fileID: 11400000, guid: 4c3c698cfa6e9c147bb07d08f5ed0b68, type: 2}
   - {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
-  ruleList: []
+  - {fileID: 11400000, guid: c59630bf6fdc9e2468c8821cf586781e, type: 2}
+  ruleList:
+  - condition: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 4d3d72f6c0456f44781a25fd16caa926, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
+  - condition: {fileID: 11400000, guid: 5d758de90701b58478eacb0ab87755af, type: 2}
+    topElementToSwap: {fileID: 11400000, guid: 4d3d72f6c0456f44781a25fd16caa926, type: 2}
+    tokenToSwap: {fileID: 11400000, guid: a7c84fecef6c07d42bedb0529d638f0b, type: 2}
   physicsForce: {fileID: 11400000, guid: eec36bfeb4fc9ad489ea685bcd68d655, type: 2}
-  traits: []
-  traitRange: 1
   placementMode: 0
   draggedOffset: {x: 0, y: 2.5, z: 0}
-  snapToGrid: 1
   selectedImage: {fileID: 1756340513, guid: e01a6f680327c71409c51ac682017739, type: 3}
   highlightedImage: {fileID: 11275362, guid: e01a6f680327c71409c51ac682017739, type: 3}
   unlockedImage: {fileID: 434414142, guid: e01a6f680327c71409c51ac682017739, type: 3}

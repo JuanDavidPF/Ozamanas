@@ -16,12 +16,10 @@ namespace Ozamanas.Forces
         [SerializeField] private float duration = 2f;
 
         [SerializeField] private GameObject VFXBite;
-
-        [SerializeField]  private MachineTrait markTrait;
         [SerializeField]  private MachineTrait poisonedTrait;
-        
-        private Cell currentCell;
 
+         [SerializeField]  private CellData forest;
+        
         private SnakeController[] controllers;
 
         private Transform nearMachine;
@@ -39,69 +37,156 @@ namespace Ozamanas.Forces
 
             animator = GetComponent<Animator>();
         }
-        protected override void FixedUpdate()
+      
+        public override void FirstPlacement()
         {
-            base.FixedUpdate();
+             if (data.placementMode != PlacementMode.SinglePlacement) CheckFirstPlacement();
+            
+            base.FirstPlacement();
+        }
+        public override void SecondPlacement()
+        {
 
-             if (isPlaced) return;
+            base.SecondPlacement();
+        }
 
-            base.GetMachinesOnAttackRange();
+         private void CheckFirstPlacement()
+        {
+            CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
 
-            SetUpNearMachine();
+            if (cellHovered && cellHovered.cellReference) cellHovered.cellReference.CellOverLay.DeActivateAllPointers();
+ 
+            if (cellHovered &&
+            IsValidPlacement(cellHovered.cellReference) && validCells.Contains(cellHovered.cellReference))
+            {
+                firstPlacementComplete = cellHovered.cellReference;
+                firstPlacementComplete.isOccupied = true;
+                firstPlacementComplete.CurrentTopElement = data.GetTopElementToSwap(firstPlacementComplete);
+                firstPlacementComplete.data = data.GetTokenToSwap(firstPlacementComplete);
+                transform.position = firstPlacementComplete.worldPosition;
+                stopForceDragging = true;
+                CalculateSecondPlacementArea();
+            }
+            else 
+            {
+               OnForceFailedPlacement();
+            }
 
-            if(nearMachine) nearMachine.GetComponentInParent<HumanMachine>().AddTraitToMachine(markTrait);
+            if (Board.Board.reference) Board.Board.reference.OnNewCellData.RemoveListener(OnNewCellData);
+
+            EraseValidCells();
+        
+        }
+
+        private void CalculateSecondPlacementArea()
+        {
+            if (!data) return;
+
+            if(!firstPlacementComplete) return;
+
+            EraseAttackRangeCells();
+
+            stopAttackRangePrinting = true;
+
+            firstPlacementComplete.OnCellChanged.AddListener(OnAnchorChanged);
+
+            foreach (var cellOnRange in firstPlacementComplete.GetCellsOnRange(data.attackRange.value-1, true))
+                {
+                    if (!cellOnRange) continue;
+
+                    cellOnRange.CellOverLay.ActivatePointer(CellPointerType.AttackRangePointer);
+                    cellsOnAttackRange.Add(cellOnRange);
+                    cellOnRange.OnCellChanged.AddListener(OnAreaChanged);
+                    
+                }
         }
         protected override void FinalPlacement()
         {
+            placements = 0;
+            
+            CellSelectionHandler cellHovered = Board.CellSelectionHandler.currentCellHovered;
 
-            base.FinalPlacement();
+            if (cellHovered && cellHovered.cellReference) cellHovered.cellReference.CellOverLay.DeActivateAllPointers();
 
-            if (!isPlaced) return;
+            DeActivateAllPointers();
 
-            currentCell = Board.Board.GetCellByPosition(transform.position.ToFloat3().UnityToGrid());
-
-            currentCell.isOccupied = true;
-
-            SetUpNearMachine();
-
-            if (!nearMachine)
+            if (cellHovered && cellsOnAttackRange.Contains(cellHovered.cellReference))
             {
-                base.DestroyForce();
-                currentCell.isOccupied = false;
-                return;
+                OnSuccesfulPlacement?.Invoke(this);
+                isPlaced = true;
             }
-
-            animator.SetTrigger("OnRelease");
-
-            transform.position = currentCell.worldPosition;
-
-            StartCoroutine(WaitToRemoveSnake());
-
-            clld.enabled = false;
-
-            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
-
-            currentCell.data = data.GetTokenToSwap(currentCell);
-
-            transform.LookAt(nearMachine);
-
-            foreach (var snake in controllers)
+            else 
             {
-                if (!snake) continue;
+                OnForceFailedPlacement();
+            }
+            
+            if (Board.Board.reference) Board.Board.reference.OnNewCellData.RemoveListener(OnNewCellData);
 
-                snake.Bite(nearMachine);
-                
-                if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
+            EraseValidCells();
+            EraseAttackRangeCells();
+
+           switch (data.placementMode)
+            { 
+                case PlacementMode.SinglePlacement:
+                SetUpFirstPlacement();
+                break;
+                case PlacementMode.DoublePlacement:
+                SetUpSecondPlacement();
+                break;
+             }
+
+           }   
+           
+           private void SetUpFirstPlacement()
+           {
+
+           }
+
+            private void SetUpSecondPlacement()
+           {
+
+                animator.SetTrigger("OnRelease");
+
+                if(Board.CellSelectionHandler.currentCellHovered.cellReference == null) base.DestroyForce();
+
+                currentCell = Board.CellSelectionHandler.currentCellHovered.cellReference;
+
+                SetUpNearMachine();
+
+                if (!nearMachine)
                 {
-                    machine.SetCapturedStatus(this);
+                    base.DestroyForce();
+                    firstPlacementComplete.isOccupied = true;
+                    firstPlacementComplete.data = forest;
+                    firstPlacementComplete.CurrentTopElement = forest.defaultTopElement;
+                    return;
                 }
-            }
+
+
+                StartCoroutine(WaitToRemoveSnake());
+
+                clld.enabled = false;
+
+                transform.LookAt(nearMachine);
+
+                foreach (var snake in controllers)
+                {
+                    if (!snake) continue;
+
+                    snake.Bite(nearMachine);
+                    
+                    if (nearMachine.TryGetComponentInParent(out HumanMachine machine))
+                    {
+                        machine.SetCapturedStatus(this);
+                    }
+                }
 
         }
 
         private void SetUpNearMachine()
         {
-            foreach(HumanMachine machine in machinesAffected)
+            List<HumanMachine> machines = currentCell.CurrentHumanMachines;
+            foreach(HumanMachine machine in machines)
             {
                 if(!machine) continue;
                 
@@ -147,25 +232,30 @@ namespace Ozamanas.Forces
             nearMachine.DOLookAt(transform.position,0.3f);
         }
 
+        protected override void OnForceFailedPlacement()
+        {
+            base.OnForceFailedPlacement();
+            DetachHumanMachine();
+        }
+
         public override void DetachHumanMachine()
         {
-            if (currentCell) 
+            if (firstPlacementComplete) 
             {
-                currentCell.isOccupied = false;
-
-                if(currentCell.CurrentHumanMachines.Count == 0) currentCell.ResetCellData();
+                firstPlacementComplete.isOccupied = false;
+                if(firstPlacementComplete.TryGetComponentInChildren<GhostCell>(out GhostCell ghost))
+                {
+                    firstPlacementComplete.ResetCellData();
+                }
             }
 
-            if(!nearMachine) return;
-
-            if (!nearMachine.TryGetComponentInParent(out HumanMachine machine)) return;
-
-            machine.transform.SetParent(null,true);
-
-            if(poisonedTrait) machine.RemoveTraitToMachine(poisonedTrait);
-
-            nearMachine.GetComponentInParent<MachinePhysicsManager>().SetIntelligent();
-
+            if(nearMachine) 
+            {
+                if (!nearMachine.TryGetComponentInParent(out HumanMachine machine)) return;
+                machine.transform.SetParent(null,true);
+                if(poisonedTrait) machine.RemoveTraitToMachine(poisonedTrait);
+                nearMachine.GetComponentInParent<MachinePhysicsManager>().SetIntelligent();
+            }
             base.DestroyForce();
         }
 

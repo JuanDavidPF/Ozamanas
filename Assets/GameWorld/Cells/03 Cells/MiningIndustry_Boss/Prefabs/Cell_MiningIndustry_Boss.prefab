@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4454315225927143526}
   - component: {fileID: 1703777374}
   - component: {fileID: 6272958290133563350}
+  - component: {fileID: 4576758993682420048}
   m_Layer: 0
   m_Name: Cell_MiningIndustry_Boss
   m_TagString: Cell
@@ -121,7 +122,6 @@ MonoBehaviour:
   inWaveNumber: 1
   inLastWave: 0
   boss: {fileID: 11400000, guid: 2364893996f8b98479c52b6c31ad69c3, type: 2}
-  focusSpeed: 0.2
 --- !u!114 &4454315225927143526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +202,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4576758993682420048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986721062166553455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cf38a41d81dda409bca437459fbbe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: 0
+  focusSpeed: 0.2
 --- !u!1 &3646411746356442604
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ namespace Ozamanas.Forces
 
         private Tween mammalTween;
         private Animator animator;
-        private Cell currentCell;
 
         protected override void Awake()
         {
@@ -67,7 +66,7 @@ namespace Ozamanas.Forces
         {
             base.Drag();
             
-            if (Board.CellSelectionHandler.currentCellHovered || !data.snapToGrid)
+            if (Board.CellSelectionHandler.currentCellHovered)
             {
                 if(data.physicsForce.type == AddForceType.FrontFlip)
                 Board.CellSelectionHandler.currentCellHovered.cellReference.CellOverLay.ActivatePointer(CellPointerType.PullPointer);

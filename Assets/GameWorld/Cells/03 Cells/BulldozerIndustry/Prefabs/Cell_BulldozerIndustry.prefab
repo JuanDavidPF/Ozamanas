@@ -96,8 +96,7 @@ MonoBehaviour:
     condition: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
     topElementToSwap: {fileID: 11400000, guid: 6eefd38f723c7944eae0098c85fc13f4, type: 2}
     tokenToSwap: {fileID: 11400000, guid: e6741df88ae7f4245b42da618ddf4c28, type: 2}
-  activeTraits: []
-  tileMeshFilter: {fileID: 0}
+  hollowTile: {fileID: 0}
   worldPosition:
     x: 2.595
     y: 0
@@ -194,6 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6456332329913500448}
+  - component: {fileID: 3973938996095443290}
   m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
@@ -208,7 +208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3646411746356442604}
-  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0.25881916, z: -0, w: -0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -216,7 +216,19 @@ Transform:
   - {fileID: 7154819871054071402}
   m_Father: {fileID: 202609059502580113}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 330, z: 0}
+--- !u!114 &3973938996095443290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646411746356442604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2586e8ca876a2488e0b621c12d48aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5661703248474213575
 PrefabInstance:
   m_ObjectHideFlags: 0

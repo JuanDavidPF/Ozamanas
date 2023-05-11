@@ -30,11 +30,11 @@ namespace Ozamanas.Machines
          private bool doubleDamage = false;
         private bool invulnerable = false;
 
-        private GameObject replacement;
+        protected GameObject replacement;
 
         private bool broken = false;
 
-        private float lifeSpan = 2f;
+        protected float lifeSpan = 2f;
         private float explosionPower = 2f;
 
         [Space(15)]
@@ -117,7 +117,7 @@ namespace Ozamanas.Machines
 
             broken = true;
 
-            SpawnDesrtoyedMachine();
+            SpawnDestroyedMachine();
             machine.RemoveMachineFromCurrentCell();
             machine.Machine_status = Tags.MachineState.Destroyed;
             OnMachineDestroyed?.Invoke();
@@ -125,16 +125,12 @@ namespace Ozamanas.Machines
             Destroy(gameObject);
         }
 
-        private void SpawnDesrtoyedMachine()
+        protected virtual void SpawnDestroyedMachine()
         {
             if(!replacement) return;
-
- 
             GameObject temp = Instantiate(replacement, transform.position, transform.rotation);
             temp.SetActive(true);
             temp.GetComponent<MachineOnDestroy>().DestructableSetup(lifeSpan);
-
-            if(machine.Machine_token.machineHierarchy == Tags.MachineHierarchy.Boss) return;
 
             Rigidbody[] rbs = temp.GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rb in rbs)

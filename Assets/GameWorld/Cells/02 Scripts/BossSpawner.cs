@@ -15,11 +15,11 @@ namespace Ozamanas.Board
 
        [SerializeField] private CellTopElement boss;
 
-       [SerializeField] private float focusSpeed = 0.2f;
+       private CinematicIntro cinematicIntro;
 
-       private Tween anchorTween;
 
-       private CameraAnchor cameraAnchor;
+
+
 
        private int waves = 0;
 
@@ -28,7 +28,7 @@ namespace Ozamanas.Board
        protected override void Awake()
        {
          base.Awake();
-          cameraAnchor = FindObjectOfType<CameraAnchor>();
+         cinematicIntro.GetComponent<CinematicIntro>();
 
        }
 
@@ -50,7 +50,7 @@ namespace Ozamanas.Board
             if(bossSpawned) return;
             bossSpawned = true;
             CurrentTopElement = boss;
-            anchorTween = cameraAnchor.transform.DOMove(transform.position,focusSpeed,false);
+            cinematicIntro.Behaviour();
        }
 
         
