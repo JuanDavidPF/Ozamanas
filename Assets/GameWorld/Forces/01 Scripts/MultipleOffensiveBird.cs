@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ozamanas.Extenders;
-using DG.Tweening;
 using Ozamanas.Board;
 using Ozamanas.Tags;
 using Ozamanas.Machines;
@@ -47,9 +46,13 @@ namespace Ozamanas.Forces
 
             animator.SetTrigger("Release");
 
-            currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+            if(currentCell.CurrentHumanMachines.Count == 0)
+            {
+                currentCell.CurrentTopElement = data.GetTopElementToSwap(currentCell);
+                currentCell.data = data.GetTokenToSwap(currentCell);
+            }
 
-            currentCell.data = data.GetTokenToSwap(currentCell);
+            
 
             transform.position = currentCell.transform.position;
 

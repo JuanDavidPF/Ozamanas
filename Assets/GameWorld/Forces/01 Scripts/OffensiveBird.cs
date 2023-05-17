@@ -56,14 +56,7 @@ namespace Ozamanas.Forces
         }//Closes FirstPlacement method
 
        
-         void OnDestroy()
-        {
-            if (birdTween != null) birdTween.Kill();
-        }//Closes OnDestroy method
-
-
-       
-      
+    
 
         private void AttackMachine(HumanMachine machine)
         {
@@ -90,6 +83,7 @@ namespace Ozamanas.Forces
 
         public override void DestroyForce()
         {
+            if (birdTween != null) birdTween.Kill();
             base.DestroyForce();
         }
 

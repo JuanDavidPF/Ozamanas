@@ -12,50 +12,37 @@ namespace Ozamanas.UI
 
         [Header("Containers")]
 
-        [SerializeField] Transform traitIcons;
         [SerializeField] Transform healthBar;
+
+        [SerializeField] Transform toolTipHealthBar;
 
         [Space(20)]
         [Header("Elements")]
 
         [SerializeField] Transform trait;
-        [SerializeField] Transform health;
+        [SerializeField] Transform empty;
+        [SerializeField] Transform full;
 
         private void Awake()
         {
-            if (traitIcons) traitIcons.Clean();
             if (healthBar) healthBar.Clean();
+             if (toolTipHealthBar) toolTipHealthBar.Clean();
         }//Closes Awake methods
 
 
-        public void UpdateArmor(int armorPoints)
+        public void UpdateArmor(int armorPoints, int armorEmpty)
         {
-            if (!healthBar || !health) return;
+            if (!healthBar || !empty || !full || !toolTipHealthBar) return;
 
             healthBar.Clean();
+            toolTipHealthBar.Clean();
 
-            for (int i = 0; i < armorPoints; i++) Instantiate(health, healthBar);
+            for (int i = 0; i < armorPoints; i++) Instantiate(full, healthBar);
+            for (int i = 0; i < armorEmpty; i++) Instantiate(empty, healthBar);
 
+            for (int i = 0; i < armorPoints; i++) Instantiate(full, toolTipHealthBar);
+            for (int i = 0; i < armorEmpty; i++) Instantiate(empty, toolTipHealthBar);
 
         }//Closes UpdateArmor method
-
-        public void UpdateTraits(List<MachineTrait> machineTraits)
-        {
-            if (!traitIcons || !trait) return;
-            traitIcons.Clean();
-
-
-
-            foreach (var machineTrait in machineTraits)
-            {
-                Transform newTrait = Instantiate(trait, traitIcons);
-
-                if (newTrait.TryGetComponent(out Image traitIcon))
-                {
-                    traitIcon.sprite = machineTrait.traitIcon;
-                }
-            }
-        }//Closes UpdateTraits method
-
-    }//Closes MachineStatusBar class
+}
 }//Closes namespace declaration

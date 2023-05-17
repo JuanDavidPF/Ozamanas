@@ -13,7 +13,9 @@ namespace Ozamanas.Machines
     {
         private Transform _t;
 
-       private int m_armorPoints = 1;
+       private int m_armorPoints;
+
+       private int initArmor;
 
         private HumanMachine machine; 
         public int armorPoints
@@ -21,9 +23,8 @@ namespace Ozamanas.Machines
             get { return m_armorPoints; }
             set
             {
-
                 m_armorPoints = value;
-                OnArmorChanged?.Invoke(value);
+                OnArmorChanged?.Invoke(value,initArmor-value);
             }
         }
          private int maxArmorPoints = 1;
@@ -41,7 +42,7 @@ namespace Ozamanas.Machines
         [Title("Events")]
         [SerializeField] public UnityEvent OnMachineDamaged;
         [SerializeField] public UnityEvent OnMachineGainArmor;
-        [SerializeField] public UnityEvent<int> OnArmorChanged;
+        [SerializeField] public UnityEvent<int,int> OnArmorChanged;
         [SerializeField] public UnityEvent OnMachineDisarm;
         [SerializeField] public UnityEvent OnMachineDestroyed;
 
@@ -55,6 +56,7 @@ namespace Ozamanas.Machines
         {
             if(!machine || !machine.Machine_token) return;
 
+            initArmor = machine.Machine_token.armorPoints;
             armorPoints = machine.Machine_token.armorPoints;
             maxArmorPoints = machine.Machine_token.maxArmorPoints;
             lifeSpan = machine.Machine_token.lifeSpan;
@@ -77,6 +79,7 @@ namespace Ozamanas.Machines
         {
             armorPoints++;
             armorPoints = Mathf.Clamp(armorPoints, 1, maxArmorPoints);
+            if(armorPoints > initArmor) initArmor = armorPoints;
             OnMachineGainArmor?.Invoke();
         }
 

@@ -56,10 +56,7 @@ namespace Ozamanas.Board
             }
         }
 
-    
 
-        [SerializeField] private int hoverLayer;
-        [SerializeField] private int selectedLayer;
 
         private void Awake()
         {

@@ -37,8 +37,8 @@ namespace Ozamanas.Machines
 
         private void SpawnMachineOnQueue()
         {
-            Instantiate(spawnQueue[0].machinePrefab, _t.position, _t.rotation);
-
+            HumanMachine temp = Instantiate(spawnQueue[0].machinePrefab, _t.position, _t.rotation).GetComponent<HumanMachine>();
+            temp.Machine_token = spawnQueue[0];
             spawnQueue.RemoveAt(0);
         }
 

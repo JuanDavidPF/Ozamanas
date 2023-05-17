@@ -32,7 +32,7 @@ namespace Ozamanas.Machines
         private CellData secondObjective;
         private int secondObjectiveRange;
 
-        protected MachineSpeed currentSpeed;
+        private MachineSpeed currentSpeed;
         private MachineAltitude currentAltitude;
         private float timeMaxToReachDestination = 10f;
         private float timeToReachDestination = 0f;
@@ -65,6 +65,7 @@ namespace Ozamanas.Machines
         }
 
         public MachineAltitude CurrentAltitude { get => currentAltitude; set => currentAltitude = value; }
+        public MachineSpeed CurrentSpeed { get => currentSpeed; set => currentSpeed = value; }
 
 
 
@@ -101,7 +102,7 @@ namespace Ozamanas.Machines
 
         protected void LoadMachineSpeedInformation()
         {
-            currentSpeed=humanMachine.Machine_token.currentSpeed;
+            CurrentSpeed=humanMachine.Machine_token.currentSpeed;
             CurrentAltitude=humanMachine.Machine_token.currentAltitude;
         }
 
@@ -389,30 +390,30 @@ namespace Ozamanas.Machines
             if(!navMeshAgent) return;
 
             GotoMainObjective();
-            currentSpeed=humanMachine.Machine_token.currentSpeed;
-            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            CurrentSpeed=humanMachine.Machine_token.currentSpeed;
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(CurrentSpeed);
             if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isStopped) navMeshAgent.isStopped = false;
         }
 
         public void IncreaseMachineSpeed()
         {
-            int speed = (int)currentSpeed;
+            int speed = (int)CurrentSpeed;
             speed++;
             speed = Mathf.Clamp(speed, 0, 4);
-            currentSpeed = (MachineSpeed)speed;
+            CurrentSpeed = (MachineSpeed)speed;
             
             if(!navMeshAgent || ! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(CurrentSpeed);
         }
 
         public void DecreaseMachineSpeed()
         {
-            int speed = (int)currentSpeed;
+            int speed = (int)CurrentSpeed;
             speed--;
             speed = Mathf.Clamp(speed, 0, 4);
-            currentSpeed = (MachineSpeed)speed;
+            CurrentSpeed = (MachineSpeed)speed;
              if(! navMeshAgent.isActiveAndEnabled) return;
-            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            navMeshAgent.speed = humanMachine.Machine_token.speedValues.GetSpeed(CurrentSpeed);
         }
 
         public void StopMachine()

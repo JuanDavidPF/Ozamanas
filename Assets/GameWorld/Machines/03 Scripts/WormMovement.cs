@@ -38,7 +38,7 @@ namespace Ozamanas.Machines
 
          public void StartWorm()
         {
-            Cart.m_Speed = humanMachine.Machine_token.speedValues.GetSpeed(currentSpeed);
+            Cart.m_Speed = humanMachine.Machine_token.speedValues.GetSpeed(CurrentSpeed);
             Cart.m_Position = currentPos;
         }
         public override void SetCurrentDestination()

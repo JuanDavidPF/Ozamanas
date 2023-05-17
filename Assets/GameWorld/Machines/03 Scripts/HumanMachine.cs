@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ozamanas.Board;
 using Ozamanas.Forces;
 using Ozamanas.Tags;
-using Ozamanas.Energy;
+using Ozamanas.World;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +17,7 @@ namespace Ozamanas.Machines
     {
         public static List<HumanMachine> machines = new List<HumanMachine>();
         [SerializeField] private MachineState machine_status;
-        [SerializeField] protected HumanMachineToken machine_token;
+        protected HumanMachineToken machine_token;
         [SerializeField] private List<MachineTrait> m_activeTraits = new List<MachineTrait>();
 
         public List<MachineTrait> activeTraits
@@ -31,7 +31,7 @@ namespace Ozamanas.Machines
         }
 
         private AncientForce hijacker;
-        protected  MachineArmor machineArmor;
+        private MachineArmor machineArmor;
         private MachineMovement machineMovement;
 
         private MachinePhysicsManager machinePhysics;
@@ -40,7 +40,7 @@ namespace Ozamanas.Machines
         private TraitVFXController traitVFXController;
 
 
-        [SerializeField] private Cell m_currentCell;
+        private Cell m_currentCell;
         public Cell CurrentCell
         {
             get { return m_currentCell; }
@@ -56,6 +56,7 @@ namespace Ozamanas.Machines
         public MachineState Machine_status { get => machine_status; set => machine_status = value; }
         public HumanMachineToken Machine_token { get => machine_token; set => machine_token = value; }
         public MachineMovement MachineMovement { get => machineMovement; set => machineMovement = value; }
+        public MachineArmor MachineArmor { get => machineArmor; set => machineArmor = value; }
 
         [Space(20)]
         [Header("Events")]
@@ -65,7 +66,7 @@ namespace Ozamanas.Machines
         public UnityEvent OnRunningMachine;
         public UnityEvent<Cell> OnCurrentCellChanged;
         public UnityEvent<List<MachineTrait>> OnTraitsUpdated;
-        
+
         public void SetMachineStatus(MachineState status) 
         { 
             if(Machine_status == MachineState.Captured && status != MachineState.Captured && hijacker)
@@ -79,16 +80,17 @@ namespace Ozamanas.Machines
 
          protected virtual void Start()
          {
+           
          }
 
         protected virtual void Awake()
         {
-            machineArmor = GetComponent<MachineArmor>();
+            MachineArmor = GetComponent<MachineArmor>();
             MachineMovement = GetComponent<MachineMovement>();
             animator = GetComponent<Animator>();
             machinePhysics = GetComponent<MachinePhysicsManager>();
             traitVFXController = GetComponentInChildren<TraitVFXController>();
-
+            
         }
 
         private void OnEnable()
@@ -193,7 +195,7 @@ namespace Ozamanas.Machines
 
         public void RestoreMachineAttributesAndTraits()
         {
-            machineArmor.RestoreOriginalValues();
+            MachineArmor.RestoreOriginalValues();
             MachineMovement.RestoreOriginalValues();
             activeTraits = new List<MachineTrait>();
             traitVFXController.DeActivateAllTraitVFX();
@@ -201,7 +203,7 @@ namespace Ozamanas.Machines
 
         public void SetMachineAttributes()
         {
-            machineArmor.RestoreOriginalValues();
+            MachineArmor.RestoreOriginalValues();
             MachineMovement.RestoreOriginalValues();
             traitVFXController.DeActivateAllTraitVFX();
 
@@ -222,11 +224,11 @@ namespace Ozamanas.Machines
                 {
 
                     case MachineTraits.DisarmMachine:
-                        machineArmor.DisarmMachine();
+                        MachineArmor.DisarmMachine();
                         break;
 
                     case MachineTraits.DoubleDamage:
-                        machineArmor.SetDoubleDamageOn();
+                        MachineArmor.SetDoubleDamageOn();
                         break;
 
                     case MachineTraits.IncreaseSpeed:
@@ -234,7 +236,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.Invulnerable:
-                        machineArmor.SetInvulnerable();
+                        MachineArmor.SetInvulnerable();
                         break;
 
                     case MachineTraits.ReduceSpeed:
@@ -242,7 +244,7 @@ namespace Ozamanas.Machines
                         break;
 
                     case MachineTraits.RepairMachine:
-                        machineArmor.RepairMachine();
+                        MachineArmor.RepairMachine();
                         break;
 
                     case MachineTraits.StopMachine:
@@ -308,6 +310,7 @@ namespace Ozamanas.Machines
             return Machine_token.isDestructor;
         }
 
+       
        
 
 

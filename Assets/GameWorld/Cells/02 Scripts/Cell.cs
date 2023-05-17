@@ -7,7 +7,6 @@ using Ozamanas.Tags;
 using UnityEngine.Events;
 using Ozamanas.Extenders;
 using Sirenix.OdinInspector;
-using System;
 
 namespace Ozamanas.Board
 {
@@ -254,14 +253,7 @@ namespace Ozamanas.Board
         {
             if(!topElementTransform) return;
             
-            if (topElementTransform.childCount== 0) return;
-
-            foreach (Transform child in topElementTransform) 
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-
-           
+           topElementTransform.Clean();
 
         }
 
